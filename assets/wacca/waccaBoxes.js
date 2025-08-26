@@ -154,7 +154,11 @@ const waccaBoxes = [
         id: 311016,
         rarity: 2,
       },
-
+      {
+        kind: 16,
+        id: 311017,
+        rarity: 2,
+      }
 
     ]
   },
@@ -390,6 +394,81 @@ const waccaBoxes = [
       {
         kind: 6,
         id: 202023,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202024,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202025,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202026,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202027,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202028,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202029,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202030,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202031,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202032,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202033,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202034,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202035,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202036,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202037,
+        rarity: 2,
+      },
+      {
+        kind: 6,
+        id: 202038,
         rarity: 2,
       },
       {
