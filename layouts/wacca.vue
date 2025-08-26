@@ -26,7 +26,7 @@
 </style>
 
 <script setup>
-import waccaSongs from "~/assets/wacca/waccaSongs.js";
+import getSongs from "~/assets/wacca/getSongs.js";
 
 const theme = useState("theme");
 const runtimeConfig = useRuntimeConfig();
@@ -112,7 +112,7 @@ function selectVersion() {
 
 function cachePlayerSongs() {
   profile.value.songs = [];
-  for (const song of waccaSongs) {
+  for (const song of getSongs(version.value)) {
     profile.value.songs[song.id] = cacheSongInfo(song);
   }
 }

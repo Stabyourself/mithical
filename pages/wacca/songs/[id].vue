@@ -325,7 +325,7 @@ Chart.register(zoomPlugin);
 Chart.register(...registerables);
 Chart.register(annotationPlugin);
 
-import waccaSongs from "~/assets/wacca/waccaSongs.js";
+import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import waccaGradeBorders from "~/assets/wacca/waccaGradeBorders";
 import waccaCategories from "~/assets/wacca/waccaCategories";
@@ -339,16 +339,18 @@ definePageMeta({
 const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 const activeCard = useState("activeCard");
+const version = useState("version");
 
 const song = computed(() => {
-  return waccaSongs.find((song) => song.id === parseInt(route.params.id));
+  return getSongs(version.value).find(
+    (song) => song.id === parseInt(route.params.id)
+  );
 });
 
 const fullUrl = computed(() => {
   return `/wacca/img/covers/${song.value.imageName}`;
 });
 
-const version = useState("version");
 const filteredSheets = computed(() => {
   return song.value.sheets.filter(
     (sheet) => sheet.gameVersion <= version.value

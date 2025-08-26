@@ -183,20 +183,25 @@
 </style>
 
 <script setup>
-import waccaSongs from "~/assets/wacca/waccaSongs.js";
+import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
-import waccaRateMulBorders from "~/assets/wacca/waccaRateMulBorders";
+import getRatingBorders from "~/assets/wacca/waccaRateMulBorders";
 
 const language = useState("language");
 const profile = useState("profile");
+const version = useState("version");
 
 definePageMeta({
   middleware: ["auth"],
 });
 
+const ratingBorders = computed(() => {
+  return getRatingBorders(version.value);
+});
+
 function getRating(difficulty, score) {
-  for (let i = 0; i < waccaRateMulBorders.length; i++) {
-    const border = waccaRateMulBorders[i];
+  for (let i = 0; i < ratingBorders.value.length; i++) {
+    const border = ratingBorders.value[i];
 
     if (score >= border.min) {
       return border.multiplier * difficulty * 10;
@@ -208,28 +213,37 @@ function getRating(difficulty, score) {
 
 const tab = ref(0);
 
-const version = useState("version");
-
 const sheetFolders = computed(() => {
-  const folders = [
-    {
-      name: "Previous versions",
-      sheets: [],
-      count: 35,
-    },
-    {
-      name: "Wacca Reverse+",
+  const folders = [];
+
+  folders.push({
+    name: "Previous versions",
+    sheets: [],
+    count: 35,
+  });
+
+  if (version.value <= 300) {
+    folders.push({
+      name: "Wacca Reverse",
       sheets: [],
       count: 15,
-    },
-  ];
+    });
+  } else {
+    folders.push({
+      name: "Wacca Plus",
+      sheets: [],
+      count: 15,
+    });
+  }
 
   // calculate rating potentials
   for (const music of profile.value.music) {
     let sheet = {};
     sheet.difficulty = music.music_difficulty - 1;
     sheet.score = music.score;
-    sheet.song = waccaSongs.find((song) => song.id == music.music_id);
+    sheet.song = getSongs(version.value).find(
+      (song) => song.id == music.music_id
+    );
 
     if (
       sheet.song &&
@@ -241,7 +255,7 @@ const sheetFolders = computed(() => {
         sheet.score
       );
 
-      if (sheet.song.sheets[sheet.difficulty].gameVersion < 300) {
+      if (sheet.song.sheets[sheet.difficulty].gameVersion < version.value) {
         folders[0].sheets.push(sheet);
       } else {
         folders[1].sheets.push(sheet);
@@ -259,8 +273,8 @@ const sheetFolders = computed(() => {
       // find next rating border
       let nextBorder;
 
-      for (let i = waccaRateMulBorders.length - 1; i >= 0; i--) {
-        const border = waccaRateMulBorders[i];
+      for (let i = ratingBorders.value.length - 1; i >= 0; i--) {
+        const border = ratingBorders.value[i];
 
         if (border.min > sheet.score) {
           nextBorder = border;

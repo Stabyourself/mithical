@@ -412,7 +412,8 @@ import { formatDifficulty } from "~/assets/js/util";
 import { NuxtLink } from "#components";
 const difficultyInternal = useState("difficultyInternal");
 
-import waccaSongs from "~~/assets/wacca/waccaSongs.js";
+const version = useState("version");
+import getSongs from "~~/assets/wacca/getSongs.js";
 
 const props = defineProps({
   play: Object,
@@ -420,7 +421,9 @@ const props = defineProps({
 });
 
 const song = computed(() => {
-  let song = waccaSongs.find((song) => song.id === props.play.info.music_id);
+  let song = getSongs(version).find(
+    (song) => song.id === props.play.info.music_id
+  );
 
   return song;
 });

@@ -158,7 +158,7 @@
       </div>
 
       <div class="songs-result-count">
-        Showing {{ songsFiltered.length }} of {{ waccaSongs.length }} songs
+        Showing {{ songsFiltered.length }} of {{ getSongs().length }} songs
       </div>
 
       <div class="songs">
@@ -349,7 +349,7 @@
 
 <script setup>
 import fuzzysort from "fuzzysort";
-import waccaSongs from "~/assets/wacca/waccaSongs.js";
+import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import waccaCategories from "~/assets/wacca/waccaCategories";
 
@@ -855,7 +855,7 @@ const waccaCategoriesFiltered = computed(() => {
 });
 
 const songsFiltered = computed(() => {
-  let results = [...waccaSongs];
+  let results = [...getSongs(version.value)];
 
   // filter out songs based on selected version (reverse or plus)
   results = results.filter((song) => {

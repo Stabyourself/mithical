@@ -1,5 +1,9 @@
 <template>
-  <div v-if="props.rank > 0" class="stage-up" :class="`medal-${medalDesign}`">
+  <div
+    v-if="props.rank > 0 && props.danRank > 0"
+    class="stage-up"
+    :class="`medal-${medalDesign}`"
+  >
     <div>
       <img :src="urlBack" class="stage-up-medal" />
       <img :src="urlNumber" class="stage-up-number" />
