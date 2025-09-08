@@ -817,6 +817,45 @@ const waccaSymbolColors = [
         45
       ]
     ]
+  },
+  {
+    "id": 403001,
+    "name": "プラス",
+    "nameEnglish": "Plus",
+    "acquisition": "最初から所持",
+    "acquisitionEnglish": "Obtained from the start.",
+    "colors": [
+      [
+        0,
+        43,
+        112
+      ],
+      [
+        206,
+        183,
+        0
+      ],
+      [
+        0,
+        112,
+        99
+      ],
+      [
+        26,
+        89,
+        153
+      ],
+      [
+        153,
+        105,
+        8
+      ],
+      [
+        79,
+        158,
+        115
+      ]
+    ]
   }
 ]
 
