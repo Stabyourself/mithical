@@ -5634,20 +5634,140 @@ const waccaTitles = [
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
   {
-    "id": 407050,
+    "id": 404050,
     "name": "Rrhar'il",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
   {
-    "id": 407051,
+    "id": 404051,
     "name": "egoIST",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
   {
-    "id": 407052,
+    "id": 404052,
     "name": "�",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404053,
+    "name": "WACCA Plus ステージI  クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ I をクリアする",
+    "acquisitionEnglish": "Clear Stage I in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404054,
+    "name": "WACCA Plus ステージII  クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ II をクリアする",
+    "acquisitionEnglish": "Clear Stage II in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404055,
+    "name": "WACCA Plus ステージIII  クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ III をクリアする",
+    "acquisitionEnglish": "Clear Stage III in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404056,
+    "name": "WACCA Plus ステージIV  クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ IV をクリアする",
+    "acquisitionEnglish": "Clear Stage IV in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404057,
+    "name": "WACCA Plus ステージV  クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ V をクリアする",
+    "acquisitionEnglish": "Clear Stage V in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404058,
+    "name": "WACCA Plus ステージVI  クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ VI をクリアする",
+    "acquisitionEnglish": "Clear Stage VI in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404059,
+    "name": "WACCA Plus ステージVII  クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ VII をクリアする",
+    "acquisitionEnglish": "Clear Stage VII in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404060,
+    "name": "WACCA Plus ステージVIII  クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ VIII をクリアする",
+    "acquisitionEnglish": "Clear Stage VIII in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404061,
+    "name": "WACCA Plus ステージIX  クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ IX をクリアする",
+    "acquisitionEnglish": "Clear Stage IX in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404062,
+    "name": "WACCA Plus ステージX クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ X をクリアする",
+    "acquisitionEnglish": "Clear Stage X in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404063,
+    "name": "WACCA Plus ステージXI クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ XI をクリアする",
+    "acquisitionEnglish": "Clear Stage XI in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404064,
+    "name": "WACCA Plus ステージXII クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ XII をクリアする",
+    "acquisitionEnglish": "Clear Stage XII in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404065,
+    "name": "WACCA Plus ステージXIII クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ XIII をクリアする",
+    "acquisitionEnglish": "Clear Stage XIII in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404066,
+    "name": "WACCA Plus ステージXIV クリア！",
+    "acquisition": "WACCA Plus ステージアップ\r\nステージ XIV をクリアする",
+    "acquisitionEnglish": "Clear Stage XIV in\r\nWACCA Plus Stage Up."
+  },
+  {
+    "id": 404067,
+    "name": "Chronomia",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404068,
+    "name": "Get Your Wish",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404069,
+    "name": "Mãos para cima! ~手を上げな~",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404070,
+    "name": "Mujinku-Vacuum Track#ADD8E6-",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404071,
+    "name": "Twisted Drop Party ",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404072,
+    "name": "惑星ループ | Planet Loop",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   }

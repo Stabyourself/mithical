@@ -363,7 +363,7 @@ const waccaUserPlates = [
     "id": 311008,
     "path": "uT_US_48",
     "name": "光&対立",
-    "nameEnglish": "Light & Conflict",
+    "nameEnglish": "Hikari & Tairitsu",
     "acquisition": "「Arcaea × WACCA」\r\nイベントゲート達成報酬",
     "acquisitionEnglish": "\"Arcaea X WACCA\"\r\nEvent Gate achievement reward."
   },
@@ -446,6 +446,14 @@ const waccaUserPlates = [
     "nameEnglish": null,
     "acquisition": "DIVE with Üを1回プレイ",
     "acquisitionEnglish": "Play DIVE with Ü once."
+  },
+  {
+    "id": 411001,
+    "path": "uT_PLUS_01",
+    "name": "Brazil",
+    "nameEnglish": "",
+    "acquisition": "",
+    "acquisitionEnglish": "Complete Stage Up \"Dance III\"."
   }
 ]
 
