@@ -278,10 +278,6 @@ h1 {
     flex-wrap: wrap;
   }
 
-  .item-popup-item {
-    transform: scale(1);
-  }
-
   .item-popup-congrats {
     font-weight: bold;
   }
@@ -293,6 +289,26 @@ h1 {
     color: rgb(255, 255, 122);
     text-shadow: 0px 0px 10px gold;
     text-transform: uppercase;
+  }
+}
+
+@media (max-width: 600px) {
+  .gamba-buttons {
+    flex-direction: column;
+
+    .gamba-button-text {
+      font-size: 2rem;
+    }
+
+    .v-btn.v-btn--density-default {
+      width: 100%;
+    }
+  }
+
+  .item-popup .item-popup-item {
+    width: 100px;
+    height: 100px;
+    transform: scale(0.7);
   }
 }
 </style>
