@@ -33,10 +33,10 @@
     </div>
 
     <div class="pa-4">
-      <div class="gamba-button">
+      <div class="gamba-buttons">
         <v-btn
           class="elevation-3"
-          @click="spin(i)"
+          @click="spin(1)"
           color="primary"
           size="x-large"
           :disabled="!spinReady || !enoughRP"
@@ -45,6 +45,23 @@
           <span class="gamba-button-text">
             Gamba
             <div class="gamba-button-cost">{{ box.price }} RP per spin</div>
+          </span>
+        </v-btn>
+
+        <v-btn
+          v-if="props.tenspin"
+          class="elevation-3"
+          @click="spin(10)"
+          color="primary"
+          size="x-large"
+          :disabled="!spinReady || !enoughRPten"
+          :loading="spinLoading"
+        >
+          <span class="gamba-button-text">
+            Gamba&times;10
+            <div class="gamba-button-cost">
+              {{ box.price * 10 }} RP per spin
+            </div>
           </span>
         </v-btn>
       </div>
@@ -71,15 +88,24 @@
       @click="closeResult"
     >
       <div class="item-popup-inner">
-        <div class="item-popup-congrats">Item get!</div>
-        <div class="item-popup-item">
-          <WaccaGachaItem
-            :kind="receivedItem.kind"
-            :id="receivedItem.id"
-            :rarity="receivedItem.rarity"
-          />
+        <div class="item-popup-congrats">
+          Item{{ receivedItems.length > 1 ? "s" : "" }} get!
         </div>
-        <div v-if="isNew" class="item-popup-new">New!</div>
+        <div class="item-popup-items">
+          <div
+            class="item-popup-item"
+            v-for="(receivedItem, index) in receivedItems"
+          >
+            <WaccaGachaItem
+              :kind="receivedItem.kind"
+              :id="receivedItem.id"
+              :rarity="receivedItem.rarity"
+            />
+            <div class="item-popup-new">
+              {{ isNew(receivedItem) ? "New!" : "&nbsp;" }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </v-container>
@@ -171,9 +197,10 @@ h1 {
   padding: 5px 10px;
 }
 
-.gamba-button {
+.gamba-buttons {
   display: flex;
   justify-content: center;
+  gap: 20px;
 
   .v-btn.v-btn--density-default {
     height: auto;
@@ -209,6 +236,9 @@ h1 {
 
 .item-popup {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   top: 0px;
   left: 0px;
   width: 100%;
@@ -235,15 +265,21 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 400px;
 
     transform: translateY(-30px);
     transition: transform 0.3s;
   }
 
+  .item-popup-items {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
   .item-popup-item {
-    margin: 1.4em 0;
-    transform: scale(1.5);
+    transform: scale(1);
   }
 
   .item-popup-congrats {
@@ -251,6 +287,7 @@ h1 {
   }
 
   .item-popup-new {
+    text-align: center;
     font-size: 1.2em;
     font-weight: bold;
     color: rgb(255, 255, 122);
@@ -270,10 +307,12 @@ const activeCard = useState("activeCard");
 
 const props = defineProps({
   box: Object,
+  tenspin: Boolean,
 });
 
 const itemList = ref([]);
-const receivedItem = ref(props.box.items[0]);
+const featuredItem = ref(props.box.items[0]);
+const receivedItems = ref([]);
 
 const position = 40;
 const itemWidth = 160;
@@ -285,7 +324,7 @@ function updateItemList() {
   itemList.value.sort(() => Math.random() - 0.5);
   // remove received item from list
   itemList.value.splice(
-    itemList.value.findIndex((item) => item.id === receivedItem.value.id),
+    itemList.value.findIndex((item) => item.id === featuredItem.value.id),
     1
   );
 
@@ -297,7 +336,7 @@ function updateItemList() {
   }
 
   // insert received item at position
-  itemList.value.splice(position, 0, receivedItem.value);
+  itemList.value.splice(position, 0, featuredItem.value);
 }
 
 let scrollDistance;
@@ -309,19 +348,29 @@ let spinStartTime;
 const spinTime = 6;
 const spinReady = ref(true);
 const spinLoading = ref(false);
-const isNew = ref(false);
 
-function spin() {
+function spin(amount) {
   spinReady.value = false;
   spinLoading.value = true;
 
-  let gachaUrl = `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/gacha/${props.box.id}`;
+  let gachaUrl = `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/gacha/${props.box.id}/${amount}`;
   $fetch(gachaUrl, {
     method: "POST",
   })
     .then((data) => {
       spinLoading.value = false;
-      receivedItem.value = data.item;
+      receivedItems.value = data.items;
+
+      // find the rarest item that is new
+      let newItems = data.items.filter((item) => isNew(item));
+      if (newItems.length > 0) {
+        newItems.sort((a, b) => b.rarity - a.rarity);
+        featuredItem.value = newItems[0];
+      } else {
+        // if no new items, just show the rarest item
+        data.items.sort((a, b) => b.rarity - a.rarity);
+        featuredItem.value = data.items[0];
+      }
 
       updateItemList();
 
@@ -406,11 +455,12 @@ function boxName(box) {
 
 function finishSpin() {
   rouletteGetSound.play();
-  isNew.value = !profile.value.items.some(
-    (item) => item.item_id === receivedItem.value.id
-  );
   spinTimer = spinTime;
   resultOpen.value = true;
+}
+
+function isNew(item) {
+  return !profile.value.items.some((i) => i.item_id === item.id);
 }
 
 const resultOpen = ref(false);
@@ -418,14 +468,20 @@ const resultOpen = ref(false);
 function closeResult() {
   resultOpen.value = false;
   spinReady.value = true;
-  // add a copy of receiveditem
-  profile.value.items.push({
-    item_kind: receivedItem.value.kind,
-    item_id: receivedItem.value.id,
+  // add a copy of receiveditems (localside)
+  receivedItems.value.forEach((item) => {
+    profile.value.items.push({
+      item_kind: item.kind,
+      item_id: item.id,
+    });
   });
 }
 
 const enoughRP = computed(() => {
   return profile.value.points >= props.box.price;
+});
+
+const enoughRPten = computed(() => {
+  return profile.value.points >= props.box.price * 10;
 });
 </script>

@@ -11,6 +11,7 @@
         class="mt-4"
         ref="waccaGacha"
         :box="box"
+        :tenspin="box.price * 10 <= 99999"
       />
     </v-container>
   </WaccaProfileRequired>
