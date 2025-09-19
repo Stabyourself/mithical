@@ -1,114 +1,106 @@
 <template>
-  <span :class="[`rating-${ratingColor}`, { simple }]">{{
-    realRateFormatted
-  }}</span>
+  <span :class="[`rating-${ratingColor}`, { simple }, 'rating']">
+    {{ realRateFormatted }}
+  </span>
 </template>
 
 <style scoped lang="scss">
 @keyframes rate_animation {
-  0%,
+  0% {
+    background-position: 0px;
+  }
+
   100% {
-    background-position: 0 0;
-  }
-
-  50% {
-    background-position: 100% 0;
+    background-position: -100px, 0px;
   }
 }
 
-@mixin animate {
-  -webkit-background-clip: text;
-  background-clip: text;
+.rating {
+  -webkit-text-stroke: 0.02em #454743;
+  background-clip: text !important;
   color: transparent;
-  animation: rate_animation 6s ease-in-out infinite;
-  background-size: 400% 100%;
+  text-shadow: none;
+  font-weight: 800;
+  background-size: 100% 60%;
+  background-position: center center;
 }
 
-.profile-stat {
-  display: inline-block;
+@mixin animated {
+  background-repeat: repeat;
+  background-size: 100px auto, 100% auto;
+  animation: rate_animation 4s linear infinite;
 }
 
 .rating-white {
-  color: grey;
+  background-color: grey;
 }
 
 .rating-darkblue {
-  color: #1005de;
+  background-color: #4948ff;
 }
 
 .rating-yellow {
-  color: #fffc48;
+  background-image: linear-gradient(180deg, #fda901, #fee105);
 }
 
 .rating-red {
-  color: #fc0606;
+  background-image: linear-gradient(180deg, #ff639f, #e7307d);
 }
 
 .rating-purple {
-  color: #a000ac;
+  background-color: #a000ac;
+  background-image: url("/wacca/img/RatePattern2.png");
+  @include animated;
 }
 
 .rating-blue {
-  color: #009de6;
+  background-color: #8be0ff;
+  background-image: url("/wacca/img/RatePattern2.png");
+  @include animated;
 }
 
-.rating-silver.simple {
-  color: #b7b7b7;
+.rating-silver {
+  background-color: #f8f8f8;
+  background-image: url("/wacca/img/RatePattern2.png");
+  @include animated;
 }
 
-.rating-gold.simple {
-  color: #bf953f;
+.rating-gold {
+  background-color: #fddb2f;
+  background-image: url("/wacca/img/uT_PRate_Sparkles.png");
+  @include animated;
 }
 
-.rating-rainbow.simple {
-  color: violet;
+.rating-rainbow {
+  background-image: url("/wacca/img/uT_PRate_Sparkles.png"),
+    url("/wacca/img/rainbow.png");
+  @include animated;
 }
 
-.rating-silver:not(.simple) {
-  @include animate;
-
-  background-image: repeating-linear-gradient(
-    -70deg,
-    #b7b7b7,
-    #f6f6f6,
-    #8a8a8a,
-    #f5f5f5,
-    #828282
-  );
+.rating-rainbow2 {
+  background-image: url("/wacca/img/uT_PRate_Sparkles.png"),
+    url("/wacca/img/rainbow2.png");
+  @include animated;
 }
 
-.rating-gold:not(.simple) {
-  @include animate;
-
-  background-image: repeating-linear-gradient(
-    -70deg,
-    #bf953f,
-    #fcf6ba,
-    #b38728,
-    #fbf5b7,
-    #aa771c
-  );
+.rating-rainbow3 {
+  background-image: url("/wacca/img/uT_PRate_Sparkles.png"),
+    url("/wacca/img/rainbow3.png");
+  @include animated;
 }
 
-.rating-rainbow:not(.simple) {
-  @include animate;
-
-  background-image: repeating-linear-gradient(
-    -70deg,
-    violet,
-    indigo,
-    blue,
-    green,
-    yellow,
-    orange,
-    red,
-    violet
-  );
+.rating-rainbow4 {
+  background-image: url("/wacca/img/uT_PRate_Sparkles.png"),
+    url("/wacca/img/rainbow4.png");
+  @include animated;
 }
 </style>
 
 <script setup>
 const ratingColors = [
+  { from: 2800, color: "rainbow4" },
+  { from: 2700, color: "rainbow3" },
+  { from: 2600, color: "rainbow2" },
   { from: 2500, color: "rainbow" },
   { from: 2200, color: "gold" },
   { from: 1900, color: "silver" },

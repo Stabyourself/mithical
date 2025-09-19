@@ -67,8 +67,7 @@
 
 .rating {
   vertical-align: middle;
-  font-weight: 700;
-  font-size: 2em;
+  font-size: 2.5em;
 }
 
 :deep(.rating-white) {
