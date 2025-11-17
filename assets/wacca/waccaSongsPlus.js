@@ -13784,6 +13784,361 @@ const waccaSongs = [
       },
     ],
   },
+  {
+    id: 4096,
+    title: "DAWNBREAKER",
+    titleEnglish: null,
+    artist: "DJ Noriken",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 150,
+    imageName: "S04/uT_J_S04_096.png",
+    category: "Variety",
+    releaseDate: "2025-10-21",
+    sheets: [
+      {
+        difficulty: 5,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 9.7,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 12.3,
+        gameVersion: 400,
+        charter: "SNOWBREAKER",
+      },
+    ],
+  },
+  {
+    id: 4097,
+    title: "ICEBURN",
+    titleEnglish: null,
+    artist: "Srav3R",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 190,
+    imageName: "S04/uT_J_S04_097.png",
+    category: "Variety",
+    releaseDate: "2025-10-21",
+    sheets: [
+      {
+        difficulty: 4,
+        gameVersion: 400,
+        charter: "Tiiger",
+      },
+      {
+        difficulty: 9.8,
+        gameVersion: 400,
+        charter: "TiiG3R",
+      },
+      {
+        difficulty: 13.8,
+        gameVersion: 400,
+        charter: "ICEBALL",
+      },
+    ],
+  },
+  {
+    id: 4098,
+    title: "Random Access Emotions",
+    titleEnglish: null,
+    artist: "aran",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 180,
+    imageName: "S04/uT_J_S04_098.png",
+    category: "Variety",
+    releaseDate: "2025-10-21",
+    sheets: [
+      {
+        difficulty: 3,
+        gameVersion: 400,
+        charter: "twis",
+      },
+      {
+        difficulty: 10,
+        gameVersion: 400,
+        charter: "twis",
+      },
+      {
+        difficulty: 12.2,
+        gameVersion: 400,
+        charter: "Twisumi Aoi",
+      },
+      {
+        difficulty: 13.5,
+        gameVersion: 400,
+        charter: "twis vs. Ice Money Twinks",
+      }
+    ],
+  },
+  {
+    id: 4099,
+    title: "STARTLINER",
+    titleEnglish: null,
+    artist: "kz(livetune)／歌：オンゲキシューターズ",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 135,
+    imageName: "S04/uT_J_S04_099.png",
+    category: "Variety",
+    releaseDate: "2025-10-21",
+    sheets: [
+      {
+        difficulty: 4,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 8.7,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 11.6,
+        gameVersion: 400,
+        charter: "SNOWLINER",
+      }
+    ],
+  },
+  {
+    id: 4100,
+    title: "Stellar:Dream",
+    titleEnglish: null,
+    artist: "EmoCosine + Synthion",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 250,
+    imageName: "S04/uT_J_S04_100.png",
+    category: "Variety",
+    releaseDate: "2025-11-11",
+    sheets: [
+      {
+        difficulty: 6,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 10,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 13.8,
+        gameVersion: 400,
+        charter: "キラキラ猫！/vs/ ~レイ~ /vs/ ヤクサンス",
+      },
+      {
+        difficulty: 14.3,
+        gameVersion: 400,
+        charter: "Snowball",
+      }
+    ],
+  },
+  {
+    id: 4101,
+    title: "Titania",
+    titleEnglish: null,
+    artist: "xi",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 212,
+    imageName: "S04/uT_J_S04_101.png",
+    category: "Variety",
+    releaseDate: "2025-11-11",
+    sheets: [
+      {
+        difficulty: 5,
+        gameVersion: 400,
+        charter: "ソーラー・ヘキサ",
+      },
+      {
+        difficulty: 11,
+        gameVersion: 400,
+        charter: "ソーラー・ヘキサ",
+      },
+      {
+        difficulty: 13.7,
+        gameVersion: 400,
+        charter: "ソーラー・ヘキサ",
+      },
+      {
+        difficulty: 14.3,
+        gameVersion: 400,
+        charter: "ソーラー・ヘキサ & 「小我」",
+      }
+    ],
+  },
+  {
+    id: 4102,
+    title: "Y.Y.Y.計画!!!!",
+    titleEnglish: null,
+    artist: "曲: 烏屋茶房 / 歌: R.B.P. [九條 楓(CV:佳村 はるか)、逢坂 茜(CV:大空 直美)、珠洲島 有栖(CV:長縄 まりあ)]",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 186,
+    imageName: "S04/uT_J_S04_102.png",
+    category: "Variety",
+    releaseDate: "2025-10-21",
+    sheets: [
+      {
+        difficulty: 4,
+        gameVersion: 400,
+        charter: "Panaman",
+      },
+      {
+        difficulty: 8.8,
+        gameVersion: 400,
+        charter: "Panaman",
+      },
+      {
+        difficulty: 12.5,
+        gameVersion: 400,
+        charter: "Panaman",
+      }
+    ],
+  },
+  {
+    id: 4103,
+    title: "WakeUP MakeUP FEVER!",
+    titleEnglish: null,
+    artist: "曲: アオワイファイ / 歌: オンゲキシューターズ",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 126,
+    imageName: "S04/uT_J_S04_103.png",
+    category: "Variety",
+    releaseDate: "2025-11-11",
+    sheets: [
+      {
+        difficulty: 3,
+        gameVersion: 400,
+        charter: "キラキラ猫！",
+      },
+      {
+        difficulty: 8,
+        gameVersion: 400,
+        charter: "やす",
+      },
+      {
+        difficulty: 12.6,
+        gameVersion: 400,
+        charter: "やす & キラキラ猫！",
+      }
+    ],
+  },
+  {
+    id: 4009,
+    title: "Last Kingdom",
+    titleEnglish: null,
+    artist: "USAO",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 150,
+    imageName: "S04/uT_J_S04_009.png",
+    category: "Variety",
+    releaseDate: "2025-10-21",
+    sheets: [
+      {
+        difficulty: 6,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 10.5,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 13.6,
+        gameVersion: 400,
+        charter: "Snowball",
+      }
+    ],
+  },
+  {
+    id: 4007,
+    title: "Good bye, Merry-Go-Round.",
+    titleEnglish: null,
+    artist: "Yooh",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 185,
+    imageName: "S04/uT_J_S04_007.png",
+    category: "Variety",
+    releaseDate: "2025-10-21",
+    sheets: [
+      {
+        difficulty: 5,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 10.8,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 12.8,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 14,
+        gameVersion: 400,
+        charter: "Snowball",
+      }
+    ],
+  },
+  {
+    id: 4034,
+    title: "Don't Fight The Music",
+    titleEnglish: null,
+    artist: "黒魔",
+    dateAdded: 20251021,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 200,
+    imageName: "S04/uT_J_S04_034.png",
+    category: "Variety",
+    releaseDate: "2025-11-11",
+    sheets: [
+      {
+        difficulty: 6,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 10.7,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 13.4,
+        gameVersion: 400,
+        charter: "Snowball",
+      },
+      {
+        difficulty: 14.3,
+        gameVersion: 400,
+        charter: "Snowball",
+      }
+    ],
+  }
 ];
 
 export default waccaSongs;
