@@ -2254,7 +2254,7 @@ const waccaSongs = [
         gameVersion: 100,
         charter: "Marvelous",
       },
-	  {
+      {
         difficulty: 13.9,
         gameVersion: 400,
         charter: "XVII:THE STARS/WACCA PLUS FUMEN TEAM",
@@ -7606,7 +7606,7 @@ const waccaSongs = [
         gameVersion: 200,
         charter: "Marvelous",
       },
-	  {
+      {
         difficulty: 13.8,
         gameVersion: 400,
         charter: "↓Rafraud↓",
