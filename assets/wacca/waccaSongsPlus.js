@@ -12548,7 +12548,7 @@ const waccaSongs = [
         charter: "Snowball",
       },
       {
-        difficulty: 13.8,
+        difficulty: 13.9,
         gameVersion: 400,
         charter: "SNOWBÅLL(大未来雪玉)",
       },
@@ -13688,7 +13688,7 @@ const waccaSongs = [
         charter: "Estenda a mão e dance em todo o mundo!",
       },
       {
-        difficulty: 12.7,
+        difficulty: 12.8,
         gameVersion: 400,
         charter: "Uni duni tê!",
       },
@@ -13794,7 +13794,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 150,
     imageName: "S04/uT_J_S04_096.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-10-21",
     sheets: [
       {
@@ -13824,7 +13824,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 190,
     imageName: "S04/uT_J_S04_097.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-10-21",
     sheets: [
       {
@@ -13854,7 +13854,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 180,
     imageName: "S04/uT_J_S04_098.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-10-21",
     sheets: [
       {
@@ -13889,7 +13889,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 135,
     imageName: "S04/uT_J_S04_099.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-10-21",
     sheets: [
       {
@@ -13919,7 +13919,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 250,
     imageName: "S04/uT_J_S04_100.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-11-11",
     sheets: [
       {
@@ -13954,7 +13954,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 212,
     imageName: "S04/uT_J_S04_101.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-11-11",
     sheets: [
       {
@@ -13989,7 +13989,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 186,
     imageName: "S04/uT_J_S04_102.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-10-21",
     sheets: [
       {
@@ -14019,7 +14019,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 126,
     imageName: "S04/uT_J_S04_103.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-11-11",
     sheets: [
       {
@@ -14049,7 +14049,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 150,
     imageName: "S04/uT_J_S04_009.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-10-21",
     sheets: [
       {
@@ -14079,7 +14079,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 185,
     imageName: "S04/uT_J_S04_007.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-10-21",
     sheets: [
       {
@@ -14114,7 +14114,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 200,
     imageName: "S04/uT_J_S04_034.png",
-    category: "Variety",
+    category: "バラエティ",
     releaseDate: "2025-11-11",
     sheets: [
       {
