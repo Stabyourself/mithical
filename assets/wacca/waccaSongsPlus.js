@@ -12548,7 +12548,7 @@ const waccaSongs = [
         charter: "Snowball",
       },
       {
-        difficulty: 13.8,
+        difficulty: 13.9,
         gameVersion: 400,
         charter: "SNOWBÅLL(大未来雪玉)",
       },
@@ -13688,7 +13688,7 @@ const waccaSongs = [
         charter: "Estenda a mão e dance em todo o mundo!",
       },
       {
-        difficulty: 12.7,
+        difficulty: 12.8,
         gameVersion: 400,
         charter: "Uni duni tê!",
       },
