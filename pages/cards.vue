@@ -188,7 +188,7 @@ async function getCardInfo(addluid, convert) {
 
     $fetch(`${runtimeConfig.public.apiUrl}/card/${addluid}`)
       .then((data) => {
-        if (!data.user_name) {
+        if (data.user_name === undefined) {
           reject("failedapi");
           return;
         }
