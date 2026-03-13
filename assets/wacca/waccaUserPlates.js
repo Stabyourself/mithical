@@ -454,6 +454,14 @@ const waccaUserPlates = [
     "nameEnglish": "",
     "acquisition": "",
     "acquisitionEnglish": "Complete Stage Up \"Dance III\"."
+  },
+  {
+    "id": 411002,
+    "path": "uT_PLUS_02",
+    "name": "Crossing Delta",
+    "nameEnglish": "",
+    "acquisition": "",
+    "acquisitionEnglish": "Play \"Pop Sequence\", \"Slapstick Parfait\", and \"Paved Garden\" in order."
   }
 ]
 

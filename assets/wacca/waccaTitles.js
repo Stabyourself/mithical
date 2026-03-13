@@ -5770,6 +5770,78 @@ const waccaTitles = [
     "name": "惑星ループ | Planet Loop",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404073,
+    "name": "Good bye, Merry-Go-Round.",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404074,
+    "name": "Last Kingdom",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404075,
+    "name": "Don't Fight The Music",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404076,
+    "name": "DAWNBREAKER",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404077,
+    "name": "ICEBURN",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404078,
+    "name": "Random Access Emotions",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404079,
+    "name": "STARTLINER",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404080,
+    "name": "Stellar:Dream",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404081,
+    "name": "Titania",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404082,
+    "name": "Y.Y.Y",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404083,
+    "name": "↓TERMINAL VELOCITY↓",
+    "acquisition": "???",
+    "acquisitionEnglish": "???"
+  },
+  {
+    "id": 404084,
+    "name": "WakeUP MakeUP FEVER!",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   }
 ]
 
