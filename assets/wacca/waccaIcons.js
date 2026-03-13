@@ -2214,6 +2214,62 @@ const waccaIcons = [
     "nameEnglish": null,
     "acquisition": "「maimai  × WACCA」 イベントゲート\n達成報酬",
     "acquisitionEnglish": "\"maimai × Wacca\" Event Gate achievement award"
+  },
+  {
+    "id": 402005,
+    "path": "S04/uT_UICN_S04_00_05",
+    "name": "Akari",
+    "nameEnglish": null,
+    "acquisition": "「O.N.G.E.K.I × WACCA pt.1」 イベントゲート\n達成報酬",
+    "acquisitionEnglish": "\"O.N.G.E.K.I × WACCA pt. 1\" Event Gate achievement award"
+  },
+  {
+    "id": 402006,
+    "path": "S04/uT_UICN_S04_00_06",
+    "name": "Aoi",
+    "nameEnglish": null,
+    "acquisition": "「O.N.G.E.K.I × WACCA pt.1」 イベントゲート\n達成報酬",
+    "acquisitionEnglish": "\"O.N.G.E.K.I × WACCA pt. 1\" Event Gate achievement award"
+  },
+  {
+    "id": 402007,
+    "path": "S04/uT_UICN_S04_00_07",
+    "name": "Arisu",
+    "nameEnglish": null,
+    "acquisition": "「O.N.G.E.K.I × WACCA pt.2」 イベントゲート\n達成報酬",
+    "acquisitionEnglish": "\"O.N.G.E.K.I × WACCA pt. 2\" Event Gate achievement award"
+  },
+  {
+    "id": 402008,
+    "path": "S04/uT_UICN_S04_00_08",
+    "name": "O.N.G.E.K.I Cabinet",
+    "nameEnglish": null,
+    "acquisition": "「O.N.G.E.K.I × WACCA pt.1」 イベントゲート\n達成報酬",
+    "acquisitionEnglish": "\"O.N.G.E.K.I × WACCA pt. 1\" Event Gate achievement award"
+  },
+  {
+    "id": 402009,
+    "path": "S04/uT_UICN_S04_00_09",
+    "name": "Setsuna",
+    "nameEnglish": null,
+    "acquisition": "「O.N.G.E.K.I × WACCA pt.2」 イベントゲート\n達成報酬",
+    "acquisitionEnglish": "\"O.N.G.E.K.I × WACCA pt. 2\" Event Gate achievement award"
+  },
+  {
+    "id": 402010,
+    "path": "S04/uT_UICN_S04_00_10",
+    "name": "Yuzu",
+    "nameEnglish": null,
+    "acquisition": "「O.N.G.E.K.I × WACCA pt.1」 イベントゲート\n達成報酬",
+    "acquisitionEnglish": "\"O.N.G.E.K.I × WACCA pt. 1\" Event Gate achievement award"
+  },
+  {
+    "id": 402011,
+    "path": "S04/uT_UICN_S04_00_11",
+    "name": "Uncle Lime",
+    "nameEnglish": null,
+    "acquisition": "Play Mahalova and MVURBD",
+    "acquisitionEnglish": "Play Mahalova and MVURBD"
   }
 ]
 
