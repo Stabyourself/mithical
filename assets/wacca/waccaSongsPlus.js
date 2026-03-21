@@ -534,6 +534,11 @@ const waccaSongs = [
         gameVersion: 100,
         charter: "Marvelous",
       },
+      {
+        difficulty: 13.8,
+        gameVersion: 400,
+        charter: "Dj",
+      },
     ],
   },
   {
@@ -1940,7 +1945,7 @@ const waccaSongs = [
         charter: "Marvelous",
       },
       {
-        difficulty: 1,
+        difficulty: 0,
         gameVersion: 400,
         charter: "DO YOU REMEMBER THE CODE? [ 覚 ]",
       },
@@ -2299,6 +2304,11 @@ const waccaSongs = [
         difficulty: 9.3,
         gameVersion: 100,
         charter: "Marvelous",
+      },
+      {
+        difficulty: 12.5,
+        gameVersion: 400,
+        charter: "BAD ENGINE",
       },
     ],
   },
@@ -5968,6 +5978,11 @@ const waccaSongs = [
         gameVersion: 200,
         charter: "Marvelous",
       },
+      {
+        difficulty: 13.9,
+        gameVersion: 400,
+        charter: "Lightning Sword",
+      },
     ],
   },
   {
@@ -9243,6 +9258,11 @@ const waccaSongs = [
         gameVersion: 250,
         charter: "Marvelous",
       },
+      {
+        difficulty: 13.8,
+        gameVersion: 400,
+        charter: "YUKIDAMA",
+      },
     ],
   },
   {
@@ -9815,6 +9835,11 @@ const waccaSongs = [
         difficulty: 12.5,
         gameVersion: 300,
         charter: "Marvelous",
+      },
+      {
+        difficulty: 13.8,
+        gameVersion: 400,
+        charter: "PastelTangent",
       },
     ],
   },
@@ -11624,6 +11649,11 @@ const waccaSongs = [
         gameVersion: 300,
         charter: "Marvelous",
       },
+      {
+        difficulty: 13.7,
+        gameVersion: 400,
+        charter: "ROCHE LIMIT",
+      },
     ],
   },
   {
@@ -12903,7 +12933,7 @@ const waccaSongs = [
         charter: "ヤ.ヤ.ス.ス.ヤ.ス.ス.",
       },
       {
-        difficulty: 1,
+        difficulty: 0,
         gameVersion: 400,
         charter: ".ス.ス.ヤ.ス.ス.ヤ.ヤ [ 戻 ]",
       },
@@ -13948,7 +13978,7 @@ const waccaSongs = [
         charter: "キラキラ猫！/vs/ ~レイ~ /vs/ ヤクサンス",
       },
       {
-        difficulty: 14.3,
+        difficulty: 14.2,
         gameVersion: 400,
         charter: "Snowball",
       }
@@ -14143,7 +14173,7 @@ const waccaSongs = [
         charter: "Snowball",
       },
       {
-        difficulty: 14.3,
+        difficulty: 14.4,
         gameVersion: 400,
         charter: "Snowball",
       }
@@ -14481,6 +14511,131 @@ const waccaSongs = [
         difficulty: 14.0,
         gameVersion: 400,
         charter: 'HEY B*TCH!!',
+      },
+    ],
+  },
+  {
+    id: 4116,
+    title: "Burned Out",
+    titleEnglish: null,
+    artist: "Getty feat. DJ Noriken",
+    dateAdded: 20260322,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 170,
+    imageName: "S04/uT_J_S04_116.png",
+    category: "TANO*C",
+    releaseDate: "2026-03-18",
+    sheets: [
+      {
+        difficulty: 4,
+        gameVersion: 400,
+        charter: 'Tiiger',
+      },
+      {
+        difficulty: 9.8,
+        gameVersion: 400,
+        charter: 'Tiiger',
+      },
+      {
+        difficulty: 13.6,
+        gameVersion: 400,
+        charter: 'Burning the Rocket Fuel',
+      },
+    ],
+  },
+  {
+    id: 4120,
+    title: "Mega TSKR",
+    titleEnglish: null,
+    artist: "かめりあ",
+    dateAdded: 20260322,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 205,
+    imageName: "S04/uT_J_S04_120.png",
+    category: "バラエティ",
+    releaseDate: "2026-03-18",
+    sheets: [
+      {
+        difficulty: 4,
+        gameVersion: 400,
+        charter: 'Lightning Sword',
+      },
+      {
+        difficulty: 10.8,
+        gameVersion: 400,
+        charter: 'MEGA TiiSKR',
+      },
+      {
+        difficulty: 13.9,
+        gameVersion: 400,
+        charter: 'Lightning Sword',
+      },
+    ],
+  },
+  {
+    id: 4124,
+    title: "Rebellion of Phantom",
+    titleEnglish: null,
+    artist: "DJ Myosuke & Gram",
+    dateAdded: 20260322,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 222,
+    imageName: "S04/uT_J_S04_124.png",
+    category: "TANO*C",
+    releaseDate: "2026-03-18",
+    sheets: [
+      {
+        difficulty: 5,
+        gameVersion: 400,
+        charter: 'Fatal eRor!',
+      },
+      {
+        difficulty: 9.8,
+        gameVersion: 400,
+        charter: 'Fatal eRWor!',
+      },
+      {
+        difficulty: 13.2,
+        gameVersion: 400,
+        charter: 'Fatal eR+RWor!',
+      },
+    ],
+  },
+  {
+    id: 4127,
+    title: "sys_dei/cide",
+    titleEnglish: null,
+    artist: "Lusumi",
+    dateAdded: 20260329,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 220,
+    imageName: "S04/uT_J_S04_127.png",
+    category: "オリジナル",
+    releaseDate: "2026-03-18",
+    sheets: [
+      {
+        difficulty: 7,
+        gameVersion: 400,
+        charter: 'やす',
+      },
+      {
+        difficulty: 11.7,
+        gameVersion: 400,
+        charter: 'UKIDAMA',
+      },
+      {
+        difficulty: 14.3,
+        gameVersion: 400,
+        charter: 'LUNAR SEPTA',
+      },
+      {
+        difficulty: 14.8,
+        gameVersion: 400,
+        charter: 'XX:JUDGEMENT/Dimensional Blade',
       },
     ],
   },

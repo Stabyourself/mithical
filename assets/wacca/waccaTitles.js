@@ -5842,6 +5842,114 @@ const waccaTitles = [
     "name": "WakeUP MakeUP FEVER!",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404085,
+    "name": "Asterism",
+    "acquisition": "「O.N.G.E.K.I × WACCA pt.1」 イベントゲート達成報酬",
+    "acquisitionEnglish": "\"O.N.G.E.K.I × WACCA pt.1\" Event Gate achievement award"
+  },
+  {
+    "id": 404086,
+    "name": "O.N.G.E.K.I.",
+    "acquisition": "「O.N.G.E.K.I × WACCA pt.2」 イベントゲート達成報酬",
+    "acquisitionEnglish": "\"O.N.G.E.K.I × WACCA pt.2\" Event Gate achievement award"
+  },
+  {
+    "id": 404087,
+    "name": "Crossing Delta",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404088,
+    "name": "Giga Flare VIP",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404089,
+    "name": "Maholova",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404090,
+    "name": "MVURBD",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404091,
+    "name": "Paved Garden",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404092,
+    "name": "Shadow Bang",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404093,
+    "name": "Slapstick Parfait",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404094,
+    "name": "BIBBIDIBA",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404095,
+    "name": "Pop Sequence",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404096,
+    "name": "SWAG!!",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404097,
+    "name": "Kirakira Noel Story!!",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404100,
+    "name": "Burned Out",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404103,
+    "name": "MEGA TSKR",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404104,
+    "name": "Rebellion of Phantom",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404107,
+    "name": "sys_dei/cide",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404108,
+    "name": "Fatal Error!",
+    "acquisition": "???",
+    "acquisitionEnglish": "???"
   }
 ]
 
