@@ -1911,7 +1911,7 @@ const waccaSongs = [
       {
         difficulty: 11.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous ",
       },
     ],
   },
