@@ -14632,11 +14632,11 @@ const waccaSongs = [
         gameVersion: 400,
         charter: 'LUNAR SEPTA',
       },
-      {
-        difficulty: 14.8,
-        gameVersion: 400,
-        charter: 'XX:JUDGEMENT/Dimensional Blade',
-      },
+      // {
+      //   difficulty: 14.8,
+      //   gameVersion: 400,
+      //   charter: 'XX:JUDGEMENT/Dimensional Blade',
+      // },
     ],
   },
 ];
