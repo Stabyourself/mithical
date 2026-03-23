@@ -2180,7 +2180,7 @@ const waccaIcons = [
     "path": "S04/uT_UICN_S04_00_00",
     "name": "IMPULSE // WEAVER",
     "nameEnglish": null,
-    "acquisition": "Clear IMPULSE // WEAVER\r\non Expert difficulty",
+    "acquisition": "Clear IMPULSE // WEAVER\r\non Normal, Hard, and Expert difficulty",
     "acquisitionEnglish": null
   },
   {
@@ -2276,7 +2276,7 @@ const waccaIcons = [
     "path": "S04/uT_UICN_S04_00_12",
     "name": "egoIST",
     "nameEnglish": null,
-    "acquisition": "Clear egoIST\r\non Expert difficulty",
+    "acquisition": "Clear egoIST\r\non Normal, Hard, and Expert difficulty",
     "acquisitionEnglish": null
   },
   {
@@ -2284,7 +2284,7 @@ const waccaIcons = [
     "path": "S04/uT_UICN_S04_00_13",
     "name": "Null",
     "nameEnglish": null,
-    "acquisition": "Clear Null\r\non Expert difficulty",
+    "acquisition": "Clear Null\r\non Normal, Hard, and Expert difficulty",
     "acquisitionEnglish": null
   },
   {
@@ -2292,7 +2292,7 @@ const waccaIcons = [
     "path": "S04/uT_UICN_S04_00_15",
     "name": "sys_dei/cide",
     "nameEnglish": null,
-    "acquisition": "Clear sys/dei_cide\r\non Expert difficulty",
+    "acquisition": "Clear sys/dei_cide\r\non Normal, Hard, and Expert difficulty",
     "acquisitionEnglish": null
   }
 ]
