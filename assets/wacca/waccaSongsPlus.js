@@ -14623,7 +14623,7 @@ const waccaSongs = [
         charter: 'やす',
       },
       {
-        difficulty: 11.7,
+        difficulty: 11.2,
         gameVersion: 400,
         charter: 'UKIDAMA',
       },
@@ -14632,11 +14632,11 @@ const waccaSongs = [
         gameVersion: 400,
         charter: 'LUNAR SEPTA',
       },
-      {
-        difficulty: 14.8,
-        gameVersion: 400,
-        charter: 'XX:JUDGEMENT/Dimensional Blade',
-      },
+      // {
+      //   difficulty: 14.8,
+      //   gameVersion: 400,
+      //   charter: 'XX:JUDGEMENT/Dimensional Blade',
+      // },
     ],
   },
 ];
