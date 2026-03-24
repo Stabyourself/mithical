@@ -14625,7 +14625,7 @@ const waccaSongs = [
       {
         difficulty: 11.2,
         gameVersion: 400,
-        charter: 'UKIDAMA',
+        charter: 'YUKIDAMA',
       },
       {
         difficulty: 14.3,
