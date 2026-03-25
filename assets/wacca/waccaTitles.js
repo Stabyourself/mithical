@@ -1723,7 +1723,7 @@ const waccaTitles = [
   },
   {
     "id": 204102,
-    "name": "Good Night<comma> (半角スペース) Bad God.",
+    "name": "Good Night, (半角スペース) Bad God.",
     "acquisition": "「グルーヴコースター × WACCA」第2弾\r\nイベントゲート達成報酬",
     "acquisitionEnglish": "\"Groove Coaster X WACCA\" 2nd\r\nEvent Gate achievement reward."
   },
@@ -2473,7 +2473,7 @@ const waccaTitles = [
   },
   {
     "id": 204228,
-    "name": "Hello<comma> Morning",
+    "name": "Hello, Morning",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on \r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
@@ -2845,7 +2845,7 @@ const waccaTitles = [
   },
   {
     "id": 204290,
-    "name": "Help me<comma> ERINNNNNN!!",
+    "name": "Help me, ERINNNNNN!!",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on \r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
@@ -3097,7 +3097,7 @@ const waccaTitles = [
   },
   {
     "id": 204332,
-    "name": "Good Night<comma> Bad Luck.",
+    "name": "Good Night, Bad Luck.",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on \r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
