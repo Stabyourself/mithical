@@ -9,7 +9,9 @@
     ></div>
     <div class="song-category-info">
       <div class="song-category-title">
-        {{ language == "ja" ? category.ja : category.en }}
+        {{
+          category.hideText ? "" : language == "ja" ? category.ja : category.en
+        }}
       </div>
       <!-- <div class="song-category-count">
         {{ category.count }}
