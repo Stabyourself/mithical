@@ -20,7 +20,7 @@ const waccaCategories = [
   },
   { ja: "WACCA", en: "WACCA", img: "wacca.png", color: "#ff465f", hideText: true, version: true },
   { ja: "WACCA Lily", en: "WACCA Lily", img: "lily.png", color: "#7bf716", hideText: true, version: true },
-  { ja: "WACCA Reverse", en: "WACCA Reverse", img: "reverse.png", color: "#4918a3", hideText: true, version: true },
+  { ja: "WACCA Reverse", en: "WACCA Reverse", img: "reverse.png", color: "#1fe4fa", hideText: true, version: true },
   { ja: "WACCA Plus", en: "WACCA Plus", img: "plus.png", color: "#f7e121", hideText: true, hidden: false, version: true },
 ];
 
