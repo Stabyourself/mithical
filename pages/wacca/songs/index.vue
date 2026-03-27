@@ -849,6 +849,13 @@ function toggleCategory(category) {
 }
 
 const waccaCategoriesFiltered = computed(() => {
+  // hides Plus category button per version
+  if (version.value <= 300){
+    waccaCategories[7].hidden = true;
+  }
+  if (version.value > 300){
+    waccaCategories[7].hidden = false;
+  }
   return waccaCategories.filter((category) => {
     return !category.hidden;
   });

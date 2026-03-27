@@ -11,7 +11,7 @@ const waccaCategories = [
   { ja: "バラエティ", en: "Variety", img: "variety.png", color: "#68d35e" },
   { ja: "オリジナル", en: "Original", img: "original.png", color: "#ea3989" },
   { ja: "TANO*C", en: "TANO*C", img: "tanoc.png", color: "#232530" },
-  { ja: "WACCA Plus", en: "WACCA Plus", img: "plus.png", color: "#f7e121" },
+  { ja: "WACCA Plus", en: "WACCA Plus", img: "plus.png", color: "#f7e121", hidden: false },
   {
     ja: "TANO*C（オリジナル）",
     en: "TANO*C (Original)",
