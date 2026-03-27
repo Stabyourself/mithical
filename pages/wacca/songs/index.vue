@@ -970,10 +970,9 @@ const songsFiltered = computed(() => {
     }
     // otherwise include results from categories
     else{
-      allResults = allResults.filter((song) => {
+      results = allResults.filter((song) => {
         return compareCategories.includes(song.category);
       });
-      results = allResults;
     }  
   }
   // Default check categories for set of all songs
