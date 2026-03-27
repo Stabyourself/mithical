@@ -5935,7 +5935,7 @@ const waccaTitles = [
   },
   {
     "id": 404104,
-    "name": "Rebellion of Phantom",
+    "name": "The Rebellion of Phantom (feat. Valkyria)",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
