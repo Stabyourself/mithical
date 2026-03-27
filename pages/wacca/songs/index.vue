@@ -144,6 +144,23 @@
           </v-menu>
         </v-btn-group>
 
+        <v-btn-group>
+          <v-btn color="primary"> Versions </v-btn>
+
+          <v-menu activator="parent">
+            <div class="song-categories" @click.stop>
+              <WaccaCategoryToggle
+                v-for="category in waccaVersionsFiltered"
+                :key="category.ja"
+                :category="category"
+                :active-categories="activeCategories"
+                @click="toggleCategory(category)"
+                :language="language"
+              />
+            </div>
+          </v-menu>
+        </v-btn-group>
+
         <v-text-field
           class="song-search"
           v-model="search"
@@ -849,22 +866,33 @@ function toggleCategory(category) {
 }
 
 const waccaCategoriesFiltered = computed(() => {
+  return waccaCategories.filter((category) => {
+    return !category.hidden && !category.version;
+  });
+});
+
+const waccaVersionsFiltered = computed(() => {
   // hides Plus category button per version
   if (version.value <= 300){
-    waccaCategories[7].hidden = true;
+    waccaCategories[11].hidden = true;
   }
   if (version.value > 300){
-    waccaCategories[7].hidden = false;
+    waccaCategories[11].hidden = false;
   }
   return waccaCategories.filter((category) => {
-    return !category.hidden;
+    return !category.hidden && category.version;
   });
 });
 
 const songsFiltered = computed(() => {
   let results = [...getSongs(version.value)];
+  let sResults = [];
+  let lilyResults = [];
+  let reverseResults = [];
   let plusResults = [];
-  let nonPlusResults = [];
+  let allResults = [];
+  const versionArr = ["WACCA", "WACCA Lily", "WACCA Reverse", "WACCA Plus"];
+  const categoryArr = ["アニメ／ＰＯＰ", "ボカロ", "東方アレンジ", "2.5次元", "バラエティ", "オリジナル", "TANO*C"];
 
   // If not on WACCA Plus, deselect the plus category if it was selected before hiding the button
   if (version.value <= 300 && activeCategories.value.includes("WACCA Plus")){
@@ -890,38 +918,66 @@ const songsFiltered = computed(() => {
     compareCategories.push("TANO*C（オリジナル）");
   }
 
+  // Check all the version categories and filter songs based on version
+  if (activeCategories.value.includes("WACCA")){
+    sResults = results.filter((song) => {
+        return song.gameVersion <= 100;
+    });
+  }
+
+  if (activeCategories.value.includes("WACCA Lily")){
+    lilyResults = results.filter((song) => {
+        return song.gameVersion > 100 && song.gameVersion <= 200;
+    });
+  }
+
+  if (activeCategories.value.includes("WACCA Reverse")){
+    reverseResults = results.filter((song) => {
+        return song.gameVersion > 200 && song.gameVersion <= 300;
+    });
+  }
   
+  // Plus needs special handling because old songs have new infs
   if (activeCategories.value.includes("WACCA Plus")){
-    plusResults = results.filter((song) => {
-      // Get plus songs with infs
-      if(song.sheets.length == 4){
-        let songArray = song.sheets;
-        return songArray[3].gameVersion == version.value;
-      }
+      plusResults = results.filter((song) => {
+        // If Plus is only version selected, do new inf logic
+        if (
+          compareCategories.length == 1
+          || (compareCategories.length > 1 && !compareCategories.some(i => ["WACCA", "WACCA Lily", "WACCA Reverse"].includes(i)))
+        ) {
+          // Get plus songs with infs
+          if(song.sheets.length == 4){
+            let songArray = song.sheets;
+            return songArray[3].gameVersion == version.value;
+          }
+        }
       // Get plus songs without infs
       return (
         song.sheets.filter((sheet) => sheet.gameVersion != version.value)
           .length < 3
       );
-    });
+      });
+  
   }
 
+  // combine all version filters
+  allResults = allResults.concat(sResults, lilyResults, reverseResults, plusResults);
 
-  // Check categories within set of Plus songs
-  if (activeCategories.value.includes("WACCA Plus")){
-    // If only category selected is Plus, just return plus
-    if (compareCategories.length == 1){
-      results = plusResults;
+  // check if we have a version type selected
+  if ( activeCategories.value.some(i => versionArr.includes(i)) ) {
+    // if no category selected, just return the big result of only versions
+    if (!activeCategories.value.some(i => categoryArr.includes(i))) {
+      results = allResults;
     }
-    // Otherwise, filter categories within set of Plus songs
+    // otherwise include results from categories
     else{
-      plusResults = plusResults.filter((song) => {
+      allResults = allResults.filter((song) => {
         return compareCategories.includes(song.category);
       });
-      results = plusResults;
-    }
+      results = allResults;
+    }  
   }
-  // Check categories for set of all songs
+  // Default check categories for set of all songs
   else {
     results = results.filter((song) => {
       return compareCategories.includes(song.category);
@@ -929,7 +985,7 @@ const songsFiltered = computed(() => {
   }
 
 
-  // filters
+  // filters on whatever we returned
   filters.value.forEach((filter) => {
     if (filter.type == "buttons") {
       filter.subItems.forEach((filterSub) => {

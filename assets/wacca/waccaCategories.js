@@ -11,7 +11,6 @@ const waccaCategories = [
   { ja: "バラエティ", en: "Variety", img: "variety.png", color: "#68d35e" },
   { ja: "オリジナル", en: "Original", img: "original.png", color: "#ea3989" },
   { ja: "TANO*C", en: "TANO*C", img: "tanoc.png", color: "#232530" },
-  { ja: "WACCA Plus", en: "WACCA Plus", img: "plus.png", color: "#f7e121", hidden: false },
   {
     ja: "TANO*C（オリジナル）",
     en: "TANO*C (Original)",
@@ -19,6 +18,10 @@ const waccaCategories = [
     color: "#232530",
     hidden: true,
   },
+  { ja: "WACCA", en: "WACCA", img: "wacca.png", color: "#ff465f", version: true},
+  { ja: "WACCA Lily", en: "WACCA Lily", img: "lily.png", color: "#7bf716", version: true},
+  { ja: "WACCA Reverse", en: "WACCA Reverse", img: "reverse.png", color: "#4918a3", version: true},   
+  { ja: "WACCA Plus", en: "WACCA Plus", img: "plus.png", color: "#f7e121", hidden: false , version: true}, 
 ];
 
 export default waccaCategories;
