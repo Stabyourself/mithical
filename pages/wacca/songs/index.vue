@@ -893,10 +893,12 @@ const songsFiltered = computed(() => {
   
   if (activeCategories.value.includes("WACCA Plus")){
     plusResults = results.filter((song) => {
+      // Get plus songs with infs
       if(song.sheets.length == 4){
         let songArray = song.sheets;
         return songArray[3].gameVersion == version.value;
       }
+      // Get plus songs without infs
       return (
         song.sheets.filter((sheet) => sheet.gameVersion != version.value)
           .length < 3
