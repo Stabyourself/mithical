@@ -857,7 +857,7 @@ const waccaCategoriesFiltered = computed(() => {
 const songsFiltered = computed(() => {
   let results = [...getSongs(version.value)];
   let plusResults = [];
-
+  let nonPlusResults = [];
   // filter out songs based on selected version (reverse or plus)
   results = results.filter((song) => {
     return song.gameVersion <= version.value;
@@ -891,13 +891,17 @@ const songsFiltered = computed(() => {
   }
 
   // don't do plus songs twice
-  results = results.filter((song) => {
+  nonPlusResults = results.filter((song) => {
     return plusResults.indexOf(song) === -1;
   });
 
-  results = results.filter((song) => {
+  // Check categories of everything else
+  nonPlusResults = nonPlusResults.filter((song) => {
     return compareCategories.includes(song.category);
   });
+
+  // combine at the end
+  results = nonPlusResults.concat(plusResults);
 
   // filters
   filters.value.forEach((filter) => {
@@ -922,9 +926,6 @@ const songsFiltered = computed(() => {
       .map((result) => result.obj);
   }
 
-  if(plusResults.length > 0){
-    results = results.concat(plusResults);
-  }
   // sort
   results = results.sort(activeSort.value.sortFunction);
 
