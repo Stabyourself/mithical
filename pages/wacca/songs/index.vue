@@ -939,25 +939,24 @@ const songsFiltered = computed(() => {
   
   // Plus needs special handling because old songs have new infs
   if (activeCategories.value.includes("WACCA Plus")){
-      plusResults = results.filter((song) => {
-        // If Plus is only version selected, do new inf logic
-        if (
-          compareCategories.length == 1
-          || (compareCategories.length > 1 && !compareCategories.some(i => ["WACCA", "WACCA Lily", "WACCA Reverse"].includes(i)))
-        ) {
-          // Get plus songs with infs
-          if(song.sheets.length == 4){
-            let songArray = song.sheets;
-            return songArray[3].gameVersion == version.value;
-          }
+    plusResults = results.filter((song) => {
+      // If Plus is only version selected, do new inf logic
+      if (
+        compareCategories.length == 1
+        || (compareCategories.length > 1 && !compareCategories.some(i => ["WACCA", "WACCA Lily", "WACCA Reverse"].includes(i)))
+      ) {
+        // Get plus songs with infs
+        if(song.sheets.length == 4){
+          let songArray = song.sheets;
+          return songArray[3].gameVersion == version.value;
         }
+      }
       // Get plus songs without infs
       return (
         song.sheets.filter((sheet) => sheet.gameVersion != version.value)
           .length < 3
       );
-      });
-  
+    });
   }
 
   // combine all version filters
