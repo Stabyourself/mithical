@@ -906,18 +906,28 @@ const songsFiltered = computed(() => {
     });
   }
 
-  // don't do plus songs twice
-  nonPlusResults = results.filter((song) => {
-    return plusResults.indexOf(song) === -1;
-  });
 
-  // Check categories of everything else
-  nonPlusResults = nonPlusResults.filter((song) => {
-    return compareCategories.includes(song.category);
-  });
+  // Check categories within set of Plus songs
+  if (activeCategories.value.includes("WACCA Plus")){
+    // If only category selected is Plus, just return plus
+    if (compareCategories.length == 1){
+      results = plusResults;
+    }
+    // Otherwise, filter categories within set of Plus songs
+    else{
+      plusResults = plusResults.filter((song) => {
+        return compareCategories.includes(song.category);
+      });
+      results = plusResults;
+    }
+  }
+  // Check categories for set of all songs
+  else {
+    results = results.filter((song) => {
+      return compareCategories.includes(song.category);
+    });
+  }
 
-  // combine at the end
-  results = nonPlusResults.concat(plusResults);
 
   // filters
   filters.value.forEach((filter) => {
