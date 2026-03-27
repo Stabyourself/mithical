@@ -921,19 +921,19 @@ const songsFiltered = computed(() => {
   // Check all the version categories and filter songs based on version
   if (activeCategories.value.includes("WACCA")){
     baseResults = results.filter((song) => {
-        return song.gameVersion <= 100;
+        return song.gameVersion < 200;
     });
   }
 
   if (activeCategories.value.includes("WACCA Lily")){
     lilyResults = results.filter((song) => {
-        return song.gameVersion > 100 && song.gameVersion <= 200;
+        return song.gameVersion >= 200 && song.gameVersion < 300;
     });
   }
 
   if (activeCategories.value.includes("WACCA Reverse")){
     reverseResults = results.filter((song) => {
-        return song.gameVersion > 200 && song.gameVersion <= 300;
+        return song.gameVersion >= 300 && song.gameVersion < 400;
     });
   }
   
