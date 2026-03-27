@@ -856,6 +856,7 @@ const waccaCategoriesFiltered = computed(() => {
 
 const songsFiltered = computed(() => {
   let results = [...getSongs(version.value)];
+  let plusResults = [];
 
   // filter out songs based on selected version (reverse or plus)
   results = results.filter((song) => {
@@ -874,6 +875,25 @@ const songsFiltered = computed(() => {
   if (compareCategories.includes("TANO*C")) {
     compareCategories.push("TANO*C（オリジナル）");
   }
+
+  
+  if (activeCategories.value.includes("WACCA Plus")){
+    plusResults = results.filter((song) => {
+      if(song.sheets.length == 4){
+        let songArray = song.sheets;
+        return songArray[3].gameVersion == version.value;
+      }
+      return (
+        song.sheets.filter((sheet) => sheet.gameVersion != version.value)
+          .length < 3
+      );
+    });
+  }
+
+  // don't do plus songs twice
+  results = results.filter((song) => {
+    return plusResults.indexOf(song) === -1;
+  });
 
   results = results.filter((song) => {
     return compareCategories.includes(song.category);
@@ -902,10 +922,14 @@ const songsFiltered = computed(() => {
       .map((result) => result.obj);
   }
 
+  if(plusResults.length > 0){
+    results = results.concat(plusResults);
+  }
   // sort
   results = results.sort(activeSort.value.sortFunction);
 
   return results;
+
 });
 
 function clickSort(sortOption) {
