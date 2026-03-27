@@ -867,7 +867,7 @@ const songsFiltered = computed(() => {
   let nonPlusResults = [];
 
   // If not on WACCA Plus, deselect the plus category if it was selected before hiding the button
-  if (version.value < 400 && activeCategories.value.includes("WACCA Plus")){
+  if (version.value <= 300 && activeCategories.value.includes("WACCA Plus")){
     let categoryIndex = activeCategories.value.indexOf("WACCA Plus");
     activeCategories.value.splice(categoryIndex, 1);
   }
