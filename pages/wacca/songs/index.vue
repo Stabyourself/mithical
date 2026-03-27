@@ -886,7 +886,7 @@ const waccaVersionsFiltered = computed(() => {
 
 const songsFiltered = computed(() => {
   let results = [...getSongs(version.value)];
-  let sResults = [];
+  let baseResults = [];
   let lilyResults = [];
   let reverseResults = [];
   let plusResults = [];
@@ -920,7 +920,7 @@ const songsFiltered = computed(() => {
 
   // Check all the version categories and filter songs based on version
   if (activeCategories.value.includes("WACCA")){
-    sResults = results.filter((song) => {
+    baseResults = results.filter((song) => {
         return song.gameVersion <= 100;
     });
   }
@@ -961,7 +961,7 @@ const songsFiltered = computed(() => {
   }
 
   // combine all version filters
-  allResults = allResults.concat(sResults, lilyResults, reverseResults, plusResults);
+  allResults = allResults.concat(baseResults, lilyResults, reverseResults, plusResults);
 
   // check if we have a version type selected
   if ( activeCategories.value.some(i => versionArr.includes(i)) ) {
