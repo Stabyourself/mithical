@@ -14576,7 +14576,7 @@ const waccaSongs = [
   },
   {
     id: 4124,
-    title: "Rebellion of Phantom",
+    title: "The Rebellion of Phantom (feat. Valkyria)",
     titleEnglish: null,
     artist: "DJ Myosuke & Gram",
     dateAdded: 20260322,
@@ -14609,7 +14609,7 @@ const waccaSongs = [
     title: "sys_dei/cide",
     titleEnglish: null,
     artist: "Lusumi",
-    dateAdded: 20260329,
+    dateAdded: 20260322,
     dateRemoved: 0,
     gameVersion: 400,
     bpm: 220,

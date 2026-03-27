@@ -929,7 +929,6 @@ const songsFiltered = computed(() => {
   results = results.sort(activeSort.value.sortFunction);
 
   return results;
-
 });
 
 function clickSort(sortOption) {
