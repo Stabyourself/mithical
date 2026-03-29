@@ -798,10 +798,82 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
   });
 }
 
+
+filters.value.push({
+  type: "heading",
+  text: "Level",
+});
+
+let normalModel = ref([0, 15]);
+let hardModel = ref([0, 15]);
+let expertModel = ref([0, 15]);
+let infernoModel = ref([0, 15.7]);
+
+filters.value.push({
+  type: "range-slider",
+  text: "Normal",
+  min: 0,
+  max: 15,
+  model: normalModel,
+  step: 0.1,
+  filterFunction(song) {
+    let songArr = song.sheets;
+    return songArr[0].difficulty >= normalModel.value[0] && 
+    songArr[0].difficulty <= normalModel.value[1];
+  },
+});
+
+filters.value.push({
+  type: "range-slider",
+  text: "Hard",
+  min: 0,
+  max: 15,
+  model: hardModel,
+  step: 0.1,
+  filterFunction(song) {
+    let songArr = song.sheets;
+    return songArr[1].difficulty >= hardModel.value[0] && 
+    songArr[1].difficulty <= hardModel.value[1];
+  },
+});
+
+filters.value.push({
+  type: "range-slider",
+  text: "Expert",
+  min: 0,
+  max: 15,
+  model: expertModel,
+  step: 0.1,
+  filterFunction(song) {
+    let songArr = song.sheets;
+    return songArr[2].difficulty >= expertModel.value[0] && 
+    songArr[2].difficulty <= expertModel.value[1];
+  },
+});
+
+filters.value.push({
+  type: "range-slider",
+  text: "Inferno",
+  min: 0,
+  max: 15.1, // Simply do not fucking make anything harder than mobius
+  model: infernoModel,
+  step: 0.1,
+  filterFunction(song) {
+    let songArr = song.sheets;
+    let difficulty = 0;
+    if(songArr.length == 4){
+      difficulty = songArr[3].difficulty;
+    }
+    return difficulty >= infernoModel.value[0] && 
+    difficulty <= infernoModel.value[1];
+  },
+});
+
 filters.value.push({
   type: "heading",
   text: "Score",
 });
+
 
 // leaving this here in case it turns out I need to debounce it
 // function debounce(fn, wait) {
