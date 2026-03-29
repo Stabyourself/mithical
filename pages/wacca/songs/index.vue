@@ -938,13 +938,23 @@ filters.value.push({
 
 filters.value.push({
   type: "help",
-  help: ["Normal", "Hard", "Expert", "Inferno"],
+  help: ["All", "Normal", "Hard", "Expert", "Inferno"],
 });
 
 filters.value.push({
   type: "buttons",
   text: "Difficulty ", // There is a space here cause js is funny it needs to be a different name
   subItems: [
+	  {
+      text: "All",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        scoreName = "All";
+        return true;
+      },
+      active: true,
+    },
     {
       text: "Normal",
       icon: "mdi-circle-outline",
@@ -953,7 +963,6 @@ filters.value.push({
         scoreName = "Normal";
         return true;
       },
-      active: true
     },
     {
       text: "Hard",
@@ -998,6 +1007,13 @@ filters.value.push({
     }
 
     let score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
+
+    if (scoreName == "All") { 
+      for (let i = 0; i < waccaDifficulties.length; i++) {
+        score = profile.value.songs[song.id]?.scores[i]?.score ?? 0;
+        return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+      }
+    }
     if (scoreName == "Normal"){
       score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
       return score >= scoreModel.value[0] && score <= scoreModel.value[1];
