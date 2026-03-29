@@ -945,7 +945,6 @@ filters.value.push({
   type: "buttons",
   text: "Difficulty ", // There is a space here cause js is funny it needs to be a different name
   subItems: [
-
     {
       text: "Normal",
       icon: "mdi-circle-outline",
