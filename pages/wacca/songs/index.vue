@@ -1009,10 +1009,19 @@ filters.value.push({
     let score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
 
     if (scoreName == "All") { 
-      for (let i = 0; i < waccaDifficulties.length; i++) {
-        score = profile.value.songs[song.id]?.scores[i]?.score ?? 0;
-        return score >= scoreModel.value[0] && score <= scoreModel.value[1];
-      }
+      // Create score sets for all diffs used in All button
+      let scoreNormal = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
+      let scoreHard = profile.value.songs[song.id]?.scores[1]?.score ?? 0;
+      let scoreExpert = profile.value.songs[song.id]?.scores[2]?.score ?? 0;
+      let scoreIInferno = profile.value.songs[song.id]?.scores[3]?.score ?? 0;
+
+      // Return set of all scores individually 
+      return (
+        scoreNormal >= scoreModel.value[0] && score <= scoreModel.value[1] ||
+        scoreHard >= scoreModel.value[0] && score <= scoreModel.value[1] ||
+        scoreExpert >= scoreModel.value[0] && score <= scoreModel.value[1] ||
+        scoreIInferno >= scoreModel.value[0] && score <= scoreModel.value[1]
+      );
     }
     if (scoreName == "Normal"){
       score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
