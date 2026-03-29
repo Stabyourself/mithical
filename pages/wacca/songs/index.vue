@@ -983,7 +983,7 @@ filters.value.push({
       },
     },
     {
-      text: "scoreInferno",
+      text: "Inferno",
       icon: "mdi-circle-outline",
       iconActive: "mdi-circle",
       filterFunction() {
