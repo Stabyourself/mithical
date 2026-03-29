@@ -829,6 +829,13 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
         if (songArr.length == 4){
           difficulty = songArr[i].difficulty;
         }
+        // Allows for sorting on lvl 0 infs
+        // For some reason this allows forced inf sorting 
+        // coming down from max instead of only just going up from min
+        // Needs to be non null non int value to work
+        else if (model.value[1] < max){
+            difficulty = "WACCA";
+        }
         return (
           difficulty >= model.value[0] && 
           difficulty <= model.value[1]
