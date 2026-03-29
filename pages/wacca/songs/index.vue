@@ -1029,7 +1029,6 @@ filters.value.push({
       return score >= scoreModel.value[0] && score <= scoreModel.value[1];
     }
 
-    // Special Inferno case
     if(scoreName == "Inferno"){
       score = profile.value.songs[song.id]?.scores[3]?.score ?? 0;
       return score >= scoreModel.value[0] && score <= scoreModel.value[1];
