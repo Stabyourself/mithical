@@ -798,86 +798,233 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
   });
 }
 
+// Condense Level filter to one range bar
+
+let name = "";
+let model = ref([0 ,15.1]) // Do not make things harder than Mobius
 
 filters.value.push({
   type: "heading",
   text: "Level",
 });
 
-// Adds one level slider for all difficulties
+filters.value.push({
+  type: "help",
+  help: ["All", "Normal", "Hard", "Expert", "Inferno"],
+});
 
-// let model = ref([0 ,15.1])
-// filters.value.push({
-//   type: "range-slider",
-//   text: "Range",
-//   min: 0,
-//   max: 15.1,
-//   model: model,
-//   step: 0.1,
-//   filterFunction(song) {
-//     return (
-//       song.sheets.filter(
-//         (sheet) => sheet.difficulty >= model.value[0] &&
-//         sheet.difficulty <= model.value[1])
-//         .length > 0
-//     )
-//   }
-// });
-
-// Adds level sliders for each difficulty seperately
-
-for (let i = 0; i < waccaDifficulties.length; i++) {
-  let model = ref([0, 15]);
-  let max = 15;
-  let name = waccaDifficulties[i].name;
-
-  if (name == "Inferno") {
-    model = ref([0, 15.1]); // Don't make anything harder than mobius
-    max = 15.1;
-  }
-
-  filters.value.push({
-    type: "range-slider",
-    text: name,
-    min: 0,
-    max: max,
-    model: model,
-    step: 0.1,
-    filterFunction(song) {
-      let songArr = song.sheets;
-      // Special Inferno case
-      if(name == "Inferno"){
-        let difficulty = 0;
-        if (songArr.length == 4){
-          difficulty = songArr[i].difficulty;
-        }
-        // Allows for sorting on lvl 0 infs
-        // For some reason this allows forced inf sorting 
-        // coming down from max instead of only just going up from min
-        // Needs to be non null non int value to work
-        else if (model.value[1] < max){
-            difficulty = "WACCA";
-        }
-        return (
-          difficulty >= model.value[0] && 
-          difficulty <= model.value[1]
-        );
-      }
-      // Otherwise normally filter
-      return (
-        songArr[i].difficulty >= model.value[0] && 
-        songArr[i].difficulty <= model.value[1]
-      );
+filters.value.push({
+  type: "buttons",
+  text: "Difficulty",
+  subItems: [
+    {
+      text: "All",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        name = "All";
+        return true;
+      },
+      active: true,
     },
-  });
-}
+    {
+      text: "Normal",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        name = "Normal";
+        return true;
+      },
+    },
+    {
+      text: "Hard",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        name = "Hard";
+        return true;
+      },
+    },
+    {
+      text: "Expert",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        name = "Expert";
+        return true;
+      },
+    },
+    {
+      text: "Inferno",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        name = "Inferno";
+        return true;
+      },
+    },
+  ],
+});
+
+filters.value.push({
+  type: "range-slider",
+  text: "Range",
+  min: 0,
+  max: 15.1,
+  model: model,
+  step: 0.1,
+  filterFunction(song) {
+    let songArr = song.sheets;
+    if (name == "All") { 
+      return (
+        song.sheets.filter(
+          (sheet) => sheet.difficulty >= model.value[0] &&
+          sheet.difficulty <= model.value[1])
+          .length > 0
+      )
+    }
+
+    if (name == "Normal"){
+      return (
+        songArr[0].difficulty >= model.value[0] && 
+        songArr[0].difficulty <= model.value[1]
+      );
+    }
+
+    if (name == "Hard"){
+      return (
+        songArr[1].difficulty >= model.value[0] && 
+        songArr[1].difficulty <= model.value[1]
+      );
+    }
+
+    if (name == "Expert"){
+      return (
+        songArr[2].difficulty >= model.value[0] && 
+        songArr[2].difficulty <= model.value[1]
+      );
+    }
+
+    // Special Inferno case
+    if(name == "Inferno"){
+      let difficulty = 0;
+      if (songArr.length == 4){
+        difficulty = songArr[3].difficulty;
+      }
+      // Allows for sorting on lvl 0 infs
+      // For some reason this allows forced inf sorting 
+      // coming down from max instead of only just going up from min
+      // Needs to be non null non int value to work
+      else if (model.value[1] < 15.1){
+          difficulty = "WACCA";
+      }
+      return (
+        difficulty >= model.value[0] && 
+        difficulty <= model.value[1]
+      );
+    }
+  }
+});
+
+// Condense score filter to one range bar
+
+let scoreName = "";
+let scoreModel = ref([0, 1000000]);
 
 filters.value.push({
   type: "heading",
   text: "Score",
 });
 
+filters.value.push({
+  type: "help",
+  help: ["Normal", "Hard", "Expert", "Inferno"],
+});
+
+filters.value.push({
+  type: "buttons",
+  text: "Difficulty ", // There is a space here cause js is funny it needs to be a different name
+  subItems: [
+
+    {
+      text: "Normal",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        scoreName = "Normal";
+        return true;
+      },
+      active: true
+    },
+    {
+      text: "Hard",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        scoreName = "Hard";
+        return true;
+      },
+    },
+    {
+      text: "Expert",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        scoreName = "Expert";
+        return true;
+      },
+    },
+    {
+      text: "scoreInferno",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        scoreName = "Inferno";
+        return true;
+      },
+    },
+  ],
+});
+
+filters.value.push({
+  type: "range-slider",
+  text: "Range",
+  min: 0,
+  max: 1000000,
+  model: scoreModel,
+  step: 10000,
+  filterFunction(song) {
+    if (!profile.value) {
+      return true;
+    }
+
+    let score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
+    if (scoreName == "Normal"){
+      score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
+      return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+    }
+
+    if (scoreName == "Hard"){
+      score = profile.value.songs[song.id]?.scores[1]?.score ?? 0;
+      return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+    }
+
+    if (scoreName == "Expert"){
+      score = profile.value.songs[song.id]?.scores[2]?.score ?? 0;
+      return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+    }
+
+    // Special Inferno case
+    if(scoreName == "Inferno"){
+      score = profile.value.songs[song.id]?.scores[3]?.score ?? 0;
+      return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+    }
+  }
+});
+
+
 // leaving this here in case it turns out I need to debounce it
+
 // function debounce(fn, wait) {
 //   let timer;
 //   return function (...args) {
@@ -891,36 +1038,88 @@ filters.value.push({
 //   };
 // }
 
-for (let i = 0; i < waccaDifficulties.length; i++) {
-  let model = ref([0, 1000000]);
-  // let modelDebounced = ref([0, 1000000]);
 
-  // let debounced = debounce(() => {
-  //   modelDebounced.value = model.value;
-  // }, 0);
+// Adds level sliders for each difficulty seperately if you ever want that
 
-  // watch(model, () => {
-  //   debounced();
-  // });
+// let name = thing;
+// for (let i = 0; i < waccaDifficulties.length; i++) {
+//   let model = ref([0, 15]);
+//   let max = 15;
+//   let name = waccaDifficulties[i].name;
 
-  filters.value.push({
-    type: "range-slider",
-    text: waccaDifficulties[i].name,
-    min: 0,
-    max: 1000000,
-    model: model,
-    step: 10000,
-    filterFunction(song) {
-      if (!profile.value) {
-        return true;
-      }
+//   if (name == "Inferno") {
+//     model = ref([0, 15.1]); // Don't make anything harder than mobius
+//     max = 15.1;
+//   }
 
-      let score = profile.value.songs[song.id]?.scores[i]?.score ?? 0;
+//   filters.value.push({
+//     type: "range-slider",
+//     text: name,
+//     min: 0,
+//     max: max,
+//     model: model,
+//     step: 0.1,
+//     filterFunction(song) {
+//       let songArr = song.sheets;
+//       // Special Inferno case
+//       if(name == "Inferno"){
+//         let difficulty = 0;
+//         if (songArr.length == 4){
+//           difficulty = songArr[i].difficulty;
+//         }
+//         // Allows for sorting on lvl 0 infs
+//         // For some reason this allows forced inf sorting 
+//         // coming down from max instead of only just going up from min
+//         // Needs to be non null non int value to work
+//         else if (model.value[1] < max){
+//             difficulty = "WACCA";
+//         }
+//         return (
+//           difficulty >= model.value[0] && 
+//           difficulty <= model.value[1]
+//         );
+//       }
+//       // Otherwise normally filter
+//       return (
+//         songArr[i].difficulty >= model.value[0] && 
+//         songArr[i].difficulty <= model.value[1]
+//       );
+//     },
+//   });
+// }
 
-      return score >= model.value[0] && score <= model.value[1];
-    },
-  });
-}
+// Adds score sliders for each difficulty seperately if you ever want that
+
+// for (let i = 0; i < waccaDifficulties.length; i++) {
+//   let model = ref([0, 1000000]);
+//   // let modelDebounced = ref([0, 1000000]);
+
+//   // let debounced = debounce(() => {
+//   //   modelDebounced.value = model.value;
+//   // }, 0);
+
+//   // watch(model, () => {
+//   //   debounced();
+//   // });
+
+//   filters.value.push({
+//     type: "range-slider",
+//     text: waccaDifficulties[i].name,
+//     min: 0,
+//     max: 1000000,
+//     model: model,
+//     step: 10000,
+//     filterFunction(song) {
+//       if (!profile.value) {
+//         return true;
+//       }
+
+//       let score = profile.value.songs[song.id]?.scores[i]?.score ?? 0;
+
+//       return score >= model.value[0] && score <= model.value[1];
+//     },
+//   });
+// }
 
 const perPage = 50;
 const page = ref(1);
