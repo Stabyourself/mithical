@@ -804,6 +804,28 @@ filters.value.push({
   text: "Level",
 });
 
+// Adds one level slider for all difficulties
+
+// let model = ref([0 ,15.1])
+// filters.value.push({
+//   type: "range-slider",
+//   text: "Range",
+//   min: 0,
+//   max: 15.1,
+//   model: model,
+//   step: 0.1,
+//   filterFunction(song) {
+//     return (
+//       song.sheets.filter(
+//         (sheet) => sheet.difficulty >= model.value[0] &&
+//         sheet.difficulty <= model.value[1])
+//         .length > 0
+//     )
+//   }
+// });
+
+// Adds level sliders for each difficulty seperately
+
 for (let i = 0; i < waccaDifficulties.length; i++) {
   let model = ref([0, 15]);
   let max = 15;
