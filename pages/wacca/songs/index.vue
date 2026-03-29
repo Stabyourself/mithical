@@ -807,7 +807,7 @@ filters.value.push({
 let normalModel = ref([0, 15]);
 let hardModel = ref([0, 15]);
 let expertModel = ref([0, 15]);
-let infernoModel = ref([0, 15.7]);
+let infernoModel = ref([0, 15.1]);
 
 filters.value.push({
   type: "range-slider",
