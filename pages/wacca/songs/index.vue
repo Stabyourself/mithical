@@ -874,7 +874,6 @@ filters.value.push({
   text: "Score",
 });
 
-
 // leaving this here in case it turns out I need to debounce it
 // function debounce(fn, wait) {
 //   let timer;
