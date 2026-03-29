@@ -800,8 +800,8 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
 
 // Condense Level filter to one range bar
 
-let name = "";
-let model = ref([0 ,15.1]) // Do not make things harder than Mobius
+let levelName = "";
+let levelModel = ref([0 ,15.1]) // Do not make things harder than Mobius
 
 filters.value.push({
   type: "heading",
@@ -822,7 +822,7 @@ filters.value.push({
       icon: "mdi-circle-outline",
       iconActive: "mdi-circle",
       filterFunction() {
-        name = "All";
+        levelName = "All";
         return true;
       },
       active: true,
@@ -832,7 +832,7 @@ filters.value.push({
       icon: "mdi-circle-outline",
       iconActive: "mdi-circle",
       filterFunction() {
-        name = "Normal";
+        levelName = "Normal";
         return true;
       },
     },
@@ -841,7 +841,7 @@ filters.value.push({
       icon: "mdi-circle-outline",
       iconActive: "mdi-circle",
       filterFunction() {
-        name = "Hard";
+        levelName = "Hard";
         return true;
       },
     },
@@ -850,7 +850,7 @@ filters.value.push({
       icon: "mdi-circle-outline",
       iconActive: "mdi-circle",
       filterFunction() {
-        name = "Expert";
+        levelName = "Expert";
         return true;
       },
     },
@@ -859,7 +859,7 @@ filters.value.push({
       icon: "mdi-circle-outline",
       iconActive: "mdi-circle",
       filterFunction() {
-        name = "Inferno";
+        levelName = "Inferno";
         return true;
       },
     },
@@ -871,42 +871,42 @@ filters.value.push({
   text: "Range",
   min: 0,
   max: 15.1,
-  model: model,
+  model: levelModel,
   step: 0.1,
   filterFunction(song) {
     let songArr = song.sheets;
-    if (name == "All") { 
+    if (levelName == "All") { 
       return (
         song.sheets.filter(
-          (sheet) => sheet.difficulty >= model.value[0] &&
-          sheet.difficulty <= model.value[1])
+          (sheet) => sheet.difficulty >= levelModel.value[0] &&
+          sheet.difficulty <= levelModel.value[1])
           .length > 0
       )
     }
 
-    if (name == "Normal"){
+    if (levelName == "Normal"){
       return (
-        songArr[0].difficulty >= model.value[0] && 
-        songArr[0].difficulty <= model.value[1]
+        songArr[0].difficulty >= levelModel.value[0] && 
+        songArr[0].difficulty <= levelModel.value[1]
       );
     }
 
-    if (name == "Hard"){
+    if (levelName == "Hard"){
       return (
-        songArr[1].difficulty >= model.value[0] && 
-        songArr[1].difficulty <= model.value[1]
+        songArr[1].difficulty >= levelModel.value[0] && 
+        songArr[1].difficulty <= levelModel.value[1]
       );
     }
 
-    if (name == "Expert"){
+    if (levelName == "Expert"){
       return (
-        songArr[2].difficulty >= model.value[0] && 
-        songArr[2].difficulty <= model.value[1]
+        songArr[2].difficulty >= levelModel.value[0] && 
+        songArr[2].difficulty <= levelModel.value[1]
       );
     }
 
     // Special Inferno case
-    if(name == "Inferno"){
+    if(levelName == "Inferno"){
       let difficulty = 0;
       if (songArr.length == 4){
         difficulty = songArr[3].difficulty;
@@ -915,12 +915,12 @@ filters.value.push({
       // For some reason this allows forced inf sorting 
       // coming down from max instead of only just going up from min
       // Needs to be non null non int value to work
-      else if (model.value[1] < 15.1){
+      else if (levelModel.value[1] < 15.1){
           difficulty = "WACCA";
       }
       return (
-        difficulty >= model.value[0] && 
-        difficulty <= model.value[1]
+        difficulty >= levelModel.value[0] && 
+        difficulty <= levelModel.value[1]
       );
     }
   }
@@ -938,14 +938,23 @@ filters.value.push({
 
 filters.value.push({
   type: "help",
-  help: ["Normal", "Hard", "Expert", "Inferno"],
+  help: ["All", "Normal", "Hard", "Expert", "Inferno"],
 });
 
 filters.value.push({
   type: "buttons",
   text: "Difficulty ", // There is a space here cause js is funny it needs to be a different name
   subItems: [
-
+	  {
+      text: "All",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        scoreName = "All";
+        return true;
+      },
+      active: true,
+    },
     {
       text: "Normal",
       icon: "mdi-circle-outline",
@@ -954,7 +963,6 @@ filters.value.push({
         scoreName = "Normal";
         return true;
       },
-      active: true
     },
     {
       text: "Hard",
@@ -999,6 +1007,14 @@ filters.value.push({
     }
 
     let score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
+
+    if (scoreName == "All") { 
+      for (let i = 0; i < waccaDifficulties.length; i++) {
+        score = profile.value.songs[song.id]?.scores[i]?.score ?? 0;
+        return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+      }
+    }
+
     if (scoreName == "Normal"){
       score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
       return score >= scoreModel.value[0] && score <= scoreModel.value[1];
