@@ -1013,14 +1013,14 @@ filters.value.push({
       let scoreNormal = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
       let scoreHard = profile.value.songs[song.id]?.scores[1]?.score ?? 0;
       let scoreExpert = profile.value.songs[song.id]?.scores[2]?.score ?? 0;
-      let scoreIInferno = profile.value.songs[song.id]?.scores[3]?.score ?? 0;
+      let scoreInferno = profile.value.songs[song.id]?.scores[3]?.score ?? 0;
 
       // Return set of all scores individually 
       return (
-        scoreNormal >= scoreModel.value[0] && score <= scoreModel.value[1] ||
-        scoreHard >= scoreModel.value[0] && score <= scoreModel.value[1] ||
-        scoreExpert >= scoreModel.value[0] && score <= scoreModel.value[1] ||
-        scoreIInferno >= scoreModel.value[0] && score <= scoreModel.value[1]
+        scoreNormal >= scoreModel.value[0] && scoreNormal <= scoreModel.value[1] ||
+        scoreHard >= scoreModel.value[0] && scoreHard <= scoreModel.value[1] ||
+        scoreExpert >= scoreModel.value[0] && scoreExpert <= scoreModel.value[1] ||
+        scoreInferno >= scoreModel.value[0] && scoreInferno <= scoreModel.value[1]
       );
     }
     if (scoreName == "Normal"){
