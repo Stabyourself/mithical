@@ -800,7 +800,6 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
 
 // Condense Level filter to one range bar
 let allLevelActive = true;
-let allScoreActive = true;
 let levelName = "";
 let levelModel = ref([0 ,15.1]) // Do not make things harder than Mobius
 
@@ -823,7 +822,6 @@ filters.value.push({
       icon: "mdi-checkbox-blank-outline",
       iconActive: "mdi-checkbox-marked",
       filterFunction() {
-        levelName = "All";
         return true;
       },
       active: true
@@ -935,6 +933,7 @@ filters.value.push({
 // Condense score filter to one range bar
 
 let scoreName = "";
+let allScoreActive = true;
 let scoreModel = ref([0, 1000000]);
 
 filters.value.push({
@@ -956,7 +955,6 @@ filters.value.push({
       icon: "mdi-checkbox-blank-outline",
       iconActive: "mdi-checkbox-marked",
       filterFunction() {
-        scoreName = "All";
         return true;
       },
       active: true
@@ -1358,7 +1356,7 @@ function clickFilter(coFilter, coFilterSub) {
   if(filter.text == "Difficulty " || filter.text == "Difficulty"){
     if (filterSub.active == true){
       filterSub.active = false;
-      // If All is selected and something is deselected, turn off all
+      // If All is selected and something is deselected, turn off All box
       filter.subItems[0].active = false;
     }
     else{
@@ -1385,13 +1383,10 @@ function clickFilter(coFilter, coFilterSub) {
   }
 
   // Multi deselect support for score/level
-  if
-  (
+  if (
     (filter.subItems.every(value => (value.active == true) || 
     (!value.text == "All" || value.text == "All")))
   ) {
-    if(filterSub.text == "All"){
-    }
     if (filter.text == "Difficulty "){
       allScoreActive = true;
     }
