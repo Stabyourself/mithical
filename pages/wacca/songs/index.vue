@@ -799,8 +799,8 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
 }
 
 // Condense Level filter to one range bar
-let allLevelActive = false;
-let allScoreActive = false;
+let allLevelActive = true;
+let allScoreActive = true;
 let levelName = "";
 let levelModel = ref([0 ,15.1]) // Do not make things harder than Mobius
 
@@ -811,13 +811,23 @@ filters.value.push({
 
 filters.value.push({
   type: "help",
-  help: ["Normal", "Hard", "Expert", "Inferno"],
+  help: ["All", "Normal", "Hard", "Expert", "Inferno"],
 });
 
 filters.value.push({
   type: "buttons",
   text: "Difficulty",
   subItems: [
+    {
+      text: "All",
+      icon: "mdi-circle-outline",
+      iconActive: "mdi-circle",
+      filterFunction() {
+        levelName = "All";
+        return true;
+      },
+      active: true
+    },
     {
       text: "Normal",
       icon: "mdi-circle-outline",
@@ -919,8 +929,6 @@ filters.value.push({
         );
       }
     }
-
-
   }
 });
 
@@ -948,7 +956,7 @@ filters.value.push({
       icon: "mdi-circle-outline",
       iconActive: "mdi-circle",
       filterFunction() {
-        scoreName = "Normal";
+        scoreName = "All";
         return true;
       },
       active: true
@@ -1345,12 +1353,28 @@ function clickFilter(coFilter, coFilterSub) {
     (filterSub) => filterSub.text == coFilterSub.text
   );
 
+  // Multi select support for level and score
+
   if(filter.text == "Difficulty " || filter.text == "Difficulty"){
     if (filterSub.active == true){
       filterSub.active = false;
+      // If All is selected and something is deselected, turn off all
+      filter.subItems[0].active = false;
     }
     else{
       filterSub.active = true;
+    }
+    if (filterSub.text == "All"){
+      if(filterSub.active == false){
+        filter.subItems.forEach((filterSub) => {
+          filterSub.active = false;
+        });
+      }
+      else {
+        filter.subItems.forEach((filterSub) => {
+          filterSub.active = true;
+        });
+      }
     }
   }
   else {
@@ -1360,11 +1384,18 @@ function clickFilter(coFilter, coFilterSub) {
     filterSub.active = true;
   }
 
-  if((filter.subItems.every(value => value.active == true))) {
+  // Multi deselect support for score/level
+  if
+  (
+    (filter.subItems.every(value => (value.active == true) || 
+    (!value.text == "All" || value.text == "All")))
+  ) {
+    if(filterSub.text == "All"){
+    }
     if (filter.text == "Difficulty "){
       allScoreActive = true;
     }
-    if (filter.text == "Difficulty"){
+    else if (filter.text == "Difficulty"){
       allLevelActive = true;
     }
   }
@@ -1372,7 +1403,7 @@ function clickFilter(coFilter, coFilterSub) {
     if (filter.text == "Difficulty "){
       allScoreActive = false;
     }
-    if (filter.text == "Difficulty"){
+    else if (filter.text == "Difficulty"){
       allLevelActive = false;
     }
   }
