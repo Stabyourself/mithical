@@ -5950,6 +5950,18 @@ const waccaTitles = [
     "name": "Fatal Error!",
     "acquisition": "???",
     "acquisitionEnglish": "???"
+  },
+  {
+    "id": 404110,
+    "name": "Oppan Gangnam Style!",
+    "acquisition": "???",
+    "acquisitionEnglish": "???"
+  },
+  {
+    "id": 404111,
+    "name": "Got it memorized?",
+    "acquisition": "???",
+    "acquisitionEnglish": "???"
   }
 ]
 
