@@ -1376,6 +1376,10 @@ function clickFilter(coFilter, coFilterSub) {
       filter.subItems[0].active = false;
     } else {
       filterSub.active = true;
+      // if all subitems except All are selected, turn on All box
+      if (filter.subItems.slice(1).every((value) => value.active == true)) {
+        filter.subItems[0].active = true;
+      }
     }
     if (filterSub.text == "All") {
       if (filterSub.active == false) {
