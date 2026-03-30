@@ -242,7 +242,8 @@
   overflow: auto;
   border-radius: inherit;
 
-  box-shadow: 0px 5px 5px -3px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)),
+  box-shadow:
+    0px 5px 5px -3px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, 0.2)),
     0px 8px 10px 1px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)),
     0px 3px 14px 2px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
 }
@@ -801,7 +802,7 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
 // Condense Level filter to one range bar
 let allLevelActive = true;
 let levelName = "";
-let levelModel = ref([0, 15.1]) // Do not make things harder than Mobius
+let levelModel = ref([0, 15.1]); // Do not make things harder than Mobius
 
 filters.value.push({
   type: "heading",
@@ -824,7 +825,7 @@ filters.value.push({
       filterFunction() {
         return true;
       },
-      active: true
+      active: true,
     },
     {
       text: "Normal",
@@ -834,7 +835,7 @@ filters.value.push({
         levelName = "Normal";
         return true;
       },
-      active: true
+      active: true,
     },
     {
       text: "Hard",
@@ -844,7 +845,7 @@ filters.value.push({
         levelName = "Hard";
         return true;
       },
-      active: true
+      active: true,
     },
     {
       text: "Expert",
@@ -854,7 +855,7 @@ filters.value.push({
         levelName = "Expert";
         return true;
       },
-      active: true
+      active: true,
     },
     {
       text: "Inferno",
@@ -864,7 +865,7 @@ filters.value.push({
         levelName = "Inferno";
         return true;
       },
-      active: true
+      active: true,
     },
   ],
 });
@@ -878,56 +879,55 @@ filters.value.push({
   step: 0.1,
   filterFunction(song) {
     let songArr = song.sheets;
-    if (allLevelActive == true) { 
+    if (allLevelActive == true) {
       return (
         song.sheets.filter(
-          (sheet) => sheet.difficulty >= levelModel.value[0] &&
-          sheet.difficulty <= levelModel.value[1])
-          .length > 0
-      )
-    }
-    else {
-      if (levelName == "Normal"){
+          (sheet) =>
+            sheet.difficulty >= levelModel.value[0] &&
+            sheet.difficulty <= levelModel.value[1],
+        ).length > 0
+      );
+    } else {
+      if (levelName == "Normal") {
         return (
-          songArr[0].difficulty >= levelModel.value[0] && 
+          songArr[0].difficulty >= levelModel.value[0] &&
           songArr[0].difficulty <= levelModel.value[1]
         );
       }
 
-      if (levelName == "Hard"){
+      if (levelName == "Hard") {
         return (
-          songArr[1].difficulty >= levelModel.value[0] && 
+          songArr[1].difficulty >= levelModel.value[0] &&
           songArr[1].difficulty <= levelModel.value[1]
         );
       }
 
-      if (levelName == "Expert"){
+      if (levelName == "Expert") {
         return (
-          songArr[2].difficulty >= levelModel.value[0] && 
+          songArr[2].difficulty >= levelModel.value[0] &&
           songArr[2].difficulty <= levelModel.value[1]
         );
       }
 
       // Special Inferno case
-      if(levelName == "Inferno"){
+      if (levelName == "Inferno") {
         let difficulty = 0;
-        if (songArr.length == 4){
+        if (songArr.length == 4) {
           difficulty = songArr[3].difficulty;
         }
         // Allows for sorting on lvl 0 infs
-        // For some reason this allows forced inf sorting 
+        // For some reason this allows forced inf sorting
         // coming down from max instead of only just going up from min
         // Needs to be non null non int value to work
-        else if (levelModel.value[1] < 15.1){
-            difficulty = "WACCA";
+        else if (levelModel.value[1] < 15.1) {
+          difficulty = "WACCA";
         }
         return (
-          difficulty >= levelModel.value[0] && 
-          difficulty <= levelModel.value[1]
+          difficulty >= levelModel.value[0] && difficulty <= levelModel.value[1]
         );
       }
     }
-  }
+  },
 });
 
 // Condense score filter to one range bar
@@ -957,7 +957,7 @@ filters.value.push({
       filterFunction() {
         return true;
       },
-      active: true
+      active: true,
     },
     {
       text: "Normal",
@@ -967,7 +967,7 @@ filters.value.push({
         scoreName = "Normal";
         return true;
       },
-      active: true
+      active: true,
     },
     {
       text: "Hard",
@@ -977,7 +977,7 @@ filters.value.push({
         scoreName = "Hard";
         return true;
       },
-      active: true
+      active: true,
     },
     {
       text: "Expert",
@@ -987,7 +987,7 @@ filters.value.push({
         scoreName = "Expert";
         return true;
       },
-      active: true
+      active: true,
     },
     {
       text: "Inferno",
@@ -997,7 +997,7 @@ filters.value.push({
         scoreName = "Inferno";
         return true;
       },
-      active: true
+      active: true,
     },
   ],
 });
@@ -1017,45 +1017,47 @@ filters.value.push({
     //Default
     let score = 0;
 
-    if (allScoreActive == true) { 
+    if (allScoreActive == true) {
       // Create score sets for all diffs used in All button
       let scoreNormal = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
       let scoreHard = profile.value.songs[song.id]?.scores[1]?.score ?? 0;
       let scoreExpert = profile.value.songs[song.id]?.scores[2]?.score ?? 0;
       let scoreInferno = profile.value.songs[song.id]?.scores[3]?.score ?? 0;
 
-      // Return set of all scores individually 
+      // Return set of all scores individually
       return (
-        scoreNormal >= scoreModel.value[0] && scoreNormal <= scoreModel.value[1] ||
-        scoreHard >= scoreModel.value[0] && scoreHard <= scoreModel.value[1] ||
-        scoreExpert >= scoreModel.value[0] && scoreExpert <= scoreModel.value[1] ||
-        scoreInferno >= scoreModel.value[0] && scoreInferno <= scoreModel.value[1]
+        (scoreNormal >= scoreModel.value[0] &&
+          scoreNormal <= scoreModel.value[1]) ||
+        (scoreHard >= scoreModel.value[0] &&
+          scoreHard <= scoreModel.value[1]) ||
+        (scoreExpert >= scoreModel.value[0] &&
+          scoreExpert <= scoreModel.value[1]) ||
+        (scoreInferno >= scoreModel.value[0] &&
+          scoreInferno <= scoreModel.value[1])
       );
-    }
-    else{
-      if (scoreName == "Normal"){
+    } else {
+      if (scoreName == "Normal") {
         score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
         return score >= scoreModel.value[0] && score <= scoreModel.value[1];
       }
 
-      if (scoreName == "Hard"){
+      if (scoreName == "Hard") {
         score = profile.value.songs[song.id]?.scores[1]?.score ?? 0;
         return score >= scoreModel.value[0] && score <= scoreModel.value[1];
       }
 
-      if (scoreName == "Expert"){
+      if (scoreName == "Expert") {
         score = profile.value.songs[song.id]?.scores[2]?.score ?? 0;
         return score >= scoreModel.value[0] && score <= scoreModel.value[1];
       }
 
-      if(scoreName == "Inferno"){
+      if (scoreName == "Inferno") {
         score = profile.value.songs[song.id]?.scores[3]?.score ?? 0;
         return score >= scoreModel.value[0] && score <= scoreModel.value[1];
       }
     }
-  }
+  },
 });
-
 
 // leaving this here in case it turns out I need to debounce it
 
@@ -1071,7 +1073,6 @@ filters.value.push({
 //     }, wait);
 //   };
 // }
-
 
 // Adds level sliders for each difficulty seperately if you ever want that
 
@@ -1102,20 +1103,20 @@ filters.value.push({
 //           difficulty = songArr[i].difficulty;
 //         }
 //         // Allows for sorting on lvl 0 infs
-//         // For some reason this allows forced inf sorting 
+//         // For some reason this allows forced inf sorting
 //         // coming down from max instead of only just going up from min
 //         // Needs to be non null non int value to work
 //         else if (model.value[1] < max){
 //             difficulty = "WACCA";
 //         }
 //         return (
-//           difficulty >= model.value[0] && 
+//           difficulty >= model.value[0] &&
 //           difficulty <= model.value[1]
 //         );
 //       }
 //       // Otherwise normally filter
 //       return (
-//         songArr[i].difficulty >= model.value[0] && 
+//         songArr[i].difficulty >= model.value[0] &&
 //         songArr[i].difficulty <= model.value[1]
 //       );
 //     },
@@ -1165,7 +1166,7 @@ const activeCategories = ref([]);
 function toggleCategory(category) {
   if (activeCategories.value.includes(category.ja)) {
     activeCategories.value = activeCategories.value.filter(
-      (c) => c != category.ja
+      (c) => c != category.ja,
     );
   } else {
     activeCategories.value.push(category.ja);
@@ -1180,10 +1181,10 @@ const waccaCategoriesFiltered = computed(() => {
 
 const waccaVersionsFiltered = computed(() => {
   // hides Plus category button per version
-  if (version.value <= 300){
+  if (version.value <= 300) {
     waccaCategories[11].hidden = true;
   }
-  if (version.value > 300){
+  if (version.value > 300) {
     waccaCategories[11].hidden = false;
   }
   return waccaCategories.filter((category) => {
@@ -1199,14 +1200,22 @@ const songsFiltered = computed(() => {
   let plusResults = [];
   let allResults = [];
   const versionArr = ["WACCA", "WACCA Lily", "WACCA Reverse", "WACCA Plus"];
-  const categoryArr = ["アニメ／ＰＯＰ", "ボカロ", "東方アレンジ", "2.5次元", "バラエティ", "オリジナル", "TANO*C"];
+  const categoryArr = [
+    "アニメ／ＰＯＰ",
+    "ボカロ",
+    "東方アレンジ",
+    "2.5次元",
+    "バラエティ",
+    "オリジナル",
+    "TANO*C",
+  ];
 
   // If not on WACCA Plus, deselect the plus category if it was selected before hiding the button
-  if (version.value <= 300 && activeCategories.value.includes("WACCA Plus")){
+  if (version.value <= 300 && activeCategories.value.includes("WACCA Plus")) {
     let categoryIndex = activeCategories.value.indexOf("WACCA Plus");
     activeCategories.value.splice(categoryIndex, 1);
   }
-  
+
   // filter out songs based on selected version (reverse or plus)
   results = results.filter((song) => {
     return song.gameVersion <= version.value;
@@ -1226,34 +1235,37 @@ const songsFiltered = computed(() => {
   }
 
   // Check all the version categories and filter songs based on version
-  if (activeCategories.value.includes("WACCA")){
+  if (activeCategories.value.includes("WACCA")) {
     baseResults = results.filter((song) => {
-        return song.gameVersion < 200;
+      return song.gameVersion < 200;
     });
   }
 
-  if (activeCategories.value.includes("WACCA Lily")){
+  if (activeCategories.value.includes("WACCA Lily")) {
     lilyResults = results.filter((song) => {
-        return song.gameVersion >= 200 && song.gameVersion < 300;
+      return song.gameVersion >= 200 && song.gameVersion < 300;
     });
   }
 
-  if (activeCategories.value.includes("WACCA Reverse")){
+  if (activeCategories.value.includes("WACCA Reverse")) {
     reverseResults = results.filter((song) => {
-        return song.gameVersion >= 300 && song.gameVersion < 400;
+      return song.gameVersion >= 300 && song.gameVersion < 400;
     });
   }
-  
+
   // Plus needs special handling because old songs have new infs
-  if (activeCategories.value.includes("WACCA Plus")){
+  if (activeCategories.value.includes("WACCA Plus")) {
     plusResults = results.filter((song) => {
       // If Plus is only version selected, do new inf logic
       if (
-        compareCategories.length == 1
-        || (compareCategories.length > 1 && !compareCategories.some(i => ["WACCA", "WACCA Lily", "WACCA Reverse"].includes(i)))
+        compareCategories.length == 1 ||
+        (compareCategories.length > 1 &&
+          !compareCategories.some((i) =>
+            ["WACCA", "WACCA Lily", "WACCA Reverse"].includes(i),
+          ))
       ) {
         // Get plus songs with infs
-        if(song.sheets.length == 4){
+        if (song.sheets.length == 4) {
           let songArray = song.sheets;
           return songArray[3].gameVersion == version.value;
         }
@@ -1267,21 +1279,26 @@ const songsFiltered = computed(() => {
   }
 
   // combine all version filters
-  allResults = allResults.concat(baseResults, lilyResults, reverseResults, plusResults);
+  allResults = allResults.concat(
+    baseResults,
+    lilyResults,
+    reverseResults,
+    plusResults,
+  );
 
   // check if we have a version type selected
-  if ( activeCategories.value.some(i => versionArr.includes(i)) ) {
+  if (activeCategories.value.some((i) => versionArr.includes(i))) {
     // if no category selected, just return the big result of only versions
-    if (!activeCategories.value.some(i => categoryArr.includes(i))) {
+    if (!activeCategories.value.some((i) => categoryArr.includes(i))) {
       results = allResults;
     }
     // otherwise include results from categories
-    else{
+    else {
       allResults = allResults.filter((song) => {
         return compareCategories.includes(song.category);
       });
       results = allResults;
-    }  
+    }
   }
   // Default check categories for set of all songs
   else {
@@ -1289,7 +1306,6 @@ const songsFiltered = computed(() => {
       return compareCategories.includes(song.category);
     });
   }
-
 
   // filters on whatever we returned
   filters.value.forEach((filter) => {
@@ -1348,34 +1364,31 @@ function toggleSortDirection() {
 function clickFilter(coFilter, coFilterSub) {
   let filter = filters.value.find((filter) => filter.text == coFilter.text);
   let filterSub = filter.subItems.find(
-    (filterSub) => filterSub.text == coFilterSub.text
+    (filterSub) => filterSub.text == coFilterSub.text,
   );
 
   // Multi select support for level and score
 
-  if(filter.text == "Difficulty " || filter.text == "Difficulty"){
-    if (filterSub.active == true){
+  if (filter.text == "Difficulty " || filter.text == "Difficulty") {
+    if (filterSub.active == true) {
       filterSub.active = false;
       // If All is selected and something is deselected, turn off All box
       filter.subItems[0].active = false;
-    }
-    else{
+    } else {
       filterSub.active = true;
     }
-    if (filterSub.text == "All"){
-      if(filterSub.active == false){
+    if (filterSub.text == "All") {
+      if (filterSub.active == false) {
         filter.subItems.forEach((filterSub) => {
           filterSub.active = false;
         });
-      }
-      else {
+      } else {
         filter.subItems.forEach((filterSub) => {
           filterSub.active = true;
         });
       }
     }
-  }
-  else {
+  } else {
     filter.subItems.forEach((filterSub) => {
       filterSub.active = false;
     });
@@ -1384,21 +1397,20 @@ function clickFilter(coFilter, coFilterSub) {
 
   // Multi deselect support for score/level
   if (
-    (filter.subItems.every(value => (value.active == true) || 
-    (!value.text == "All" || value.text == "All")))
+    filter.subItems.every(
+      (value) =>
+        value.active == true || !value.text == "All" || value.text == "All",
+    )
   ) {
-    if (filter.text == "Difficulty "){
+    if (filter.text == "Difficulty ") {
       allScoreActive = true;
-    }
-    else if (filter.text == "Difficulty"){
+    } else if (filter.text == "Difficulty") {
       allLevelActive = true;
     }
-  }
-  else {
-    if (filter.text == "Difficulty "){
+  } else {
+    if (filter.text == "Difficulty ") {
       allScoreActive = false;
-    }
-    else if (filter.text == "Difficulty"){
+    } else if (filter.text == "Difficulty") {
       allLevelActive = false;
     }
   }
@@ -1407,7 +1419,7 @@ function clickFilter(coFilter, coFilterSub) {
 const songsPaginated = computed(() => {
   return songsFiltered.value.slice(
     (page.value - 1) * perPage,
-    page.value * perPage
+    page.value * perPage,
   );
 });
 
