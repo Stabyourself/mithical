@@ -1006,7 +1006,8 @@ filters.value.push({
       return true;
     }
 
-    let score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
+    //Default
+    let score = 0;
 
     if (scoreName == "All") { 
       // Create score sets for all diffs used in All button
