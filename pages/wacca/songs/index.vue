@@ -820,8 +820,8 @@ filters.value.push({
   subItems: [
     {
       text: "All",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         levelName = "All";
         return true;
@@ -830,8 +830,8 @@ filters.value.push({
     },
     {
       text: "Normal",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         levelName = "Normal";
         return true;
@@ -840,8 +840,8 @@ filters.value.push({
     },
     {
       text: "Hard",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         levelName = "Hard";
         return true;
@@ -850,8 +850,8 @@ filters.value.push({
     },
     {
       text: "Expert",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         levelName = "Expert";
         return true;
@@ -860,8 +860,8 @@ filters.value.push({
     },
     {
       text: "Inferno",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         levelName = "Inferno";
         return true;
@@ -953,8 +953,8 @@ filters.value.push({
   subItems: [
     {
       text: "All",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         scoreName = "All";
         return true;
@@ -963,8 +963,8 @@ filters.value.push({
     },
     {
       text: "Normal",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         scoreName = "Normal";
         return true;
@@ -973,8 +973,8 @@ filters.value.push({
     },
     {
       text: "Hard",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         scoreName = "Hard";
         return true;
@@ -983,8 +983,8 @@ filters.value.push({
     },
     {
       text: "Expert",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         scoreName = "Expert";
         return true;
@@ -993,8 +993,8 @@ filters.value.push({
     },
     {
       text: "Inferno",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
+      icon: "mdi-checkbox-blank-outline",
+      iconActive: "mdi-checkbox-marked",
       filterFunction() {
         scoreName = "Inferno";
         return true;
