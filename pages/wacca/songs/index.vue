@@ -799,7 +799,8 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
 }
 
 // Condense Level filter to one range bar
-
+let allLevelActive = false;
+let allScoreActive = false;
 let levelName = "";
 let levelModel = ref([0 ,15.1]) // Do not make things harder than Mobius
 
@@ -810,23 +811,13 @@ filters.value.push({
 
 filters.value.push({
   type: "help",
-  help: ["All", "Normal", "Hard", "Expert", "Inferno"],
+  help: ["Normal", "Hard", "Expert", "Inferno"],
 });
 
 filters.value.push({
   type: "buttons",
   text: "Difficulty",
   subItems: [
-    {
-      text: "All",
-      icon: "mdi-circle-outline",
-      iconActive: "mdi-circle",
-      filterFunction() {
-        levelName = "All";
-        return true;
-      },
-      active: true,
-    },
     {
       text: "Normal",
       icon: "mdi-circle-outline",
@@ -835,6 +826,7 @@ filters.value.push({
         levelName = "Normal";
         return true;
       },
+      active: true
     },
     {
       text: "Hard",
@@ -844,6 +836,7 @@ filters.value.push({
         levelName = "Hard";
         return true;
       },
+      active: true
     },
     {
       text: "Expert",
@@ -853,6 +846,7 @@ filters.value.push({
         levelName = "Expert";
         return true;
       },
+      active: true
     },
     {
       text: "Inferno",
@@ -862,6 +856,7 @@ filters.value.push({
         levelName = "Inferno";
         return true;
       },
+      active: true
     },
   ],
 });
@@ -875,7 +870,7 @@ filters.value.push({
   step: 0.1,
   filterFunction(song) {
     let songArr = song.sheets;
-    if (levelName == "All") { 
+    if (allLevelActive == true) { 
       return (
         song.sheets.filter(
           (sheet) => sheet.difficulty >= levelModel.value[0] &&
@@ -883,46 +878,49 @@ filters.value.push({
           .length > 0
       )
     }
-
-    if (levelName == "Normal"){
-      return (
-        songArr[0].difficulty >= levelModel.value[0] && 
-        songArr[0].difficulty <= levelModel.value[1]
-      );
-    }
-
-    if (levelName == "Hard"){
-      return (
-        songArr[1].difficulty >= levelModel.value[0] && 
-        songArr[1].difficulty <= levelModel.value[1]
-      );
-    }
-
-    if (levelName == "Expert"){
-      return (
-        songArr[2].difficulty >= levelModel.value[0] && 
-        songArr[2].difficulty <= levelModel.value[1]
-      );
-    }
-
-    // Special Inferno case
-    if(levelName == "Inferno"){
-      let difficulty = 0;
-      if (songArr.length == 4){
-        difficulty = songArr[3].difficulty;
+    else {
+      if (levelName == "Normal"){
+        return (
+          songArr[0].difficulty >= levelModel.value[0] && 
+          songArr[0].difficulty <= levelModel.value[1]
+        );
       }
-      // Allows for sorting on lvl 0 infs
-      // For some reason this allows forced inf sorting 
-      // coming down from max instead of only just going up from min
-      // Needs to be non null non int value to work
-      else if (levelModel.value[1] < 15.1){
-          difficulty = "WACCA";
+
+      if (levelName == "Hard"){
+        return (
+          songArr[1].difficulty >= levelModel.value[0] && 
+          songArr[1].difficulty <= levelModel.value[1]
+        );
       }
-      return (
-        difficulty >= levelModel.value[0] && 
-        difficulty <= levelModel.value[1]
-      );
+
+      if (levelName == "Expert"){
+        return (
+          songArr[2].difficulty >= levelModel.value[0] && 
+          songArr[2].difficulty <= levelModel.value[1]
+        );
+      }
+
+      // Special Inferno case
+      if(levelName == "Inferno"){
+        let difficulty = 0;
+        if (songArr.length == 4){
+          difficulty = songArr[3].difficulty;
+        }
+        // Allows for sorting on lvl 0 infs
+        // For some reason this allows forced inf sorting 
+        // coming down from max instead of only just going up from min
+        // Needs to be non null non int value to work
+        else if (levelModel.value[1] < 15.1){
+            difficulty = "WACCA";
+        }
+        return (
+          difficulty >= levelModel.value[0] && 
+          difficulty <= levelModel.value[1]
+        );
+      }
     }
+
+
   }
 });
 
@@ -945,15 +943,15 @@ filters.value.push({
   type: "buttons",
   text: "Difficulty ", // There is a space here cause js is funny it needs to be a different name
   subItems: [
-	  {
+    {
       text: "All",
       icon: "mdi-circle-outline",
       iconActive: "mdi-circle",
       filterFunction() {
-        scoreName = "All";
+        scoreName = "Normal";
         return true;
       },
-      active: true,
+      active: true
     },
     {
       text: "Normal",
@@ -963,6 +961,7 @@ filters.value.push({
         scoreName = "Normal";
         return true;
       },
+      active: true
     },
     {
       text: "Hard",
@@ -972,6 +971,7 @@ filters.value.push({
         scoreName = "Hard";
         return true;
       },
+      active: true
     },
     {
       text: "Expert",
@@ -981,6 +981,7 @@ filters.value.push({
         scoreName = "Expert";
         return true;
       },
+      active: true
     },
     {
       text: "Inferno",
@@ -990,6 +991,7 @@ filters.value.push({
         scoreName = "Inferno";
         return true;
       },
+      active: true
     },
   ],
 });
@@ -1009,7 +1011,7 @@ filters.value.push({
     //Default
     let score = 0;
 
-    if (scoreName == "All") { 
+    if (allScoreActive == true) { 
       // Create score sets for all diffs used in All button
       let scoreNormal = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
       let scoreHard = profile.value.songs[song.id]?.scores[1]?.score ?? 0;
@@ -1024,24 +1026,26 @@ filters.value.push({
         scoreInferno >= scoreModel.value[0] && scoreInferno <= scoreModel.value[1]
       );
     }
-    if (scoreName == "Normal"){
-      score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
-      return score >= scoreModel.value[0] && score <= scoreModel.value[1];
-    }
+    else{
+      if (scoreName == "Normal"){
+        score = profile.value.songs[song.id]?.scores[0]?.score ?? 0;
+        return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+      }
 
-    if (scoreName == "Hard"){
-      score = profile.value.songs[song.id]?.scores[1]?.score ?? 0;
-      return score >= scoreModel.value[0] && score <= scoreModel.value[1];
-    }
+      if (scoreName == "Hard"){
+        score = profile.value.songs[song.id]?.scores[1]?.score ?? 0;
+        return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+      }
 
-    if (scoreName == "Expert"){
-      score = profile.value.songs[song.id]?.scores[2]?.score ?? 0;
-      return score >= scoreModel.value[0] && score <= scoreModel.value[1];
-    }
+      if (scoreName == "Expert"){
+        score = profile.value.songs[song.id]?.scores[2]?.score ?? 0;
+        return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+      }
 
-    if(scoreName == "Inferno"){
-      score = profile.value.songs[song.id]?.scores[3]?.score ?? 0;
-      return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+      if(scoreName == "Inferno"){
+        score = profile.value.songs[song.id]?.scores[3]?.score ?? 0;
+        return score >= scoreModel.value[0] && score <= scoreModel.value[1];
+      }
     }
   }
 });
@@ -1341,10 +1345,37 @@ function clickFilter(coFilter, coFilterSub) {
     (filterSub) => filterSub.text == coFilterSub.text
   );
 
-  filter.subItems.forEach((filterSub) => {
-    filterSub.active = false;
-  });
-  filterSub.active = true;
+  if(filter.text == "Difficulty " || filter.text == "Difficulty"){
+    if (filterSub.active == true){
+      filterSub.active = false;
+    }
+    else{
+      filterSub.active = true;
+    }
+  }
+  else {
+    filter.subItems.forEach((filterSub) => {
+      filterSub.active = false;
+    });
+    filterSub.active = true;
+  }
+
+  if((filter.subItems.every(value => value.active == true))) {
+    if (filter.text == "Difficulty "){
+      allScoreActive = true;
+    }
+    if (filter.text == "Difficulty"){
+      allLevelActive = true;
+    }
+  }
+  else {
+    if (filter.text == "Difficulty "){
+      allScoreActive = false;
+    }
+    if (filter.text == "Difficulty"){
+      allLevelActive = false;
+    }
+  }
 }
 
 const songsPaginated = computed(() => {
