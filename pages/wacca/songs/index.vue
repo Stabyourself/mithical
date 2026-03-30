@@ -801,7 +801,7 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
 // Condense Level filter to one range bar
 let allLevelActive = true;
 let levelName = "";
-let levelModel = ref([0 ,15.1]) // Do not make things harder than Mobius
+let levelModel = ref([0, 15.1]) // Do not make things harder than Mobius
 
 filters.value.push({
   type: "heading",
