@@ -2288,6 +2288,14 @@ const waccaIcons = [
     "acquisitionEnglish": null
   },
   {
+    "id": 402014,
+    "path": "S04/uT_UICN_S04_00_14",
+    "name": "Super Abnormia",
+    "nameEnglish": null,
+    "acquisition": "Clear Super Abnormia\r\non Normal, Hard, and Expert difficulty",
+    "acquisitionEnglish": null
+  },
+  {
     "id": 402015,
     "path": "S04/uT_UICN_S04_00_15",
     "name": "sys_dei/cide",
