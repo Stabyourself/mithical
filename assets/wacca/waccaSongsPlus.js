@@ -14831,6 +14831,11 @@ const waccaSongs = [
         difficulty: 14,
         gameVersion: 400,
         charter: '神様 HOLY THUNDEROUS WEAPON',
+      },      
+      {
+        difficulty: 14.6,
+        gameVersion: 400,
+        charter: '神様 HOLY THUNDEROUS WEAPON',
       },
     ],
   },
