@@ -5929,7 +5929,7 @@ const waccaTitles = [
   },
   {
     "id": 404099,
-    "name": "Battle No. 1 Remix",
+    "name": "BATTLE NO.1 (DJ Myosuke Remix)",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
