@@ -14686,7 +14686,7 @@ const waccaSongs = [
   },
   {
     id: 4115,
-    title: "Battle No. 1 Remix",
+    title: "BATTLE NO.1 (DJ Myosuke Remix)",
     titleEnglish: null,
     artist: "DJ Myosuke",
     dateAdded: 20260415,
