@@ -13046,7 +13046,7 @@ const waccaSongs = [
   },
   {
     id: 4064,
-    title: "Internet Yamero",
+    title: "INTERNET YAMERO",
     titleEnglish: null,
     artist: "Aiobahn feat. KOTOKO",
     dateAdded: 20250125,
@@ -14376,7 +14376,7 @@ const waccaSongs = [
   },
   {
     id: 4105,
-    title: "Giga Flare VIP",
+    title: "GIGA FLARE VIP",
     titleEnglish: null,
     artist: "Blacklolita",
     dateAdded: 20260125,
@@ -14561,7 +14561,7 @@ const waccaSongs = [
   },
   {
     id: 4120,
-    title: "Mega TSKR",
+    title: "MEGA TSKR",
     titleEnglish: null,
     artist: "かめりあ",
     dateAdded: 20260322,
