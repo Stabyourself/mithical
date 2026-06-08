@@ -5509,7 +5509,7 @@ const waccaTitles = [
   },
   {
     "id": 404027,
-    "name": "Internet Yamero",
+    "name": "INTERNET YAMERO",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
@@ -5863,7 +5863,7 @@ const waccaTitles = [
   },
   {
     "id": 404088,
-    "name": "Giga Flare VIP",
+    "name": "GIGA FLARE VIP",
     "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
