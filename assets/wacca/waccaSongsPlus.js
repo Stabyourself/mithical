@@ -14978,7 +14978,7 @@ const waccaSongs = [
         charter: 'twis',
       },
       {
-        difficulty: 8.2,
+        difficulty: 8.7,
         gameVersion: 400,
         charter: 'twis',
       },
@@ -15110,7 +15110,7 @@ const waccaSongs = [
       {
         difficulty: 13.2,
         gameVersion: 400,
-        charter: 'Jaio',
+        charter: 'Jaiouhou',
       },
     ],
   },
