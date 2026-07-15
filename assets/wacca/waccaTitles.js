@@ -6004,7 +6004,91 @@ const waccaTitles = [
     "name": "Got it memorized?",
     "acquisition": "???",
     "acquisitionEnglish": "???"
-  }
+  },
+  {
+    "id": 404113,
+    "name": "Fragmentary Specter Blade",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404114,
+    "name": "Ghost Shout",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404115,
+    "name": "Goddess Destroyed U",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404116,
+    "name": "HELLOHELL",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404117,
+    "name": "Help me, ERINNNNNN!! たすけてえーりん!!",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404119,
+    "name": "Necromantic",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404120,
+    "name": "桜華月想-SDVX EDIT- | Ouka Getsusou -SDVX EDIT-",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404121,
+    "name": "radio galaxy",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404123,
+    "name": "Shelter",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404125,
+    "name": "Ultimate taste",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },  
+  {
+    "id": 404126,
+    "name": "MERMAID",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404127,
+    "name": "Chatter Chatter",
+    "acquisition": "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    "acquisitionEnglish": "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    "id": 404129,
+    "name": "Caution: Wet Floor",
+    "acquisition": "Ghost ShoutのEXPERTで\nレートSSS+以上をクリア",
+    "acquisitionEnglish": "SSS Ghost Shout Expert"
+  },
+  {
+    "id": 404130,
+    "name": "ドキドキ★ワクワク",
+    "acquisition": "???",
+    "acquisitionEnglish": "???"
+  },
 ]
 
 export default waccaTitles;
