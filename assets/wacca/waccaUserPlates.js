@@ -462,6 +462,14 @@ const waccaUserPlates = [
     "nameEnglish": "",
     "acquisition": "",
     "acquisitionEnglish": "Play \"Pop Sequence\", \"Slapstick Parfait\", and \"Paved Garden\" in order."
+  },
+  {
+    "id": 411003,
+    "path": "uT_PLUS_03",
+    "name": "Necromantic",
+    "nameEnglish": "",
+    "acquisition": "",
+    "acquisitionEnglish": "Clear Necromantic Inferno"
   }
 ]
 

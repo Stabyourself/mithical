@@ -2302,6 +2302,22 @@ const waccaIcons = [
     "nameEnglish": null,
     "acquisition": "Clear sys/dei_cide\r\non Normal, Hard, and Expert difficulty",
     "acquisitionEnglish": null
+  },
+  {
+    "id": 402016,
+    "path": "S04/uT_UICN_S04_00_16",
+    "name": "Seiga Kaku",
+    "nameEnglish": null,
+    "acquisition": "Clear Necromantic\r\non Expert difficulty with a Full Combo",
+    "acquisitionEnglish": null
+  },
+  {
+    "id": 402017,
+    "path": "S04/uT_UICN_S04_00_17",
+    "name": "Yoshika Miyako",
+    "nameEnglish": null,
+    "acquisition": "Clear Necromantic\r\non EXPERT difficulty",
+    "acquisitionEnglish": null
   }
 ]
 
