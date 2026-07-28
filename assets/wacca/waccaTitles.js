@@ -6089,6 +6089,12 @@ const waccaTitles = [
     "acquisition": "???",
     "acquisitionEnglish": "???"
   },
+  {
+    "id": 404131,
+    "name": "Teamwork makes the dream work",
+    "acquisition": "???",
+    "acquisitionEnglish": "???"
+  },
 ]
 
 export default waccaTitles;
