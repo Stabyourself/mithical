@@ -6081,7 +6081,7 @@ const waccaTitles = [
     "id": 404129,
     "name": "Caution: Wet Floor",
     "acquisition": "Ghost ShoutのEXPERTで\nレートSSS+以上をクリア",
-    "acquisitionEnglish": "SSS Ghost Shout Expert"
+    "acquisitionEnglish": "???"
   },
   {
     "id": 404130,
