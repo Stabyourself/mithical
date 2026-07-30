@@ -2316,7 +2316,7 @@ const waccaIcons = [
     "path": "S04/uT_UICN_S04_00_17",
     "name": "Yoshika Miyako",
     "nameEnglish": null,
-    "acquisition": "Clear Necromantic\r\non EXPERT difficulty",
+    "acquisition": "Clear Necromantic\r\non Expert difficulty",
     "acquisitionEnglish": null
   }
 ]
