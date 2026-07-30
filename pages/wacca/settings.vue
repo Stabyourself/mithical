@@ -335,7 +335,7 @@ const optionList = [
   {
     id: 6,
     title: {
-      en: "SE Volume (missing actual text, may be obsolete?)",
+      en: "SE Volume (obsolete)",
       ja: "ＳＥボリューム",
     },
     description: {
@@ -503,7 +503,7 @@ const optionList = [
   {
     id: 107,
     title: {
-      en: "ComboDisplay",
+      en: "Combo Display (obsolete)",
     },
     description: {
       en: "MISSING 107",
@@ -921,10 +921,10 @@ const optionList = [
   {
     id: 124,
     title: {
-      en: "TouchEffect",
+      en: "Touch Effect (Pop) (obsolete)",
     },
     description: {
-      en: "MISSING 124",
+      en: "This version was a toggle",
     },
   },
 
@@ -1302,11 +1302,17 @@ const optionList = [
   {
     id: 1001,
     title: {
-      en: "MasterVolume",
+      en: "Headphone Volume",
     },
     description: {
-      en: "MISSING 1001",
+      en: "Adjust the volume of the headphone audio.",
     },
+    type: "slider",
+    default: 0,
+    min: 0,
+    max: 20,
+    step: 1,
+    format: (value) => value,
   },
 
   {
@@ -1316,7 +1322,7 @@ const optionList = [
       ja: "タッチエフェクト(ポップ)",
     },
     description: {
-      en: "Choose whether to show popping touch effects.",
+      en: "Choose which popping touch effects are shown. (NEEDS ITEMS)",
       ja: "タッチエフェクト(ポップ)の表示を設定できます。",
     },
     type: "options",
@@ -1324,17 +1330,24 @@ const optionList = [
     choices: [
       {
         text: {
-          ja: "タッチエフェクト(ポップ)を表示しません。",
-          en: "Do not show popping touch effects.",
+          ja: "OFF",
+          en: "OFF",
         },
         value: 312000,
       },
       {
         text: {
-          ja: "タッチエフェクト(ポップ)を表示します。",
-          en: "Show popping touch effects.",
+          ja: "デフォルト",
+          en: "Default",
         },
         value: 312001,
+      },
+      {
+        text: {
+          ja: "バブル",
+          en: "Bubble",
+        },
+        value: 312002,
       },
     ],
   },
