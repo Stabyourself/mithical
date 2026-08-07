@@ -671,6 +671,26 @@ const waccaBoxes = [
         id: 204084,
         rarity: 1,
       },
+      {
+        kind: 5,
+        id: 204063,
+        rarity: 1,
+      },
+      {
+        kind: 5,
+        id: 204064,
+        rarity: 1,
+      },
+      {
+        kind: 5,
+        id: 204066,
+        rarity: 1,
+      },
+      {
+        kind: 5,
+        id: 204076,
+        rarity: 1,
+      },
     ],
   },
   {
