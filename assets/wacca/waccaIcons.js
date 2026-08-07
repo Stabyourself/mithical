@@ -2288,11 +2288,35 @@ const waccaIcons = [
     "acquisitionEnglish": null
   },
   {
+    "id": 402014,
+    "path": "S04/uT_UICN_S04_00_14",
+    "name": "Super Abnormia",
+    "nameEnglish": null,
+    "acquisition": "Clear Super Abnormia\r\non Normal, Hard, and Expert difficulty",
+    "acquisitionEnglish": null
+  },
+  {
     "id": 402015,
     "path": "S04/uT_UICN_S04_00_15",
     "name": "sys_dei/cide",
     "nameEnglish": null,
     "acquisition": "Clear sys/dei_cide\r\non Normal, Hard, and Expert difficulty",
+    "acquisitionEnglish": null
+  },
+  {
+    "id": 402016,
+    "path": "S04/uT_UICN_S04_00_16",
+    "name": "Seiga Kaku",
+    "nameEnglish": null,
+    "acquisition": "Clear Necromantic\r\non Expert difficulty with a Full Combo",
+    "acquisitionEnglish": null
+  },
+  {
+    "id": 402017,
+    "path": "S04/uT_UICN_S04_00_17",
+    "name": "Yoshika Miyako",
+    "nameEnglish": null,
+    "acquisition": "Clear Necromantic\r\non Expert difficulty",
     "acquisitionEnglish": null
   }
 ]
