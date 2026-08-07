@@ -47,6 +47,7 @@
         :key="card.luid"
         :card="card"
         @delete="deleteCard(card)"
+        @update-name="updateCardName(card, $event)"
       />
     </TransitionGroup>
   </v-container>
@@ -218,5 +219,20 @@ function deleteCard(card) {
       localStorage.removeItem("activeCard");
     }
   }
+}
+
+function updateCardName(card, newName) {
+  cards.value = cards.value.map((c) => {
+    if (c.luid === card.luid) {
+      return {
+        ...c,
+        user_name: newName,
+      };
+    }
+
+    return c;
+  });
+
+  localStorage.setItem("cards", JSON.stringify(cards.value));
 }
 </script>
