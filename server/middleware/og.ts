@@ -155,7 +155,14 @@ export default defineEventHandler((event) => {
     return;
   }
 
-  const requestUrl = getRequestURL(event);
+  // Behind the nginx reverse proxy, the connection Nitro sees is plain
+  // http even though the public site is https-only - without this, every
+  // URL below would be built as http:// and nginx's http->https redirect
+  // breaks image/link fetching for crawlers like Discord's.
+  const requestUrl = getRequestURL(event, {
+    xForwardedProto: true,
+    xForwardedHost: true,
+  });
   const origin = requestUrl.origin;
   const url = `${origin}${path}`;
 
