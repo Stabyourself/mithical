@@ -577,12 +577,24 @@ const categoryName = computed(() => {
   return category.value.en;
 });
 
+const ogDescription = computed(() => {
+  return [
+    `by ${song.value.artist}`,
+    categoryName.value,
+    `Charted by ${chartedBy.value}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+});
+
 useSeoMeta({
   title: `Mithical | ${getTitle.value}`,
   ogTitle: `Mithical | ${getTitle.value}`,
-  description: "View your scores and the leaderboards for this song!",
-  ogDescription: "View your scores and the leaderboards for this song!",
-  ogImage: fullUrl.value,
-  twitterCard: "summary",
+  ogSiteName: "Mithical",
+  description: ogDescription,
+  ogDescription,
+  ogImage: () => `${useRequestURL().origin}${fullUrl.value}`,
+  ogUrl: () => useRequestURL().href,
+  twitterCard: "summary_large_image",
 });
 </script>
