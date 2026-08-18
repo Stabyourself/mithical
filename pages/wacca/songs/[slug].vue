@@ -244,6 +244,7 @@
 
 .single-song-cover {
   width: 320px;
+  flex-shrink: 0;
 }
 
 .single-song-details {
