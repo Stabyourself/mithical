@@ -126,7 +126,7 @@
   width: 2000px;
   height: 2000px;
 
-  background: url("/wacca/img/gacha-background.png") repeat no-repeat;
+  background: url("/wacca/img/gacha-background.webp") repeat no-repeat;
   background-size: 40px;
   transform: rotate(-20deg);
   opacity: 0.4;

@@ -10,7 +10,7 @@
           class="single-song-details"
           :style="{
             'background-image':
-              'url(/wacca/img/games/' + song.gameVersion + '.png)',
+              'url(/wacca/img/games/' + song.gameVersion + '.webp)',
           }"
         >
           <div class="single-song-header">

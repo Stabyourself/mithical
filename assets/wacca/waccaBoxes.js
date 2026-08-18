@@ -22,7 +22,7 @@ const waccaBoxes = [
     nameEnglish: "VIP BOX",
     price: 5000,
     color: "#3d8bae",
-    image: "/wacca/img/gacha_vip.png",
+    image: "/wacca/img/gacha_vip.webp",
     items: [
 
       {
@@ -168,7 +168,7 @@ const waccaBoxes = [
     nameEnglish: "Cirno Box",
     price: 5000,
     color: "#b9f0f3",
-    image: "/wacca/img/gacha_cirno.png",
+    image: "/wacca/img/gacha_cirno.webp",
     items: [
       {
         kind: 15,
@@ -334,7 +334,7 @@ const waccaBoxes = [
     nameEnglish: "Lily Box",
     price: 500,
     color: "#0e706f",
-    image: "/wacca/img/navigators/BP_Chara001_00.png",
+    image: "/wacca/img/navigators/BP_Chara001_00.webp",
     items: [
       {
         kind: 10,
@@ -699,7 +699,7 @@ const waccaBoxes = [
     nameEnglish: "R Box",
     price: 500,
     color: "#d52e6c",
-    image: "/wacca/img/navigators/BP_Chara000_00.png",
+    image: "/wacca/img/navigators/BP_Chara000_00.webp",
     items: [
       {
         kind: 10,
@@ -975,7 +975,7 @@ const waccaBoxes = [
     nameEnglish: "Reverse Box",
     price: 1500,
     color: "#651888",
-    image: "/wacca/img/navigators/BP_Chara002_00.png",
+    image: "/wacca/img/navigators/BP_Chara002_00.webp",
     items: [
       {
         kind: 16,
@@ -1227,7 +1227,7 @@ const waccaBoxes = [
     nameEnglish: "Last Spurt Event Box",
     price: 30000,
     color: "#232228",
-    image: "/wacca/img/navigators/BP_Chara003_00.png",
+    image: "/wacca/img/navigators/BP_Chara003_00.webp",
     items: [
       {
         kind: 6,

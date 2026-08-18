@@ -67,7 +67,9 @@ const props = defineProps({
 const medalDesigns = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5];
 const medalDesign = medalDesigns[props.rank - 1];
 const urlBack = computed(
-  () => `/wacca/img/stageup/level_${medalDesign}_${props.danRank}.png`
+  () => `/wacca/img/stageup/level_${medalDesign}_${props.danRank}.webp`
 );
-const urlNumber = computed(() => `/wacca/img/stageup/number_${props.rank}.png`);
+const urlNumber = computed(
+  () => `/wacca/img/stageup/number_${props.rank}.webp`
+);
 </script>

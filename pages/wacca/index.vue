@@ -4,7 +4,7 @@
       <div
         class="waifu"
         :style="{
-          backgroundImage: `url(/wacca/img/navigators/${navigator.path}.png)`,
+          backgroundImage: `url(/wacca/img/navigators/${navigator.path}.webp)`,
         }"
       ></div>
     </v-container>
@@ -147,7 +147,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("/wacca/img/gacha-button-background.png");
+  background: url("/wacca/img/gacha-button-background.webp");
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-position-y: 50%;

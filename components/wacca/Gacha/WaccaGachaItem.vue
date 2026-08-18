@@ -19,11 +19,11 @@
     />
 
     <div v-else-if="props.kind == 16" class="gacha-item-plate">
-      <img :src="`/wacca/img/plates/${item.path}.png`" />
+      <img :src="`/wacca/img/plates/${item.path}.webp`" />
     </div>
 
     <div v-else-if="props.kind == 15" class="gacha-item-navigator">
-      <img :src="`/wacca/img/navigators/${item.path}.png`" />
+      <img :src="`/wacca/img/navigators/${item.path}.webp`" />
 
       <div class="gacha-item-preview-item">
         {{ itemName(props.kind, props.id) }}

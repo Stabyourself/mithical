@@ -49,49 +49,49 @@
 
 .rating-purple {
   background-color: #a000ac;
-  background-image: url("/wacca/img/RatePattern2.png");
+  background-image: url("/wacca/img/RatePattern2.webp");
   @include animated;
 }
 
 .rating-blue {
   background-color: #8be0ff;
-  background-image: url("/wacca/img/RatePattern2.png");
+  background-image: url("/wacca/img/RatePattern2.webp");
   @include animated;
 }
 
 .rating-silver {
   background-color: #f8f8f8;
-  background-image: url("/wacca/img/RatePattern2.png");
+  background-image: url("/wacca/img/RatePattern2.webp");
   @include animated;
 }
 
 .rating-gold {
   background-color: #fddb2f;
-  background-image: url("/wacca/img/uT_PRate_Sparkles.png");
+  background-image: url("/wacca/img/uT_PRate_Sparkles.webp");
   @include animated;
 }
 
 .rating-rainbow {
-  background-image: url("/wacca/img/uT_PRate_Sparkles.png"),
-    url("/wacca/img/rainbow.png");
+  background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
+    url("/wacca/img/rainbow.webp");
   @include animated;
 }
 
 .rating-rainbow2 {
-  background-image: url("/wacca/img/uT_PRate_Sparkles.png"),
-    url("/wacca/img/rainbow2.png");
+  background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
+    url("/wacca/img/rainbow2.webp");
   @include animated;
 }
 
 .rating-rainbow3 {
-  background-image: url("/wacca/img/uT_PRate_Sparkles.png"),
-    url("/wacca/img/rainbow3.png");
+  background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
+    url("/wacca/img/rainbow3.webp");
   @include animated;
 }
 
 .rating-rainbow4 {
-  background-image: url("/wacca/img/uT_PRate_Sparkles.png"),
-    url("/wacca/img/rainbow4.png");
+  background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
+    url("/wacca/img/rainbow4.webp");
   @include animated;
 }
 </style>

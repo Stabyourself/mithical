@@ -133,7 +133,7 @@ function getTooltip(category, item) {
   let out = `<h2>${name}</h2>`;
 
   if (category.id === 16) {
-    out += `<img src="/wacca/img/plates/${item.path}.png" />`;
+    out += `<img src="/wacca/img/plates/${item.path}.webp" />`;
   }
 
   out += `<p>${acquisition}</p>`;
