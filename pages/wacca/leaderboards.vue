@@ -12,9 +12,10 @@
       </div>
 
       <div v-else>
-          <h3 class="your-rank">
-            Your Rank: {{ getRankDescription(profile.user_name) }}
-          </h3>
+          <div class="your-rank">
+            <span class="label">Your Rank</span>
+            <span class="value">{{ getRankDescription(profile.user_name) }}</span>
+          </div>
         <v-alert v-if="leaderboardsLoadingError" type="error" class="mt-4">{{
           leaderboardsLoadingError
         }}</v-alert>
@@ -67,6 +68,31 @@
 </template>
 
 <style scoped lang="scss">
+.your-rank {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(var(--v-theme-primary), 0.08);
+  border: 1px solid rgba(var(--v-theme-primary), 0.25);
+
+  .label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.65;
+  }
+
+  .value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgb(var(--v-theme-primary));
+  }
+}
+
 .leaderboard-icon {
   height: 40px;
   vertical-align: middle;
