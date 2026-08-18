@@ -1,5 +1,6 @@
 import getSongs from "../../assets/wacca/getSongs.js";
 import waccaCategories from "../../assets/wacca/waccaCategories.js";
+import { getSongSlug, findSongBySlug } from "../../assets/wacca/songSlug.js";
 
 const CRAWLER_UA =
   /facebookexternalhit|facebot|twitterbot|slackbot|discordbot|telegrambot|whatsapp|linkedinbot|skypeuripreview|pinterest|redditbot|applebot|vkshare|w3c_validator|iframely|google-inspectiontool|googleimageproxy|embedly/i;
@@ -61,11 +62,22 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function findSongById(id: number) {
-  return (
-    getSongs(400).find((song) => song.id === id) ||
-    getSongs(300).find((song) => song.id === id)
-  );
+// Songs are looked up by slug first (the canonical form), falling back to
+// the legacy numeric id so old links keep working. The Plus catalog (400)
+// is a superset of Reverse, so it's the only one we need to check.
+function resolveSong(param: string) {
+  const songs = getSongs(400);
+
+  if (/^\d+$/.test(param)) {
+    const id = parseInt(param, 10);
+    const song = songs.find((song) => song.id === id);
+    if (song) {
+      return { song, songs };
+    }
+  }
+
+  const song = findSongBySlug(param, songs);
+  return song ? { song, songs } : null;
 }
 
 function categoryName(categoryJa: string) {
@@ -147,12 +159,14 @@ export default defineEventHandler((event) => {
   const origin = requestUrl.origin;
   const url = `${origin}${path}`;
 
-  const songMatch = path.match(/^\/wacca\/songs\/(\d+)$/);
+  const songMatch = path.match(/^\/wacca\/songs\/([^/]+)$/);
 
   if (songMatch) {
-    const song = findSongById(parseInt(songMatch[1], 10));
+    const resolved = resolveSong(decodeURIComponent(songMatch[1]));
 
-    if (song) {
+    if (resolved) {
+      const { song, songs } = resolved;
+      const canonicalUrl = `${origin}/wacca/songs/${getSongSlug(song, songs)}`;
       const title = `${SITE_NAME} | ${song.title}`;
       const description = [
         `by ${song.artist}`,
@@ -169,7 +183,7 @@ export default defineEventHandler((event) => {
         title,
         description,
         image,
-        url,
+        url: canonicalUrl,
         linkText: `View ${song.title} on Mithical`,
       });
     }

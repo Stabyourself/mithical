@@ -181,7 +181,7 @@
       <div class="songs">
         <div v-for="song in songsPaginated" :key="song.id">
           <NuxtLink
-            :to="`/wacca/songs/${song.id}`"
+            :to="`/wacca/songs/${getSongSlug(song, songsForVersion)}`"
             style="text-decoration: none"
           >
             <WaccaSong
@@ -370,10 +370,13 @@ import fuzzysort from "fuzzysort";
 import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import waccaCategories from "~/assets/wacca/waccaCategories";
+import { getSongSlug } from "~/assets/wacca/songSlug.js";
 
 const language = useState("language");
 const profile = useState("profile");
 const version = useState("version");
+
+const songsForVersion = computed(() => getSongs(version.value));
 
 definePageMeta({
   middleware: ["auth"],

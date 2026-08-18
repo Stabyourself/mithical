@@ -32,7 +32,7 @@
             <div v-for="(sheet, j) in folder.sheets" :key="sheet">
               <NuxtLink
                 style="text-decoration: none"
-                :to="`/wacca/songs/${sheet.song.id}`"
+                :to="`/wacca/songs/${getSlug(sheet.song)}`"
                 class="rating-song"
               >
                 <div class="rating-jacket">
@@ -186,6 +186,7 @@
 import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import getRatingBorders from "~/assets/wacca/waccaRateMulBorders";
+import { getSongSlug } from "~/assets/wacca/songSlug.js";
 
 const language = useState("language");
 const profile = useState("profile");
@@ -332,5 +333,9 @@ function getTitle(song) {
   }
 
   return song.titleEnglish || song.title;
+}
+
+function getSlug(song) {
+  return getSongSlug(song, getSongs(version.value));
 }
 </script>

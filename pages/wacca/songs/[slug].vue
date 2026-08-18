@@ -329,6 +329,7 @@ import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import waccaGradeBorders from "~/assets/wacca/waccaGradeBorders";
 import waccaCategories from "~/assets/wacca/waccaCategories";
+import { getSongSlug, findSongBySlug } from "~/assets/wacca/songSlug.js";
 
 const profile = useState("profile");
 
@@ -342,9 +343,30 @@ const activeCard = useState("activeCard");
 const version = useState("version");
 
 const song = computed(() => {
-  return getSongs(version.value).find(
-    (song) => song.id === parseInt(route.params.id)
-  );
+  const songs = getSongs(version.value);
+  const param = route.params.slug;
+
+  if (/^\d+$/.test(param)) {
+    const byId = songs.find((song) => song.id === parseInt(param));
+    if (byId) {
+      return byId;
+    }
+  }
+
+  return findSongBySlug(param, songs);
+});
+
+// Legacy id links (and any slug that's gone stale) get normalized to the
+// canonical slug URL so slugs are always what ends up in the address bar.
+watchEffect(() => {
+  if (!song.value) {
+    return;
+  }
+
+  const canonicalSlug = getSongSlug(song.value, getSongs(version.value));
+  if (route.params.slug !== canonicalSlug) {
+    navigateTo(`/wacca/songs/${canonicalSlug}`, { replace: true });
+  }
 });
 
 const fullUrl = computed(() => {

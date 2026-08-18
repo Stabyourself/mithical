@@ -1,7 +1,7 @@
 <template>
   <component
     :is="forceExpand ? 'v-fragment' : NuxtLink"
-    :to="`/wacca/songs/${song.id}`"
+    :to="`/wacca/songs/${slug}`"
     style="text-decoration: none"
   >
     <div
@@ -414,6 +414,7 @@ const difficultyInternal = useState("difficultyInternal");
 
 const version = useState("version");
 import getSongs from "~~/assets/wacca/getSongs.js";
+import { getSongSlug } from "~~/assets/wacca/songSlug.js";
 
 const props = defineProps({
   play: Object,
@@ -430,6 +431,10 @@ const song = computed(() => {
 
 const fullUrl = computed(() => {
   return `/wacca/img/covers/${song.value.imageName}`;
+});
+
+const slug = computed(() => {
+  return getSongSlug(song.value, getSongs(version));
 });
 
 function formatDate(date) {
