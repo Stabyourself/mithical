@@ -1,8 +1,6 @@
 // plugins/vuetify.js
 import { createVuetify } from "vuetify";
 import type { ThemeDefinition } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
 const waccaLightTheme: ThemeDefinition = {
   dark: false,
@@ -91,8 +89,6 @@ const mithicalOledTheme: ThemeDefinition = {
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
-    components,
-    directives,
     theme: {
       themes: {
         waccaLight: waccaLightTheme,
