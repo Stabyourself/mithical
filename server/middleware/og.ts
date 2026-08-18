@@ -156,14 +156,21 @@ export default defineEventHandler((event) => {
   }
 
   // Behind the nginx reverse proxy, the connection Nitro sees is plain
-  // http even though the public site is https-only - without this, every
-  // URL below would be built as http:// and nginx's http->https redirect
-  // breaks image/link fetching for crawlers like Discord's.
+  // http even though the public site is https-only, and nginx isn't
+  // forwarding X-Forwarded-Proto for us to detect that. Since this app is
+  // never legitimately served over plain http outside of local dev, just
+  // force https for any non-local host rather than depending on proxy
+  // headers - otherwise every URL below would be built as http:// and
+  // nginx's http->https redirect breaks image/link fetching for crawlers
+  // like Discord's.
   const requestUrl = getRequestURL(event, {
     xForwardedProto: true,
     xForwardedHost: true,
   });
-  const origin = requestUrl.origin;
+  const isLocalHost = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(
+    requestUrl.hostname
+  );
+  const origin = isLocalHost ? requestUrl.origin : `https://${requestUrl.host}`;
   const url = `${origin}${path}`;
 
   const songMatch = path.match(/^\/wacca\/songs\/([^/]+)$/);
