@@ -74,6 +74,7 @@ $news-padding-y: 20px;
   margin: 0 -14px;
   padding: 6px 28px;
   color: white;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8);
 }
 
 .news-title-bar:after {
@@ -99,14 +100,17 @@ $news-padding-y: 20px;
 
 .news-date {
   font-size: 0.85rem;
-  font-weight: 200;
+  font-weight: 500;
   opacity: 0.85;
   white-space: nowrap;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 1);
 }
 
 .news-body-mask {
   position: relative;
-  transition: mask-image 300ms linear, -webkit-mask-image 300ms linear;
+  transition:
+    mask-image 300ms linear,
+    -webkit-mask-image 300ms linear;
   mask-image: linear-gradient(
     to bottom,
     black calc(100% - 40px),
@@ -121,7 +125,12 @@ $news-padding-y: 20px;
   );
 
   &.is-expanded {
-    mask-image: linear-gradient(to bottom, black 100%, black 100%, transparent 100%);
+    mask-image: linear-gradient(
+      to bottom,
+      black 100%,
+      black 100%,
+      transparent 100%
+    );
     -webkit-mask-image: linear-gradient(
       to bottom,
       black 100%,
