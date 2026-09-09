@@ -5,7 +5,9 @@
     with-background
   >
     <div id="site-logo">
-      <img src="/wacca/img/logo.svg" />
+      <NuxtLink to="/wacca">
+        <img src="/wacca/img/logo.svg" />
+      </NuxtLink>
     </div>
 
     <WaccaNav />

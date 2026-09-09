@@ -1,18 +1,6 @@
 <template>
   <WaccaProfileRequired>
     <v-container>
-      <div class="d-flex justify-center">
-        <NuxtLink to="/wacca/gacha" style="text-decoration: none">
-          <div
-            class="gacha-link elevation-3"
-            v-ripple="{ class: 'text-secondary' }"
-          >
-            <div class="gacha-link-background"></div>
-            <div class="gacha-link-text">Play Wacca Gacha</div>
-          </div>
-        </NuxtLink>
-      </div>
-
       <div class="d-flex ga-10 justify-center mb-6">
         <v-btn-toggle v-model="activeCategory" shaped mandatory>
           <v-btn
