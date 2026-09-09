@@ -13,7 +13,7 @@
         <div class="profile-icon">
           <WaccaIcon :icon="iconId" />
         </div>
-        <WaccaProfileBox>
+        <WaccaProfileBox ref="profileBoxRef">
           <div class="profile-box-column">
             <div>
               <span class="light">Welcome back</span>
@@ -39,6 +39,17 @@
           :danRank="selectedVersionData.dan_rank"
         />
       </div>
+
+      <WaccaNews
+        v-for="(post, index) in sortedNews"
+        :key="post.date + post.title"
+        class="news-section"
+        :style="boxWidth ? { maxWidth: boxWidth + 'px' } : undefined"
+        :title="post.title"
+        :date="post.date"
+        :body="post.body"
+        :accent-color="newsColors[index % newsColors.length]"
+      />
     </v-container>
   </WaccaProfileRequired>
 </template>
@@ -103,16 +114,33 @@
   margin-left: -40px;
   width: 150px;
 }
+
+.news-section {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 24px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
 </style>
 
 <script setup>
 import waccaNavigators from "~/assets/wacca/waccaNavigators.js";
+import waccaNews from "~/assets/wacca/waccaNews.js";
 
 definePageMeta({
   middleware: ["auth"],
 });
 
 const profile = useState("profile");
+
+const newsColors = ["#009de6", "#fed131", "#fc06a3"];
+
+const sortedNews = computed(() => {
+  return [...waccaNews].sort((a, b) => new Date(b.date) - new Date(a.date));
+});
 
 const level = computed(() => {
   return Math.floor(profile.value.exp / 100) + 1;
