@@ -21,7 +21,7 @@ And links: [Google](https://www.google.com)
 
 And images:
 
-![WACCA Logo](https://upload.wikimedia.org/wikipedia/en/0/0e/WACCA_logo.png)
+![WACCA Logo](https://upload.wikimedia.org/wikipedia/en/0/08/WACCA_logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)
 
 And blockquotes:
 
