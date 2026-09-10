@@ -32,7 +32,7 @@
             <div v-for="(sheet, j) in folder.sheets" :key="sheet">
               <NuxtLink
                 style="text-decoration: none"
-                :to="`/wacca/songs/${getSlug(sheet.song)}`"
+                :to="`/songs/${getSlug(sheet.song)}`"
                 class="rating-song"
               >
                 <div class="rating-jacket">

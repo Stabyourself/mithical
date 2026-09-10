@@ -35,6 +35,12 @@ export default defineNuxtConfig({
 
   ssr: false,
 
+  routeRules: {
+    // "/wacca" moved to the site root - keep old links working.
+    "/wacca": { redirect: { to: "/", statusCode: 301 } },
+    "/wacca/**": { redirect: { to: "/**", statusCode: 301 } },
+  },
+
   compatibilityDate: "2024-09-23",
 
   vite: {

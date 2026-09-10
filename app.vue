@@ -2,7 +2,7 @@
   <v-app :style="{ background }">
     <div id="modals"></div>
     <MainNav />
-    <NuxtLayout :name="layout"></NuxtLayout>
+    <NuxtLayout name="wacca"></NuxtLayout>
     <SettingsModal />
   </v-app>
 </template>
@@ -22,7 +22,6 @@
 <script setup>
 import { useTheme } from "vuetify";
 
-const layout = ref("wacca");
 const theme = useState("theme");
 const version = useState("version");
 
@@ -56,29 +55,18 @@ useSeoMeta({
 });
 
 const vuetifyTheme = useTheme();
-const route = useRoute();
 
 function updateTheme() {
-  // get the first part of the url
-  let nuxtTheme = route.path.split("/")[1];
-
-  if (!["wacca"].includes(nuxtTheme)) {
-    nuxtTheme = "mithical";
-  }
-
-  layout.value = nuxtTheme;
-
   let themeModded = theme.value;
-  if (nuxtTheme != "mithical" && version.value == 400) {
+  if (version.value == 400) {
     themeModded += "Plus";
   }
 
-  vuetifyTheme.global.name.value = nuxtTheme + themeModded;
+  vuetifyTheme.global.name.value = "wacca" + themeModded;
 }
 
 watch(theme, updateTheme);
 watch(version, updateTheme);
-watch(() => route.path, updateTheme);
 updateTheme();
 
 // load cards from localStorage

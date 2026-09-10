@@ -1,7 +1,7 @@
 <template>
   <component
     :is="forceExpand ? 'v-fragment' : NuxtLink"
-    :to="`/wacca/songs/${slug}`"
+    :to="`/songs/${slug}`"
     style="text-decoration: none"
   >
     <div

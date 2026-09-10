@@ -392,7 +392,7 @@ watchEffect(() => {
 
   const canonicalSlug = getSongSlug(song.value, getSongs(version.value));
   if (route.params.slug !== canonicalSlug) {
-    navigateTo(`/wacca/songs/${canonicalSlug}`, { replace: true });
+    navigateTo(`/songs/${canonicalSlug}`, { replace: true });
   }
 });
 

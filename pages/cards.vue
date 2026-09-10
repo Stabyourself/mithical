@@ -32,7 +32,7 @@
           <v-btn
             v-if="cards.length > 0"
             color="primary"
-            @click="$router.push('/wacca')"
+            @click="$router.push('/')"
             block
           >
             Go to the Wacca page
