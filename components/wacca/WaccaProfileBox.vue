@@ -35,7 +35,8 @@
   z-index: -1;
 }
 
-.v-theme--waccaOled .profile-box:after {
+.v-theme--waccaOled .profile-box:after,
+.v-theme--waccaOledPlus .profile-box:after {
   border: 1px solid white;
 }
 </style>

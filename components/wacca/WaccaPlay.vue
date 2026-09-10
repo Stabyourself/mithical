@@ -401,7 +401,8 @@ $cover-size: 100px;
   }
 }
 
-.v-theme--waccaOled .play {
+.v-theme--waccaOled .play,
+.v-theme--waccaOledPlus .play {
   outline: solid 1px white;
 }
 </style>

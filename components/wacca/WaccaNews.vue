@@ -59,7 +59,8 @@ $news-padding-y: 20px;
   }
 }
 
-.v-theme--waccaOled .news-card {
+.v-theme--waccaOled .news-card,
+.v-theme--waccaOledPlus .news-card {
   outline: solid 1px white;
 }
 
