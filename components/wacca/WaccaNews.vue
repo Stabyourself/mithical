@@ -1,8 +1,12 @@
 <template>
   <div class="news-post">
     <div class="news-title-bar">
-      <div class="news-title" v-html="renderedTitle"></div>
-      <div class="news-date">{{ formattedDate }}</div>
+      <div class="news-title-segment">
+        <div class="news-title" v-html="renderedTitle"></div>
+      </div>
+      <div class="news-date-segment">
+        <div class="news-date">{{ formattedDate }}</div>
+      </div>
     </div>
 
     <div class="news-card">
@@ -40,7 +44,6 @@ $news-padding-y: 20px;
 .news-card {
   position: relative;
   z-index: 1;
-  margin-top: -12px;
   background: rgba(var(--v-theme-boxcolor), $news-bg-alpha);
   backdrop-filter: blur(8px);
   color: white;
@@ -61,24 +64,31 @@ $news-padding-y: 20px;
 
 .v-theme--waccaOled .news-card,
 .v-theme--waccaOledPlus .news-card {
-  outline: solid 1px white;
+  border: 1px solid white;
+  border-top: none;
 }
 
 .news-title-bar {
   position: relative;
   z-index: 2;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 0 -14px;
-  padding: 6px 28px;
+  align-items: stretch;
+  gap: 3px;
+  margin: 0 -25px;
   color: white;
   text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8);
 }
 
-.news-title-bar:after {
+.news-title-segment,
+.news-date-segment {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 6px 28px;
+}
+
+.news-title-segment:after,
+.news-date-segment:after {
   content: "";
   position: absolute;
   top: 0;
@@ -90,9 +100,21 @@ $news-padding-y: 20px;
   z-index: -1;
 }
 
+.news-title-segment {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+}
+
+.news-date-segment {
+  flex: 0 0 auto;
+}
+
 .news-title {
+  min-width: 0;
   font-size: 1.4rem;
   font-weight: 700;
+  width: 100%;
 
   :deep(p) {
     margin: 0;

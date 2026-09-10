@@ -13,7 +13,7 @@
 
 .profile-box {
   position: relative;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 2rem;
   color: white;
   padding: 10px 40px;
