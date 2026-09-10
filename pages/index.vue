@@ -92,7 +92,6 @@
   :deep(.profile-box) {
     align-items: center;
     padding-left: 70px;
-    padding-right: 150px;
     box-sizing: border-box;
   }
 }
@@ -114,7 +113,7 @@
 }
 
 .stage-up {
-  margin-left: -150px;
+  margin-left: -40px;
   width: 150px;
 }
 

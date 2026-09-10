@@ -25,7 +25,7 @@ Pretty cool right? There have also been some visual updates here and there aroun
 
 That's all for now. Let's Dive!
 
-![Elizabeth](https://stickershop.line-scdn.net/stickershop/v1/product/9846329/LINEStorePC/main.png?v=1)`
+![Elizabeth](/wacca/img/news/eli.png)`
   },
   {
     title: "「 The Devil Incarnate 2 」 Sightreading Tournament",
