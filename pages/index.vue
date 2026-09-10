@@ -115,6 +115,41 @@
   width: 150px;
 }
 
+@media (max-width: 600px) {
+  .profile-header {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 24px;
+    gap: 0;
+  }
+
+  .profile-header .profile-icon {
+    height: 100px;
+    width: 100px;
+    margin-right: 0;
+  }
+
+  .profile-header :deep(.profile-box) {
+    padding: 8px 20px;
+    font-size: 1.2rem;
+  }
+
+  .profile-stats-row {
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .stage-up {
+    margin-left: 0;
+    margin-top: 55px;
+    height: 45px;
+    transform: scale(0.6);
+    transform-origin: top;
+  }
+}
+
 .news-section {
   width: 100%;
   max-width: 600px;

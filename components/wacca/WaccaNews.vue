@@ -87,6 +87,10 @@ $news-padding-y: 20px;
   padding: 6px 28px;
 }
 
+.news-date-segment {
+  padding: 6px 20px;
+}
+
 .news-title-segment:after,
 .news-date-segment:after {
   content: "";
@@ -122,7 +126,7 @@ $news-padding-y: 20px;
 }
 
 .news-date {
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 500;
   opacity: 0.85;
   white-space: nowrap;
