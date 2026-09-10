@@ -19,8 +19,12 @@
       prepend-inner-icon="mdi-card-account-details-outline"
       no-data-text="No cards added yet"
     />
+
+    <v-btn @click="$router.push('/cards')" icon variant="plain">
+      <v-icon>mdi-cards-outline</v-icon>
+    </v-btn>
+
     <div class="nav-spacer"></div>
-    <NuxtLink to="/wacca">Wacca</NuxtLink>
   </div>
 </template>
 

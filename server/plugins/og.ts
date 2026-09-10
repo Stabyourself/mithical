@@ -33,35 +33,31 @@ const ROUTE_META: Record<string, { title: string; description: string }> = {
     title: `${SITE_NAME} | Manage Your Cards`,
     description: "Add or manage the Wacca cards linked to your profile.",
   },
-  "/wacca": {
-    title: `${SITE_NAME} | Wacca`,
-    description: "Track your Wacca scores, songs, and profile.",
-  },
-  "/wacca/inventory": {
+  "/inventory": {
     title: `${SITE_NAME} | Inventory`,
     description: "Browse your Wacca item inventory.",
   },
-  "/wacca/recent": {
+  "/recent": {
     title: `${SITE_NAME} | Recent Plays`,
     description: "See your most recent Wacca plays.",
   },
-  "/wacca/rating": {
+  "/rating": {
     title: `${SITE_NAME} | Rating`,
     description: "View your Wacca rating breakdown.",
   },
-  "/wacca/leaderboards": {
+  "/leaderboards": {
     title: `${SITE_NAME} | Leaderboards`,
     description: "Check the Wacca leaderboards.",
   },
-  "/wacca/gacha": {
+  "/gacha": {
     title: `${SITE_NAME} | Gacha`,
     description: "Check out the Wacca gacha.",
   },
-  "/wacca/settings": {
+  "/settings": {
     title: `${SITE_NAME} | Wacca Settings`,
     description: "Configure your Wacca settings.",
   },
-  "/wacca/songs": {
+  "/songs": {
     title: `${SITE_NAME} | All Songs`,
     description: "Browse every song available in Wacca.",
   },
@@ -187,14 +183,14 @@ export default defineNitroPlugin((nitroApp) => {
     let image = `${origin}${DEFAULT_IMAGE_PATH}`;
     let canonicalUrl = url;
 
-    const songMatch = path.match(/^\/wacca\/songs\/([^/]+)$/);
+    const songMatch = path.match(/^\/songs\/([^/]+)$/);
 
     if (songMatch) {
       const resolved = resolveSong(decodeURIComponent(songMatch[1]));
 
       if (resolved) {
         const { song, songs } = resolved;
-        canonicalUrl = `${origin}/wacca/songs/${getSongSlug(song, songs)}`;
+        canonicalUrl = `${origin}/songs/${getSongSlug(song, songs)}`;
         title = `${SITE_NAME} | ${song.title}`;
         description = [
           `by ${song.artist}`,

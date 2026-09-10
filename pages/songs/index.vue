@@ -181,7 +181,7 @@
       <div class="songs">
         <div v-for="song in songsPaginated" :key="song.id">
           <NuxtLink
-            :to="`/wacca/songs/${getSongSlug(song, songsForVersion)}`"
+            :to="`/songs/${getSongSlug(song, songsForVersion)}`"
             style="text-decoration: none"
           >
             <WaccaSong

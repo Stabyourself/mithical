@@ -61,32 +61,6 @@ const waccaOledPlusTheme: ThemeDefinition = {
   },
 };
 
-// const mithicalLightTheme: ThemeDefinition = {
-//   dark: false,
-//   colors: {
-//     primary: "#bb86fc",
-//   },
-// };
-
-const mithicalDarkTheme: ThemeDefinition = {
-  dark: true,
-  colors: {
-    primary: "#bb86fc",
-    navbar: "#bb86fc",
-  },
-};
-
-const mithicalOledTheme: ThemeDefinition = {
-  dark: true,
-  colors: {
-    primary: "#bb86fc",
-    navbar: "#000",
-    background: "#000",
-    surface: "#000",
-    "surface-variant": "#000",
-  },
-};
-
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
     theme: {
@@ -94,9 +68,6 @@ export default defineNuxtPlugin((nuxtApp) => {
         waccaLight: waccaLightTheme,
         waccaDark: waccaDarkTheme,
         waccaOled: waccaOledTheme,
-        mithicalLight: mithicalDarkTheme, // no light mithical theme
-        mithicalDark: mithicalDarkTheme,
-        mithicalOled: mithicalOledTheme,
         waccaLightPlus: waccaLightPlusTheme,
         waccaDarkPlus: waccaDarkPlusTheme,
         waccaOledPlus: waccaOledPlusTheme,

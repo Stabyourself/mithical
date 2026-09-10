@@ -15,12 +15,6 @@
           <v-card-text>
             <div class="settings">
               <div class="settings-setting">
-                <v-btn to="/cards" block color="primary" @click="hideSettings">
-                  Manage your cards
-                </v-btn>
-              </div>
-
-              <div class="settings-setting">
                 <p>Version</p>
                 <v-btn-toggle v-model="version" shaped mandatory>
                   <v-btn color="primary" :value="300">Reverse</v-btn>
