@@ -27,17 +27,6 @@
         >
           Add Card
         </v-btn>
-
-        <div style="margin-top: 1em">
-          <v-btn
-            v-if="cards.length > 0"
-            color="primary"
-            @click="$router.push('/')"
-            block
-          >
-            Go to the Wacca page
-          </v-btn>
-        </div>
       </v-card-text>
     </v-card>
 
