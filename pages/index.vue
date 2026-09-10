@@ -90,9 +90,7 @@
   }
 
   :deep(.profile-box) {
-    align-items: center;
     padding-left: 70px;
-    box-sizing: border-box;
   }
 }
 
