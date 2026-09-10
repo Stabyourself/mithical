@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/buildImages.mjs && nuxt build",
-    "dev": "nuxt dev",
+    "dev": "node scripts/buildImages.mjs && nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare && node scripts/buildImages.mjs"
