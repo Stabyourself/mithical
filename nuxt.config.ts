@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "@mdi/font/scss/materialdesignicons.scss",
     "vuetify/_styles.scss",
     "~/assets/roboto.scss",
+    "glightbox/dist/css/glightbox.min.css",
   ],
 
   app: {

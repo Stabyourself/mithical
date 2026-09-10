@@ -212,7 +212,13 @@ $news-padding-y: 20px;
   :deep(img) {
     max-width: 100%;
     border-radius: 8px;
+  }
+
+  :deep(.news-lightbox-link) {
+    display: block;
+    width: fit-content;
     margin: 4px 0 10px;
+    cursor: zoom-in;
   }
 
   :deep(blockquote) {
@@ -282,6 +288,7 @@ $news-padding-y: 20px;
 <script setup>
 import { Collapse } from "vue-collapsed";
 import { marked } from "marked";
+import GLightbox from "glightbox";
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -295,8 +302,29 @@ const { accentColor } = toRefs(props);
 
 const expanded = ref(false);
 
+// Scopes each post's images to their own GLightbox gallery, so
+// prev/next inside the lightbox cycles through that post's images only.
+const galleryId = `news-${Math.random().toString(36).slice(2, 10)}`;
+const lightboxClass = `glightbox-${galleryId}`;
+
 const renderedTitle = computed(() => marked.parseInline(props.title));
-const renderedBody = computed(() => marked.parse(props.body));
+
+const renderedBody = computed(() => {
+  const container = document.createElement("div");
+  container.innerHTML = marked.parse(props.body);
+
+  container.querySelectorAll("img").forEach((img) => {
+    const link = document.createElement("a");
+    link.href = img.getAttribute("src");
+    link.className = `news-lightbox-link ${lightboxClass}`;
+    link.dataset.gallery = galleryId;
+
+    img.replaceWith(link);
+    link.appendChild(img);
+  });
+
+  return container.innerHTML;
+});
 
 const formattedDate = computed(() => {
   return new Date(props.date).toLocaleDateString(undefined, {
@@ -305,4 +333,18 @@ const formattedDate = computed(() => {
     day: "numeric",
   });
 });
+
+let lightbox;
+
+function initLightbox() {
+  lightbox?.destroy();
+  lightbox = GLightbox({
+    selector: `.${lightboxClass}`,
+    loop: true,
+  });
+}
+
+onMounted(initLightbox);
+watch(renderedBody, () => nextTick(initLightbox));
+onBeforeUnmount(() => lightbox?.destroy());
 </script>
