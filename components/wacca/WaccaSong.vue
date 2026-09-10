@@ -102,7 +102,8 @@ $song-paddings: 10px;
   gap: 20px;
 }
 
-.v-theme--waccaOled .song {
+.v-theme--waccaOled .song,
+.v-theme--waccaOledPlus .song {
   outline: solid 1px white;
 }
 </style>
