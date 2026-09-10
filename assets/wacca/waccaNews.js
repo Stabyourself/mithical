@@ -25,7 +25,7 @@ Pretty cool right? There have also been some visual updates here and there aroun
 
 That's all for now. Let's Dive!
 
-![Elizabeth](/wacca/img/news/eli.png)`
+![Elizabeth](/wacca/img/news/eli.webp)`
   },
   {
     title: "「 The Devil Incarnate 2 」 Sightreading Tournament",
@@ -35,7 +35,7 @@ That's all for now. Let's Dive!
 Tune into the stream on September 12th, 2026 @ 4PM PST/7PM EST. You won't want to miss this!
 
 https://twitch.tv/arcadelegacy
-![TDI2](/wacca/img/news/tdi.png)
+![TDI2](/wacca/img/news/tdi.webp)
 `,
   },
   {
@@ -56,9 +56,9 @@ And, some new and returning faces
 - *SUPER☆HARAGURO☆POP*
 - *Jägermeister* **[INFERNO]**
 
-![Touhou1](/wacca/img/news/touhou_1.png)
-![Touhou2](/wacca/img/news/touhou_2.png)
-![Touhou5](/wacca/img/news/touhou_5.png)
+![Touhou1](/wacca/img/news/touhou_1.webp)
+![Touhou2](/wacca/img/news/touhou_2.webp)
+![Touhou5](/wacca/img/news/touhou_5.webp)
 
 ---
 
@@ -69,7 +69,7 @@ We're also adding more charts from the SakuraCon 2026 tourney!
 - *N3V3R G3T OV3R* **[INFERNO]**
 - *Strange Bar* **[INFERNO]**
 
-![Sakura2026](/wacca/img/news/touhou_3.png)
+![Sakura2026](/wacca/img/news/touhou_3.webp)
 
 ---
 
@@ -77,7 +77,7 @@ Last but not least, Lunatic mode has been unlocked
 
 - *WARNING×WARNING×WARNING* **[INFERNO]**
 
-![Touhou4](/wacca/img/news/touhou_4.png)
+![Touhou4](/wacca/img/news/touhou_4.webp)
 
 Please look forward to it! Hopefully there won't be any strange incidents involving silent songs that m̴i̸g̶h̶t̴ ̷c̴a̴u̴s̴e̵ ̶a̸n̴y̵ ̷w̷e̸i̸r̴d̶ g̷̛̃̈́̃ľ̴̋̔͝i̸̊̓̅͠t̸c̷͂͑̄͝h̴͋͘͜è̶͗̉͘s̵̒̽̌͑.̶́̿͒̔.̷̑͂. C͔HECK THE R̶̤̣̽̀ECƠ̶̏̌̈Ȓ̴͝DS
 
