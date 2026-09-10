@@ -1,6 +1,6 @@
 <template>
   <div id="wacca-nav">
-    <NuxtLink to="/">Home</NuxtLink>
+    <NuxtLink to="/gacha">Gacha</NuxtLink>
     <NuxtLink to="/inventory">Inventory</NuxtLink>
     <NuxtLink to="/recent">Recent Plays</NuxtLink>
     <NuxtLink to="/songs">All Songs</NuxtLink>

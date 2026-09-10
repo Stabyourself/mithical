@@ -38,13 +38,13 @@
 
   #site-logo {
     width: 100%;
-    text-align: center;
+    display: flex;
+    justify-content: center;
     padding: 20px 0;
 
     img {
       width: 100%;
       max-width: 550px;
-      margin: 0 auto;
       display: block;
     }
   }

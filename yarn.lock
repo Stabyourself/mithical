@@ -3507,6 +3507,11 @@ magicast@^0.5.2, magicast@^0.5.4:
     "@babel/types" "^7.29.7"
     source-map-js "^1.2.1"
 
+marked@^18.0.12:
+  version "18.0.12"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-18.0.12.tgz#25840ec9ea7b22f2da48b9260ff5d8c2a6048997"
+  integrity sha512-LEm4ga2YeI2T3GVHj9b0BaDPPk93LLTHMFeMyQbNIzPxc8vCI0y/scy0ZA6z6lXKyT9j9Nhl/OC6ZYKYGuFScA==
+
 math-intrinsics@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/math-intrinsics/-/math-intrinsics-1.1.0.tgz#a0dd74be81e2aa5c2f27e65ce283605ee4e2b7f9"

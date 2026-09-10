@@ -29,7 +29,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(var(--v-theme-boxcolor), 0.8);
+  background: rgba(var(--v-theme-boxcolor), 0.65);
+  backdrop-filter: blur(8px);
   transform: skew(-20deg);
   z-index: -1;
 }
