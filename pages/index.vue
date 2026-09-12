@@ -13,7 +13,8 @@
         <div class="profile-icon">
           <WaccaIcon :icon="iconId" />
         </div>
-        <WaccaProfileBox ref="profileBoxRef">
+        <WaccaProfileBox ref="profileBoxRef"
+        :class="{ 'has-emblem': selectedVersionData?.dan_rank > 0 }">
           <div class="profile-box-column">
             <div>
               <span class="light">Welcome back</span>
@@ -90,8 +91,15 @@
   }
 
   :deep(.profile-box) {
+    align-items: center;
     padding-left: 70px;
+    box-sizing: border-box;
   }
+
+  :deep(.profile-box-wrapper.has-emblem .profile-box) {
+    padding-right: 160px;
+  }
+
 }
 
 .profile-box-column {
@@ -111,7 +119,7 @@
 }
 
 .stage-up {
-  margin-left: -40px;
+  margin-left: -160px;
   width: 150px;
 }
 
