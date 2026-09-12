@@ -51,7 +51,9 @@
       <v-icon v-for="i in props.rarity" :key="i">mdi-star</v-icon>
     </div>
 
-    <div class="gacha-item-unowned" :class="{ owned }">Owned</div>
+    <div v-if="!hideowned" class="gacha-item-unowned" :class="{ owned }">
+      Owned
+    </div>
   </div>
 </template>
 
@@ -246,6 +248,7 @@ const props = defineProps({
   kind: Number,
   id: Number,
   greyunowned: Boolean,
+  hideowned: Boolean,
 });
 
 function findItem(kind, id) {

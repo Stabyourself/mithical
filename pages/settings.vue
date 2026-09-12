@@ -11,12 +11,15 @@
       <div
         class="profile-plate"
         :style="{ backgroundImage: `url(${plateUrl})` }"
+        @click="openPicker('plate')"
       >
-        <div class="profile-plate-icon">
+        <div class="profile-plate-icon" @click.stop="openPicker('icon')">
           <WaccaIcon :icon="iconId" />
         </div>
 
-        <div class="profile-plate-title">{{ titleText }}</div>
+        <div class="profile-plate-title" @click.stop="openPicker('title')">
+          {{ titleText }}
+        </div>
 
         <span class="stat-label profile-plate-lv-label">Lv.</span>
         <span class="stat-value profile-plate-lv-value">{{ level }}</span>
@@ -25,7 +28,9 @@
           profile.points
         }}</span>
 
-        <div class="profile-plate-name">{{ profile.user_name }}</div>
+        <div class="profile-plate-name" @click.stop="openNameDialog">
+          {{ profile.user_name }}
+        </div>
 
         <div
           v-if="
@@ -44,6 +49,43 @@
           />
         </div>
       </div>
+
+      <WaccaOptionPickerModal
+        v-if="activePicker"
+        :title="pickerConfigs[activePicker].title"
+        :item-kind="pickerConfigs[activePicker].itemKind"
+        :option-id="pickerConfigs[activePicker].optionId"
+        :items="pickerConfigs[activePicker].items"
+        @closeModal="activePicker = null"
+      />
+
+      <v-dialog v-model="isEditNameDialogOpen" max-width="420">
+        <v-card>
+          <v-card-title>Change name</v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="editedName"
+              label="Name"
+              maxlength="8"
+              counter="8"
+              :error-messages="nameErrors"
+              @keydown.enter="saveName"
+            ></v-text-field>
+            <div v-if="nameSaveError" class="name-save-error">
+              {{ nameSaveError }}
+            </div>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              color="primary"
+              :disabled="!canSaveName || isSavingName"
+              :loading="isSavingName"
+              @click="saveName"
+              >Save</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
       <div class="d-flex ga-10 justify-center mb-6">
         <v-btn-toggle v-model="activeCategory" shaped mandatory>
@@ -147,6 +189,17 @@
   margin-bottom: 32px;
   clip-path: circle(73% at 50% 218%);
   container-type: inline-size;
+  cursor: pointer;
+
+  &:hover:not(
+      :has(
+        .profile-plate-icon:hover,
+        .profile-plate-title:hover,
+        .profile-plate-name:hover
+      )
+    ) {
+    filter: brightness(1.05);
+  }
 }
 
 .profile-plate-icon {
@@ -157,6 +210,11 @@
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.15);
+  }
 
   :deep(img) {
     width: 100%;
@@ -176,6 +234,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .stat-label {
@@ -221,11 +284,22 @@
   font-size: 3cqw;
   font-weight: 600;
   color: #1a1a2e;
-  -webkit-text-stroke: 0.3cqw white;
   paint-order: stroke fill;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.name-save-error {
+  color: rgb(var(--v-theme-error));
+  font-size: 0.8rem;
+  line-height: 1.2;
+  margin-top: -4px;
 }
 
 .profile-plate-stageup {
@@ -275,10 +349,98 @@ definePageMeta({
 
 import waccaUserPlates from "~/assets/wacca/waccaUserPlates.js";
 import waccaTitles from "~/assets/wacca/waccaTitles.js";
+import waccaIcons from "~/assets/wacca/waccaIcons.js";
 
+const runtimeConfig = useRuntimeConfig();
 const language = useState("language");
 const profile = useState("profile");
 const version = useState("version");
+const activeCard = useState("activeCard");
+
+const activePicker = ref(null);
+const pickerConfigs = {
+  icon: {
+    title: "Choose Icon",
+    itemKind: 6,
+    optionId: 1003,
+    items: waccaIcons,
+  },
+  title: {
+    title: "Choose Title",
+    itemKind: 5,
+    optionId: 1002,
+    items: waccaTitles,
+  },
+  plate: {
+    title: "Choose Plate",
+    itemKind: 16,
+    optionId: 1005,
+    items: waccaUserPlates,
+  },
+};
+
+function openPicker(kind) {
+  activePicker.value = kind;
+}
+
+const isEditNameDialogOpen = ref(false);
+const editedName = ref("");
+const isSavingName = ref(false);
+const nameSaveError = ref("");
+
+const trimmedEditedName = computed(() => editedName.value.trim());
+
+const canSaveName = computed(() => {
+  const length = trimmedEditedName.value.length;
+  return length >= 1 && length <= 8;
+});
+
+const nameErrors = computed(() => {
+  if (
+    trimmedEditedName.value.length === 0 ||
+    trimmedEditedName.value.length > 8
+  ) {
+    return ["Name must be 1-8 characters."];
+  }
+
+  return [];
+});
+
+watch(editedName, () => {
+  nameSaveError.value = "";
+});
+
+function openNameDialog() {
+  editedName.value = profile.value.user_name ?? "";
+  nameSaveError.value = "";
+  isEditNameDialogOpen.value = true;
+}
+
+async function saveName() {
+  if (!canSaveName.value || isSavingName.value) {
+    return;
+  }
+
+  isSavingName.value = true;
+  nameSaveError.value = "";
+
+  try {
+    const data = await $fetch(
+      `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/changename`,
+      {
+        method: "POST",
+        body: { name: trimmedEditedName.value },
+      },
+    );
+
+    profile.value.user_name = data.user_name ?? trimmedEditedName.value;
+    isEditNameDialogOpen.value = false;
+  } catch {
+    nameSaveError.value = "Failed to change name.";
+  } finally {
+    isSavingName.value = false;
+  }
+}
 
 const level = computed(() => Math.floor(profile.value.exp / 100) + 1);
 const iconId = computed(() => profile.value.options[1003] ?? 102001);
