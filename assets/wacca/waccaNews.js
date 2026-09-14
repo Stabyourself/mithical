@@ -86,7 +86,7 @@ Make sure to support both of them on their socials!
 
 ---
 
-Players who have read the [WACCA 4koma](https://imgur.com/a/wacca-4koma-full-0mqBaIz) may have noticed that the character in
+Players who have read the [WACCA 4koma](https://imgur.com/a/wacca-4koma-full-0mqBaIz) may have noticed that the character in the
 Stardust jacket art looks familiar...
 
 Introducing a WACCA Plus Original Character:
