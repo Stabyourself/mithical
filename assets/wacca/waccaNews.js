@@ -24,7 +24,7 @@ Competition was fierce, but one player came out on top. Congratulations to the W
 - *SOLEIL (Uno), 8th Place*
 ---
 
-Once again, congrats to everyone who competed! You can catch the day one VOD via [Arcade Legacy's Twitch Channel](https://www.twitch.tv/arcadelegacy/v/2871377276?sr=a).
+Once again, congrats to everyone who competed! You can catch the day one VOD via [Arcade Legacy's Twitch Channel](https://twitch.tv/arcadelegacy).
 
 ___
 
@@ -33,7 +33,7 @@ ___
 Players who were not the Tournament Organizer came back the following day to compete in a Double Elimination sightreading tournament, containing
 over 30 custom charts created by the TDI2 Fumen Team. 
 
-You can watch the VOD for day two of the tournament [here](https://www.twitch.tv/arcadelegacy/v/2872601353?sr=a). Thanks again to Arcade Legacy.
+You can watch the VOD for day two of the tournament [here](https://twitch.tv/arcadelegacy). Thanks again to Arcade Legacy.
 
 There were a lot of exciting reveals, with a vast collection of new charts that will come to WACCA Plus sometime in the future. Lets get right to them!
 
