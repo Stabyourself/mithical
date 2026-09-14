@@ -180,6 +180,7 @@ $paddings: 10px;
 .v-btn-toggle {
   padding-left: 10px;
   padding-bottom: 10px;
+  padding-right: 10px;
   flex-wrap: wrap;
   justify-content: center;
 }
