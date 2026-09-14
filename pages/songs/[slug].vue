@@ -172,7 +172,9 @@
         <div v-else>
           <div class="your-rank">
             <span class="label">Your Rank</span>
-            <span class="value">{{ getRankDescription(profile.user_name) }}</span>
+            <span class="value">{{
+              getRankDescription(profile.user_name)
+            }}</span>
           </div>
           <v-table>
             <thead>
@@ -279,6 +281,24 @@
   flex-grow: 1;
   background-size: 150px;
   background-position: bottom 10px right 10px;
+}
+
+@media (max-width: 800px) {
+  .single-song {
+    flex-direction: column;
+  }
+
+  .single-song-cover {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .single-song-details {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 80px;
+  }
 }
 
 .single-song-header {
@@ -402,7 +422,7 @@ const fullUrl = computed(() => {
 
 const filteredSheets = computed(() => {
   return song.value.sheets.filter(
-    (sheet) => sheet.gameVersion <= version.value
+    (sheet) => sheet.gameVersion <= version.value,
   );
 });
 
@@ -456,7 +476,7 @@ function getRankDescription(username) {
 function loadData() {
   leaderboardsLoading.value = ref(true);
   $fetch(
-    `${runtimeConfig.public.apiUrl}/wacca/music/${song.value.id}/highscores/${selectedDifficulty.value}`
+    `${runtimeConfig.public.apiUrl}/wacca/music/${song.value.id}/highscores/${selectedDifficulty.value}`,
   )
     .then((data) => {
       leaderboardsLoading.value = false;
@@ -473,7 +493,7 @@ function loadData() {
 function loadHistograms() {
   histogramsLoading.value = ref(true);
   $fetch(
-    `${runtimeConfig.public.apiUrl}/wacca/music/${song.value.id}/histogram`
+    `${runtimeConfig.public.apiUrl}/wacca/music/${song.value.id}/histogram`,
   )
     .then((data) => {
       histogramsLoading.value = false;
@@ -513,7 +533,7 @@ function loadPlayerHistory() {
   playerHistoryLoading.value = true;
 
   $fetch(
-    `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/music/${song.value.id}`
+    `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/music/${song.value.id}`,
   ).then((data) => {
     playerHistoryLoading.value = false;
     playerHistory.value = data;
@@ -615,7 +635,7 @@ const chartedBy = computed(() => {
 
 const category = computed(() => {
   return waccaCategories.find(
-    (category) => category.ja === song.value.category
+    (category) => category.ja === song.value.category,
   );
 });
 
