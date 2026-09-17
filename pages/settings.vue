@@ -155,19 +155,32 @@
 </template>
 
 <style scoped lang="scss">
+$paddings: 10px;
 .option {
   margin-bottom: 32px;
 
   h2 {
+    padding-left: 10px;
+    padding-top: 5px;
     font-size: 20px;
+    color: white;
   }
 
   p {
-    opacity: 0.6;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    color: rgb(var(--v-theme-primary));
   }
+  border-radius: $paddings;
+  background-color: rgb(var(--v-theme-boxcolor));
+  overflow: hidden;
+  
 }
 
 .v-btn-toggle {
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -178,6 +191,20 @@
 
 .v-btn-group .v-btn {
   min-height: 40px;
+}
+
+.v-slider {
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 15px;
+  justify-content: center;
+}
+
+.v-switch {
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  justify-content: center;
 }
 
 .profile-plate {
@@ -339,6 +366,11 @@
   display: block;
   font-size: 2.6cqw;
   opacity: 0.9;
+}
+
+.v-theme--waccaOled .option,
+.v-theme--waccaOledPlus .option {
+  outline: solid 1px white;
 }
 </style>
 
