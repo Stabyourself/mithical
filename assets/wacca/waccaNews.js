@@ -47,7 +47,7 @@ First, a new WACCA Plus Original 14+!
 
 This new song will come to WACCA Plus in a future update.
 
-In the meantime, you can take a listen to the song on [YouTube](https://www.youtube.com/watch?v=QFWSRDiHpb0) or [SoundCloud](https://soundcloud.com/lun_d/lighthouse).
+In the meantime, you can take a listen to the song on [YouTube](https://www.youtube.com/watch?v=QFWSRDiHpb0), [SoundCloud](https://soundcloud.com/lun_d/lighthouse) or [Spotify](https://open.spotify.com/track/6NfUspcgTIdaRfEMXIfXfB).
 
 A big thank you to Lundy for the song, as well as Transendium for the excellent music video, and TenHeavenly for the amazing jacket art. Make sure to follow all three of them on their socials!
 
