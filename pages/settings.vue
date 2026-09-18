@@ -1610,6 +1610,13 @@ const optionCategories = [
             },
             value: 303001,
           },
+          {
+            text: {
+              ja: "プラス",
+              en: "Plus",
+            },
+            value: 403001,
+          },
         ],
       },
 
