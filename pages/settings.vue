@@ -149,6 +149,22 @@
             :false-value="0"
           ></v-switch>
         </div>
+
+        <div v-if="option.type == 'select'">
+          <v-select
+            class="nav-select"
+            v-model="profile.options[option.id]"
+            :items="option.choices.map((choice) => ({
+              title: choice.text[language],
+              value: choice.value,
+            }))"
+            color="primary"
+            item-title="title"
+            item-value="value"
+            hide-details
+            no-data-text="Missing Setting"
+          ></v-select>
+        </div>
       </div>
     </v-container>
   </WaccaProfileRequired>
@@ -366,6 +382,13 @@ $paddings: 10px;
   display: block;
   font-size: 2.6cqw;
   opacity: 0.9;
+}
+
+.nav-select{
+  :deep(.v-select__selection),
+  :deep(.v-select__selection-text){
+    white-space: normal;
+  }
 }
 
 .v-theme--waccaOled .option,
@@ -628,8 +651,24 @@ const optionCategories = [
           en: "Choose whether to mirror the notes.",
           ja: "ノーツをミラーするか設定を変更します。",
         },
-        type: "toggle",
+        type: "select",
         default: 0,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -670,7 +709,7 @@ const optionCategories = [
           en: "Choose the bonus effect.",
           ja: "ボーナス効果の設定を行います。",
         },
-        type: "options",
+        type: "select",
         default: 1,
         choices: [
           {
@@ -700,7 +739,7 @@ const optionCategories = [
           en: "Set the ability to give-up a song mid-game.",
           ja: "プレイ中の「途中終了」を設定できます。",
         },
-        type: "options",
+        type: "select",
         default: 0,
         choices: [
           {
@@ -758,8 +797,24 @@ const optionCategories = [
           en: "You can turn choose to quickly skip Gates.",
           ja: "ゲート進行の簡易演出を設定できます。",
         },
-        type: "toggle",
+        type: "select",
         default: 0,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -772,8 +827,24 @@ const optionCategories = [
           en: "You can turn choose to quickly skip WACCA Bingo.",
           ja: "WACCA BINGOの簡易演出を設定できます。",
         },
-        type: "toggle",
+        type: "select",
         default: 0,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
     ],
   },
@@ -808,7 +879,7 @@ const optionCategories = [
           en: "Choose how songs with videos are displayed before playing them.",
           ja: "動画再生対応楽曲をプレイする前に動画再生を確認するか設定を変更します。",
         },
-        type: "options",
+        type: "select",
         default: 0,
         choices: [
           {
@@ -845,7 +916,7 @@ const optionCategories = [
           en: 'Adjust the display position of judgments such as "Marvelous".',
           ja: "「Ｍａｒｖｅｌｏｕｓ」などの判定の表示位置を調整します。",
         },
-        type: "options",
+        type: "select",
         default: 0,
         choices: [
           {
@@ -889,7 +960,24 @@ const optionCategories = [
           en: 'Choose whether to display "FAST/LATE" for non-Marvelous hits.',
           ja: "「Ｍａｒｖｅｌｏｕｓ」以外の判定の時に「ＦＡＳＴ／ＬＡＴＥ」の表示を追加できます。",
         },
-        type: "toggle",
+        type: "select",
+        default: 0,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -912,8 +1000,24 @@ const optionCategories = [
           en: "You can show or hide barlines.",
           ja: "小節線の表示を設定できます。",
         },
-        type: "toggle",
-        default: 1,
+        type: "select",
+        default: 0,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -972,7 +1076,7 @@ const optionCategories = [
           en: "Choose which method to display your score.",
           ja: "ゲーム中のスコアの表示方式を変更できます。",
         },
-        type: "options",
+        type: "select",
         default: 0,
         choices: [
           {
@@ -1002,7 +1106,7 @@ const optionCategories = [
           en: "Choose how many guidelines are displayed.",
           ja: "ガイドラインの間隔線を設定できます。",
         },
-        type: "options",
+        type: "select",
         default: 1,
         choices: [
           {
@@ -1074,7 +1178,7 @@ const optionCategories = [
           en: "Adjust information displayed in the screen center.",
           ja: "画面中央表示を設定できます。",
         },
-        type: "options",
+        type: "select",
         default: 1,
         choices: [
           {
@@ -1146,8 +1250,24 @@ const optionCategories = [
           en: "Adjust how rankings are shown in multiplayer.",
           ja: "マルチプレイ中の順位の表示を設定できます。",
         },
-        type: "toggle",
+        type: "select",
         default: 1,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -1160,8 +1280,24 @@ const optionCategories = [
           en: "Adjust the display of Stage Up Emblems.",
           ja: "ステージアップエンブレムの表示を設定できます。",
         },
-        type: "toggle",
+        type: "select",
         default: 1,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -1174,8 +1310,24 @@ const optionCategories = [
           en: "Adjust the display of ratings.",
           ja: "レーティングの表示を設定できます。",
         },
-        type: "toggle",
+        type: "select",
         default: 1,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -1188,8 +1340,24 @@ const optionCategories = [
           en: "Adjust player level display.",
           ja: "プレイヤーレベルの表示を設定できます。",
         },
-        type: "toggle",
+        type: "select",
         default: 1,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -1212,8 +1380,24 @@ const optionCategories = [
           en: "Choose whether to show the key beam effect.",
           ja: "キービームの表示を設定できます。",
         },
-        type: "toggle",
+        type: "select",
         default: 1,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -1236,8 +1420,24 @@ const optionCategories = [
           en: "Inverts the slide color gradient.",
           ja: "スライドのグラデーションを反転します。",
         },
-        type: "toggle",
+        type: "select",
         default: 0,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -1260,8 +1460,24 @@ const optionCategories = [
           en: "Choose whether to show shooting touch effects.",
           ja: "タッチエフェクト(シュート)の表示を設定できます。",
         },
-        type: "toggle",
+        type: "select",
         default: 1,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -1274,8 +1490,24 @@ const optionCategories = [
           en: "Choose whether to show R note effects.",
           ja: "Ｒノーツエフェクトの表示を設定できます。",
         },
-        type: "toggle",
+        type: "select",
         default: 1,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
@@ -1306,7 +1538,7 @@ const optionCategories = [
           en: "Choose which popping touch effects are shown. (NEEDS ITEMS)",
           ja: "タッチエフェクト(ポップ)の表示を設定できます。",
         },
-        type: "options",
+        type: "select",
         default: 312001,
         choices: [
           {
@@ -1347,7 +1579,7 @@ const optionCategories = [
           en: "Change the color pattern of the WACCA console. (NEEDS ITEMS)",
           ja: "ＷＡＣＣＡコンソールのカラーパターンを変更します。",
         },
-        type: "options",
+        type: "select",
         default: 303001,
         choices: [
           {
@@ -1378,6 +1610,13 @@ const optionCategories = [
             },
             value: 303001,
           },
+          {
+            text: {
+              ja: "プラス",
+              en: "Plus",
+            },
+            value: 403001,
+          },
         ],
       },
 
@@ -1391,7 +1630,7 @@ const optionCategories = [
           en: "Set the color of ← Slide Notes.",
           ja: "←スライドノーツの色を設定します。",
         },
-        type: "options",
+        type: "select",
         default: 4,
         choices: colorOptions,
       },
@@ -1406,7 +1645,7 @@ const optionCategories = [
           en: "Set the color of → Slide Notes.",
           ja: "→スライドノーツの色を設定します。",
         },
-        type: "options",
+        type: "select",
         default: 3,
         choices: colorOptions,
       },
@@ -1421,7 +1660,7 @@ const optionCategories = [
           en: "Set the color of ↑ Slide Notes.",
           ja: "↑スナップノーツの色を設定します。",
         },
-        type: "options",
+        type: "select",
         default: 1,
         choices: colorOptions,
       },
@@ -1436,7 +1675,7 @@ const optionCategories = [
           en: "Set the color of ↓ Slide Notes.",
           ja: "↓スライドノーツの色を設定します。",
         },
-        type: "options",
+        type: "select",
         default: 2,
         choices: colorOptions,
       },
@@ -1451,7 +1690,7 @@ const optionCategories = [
           en: "Set the color of Touch Notes.",
           ja: "タッチノーツの色を設定します。",
         },
-        type: "options",
+        type: "select",
         default: 5,
         choices: colorOptions,
       },
@@ -1466,7 +1705,7 @@ const optionCategories = [
           en: "Set the color of Chain Notes.",
           ja: "チェインノーツの色を設定します。",
         },
-        type: "options",
+        type: "select",
         default: 6,
         choices: colorOptions,
       },
@@ -1481,7 +1720,7 @@ const optionCategories = [
           en: "Set the color of Hold Notes.",
           ja: "ホールドノーツの色を設定します。",
         },
-        type: "options",
+        type: "select",
         default: 7,
         choices: colorOptions,
       },
@@ -1500,7 +1739,7 @@ const optionCategories = [
           en: "Change the sound effect when notes are touched. (NEEDS ITEMS?)",
           ja: "ノーツをタッチしたときのＳＥを変更します。",
         },
-        type: "options",
+        type: "select",
         default: 105001,
         choices: [
           {
@@ -1624,8 +1863,24 @@ const optionCategories = [
           en: "You can turn character voices on or off.",
           ja: "プレイ中（演奏中）のキャラクター音声をＯＮ／ＯＦＦできます",
         },
-        type: "toggle",
+        type: "select",
         default: 1,
+        choices: [
+          {
+            text: {
+              ja: "ＯＦＦ",
+              en: "OFF",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "ＯＮ",
+              en: "ON",
+            },
+            value: 1,
+          },
+        ],
       },
 
       {
