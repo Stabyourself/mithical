@@ -35,7 +35,7 @@
 <style scoped lang="scss">
 $news-bg-alpha: 0.65;
 $news-padding-x: 24px;
-$news-padding-y: 20px;
+$news-padding-y: 14px;
 
 .news-post {
   position: relative;
@@ -53,7 +53,6 @@ $news-padding-y: 20px;
 
 .news-content {
   padding: $news-padding-y $news-padding-x;
-  padding-top: $news-padding-y + 10px;
   padding-bottom: $news-padding-y;
   transition: padding-bottom 300ms linear;
 
