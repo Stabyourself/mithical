@@ -162,7 +162,6 @@
             item-title="title"
             item-value="value"
             hide-details
-            single-line
             no-data-text="Missing Setting"
           ></v-select>
         </div>
@@ -383,6 +382,13 @@ $paddings: 10px;
   display: block;
   font-size: 2.6cqw;
   opacity: 0.9;
+}
+
+.nav-select{
+  :deep(.v-select__selection),
+  :deep(.v-select__selection-text){
+    white-space: normal;
+  }
 }
 
 .v-theme--waccaOled .option,
