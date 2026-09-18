@@ -115,7 +115,7 @@
                       v-model="filter.model"
                       :min="filter.min"
                       :max="filter.max"
-                      :step="filter.step"
+                      :step="null"
                       thumb-label
                       color="primary"
                       hide-details
