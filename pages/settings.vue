@@ -61,7 +61,19 @@
 
       <v-dialog v-model="isEditNameDialogOpen" max-width="420">
         <v-card>
-          <v-card-title>Change name</v-card-title>
+          <v-card-title>
+            <div class="d-flex justify-space-between align-center">
+              Change name
+              <v-btn
+                icon
+                variant="plain"
+                aria-label="Close"
+                @click="isEditNameDialogOpen = false"
+              >
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
           <v-card-text>
             <v-text-field
               v-model="editedName"
