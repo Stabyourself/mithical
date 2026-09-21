@@ -15285,7 +15285,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 140,
     imageName: "S04/uT_J_S04_134.webp",
-    category: "東方アレンジ",
+    category: "バラエティ",
     releaseDate: "2026-08-31",
     sheets: [
       {
