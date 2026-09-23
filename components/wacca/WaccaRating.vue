@@ -11,7 +11,7 @@
   }
 
   100% {
-    background-position: -100px, 0px;
+    background-position: 100px, 0px;
   }
 }
 
@@ -21,7 +21,7 @@
   }
 
   100% {
-    background-position: -100px 0, -100px, 0px;
+    background-position: 100px 0, 100px, 0px;
   }
 }
 
@@ -38,13 +38,13 @@
 @mixin animated {
   background-repeat: repeat;
   background-size: 100px auto, 100% auto;
-  animation: rate_animation 4s linear infinite;
+  animation: rate_animation 6s linear infinite;
 }
 
 @mixin rainbnow-animated {
   background-repeat: repeat;
   background-size: 100px auto, 100px auto;
-  animation: rainbow_rate_animation 4s linear infinite;
+  animation: rainbow_rate_animation 6s linear infinite;
 }
 
 .rating-white {
