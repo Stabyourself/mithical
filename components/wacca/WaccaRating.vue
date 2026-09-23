@@ -21,7 +21,7 @@
   }
 
   100% {
-    background-position: -100px 0, 100px, 0;
+    background-position: -100px 0, 200px 0;
   }
 }
 
@@ -30,9 +30,14 @@
   background-clip: text !important;
   color: transparent;
   text-shadow: none;
-  font-weight: 800;
+  font-family: "TT_UDKakugoC60-B", sans-serif ;
+  font-weight: 700;
+  font-stretch: 200%;
+  letter-spacing: -0.18rem;
   background-size: 100% 60%;
   background-position: center center;
+  padding-inline: 0.1em;
+  margin-inline: -0.1em;
 }
 
 @mixin animated {
@@ -43,7 +48,7 @@
 
 @mixin rainbnow-animated {
   background-repeat: repeat;
-  background-size: 100px auto, 100px auto;
+  background-size: 100px auto, 200px auto;
   animation: rainbow_rate_animation 6s linear infinite;
 }
 
