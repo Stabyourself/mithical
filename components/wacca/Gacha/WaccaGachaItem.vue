@@ -251,20 +251,20 @@ const props = defineProps({
   hideowned: Boolean,
 });
 
+const itemLists = {
+  5: waccaTitles,
+  6: waccaIcons,
+  10: waccaSymbolColors,
+  11: waccaSoundEffects,
+  15: waccaNavigators,
+  16: waccaUserPlates,
+};
+const itemMaps = {};
+
 function findItem(kind, id) {
-  if (kind == 5) {
-    return waccaTitles.find((title) => title.id == id);
-  } else if (kind == 6) {
-    return waccaIcons.find((icon) => icon.id == id);
-  } else if (kind == 10) {
-    return waccaSymbolColors.find((symbolColor) => symbolColor.id == id);
-  } else if (kind == 11) {
-    return waccaSoundEffects.find((soundEffect) => soundEffect.id == id);
-  } else if (kind == 15) {
-    return waccaNavigators.find((navigator) => navigator.id == id);
-  } else if (kind == 16) {
-    return waccaUserPlates.find((userPlate) => userPlate.id == id);
-  }
+  if (!itemLists[kind]) return undefined;
+  itemMaps[kind] ??= new Map(itemLists[kind].map((item) => [item.id, item]));
+  return itemMaps[kind].get(Number(id));
 }
 
 function itemName(kind, id) {
@@ -280,7 +280,6 @@ const item = computed(() => {
   return findItem(props.kind, props.id);
 });
 
-const owned = computed(() => {
-  return profile.value.items.some((item) => item.item_id == props.id);
-});
+const isOwned = useOwnedItems();
+const owned = computed(() => isOwned(Number(props.id)));
 </script>

@@ -300,7 +300,7 @@ const profile = useState("profile");
 const UNDATED = "1970-01-01T00:00:00+00:00";
 
 const selectedDifficulty = ref(props.sheets.length);
-const highscores = ref([]);
+const highscores = shallowRef([]);
 const loading = ref(false);
 const error = ref(null);
 

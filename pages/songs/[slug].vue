@@ -331,12 +331,12 @@ const filteredSheets = computed(() => {
 });
 
 const yourScoreDifficulty = ref(null);
-const histograms = ref([]);
+const histograms = shallowRef([]);
 const histogramsLoading = ref(false);
 const histogramsLoadingError = ref();
 const histogramView = ref("distribution");
 
-const playerHistory = ref([]);
+const playerHistory = shallowRef([]);
 
 function loadHistograms() {
   histogramsLoading.value = true;

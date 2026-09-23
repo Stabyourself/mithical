@@ -175,13 +175,14 @@
       </div>
 
       <div class="songs-result-count">
-        Showing {{ songsFiltered.length }} of {{ getSongs().length }} songs
+        Showing {{ songsFiltered.length }} of {{ totalSongs }} songs
       </div>
 
       <div class="songs">
         <div v-for="song in songsPaginated" :key="song.id">
           <NuxtLink
             :to="`/songs/${getSongSlug(song, songsForVersion)}`"
+            :prefetch="false"
             style="text-decoration: none"
           >
             <WaccaSong
@@ -377,6 +378,11 @@ const profile = useState("profile");
 const version = useState("version");
 
 const songsForVersion = computed(() => getSongs(version.value));
+const totalSongs = computed(
+  () =>
+    songsForVersion.value.filter((song) => song.gameVersion <= version.value)
+      .length,
+);
 
 definePageMeta({
   middleware: ["auth"],

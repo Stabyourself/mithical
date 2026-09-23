@@ -439,6 +439,9 @@ const yourMarker = {
   },
 };
 
+let tooltipKey = null;
+let tooltipSize = { width: 0, height: 0 };
+
 function externalTooltip({ chart, tooltip }) {
   const el = tooltipEl.value;
   if (!el) return;
@@ -449,6 +452,29 @@ function externalTooltip({ chart, tooltip }) {
     el.style.opacity = 0;
     return;
   }
+
+  const place = () => {
+    const { width, height } = tooltipSize;
+    const gap = 12;
+    let left = tooltip.caretX + gap;
+    if (left + width > chart.width) left = tooltip.caretX - gap - width;
+    left = Math.max(0, left);
+    const top = Math.max(
+      0,
+      Math.min(tooltip.caretY - height / 2, chart.height - height),
+    );
+
+    el.style.opacity = 1;
+    el.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
+  };
+
+  // same bar as last time, just move it
+  const key = `${props.view}:${point.dataIndex}`;
+  if (key === tooltipKey) {
+    place();
+    return;
+  }
+  tooltipKey = key;
 
   const fmt = (n) => n.toLocaleString("en-US");
   const pct = (n) => `${n < 10 ? n.toFixed(1) : Math.round(n)}%`;
@@ -476,20 +502,10 @@ function externalTooltip({ chart, tooltip }) {
           isYours: point.dataIndex === yourIndex.value,
         };
 
+  // only measure when the content changed
   nextTick(() => {
-    const width = el.offsetWidth;
-    const height = el.offsetHeight;
-    const gap = 12;
-    let left = tooltip.caretX + gap;
-    if (left + width > chart.width) left = tooltip.caretX - gap - width;
-    left = Math.max(0, left);
-    const top = Math.max(
-      0,
-      Math.min(tooltip.caretY - height / 2, chart.height - height),
-    );
-
-    el.style.opacity = 1;
-    el.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
+    tooltipSize = { width: el.offsetWidth, height: el.offsetHeight };
+    place();
   });
 }
 
@@ -498,6 +514,7 @@ let lastView = props.view;
 
 function render() {
   if (!chart) return;
+  tooltipKey = null;
 
   const datasets = buildDatasets();
   chart.data.labels = buckets.value.list.map((_, i) => i);
@@ -541,7 +558,6 @@ onBeforeUnmount(() => {
 watch(
   [() => props.scores, () => props.score, () => props.view, () => props.difficulty],
   render,
-  { deep: true },
 );
 watch(themeName, () => nextTick(render));
 </script>
