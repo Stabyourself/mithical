@@ -4,16 +4,13 @@
       v-for="(difficulty, i) in filteredSheets"
       :key="i"
       class="song-difficulty"
-      @click="difficultyClick(i + 1)"
-      @mouseover="hover = i + 1"
-      @mouseleave="hover = null"
     >
       <WaccaMedal :medal="medal(i)" />
 
       <WaccaDifficultyPill
         :i="i + 1"
         :difficulty="difficulty.difficulty"
-        :class="{ active: isActiveDifficulty(i + 1) }"
+        class="active"
       />
 
       <div
@@ -32,7 +29,6 @@
 <style scoped lang="scss">
 .song-difficulty {
   margin-bottom: 5px;
-  cursor: pointer;
 }
 
 .song-difficulty-bottom {
@@ -69,12 +65,9 @@
 const props = defineProps({
   song: Object,
   playerData: Object,
-  selectedDifficulty: Number,
-  onDifficultyClick: Function,
 });
 
 const version = useState("version");
-const hover = ref(null);
 
 const grades = [
   "grade_d_count",
@@ -117,18 +110,6 @@ function medal(difficulty) {
   }
 
   return "none";
-}
-
-function isActiveDifficulty(index) {
-  return !props.selectedDifficulty || index === props.selectedDifficulty || hover.value == index
-}
-
-function difficultyClick(index) {
-  if (!props.onDifficultyClick) {
-    return false
-  }
-
-  return props.onDifficultyClick(index)
 }
 
 const filteredSheets = computed(() => {

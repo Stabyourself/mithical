@@ -77,20 +77,18 @@
       <WaccaSongSheets
         :song="song"
         :player-data="profile.songs[song.id]"
-        :selected-difficulty="yourScoreDifficulty"
-        :on-difficulty-click="selectYourScoreDifficulty"
       />
       <WaccaChart
-        ref="chart"
         :player-history="playerHistory"
         :loading="playerHistoryLoading"
         :song="song"
         :difficulty-filter="yourScoreDifficulty"
+        @select-difficulty="selectYourScoreDifficulty"
       />
     </v-container>
 
     <v-container class="elevation-1 mt-4">
-      <h2 class="container-heading">
+      <h2 class="container-heading histograms-heading">
         Histograms
 
         <v-tooltip location="end">
@@ -104,6 +102,18 @@
             network.</span
           >
         </v-tooltip>
+
+        <v-btn-toggle
+          v-model="histogramView"
+          mandatory
+          density="compact"
+          variant="outlined"
+          divided
+          class="histogram-toggle"
+        >
+          <v-btn value="distribution" size="small">Distribution</v-btn>
+          <v-btn value="cumulative" size="small">Cumulative</v-btn>
+        </v-btn-toggle>
       </h2>
       <div v-if="histogramsLoading" class="d-flex justify-center">
         <v-progress-circular
@@ -125,8 +135,9 @@
             v-for="(histogram, i) in histograms"
             :key="i"
             :scores="histogram.score_entries"
-            :color="waccaDifficulties[histogram.music_difficulty - 1].color"
+            :difficulty="histogram.music_difficulty"
             :label="waccaDifficulties[histogram.music_difficulty - 1].name"
+            :view="histogramView"
             :score="
               profile.songs[song.id]?.scores[histogram.music_difficulty - 1]
                 ?.score
@@ -138,119 +149,17 @@
 
     <v-container class="elevation-1 mt-4">
       <h2 class="container-heading">Leaderboards</h2>
-      <div class="song-sheets difficulty-selection mt-4">
-        <div
-          v-for="(difficulty, i) in filteredSheets"
-          :key="i"
-          class="song-difficulty"
-        >
-          <WaccaDifficultyPill
-            v-ripple
-            :i="i + 1"
-            :difficulty="difficulty.difficulty"
-            :class="{ active: i + 1 == selectedDifficulty }"
-            @click="selectDifficulty(i + 1)"
-          />
-        </div>
-      </div>
-
-      <div v-if="leaderboardsLoading" class="d-flex justify-center py-5">
-        <v-progress-circular
-          indeterminate
-          color="primary"
-          :size="80"
-          :width="10"
-          class="mt-4"
-        ></v-progress-circular>
-      </div>
-
-      <div v-else>
-        <v-alert v-if="leaderboardsLoadingError" type="error" class="mt-4">{{
-          leaderboardsLoadingError
-        }}</v-alert>
-
-        <div v-else>
-          <div class="your-rank">
-            <span class="label">Your Rank</span>
-            <span class="value">{{
-              getRankDescription(profile.user_name)
-            }}</span>
-          </div>
-          <v-table>
-            <thead>
-              <tr>
-                <th width="1%">Rank</th>
-                <th>Name</th>
-                <th>Score</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr
-                v-for="(score, i) in highscores"
-                :key="i"
-                :class="{ highlight: score.user_name == profile.user_name }"
-              >
-                <td class="text-right">
-                  <span v-if="i == 0 || highscores[i - 1].score != score.score">
-                    {{ i + 1 }}
-                  </span>
-                </td>
-                <td>
-                  <WaccaIcon
-                    class="highscore-icon"
-                    :icon="score.user_icon_id"
-                  />
-                  {{ score.user_name }}
-                </td>
-                <td>
-                  <WaccaGrade
-                    class="highscore-grade"
-                    :grade="fillGrade(score.grade, score.score)"
-                  />
-                  {{ score.score }}
-                </td>
-                <td>{{ formatDateLeaderboard(score.user_play_date) }}</td>
-              </tr>
-
-              <tr v-if="highscores.length === 0">
-                <td colspan="5" class="text-center">No scores yet!</td>
-              </tr>
-            </tbody>
-          </v-table>
-        </div>
-      </div>
+      <WaccaLeaderboard
+        :song="song"
+        :sheets="filteredSheets"
+        :histograms="histograms"
+        :player-history="playerHistory"
+      />
     </v-container>
   </WaccaProfileRequired>
 </template>
 
 <style scoped lang="scss">
-.your-rank {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
-  margin: 0 0 16px;
-  padding: 6px 14px;
-  border-radius: 8px;
-  background: rgba(var(--v-theme-primary), 0.08);
-  border: 1px solid rgba(var(--v-theme-primary), 0.25);
-
-  .label {
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    opacity: 0.65;
-  }
-
-  .value {
-    font-size: 1rem;
-    font-weight: 700;
-    color: rgb(var(--v-theme-primary));
-  }
-}
-
 .v-container {
   padding: 0;
   background: rgb(var(--v-theme-surface));
@@ -323,17 +232,12 @@
   font-weight: 700;
 }
 
-.highscore-grade,
-.highscore-icon {
-  height: 40px;
-  vertical-align: middle;
-}
-
 .histograms {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 300px 300px;
   gap: 10px;
+  padding-bottom: 10px;
 
   .histogram {
     width: 100%;
@@ -346,35 +250,35 @@
   }
 }
 
-.difficulty-selection {
-  :deep(.song-difficulty-pill) {
-    cursor: pointer;
+.histograms-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.histogram-toggle {
+  height: 30px !important;
+  margin-left: auto;
+
+  .v-btn {
+    text-transform: none;
+    letter-spacing: normal;
   }
 }
 
-tr.highlight {
-  background-color: rgba(var(--v-theme-primary), 0.1);
-}
-
-.your-rank {
-  margin-top: 16px;
-  margin-left: 16px;
-}
 </style>
 
 <script setup>
 import { Chart, registerables } from "chart.js";
 import "chartjs-adapter-moment";
 import zoomPlugin from "chartjs-plugin-zoom";
-import annotationPlugin from "chartjs-plugin-annotation";
 
 Chart.register(zoomPlugin);
 Chart.register(...registerables);
-Chart.register(annotationPlugin);
 
 import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
-import waccaGradeBorders from "~/assets/wacca/waccaGradeBorders";
 import waccaCategories from "~/assets/wacca/waccaCategories";
 import { getSongSlug, findSongBySlug } from "~/assets/wacca/songSlug.js";
 
@@ -427,71 +331,15 @@ const filteredSheets = computed(() => {
 });
 
 const yourScoreDifficulty = ref(null);
-const selectedDifficulty = ref(filteredSheets.value.length);
-const highscores = ref([]);
-const leaderboardsLoading = ref(false);
-const leaderboardsLoadingError = ref();
 const histograms = ref([]);
 const histogramsLoading = ref(false);
 const histogramsLoadingError = ref();
+const histogramView = ref("distribution");
 
 const playerHistory = ref([]);
 
-function sortScores(scores) {
-  return scores.sort((a, b) => {
-    // When score is identical, prefer the user who achieved it first
-    if (a.score === b.score) {
-      return new Date(a.user_play_date) - new Date(b.user_play_date);
-    }
-    return b.score - a.score;
-  });
-}
-
-function getRankDescription(username) {
-  if (!highscores.value) {
-    return "Unknown";
-  }
-
-  // If there is more than one user with the same score, the displayed rank is equal to the first listed player with that score
-  let playerRank;
-  let currentRanking;
-  let currentScore;
-  for (let i = 0; i < highscores.value.length; i++) {
-    if (!currentScore || highscores.value[i].score < currentScore) {
-      currentScore = highscores.value[i].score;
-      currentRanking = i + 1;
-    }
-    if (highscores.value[i].user_name === username) {
-      playerRank = currentRanking;
-      break;
-    }
-  }
-
-  const scoreCount =
-    highscores.value.length === 100 ? "100+" : highscores.value.length;
-
-  return !playerRank ? "Unranked" : `${playerRank} / ${scoreCount}`;
-}
-
-function loadData() {
-  leaderboardsLoading.value = ref(true);
-  $fetch(
-    `${runtimeConfig.public.apiUrl}/wacca/music/${song.value.id}/highscores/${selectedDifficulty.value}`,
-  )
-    .then((data) => {
-      leaderboardsLoading.value = false;
-      highscores.value = sortScores(data);
-      leaderboardsLoadingError.value = null;
-    })
-    .catch((err) => {
-      leaderboardsLoading.value = false;
-      leaderboardsLoadingError.value =
-        "Couldn't reach the API. Please try again later.";
-    });
-}
-
 function loadHistograms() {
-  histogramsLoading.value = ref(true);
+  histogramsLoading.value = true;
   $fetch(
     `${runtimeConfig.public.apiUrl}/wacca/music/${song.value.id}/histogram`,
   )
@@ -512,19 +360,8 @@ function selectYourScoreDifficulty(difficulty) {
   const filterValue =
     yourScoreDifficulty.value === difficulty ? null : difficulty;
   yourScoreDifficulty.value = filterValue;
-  // setTimeout is necessary so the chart reloads on the next update cycle, after yourScoreDifficulty is updated.
-  setTimeout(() => {
-    if (chart.value) {
-      chart.value.difficultyFilter(filterValue);
-    }
-  }, 0);
 }
 
-function selectDifficulty(difficulty) {
-  selectedDifficulty.value = difficulty;
-  loadData();
-}
-loadData();
 loadHistograms();
 
 const playerHistoryLoading = ref(true);
@@ -540,15 +377,6 @@ function loadPlayerHistory() {
   });
 }
 
-const chart = ref(null);
-
-watch(playerHistory, () => {
-  setTimeout(() => {
-    if (chart.value) {
-      chart.value.updateChart();
-    }
-  }, 0); //?
-});
 watch(activeCard, loadPlayerHistory);
 loadPlayerHistory();
 
@@ -598,27 +426,6 @@ function formatDate(date) {
   let month = strDate.slice(4, 6);
   let day = strDate.slice(6, 8);
   return new Date(`${year}-${month}-${day}`).toLocaleDateString();
-}
-
-function formatDateLeaderboard(date) {
-  if (date == "1970-01-01T00:00:00+00:00") {
-    return new Date("2022-09-01T00:00:00+09:00").toLocaleString();
-  }
-
-  return new Date(date).toLocaleString();
-}
-
-function fillGrade(grade, score) {
-  if (grade > 0) {
-    return grade;
-  }
-
-  // infer the grade from score
-  for (let i = 0; i < waccaGradeBorders.length; i++) {
-    if (score >= waccaGradeBorders[i].min) {
-      return waccaGradeBorders[i].grade;
-    }
-  }
 }
 
 const chartedBy = computed(() => {
