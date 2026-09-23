@@ -11,7 +11,7 @@
   }
 
   100% {
-    background-position: -100px, 0px;
+    background-position: 0px, 0px;
   }
 }
 
@@ -30,21 +30,18 @@
 }
 
 .rating {
-  -webkit-text-stroke: 0.02em #454743;
   background-clip: text !important;
   color: transparent;
   text-shadow: none;
-  font-family: Arial, sans-serif;
+  font-family: "RateFont", sans-serif;
   font-weight: 800;
-  letter-spacing: -0.05em;
 }
 
 @mixin animated {
   background-repeat: repeat;
   background-size:
-    100px auto,
-    100% auto;
-  animation: rate_animation 6s linear infinite;
+    80px auto,
+    60px auto;
 }
 
 @mixin rainbnow-animated {
@@ -91,7 +88,7 @@
 
 .rating-gold {
   background-color: #fddb2f;
-  background-image: url("/wacca/img/uT_PRate_Sparkles.webp");
+  background-image: url("/wacca/img/RatePattern2.webp"), url("/wacca/img/gold1.webp");
   @include animated;
 }
 
