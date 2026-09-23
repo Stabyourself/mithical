@@ -11,7 +11,7 @@
   }
 
   100% {
-    background-position: 100px, 0px;
+    background-position: -100px, 0px;
   }
 }
 
@@ -21,7 +21,7 @@
   }
 
   100% {
-    background-position: 100px 0, 100px, 0px;
+    background-position: -100px 0, 100px, 0;
   }
 }
 
