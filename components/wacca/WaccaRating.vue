@@ -15,6 +15,16 @@
   }
 }
 
+@keyframes rainbow_rate_animation {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+
+  100% {
+    background-position: -100px 0, -100px, 0px;
+  }
+}
+
 .rating {
   -webkit-text-stroke: 0.02em #454743;
   background-clip: text !important;
@@ -29,6 +39,12 @@
   background-repeat: repeat;
   background-size: 100px auto, 100% auto;
   animation: rate_animation 4s linear infinite;
+}
+
+@mixin rainbnow-animated {
+  background-repeat: repeat;
+  background-size: 100px auto, 100px auto;
+  animation: rainbow_rate_animation 4s linear infinite;
 }
 
 .rating-white {
@@ -74,25 +90,25 @@
 .rating-rainbow {
   background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
     url("/wacca/img/rainbow.webp");
-  @include animated;
+  @include rainbnow-animated;
 }
 
 .rating-rainbow2 {
   background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
     url("/wacca/img/rainbow2.webp");
-  @include animated;
+  @include rainbnow-animated;
 }
 
 .rating-rainbow3 {
   background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
     url("/wacca/img/rainbow3.webp");
-  @include animated;
+  @include rainbnow-animated;
 }
 
 .rating-rainbow4 {
   background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
     url("/wacca/img/rainbow4.webp");
-  @include animated;
+  @include rainbnow-animated;
 }
 </style>
 
