@@ -26,7 +26,6 @@
 }
 
 .rating {
-  -webkit-text-stroke: 0.02em #454743;
   background-clip: text !important;
   color: transparent;
   text-shadow: none;
