@@ -33,7 +33,7 @@
   font-family: "TT_UDKakugoC60-B", sans-serif ;
   font-weight: 700;
   font-stretch: 200%;
-  letter-spacing: -0.18rem;
+  letter-spacing: -0.13em;
   background-size: 100% 60%;
   background-position: center center;
   padding-inline: 0.1em;
