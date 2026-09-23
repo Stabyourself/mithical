@@ -24,8 +24,8 @@
 
   100% {
     background-position:
-      -100px 0,
-      200px 0;
+      -3em 0,
+      6em 0;
   }
 }
 
@@ -40,15 +40,15 @@
 @mixin animated {
   background-repeat: repeat;
   background-size:
-    80px auto,
-    60px auto;
+    2.5em auto,
+    2em auto;
 }
 
 @mixin rainbnow-animated {
   background-repeat: repeat;
   background-size:
-    100px auto,
-    200px auto;
+    3em auto,
+    6em auto;
   animation: rainbow_rate_animation 6s linear infinite;
 }
 
