@@ -57,16 +57,14 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-import getSongs from "~~/assets/wacca/getSongs.js";
+import { getSongById } from "~~/assets/wacca/getSongs.js";
 
 const profile = useState("profile");
 const version = useState("version");
 
 const playlogFiltered = computed(() => {
   return profile.value.playlog.filter((play) => {
-    let song = getSongs(version.value).find(
-      (song) => song.id === play.info.music_id
-    );
+    let song = getSongById(version.value, play.info.music_id);
     if (!song) {
       return false;
     }

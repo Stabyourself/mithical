@@ -28,6 +28,7 @@
 </style>
 
 <script setup>
+import { toRaw } from "vue";
 import getSongs from "~/assets/wacca/getSongs.js";
 
 const theme = useState("theme");
@@ -66,22 +67,16 @@ async function loadProfile() {
   }
 }
 
-function findMusic(song, difficulty) {
-  return profile.value.music.find((music) => {
-    return music.music_id === song.id && music.music_difficulty === difficulty;
-  });
-}
-
 // getting the song and sheet data by id/difficulty
-// is a lot of .find so we cache them in playerData
-function cacheSongInfo(song) {
-  let favorite = profile.value.favorite_music_entries.includes(song.id);
+// is a lot of lookups so we cache them in playerData
+function cacheSongInfo(song, musicByKey, favorites) {
+  let favorite = favorites.has(song.id);
   let playCount = 0;
   let rating = 0;
   let scores = [];
 
   for (let difficulty = 1; difficulty <= song.sheets.length; difficulty++) {
-    let music = findMusic(song, difficulty);
+    let music = musicByKey.get(`${song.id}-${difficulty}`);
 
     if (music) {
       playCount += music.play_count;
@@ -113,10 +108,21 @@ function selectVersion() {
 }
 
 function cachePlayerSongs() {
-  profile.value.songs = [];
+  // raw data so we're not going through vue's proxies for every lookup
+  const raw = toRaw(profile.value);
+  const musicByKey = new Map(
+    raw.music.map((music) => [
+      `${music.music_id}-${music.music_difficulty}`,
+      music,
+    ]),
+  );
+  const favorites = new Set(raw.favorite_music_entries);
+
+  const songs = [];
   for (const song of getSongs(version.value)) {
-    profile.value.songs[song.id] = cacheSongInfo(song);
+    songs[song.id] = cacheSongInfo(song, musicByKey, favorites);
   }
+  profile.value.songs = songs;
 }
 
 const themeModded = computed(() => {

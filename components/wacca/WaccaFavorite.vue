@@ -1,30 +1,56 @@
 <template>
   <!-- <v-tooltip location="start">
     <template v-slot:activator="{ props }"> -->
-  <v-btn
-    icon
+  <!-- display only for now, toggling favorites isn't supported by the backend yet -->
+  <!-- <button
+    type="button"
+    class="favorite-btn"
+    :aria-label="profileSong.favorite ? 'Remove favorite' : 'Add favorite'"
     @click.prevent="toggleFavorite"
-    variant="plain"
-    v-bind="props"
-    size="x-large"
+  > -->
+  <span
+    class="favorite-btn"
+    role="img"
+    :aria-label="profileSong.favorite ? 'Favorite' : 'Not a favorite'"
   >
-    <v-icon color="yellow" size="50">{{
-      profileSong.favorite ? "mdi-star" : "mdi-star-outline"
-    }}</v-icon>
-  </v-btn>
+    <i
+      class="mdi"
+      :class="profileSong.favorite ? 'mdi-star' : 'mdi-star-outline'"
+    ></i>
+  </span>
+  <!-- </button> -->
   <!-- </template>
     <span>{{ profileSong.favorite ? "Remove favorite" : "Add favorite" }}</span>
   </v-tooltip> -->
 </template>
 
+<style scoped>
+.favorite-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  font-size: 50px;
+  line-height: 1;
+  color: #ffeb3b;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+/* .favorite-btn:hover {
+  opacity: 1;
+} */
+</style>
+
 <script setup>
-const runtimeConfig = useRuntimeConfig();
+// const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps({
   songId: Number,
 });
 
-const activeCard = useState("activeCard");
+// const activeCard = useState("activeCard");
 const profile = useState("profile");
 
 const profileSong = computed(() => {
@@ -36,15 +62,15 @@ const profileSong = computed(() => {
   return profile.value.songs[props.songId];
 });
 
-async function toggleFavorite() {
-  profile.value.songs[props.songId].favorite =
-    !profile.value.songs[props.songId].favorite;
+// async function toggleFavorite() {
+//   profile.value.songs[props.songId].favorite =
+//     !profile.value.songs[props.songId].favorite;
 
-  await $fetch(
-    `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/favorites/${props.songId}/toggle`,
-    {
-      method: "POST",
-    }
-  );
-}
+//   await $fetch(
+//     `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/favorites/${props.songId}/toggle`,
+//     {
+//       method: "POST",
+//     }
+//   );
+// }
 </script>

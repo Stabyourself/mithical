@@ -43,7 +43,6 @@
                 >
                   {{ i + 1 }}
                 </span>
-                <span v-else>=</span>
               </td>
               <td>
                 <WaccaIcon

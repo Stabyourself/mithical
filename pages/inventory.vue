@@ -26,20 +26,19 @@
       </div>
 
       <div>
-        <div class="box-items">
-          <div v-for="item in filteredItems" :key="item.id" class="box-item">
-            <tippy
-              placement="bottom"
-              max-width="none"
-              :content="getTooltip(categories[activeCategory], item)"
-            >
-              <WaccaGachaItem
-                :kind="categories[activeCategory].id"
-                :id="item.id"
-                :rarity="0"
-                greyunowned
-              />
-            </tippy>
+        <div ref="boxItems" class="box-items">
+          <div
+            v-for="(item, i) in filteredItems"
+            :key="item.id"
+            class="box-item"
+            :data-index="i"
+          >
+            <WaccaGachaItem
+              :kind="categories[activeCategory].id"
+              :id="item.id"
+              :rarity="0"
+              greyunowned
+            />
           </div>
         </div>
       </div>
@@ -131,6 +130,7 @@
 </style>
 
 <script setup>
+import { delegate } from "tippy.js";
 import waccaIcons from "~/assets/wacca/waccaIcons.js";
 import waccaSoundEffects from "~/assets/wacca/waccaSoundEffects.js";
 import waccaTitles from "~/assets/wacca/waccaTitles.js";
@@ -209,7 +209,35 @@ const filteredItems = computed(() => {
   });
 });
 
+const ownsItem = useOwnedItems();
+
 function isOwned(check_item) {
-  return profile.value.items.some((item) => item.item_id == check_item.id);
+  return ownsItem(check_item.id);
 }
+
+// one tooltip for the whole grid instead of one per item,
+// content gets filled in on hover
+const boxItems = ref(null);
+let tooltips;
+
+// the grid only exists once the profile is loaded
+watch(boxItems, (el) => {
+  tooltips?.destroy();
+  tooltips = null;
+  if (!el) return;
+
+  tooltips = delegate(el, {
+    target: ".box-item",
+    placement: "bottom",
+    maxWidth: "none",
+    allowHTML: true,
+    onShow(instance) {
+      const item = filteredItems.value[instance.reference.dataset.index];
+      if (!item) return false;
+      instance.setContent(getTooltip(categories[activeCategory.value], item));
+    },
+  });
+});
+
+onBeforeUnmount(() => tooltips?.destroy());
 </script>

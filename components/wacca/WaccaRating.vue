@@ -11,24 +11,45 @@
   }
 
   100% {
-    background-position: -100px, 0px;
+    background-position: 0px, 0px;
+  }
+}
+
+@keyframes rainbow_rate_animation {
+  0% {
+    background-position:
+      0 0,
+      0 0;
+  }
+
+  100% {
+    background-position:
+      -3em 0,
+      6em 0;
   }
 }
 
 .rating {
-  -webkit-text-stroke: 0.02em #454743;
   background-clip: text !important;
   color: transparent;
   text-shadow: none;
+  font-family: "RateFont", sans-serif;
   font-weight: 800;
-  background-size: 100% 60%;
-  background-position: center center;
 }
 
 @mixin animated {
   background-repeat: repeat;
-  background-size: 100px auto, 100% auto;
-  animation: rate_animation 4s linear infinite;
+  background-size:
+    2.5em auto,
+    2em auto;
+}
+
+@mixin rainbnow-animated {
+  background-repeat: repeat;
+  background-size:
+    3em auto,
+    6em auto;
+  animation: rainbow_rate_animation 6s linear infinite;
 }
 
 .rating-white {
@@ -67,32 +88,32 @@
 
 .rating-gold {
   background-color: #fddb2f;
-  background-image: url("/wacca/img/uT_PRate_Sparkles.webp");
+  background-image: url("/wacca/img/RatePattern2.webp"), url("/wacca/img/gold1.webp");
   @include animated;
 }
 
 .rating-rainbow {
-  background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
-    url("/wacca/img/rainbow.webp");
-  @include animated;
+  background-image:
+    url("/wacca/img/uT_PRate_Sparkles.webp"), url("/wacca/img/rainbow.webp");
+  @include rainbnow-animated;
 }
 
 .rating-rainbow2 {
-  background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
-    url("/wacca/img/rainbow2.webp");
-  @include animated;
+  background-image:
+    url("/wacca/img/uT_PRate_Sparkles.webp"), url("/wacca/img/rainbow2.webp");
+  @include rainbnow-animated;
 }
 
 .rating-rainbow3 {
-  background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
-    url("/wacca/img/rainbow3.webp");
-  @include animated;
+  background-image:
+    url("/wacca/img/uT_PRate_Sparkles.webp"), url("/wacca/img/rainbow3.webp");
+  @include rainbnow-animated;
 }
 
 .rating-rainbow4 {
-  background-image: url("/wacca/img/uT_PRate_Sparkles.webp"),
-    url("/wacca/img/rainbow4.webp");
-  @include animated;
+  background-image:
+    url("/wacca/img/uT_PRate_Sparkles.webp"), url("/wacca/img/rainbow4.webp");
+  @include rainbnow-animated;
 }
 </style>
 
@@ -129,7 +150,7 @@ const realRateFormatted = computed(() => {
 
 const ratingColor = computed(() => {
   return ratingColors.find(
-    (color) => realRate.value >= color.from / (props.divide ?? 1)
+    (color) => realRate.value >= color.from / (props.divide ?? 1),
   ).color;
 });
 </script>

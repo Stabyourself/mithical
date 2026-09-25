@@ -58,7 +58,8 @@
       </div>
 
       <Collapse :when="expanded">
-        <div :class="{ collapsible: !props.forceExpand }">
+        <!-- details only get rendered once the card is opened -->
+        <div v-if="rendered" :class="{ collapsible: !props.forceExpand }">
           <div class="play-detail">
             <div class="play-judgements">
               <div
@@ -414,7 +415,7 @@ import { NuxtLink } from "#components";
 const difficultyInternal = useState("difficultyInternal");
 
 const version = useState("version");
-import getSongs from "~~/assets/wacca/getSongs.js";
+import getSongs, { getSongById } from "~~/assets/wacca/getSongs.js";
 import { getSongSlug } from "~~/assets/wacca/songSlug.js";
 
 const props = defineProps({
@@ -422,20 +423,14 @@ const props = defineProps({
   forceExpand: Boolean,
 });
 
-const song = computed(() => {
-  let song = getSongs(version).find(
-    (song) => song.id === props.play.info.music_id
-  );
-
-  return song;
-});
+const song = computed(() => getSongById(version.value, props.play.info.music_id));
 
 const fullUrl = computed(() => {
   return `/wacca/img/covers/${song.value.imageName}`;
 });
 
 const slug = computed(() => {
-  return getSongSlug(song.value, getSongs(version));
+  return getSongSlug(song.value, getSongs(version.value));
 });
 
 function formatDate(date) {
@@ -443,7 +438,13 @@ function formatDate(date) {
 }
 
 const expanded = ref(props.forceExpand || false);
-function expand() {
+const rendered = ref(expanded.value);
+async function expand() {
+  if (!rendered.value) {
+    // render first so the collapse has something to measure
+    rendered.value = true;
+    await nextTick();
+  }
   expanded.value = !expanded.value;
 }
 
