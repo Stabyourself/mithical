@@ -167,16 +167,9 @@
       width: min(100%, calc(100vh - 32px - 48px));
     }
   }
-  border-radius: $paddings;
-  background-color: rgb(var(--v-theme-boxcolor));
-  overflow: hidden;
-  
 }
 
 .v-btn-toggle {
-  padding-left: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -196,20 +189,6 @@
 
 .v-btn-group .v-btn {
   min-height: 40px;
-}
-
-.v-slider {
-  padding-left: 10px;
-  padding-bottom: 10px;
-  padding-right: 15px;
-  justify-content: center;
-}
-
-.v-switch {
-  padding-left: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
-  justify-content: center;
 }
 
 .profile-plate {
@@ -371,11 +350,6 @@
   display: block;
   font-size: 2.6cqw;
   opacity: 0.9;
-}
-
-.v-theme--waccaOled .option,
-.v-theme--waccaOledPlus .option {
-  outline: solid 1px white;
 }
 </style>
 
