@@ -99,67 +99,34 @@
         </v-card>
       </v-dialog>
 
-      <div class="d-flex ga-10 justify-center mb-6">
-        <v-btn-toggle v-model="activeCategory" shaped mandatory>
-          <v-btn
-            color="primary"
-            v-for="category of optionCategories"
-            :key="category.name"
-          >
-            {{ category.name }}
-          </v-btn>
-        </v-btn-toggle>
-      </div>
-
-      <div
-        v-for="option in optionCategories[activeCategory].options"
-        :key="option.name"
-        class="option"
+      <v-btn-toggle
+        v-model="activeCategory"
+        class="settings-nav mb-6"
+        shaped
+        mandatory
       >
-        <h2>{{ option.title[language] }}</h2>
-        <p>{{ option.description[language] }}</p>
+        <v-btn
+          color="primary"
+          v-for="category of optionCategories"
+          :key="category.name"
+        >
+          {{ category.name }}
+        </v-btn>
+      </v-btn-toggle>
 
-        <div v-if="option.type == 'slider'">
-          <v-slider
-            color="primary"
-            v-model="profile.options[option.id]"
-            :min="option.min"
-            :max="option.max"
-            :step="option.step"
-            thumb-label
-            hide-details
-          >
-            <template v-slot:thumb-label="{ modelValue }">
-              {{ option.format(modelValue) }}
-            </template>
-
-            <template v-slot:prepend>
-              {{ option.format(profile.options[option.id]) }}
-            </template>
-          </v-slider>
+      <div class="settings-layout">
+        <div ref="previewColumn" class="settings-preview">
+          <WaccaPlayfieldPreview :options="profile.options" />
         </div>
 
-        <div v-if="option.type == 'options'">
-          <v-btn-toggle v-model="profile.options[option.id]" shaped mandatory>
-            <v-btn
-              color="primary"
-              v-for="choice in option.choices"
-              :key="choice.value"
-              :value="choice.value"
-            >
-              {{ choice.text[language] }}
-            </v-btn>
-          </v-btn-toggle>
-        </div>
-
-        <div v-if="option.type == 'toggle'">
-          <v-switch
-            v-model="profile.options[option.id]"
-            color="primary"
-            hide-details
-            :true-value="1"
-            :false-value="0"
-          ></v-switch>
+        <div class="settings-options">
+          <WaccaSettingsOption
+            v-for="option in optionCategories[activeCategory].options"
+            :key="option.id"
+            :option="option"
+            :options="profile.options"
+            :language="language"
+          />
         </div>
       </div>
     </v-container>
@@ -167,21 +134,53 @@
 </template>
 
 <style scoped lang="scss">
-.option {
-  margin-bottom: 32px;
+// Preview on top on small screens, sticky on the right on big ones
+.settings-layout {
+  display: grid;
+  grid-template-areas:
+    "preview"
+    "options";
 
-  h2 {
-    font-size: 20px;
+  @media (min-width: 960px) {
+    grid-template-areas: "options preview";
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: 32px;
+    align-items: start;
   }
+}
 
-  p {
-    opacity: 0.6;
+.settings-options {
+  grid-area: options;
+  min-width: 0;
+}
+
+.settings-preview {
+  grid-area: preview;
+
+  @media (min-width: 960px) {
+    position: sticky;
+    // Keep the preview centered while scrolling
+    top: v-bind(previewTop);
+
+    // Fill the column but keep the circle and controls (48px) on screen
+    :deep(.playfield-preview) {
+      width: min(100%, calc(100vh - 32px - 48px));
+    }
   }
 }
 
 .v-btn-toggle {
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.settings-nav {
+  display: flex;
+  width: 100%;
+
+  .v-btn {
+    flex: 1 1 auto;
+  }
 }
 
 .v-btn-group--density-default.v-btn-group {
@@ -362,6 +361,11 @@ definePageMeta({
 import waccaUserPlates from "~/assets/wacca/waccaUserPlates.js";
 import waccaTitles from "~/assets/wacca/waccaTitles.js";
 import waccaIcons from "~/assets/wacca/waccaIcons.js";
+import waccaSymbolColors from "~/assets/wacca/waccaSymbolColors.js";
+import {
+  palettes as notePalettes,
+  paletteIndex,
+} from "~/assets/wacca/playfield/noteColors.js";
 
 const runtimeConfig = useRuntimeConfig();
 const language = useState("language");
@@ -482,6 +486,23 @@ const stageupNumberUrl = computed(
   () => `/wacca/img/stageup/number_${selectedVersionData.value.rank}.webp`,
 );
 
+const rgb = ([r, g, b]) => `rgb(${r}, ${g}, ${b})`;
+const colorStrip = (colors) =>
+  `linear-gradient(to right, ${colors
+    .map((color, i) => `${color} ${(i * 100) / colors.length}% ${((i + 1) * 100) / colors.length}%`)
+    .join(", ")})`;
+
+// Color schemes ("My Color") are items, all selectable
+// Swatch: the three main colors with the dark ones as a band below
+const colorSchemeOptions = waccaSymbolColors.map((scheme) => ({
+  text: {
+    ja: scheme.name,
+    en: scheme.nameEnglish,
+  },
+  value: scheme.id,
+  swatch: `${colorStrip(scheme.colors.slice(3).map(rgb))} bottom / 100% 30% no-repeat, ${colorStrip(scheme.colors.slice(0, 3).map(rgb))}`,
+}));
+
 const colorOptions = [
   {
     text: {
@@ -575,6 +596,13 @@ const colorOptions = [
     value: 1006,
   },
 ];
+
+// Swatch: mini note body with the same gradient as the preview
+for (const choice of colorOptions) {
+  const { light, base, dark } = notePalettes[paletteIndex(choice.value)];
+  choice.swatch = `linear-gradient(to bottom, ${light} 0%, ${base} 20%, ${dark} 33%, ${dark} 44%, ${base} 64%, ${base} 86%, ${light} 100%)`;
+  choice.noteCaps = true;
+}
 
 const optionCategories = [
   {
@@ -1324,41 +1352,12 @@ const optionCategories = [
           ja: "マイカラー",
         },
         description: {
-          en: "Change the color pattern of the WACCA console. (NEEDS ITEMS)",
+          en: "Change the color pattern of the WACCA console.",
           ja: "ＷＡＣＣＡコンソールのカラーパターンを変更します。",
         },
         type: "options",
         default: 303001,
-        choices: [
-          {
-            text: {
-              ja: "現在のマイカラー",
-              en: "Current My Color",
-            },
-            value: 103001,
-          },
-          {
-            text: {
-              ja: "リリィカラー",
-              en: "Lily Color",
-            },
-            value: 203001,
-          },
-          {
-            text: {
-              ja: "トリコロール",
-              en: "Tricolor",
-            },
-            value: 203004,
-          },
-          {
-            text: {
-              ja: "ルーンカラー",
-              en: "Luin Color",
-            },
-            value: 303001,
-          },
-        ],
+        choices: colorSchemeOptions,
       },
 
       {
@@ -1772,4 +1771,32 @@ const optionCategories = [
 ];
 
 const activeCategory = ref(0);
+
+// Sticky offset that centers the preview
+const previewColumn = ref(null);
+const previewTop = ref("16px");
+let previewResizeObserver = null;
+
+function updatePreviewTop() {
+  if (!previewColumn.value) return;
+  const height = previewColumn.value.offsetHeight;
+  previewTop.value = `${Math.max(16, (window.innerHeight - height) / 2)}px`;
+}
+
+onMounted(() => {
+  previewResizeObserver = new ResizeObserver(updatePreviewTop);
+  if (previewColumn.value) previewResizeObserver.observe(previewColumn.value);
+  window.addEventListener("resize", updatePreviewTop);
+});
+
+// Column only exists once the profile's loaded
+watch(previewColumn, (element, previous) => {
+  if (previous) previewResizeObserver?.unobserve(previous);
+  if (element) previewResizeObserver?.observe(element);
+});
+
+onBeforeUnmount(() => {
+  previewResizeObserver?.disconnect();
+  window.removeEventListener("resize", updatePreviewTop);
+});
 </script>
