@@ -5,6 +5,13 @@
   src: url("~/assets/font/SHINBI.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "RateFont";
+  font-style: normal;
+  font-weight: 400;
+  src: url("~/assets/font/RateFont.woff2") format("woff2");
+}
+
 .v-theme--waccaLight.wacca.v-theme-provider,
 .v-theme--waccaLightPlus.wacca.v-theme-provider {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAA9AgMAAAC4tyNYAAAADFBMVEX4+Pj////9/f37+/uz03onAAAA10lEQVQoz1XQvQ3CMBCG4QNEQZEybMAISJSRWIAil6RIkREYgSW8D0tkH/z9JBJu/FaPfRff2E7n+xSL6xAv1yUm1zlG1y0GVxtppkR2QjJyEVJLTFNrElJrFFJLzFpLTEF1RFALENaMn7AmIKwRCIpMiyJTVB0Q1gKENUfDAnNngbmxwKwsMLnVk/V/Hntd9yp75cdxzLfroI1wiNl1z97V5qDA+65MMETSTINRjKQYDtEbSTOFAwgBIwSMEDBCwAgBIwSMEDJYohggYoCYObtmIGKAiPkBm4hj3UXWVGQAAAAASUVORK5CYII=);
