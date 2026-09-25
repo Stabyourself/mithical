@@ -3,6 +3,8 @@
 body {
   // evil hack to make waifus work (waifus > neat code)
   overflow: hidden;
+  // clip instead of hidden so sticky keeps working
+  overflow: clip;
 }
 
 .front-header {
