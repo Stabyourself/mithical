@@ -1,17 +1,24 @@
 <template>
   <!-- <v-tooltip location="start">
     <template v-slot:activator="{ props }"> -->
-  <button
+  <!-- display only for now, toggling favorites isn't supported by the backend yet -->
+  <!-- <button
     type="button"
     class="favorite-btn"
     :aria-label="profileSong.favorite ? 'Remove favorite' : 'Add favorite'"
     @click.prevent="toggleFavorite"
+  > -->
+  <span
+    class="favorite-btn"
+    role="img"
+    :aria-label="profileSong.favorite ? 'Favorite' : 'Not a favorite'"
   >
     <i
       class="mdi"
       :class="profileSong.favorite ? 'mdi-star' : 'mdi-star-outline'"
     ></i>
-  </button>
+  </span>
+  <!-- </button> -->
   <!-- </template>
     <span>{{ profileSong.favorite ? "Remove favorite" : "Add favorite" }}</span>
   </v-tooltip> -->
@@ -31,19 +38,19 @@
   transition: opacity 0.2s;
 }
 
-.favorite-btn:hover {
+/* .favorite-btn:hover {
   opacity: 1;
-}
+} */
 </style>
 
 <script setup>
-const runtimeConfig = useRuntimeConfig();
+// const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps({
   songId: Number,
 });
 
-const activeCard = useState("activeCard");
+// const activeCard = useState("activeCard");
 const profile = useState("profile");
 
 const profileSong = computed(() => {
@@ -55,15 +62,15 @@ const profileSong = computed(() => {
   return profile.value.songs[props.songId];
 });
 
-async function toggleFavorite() {
-  profile.value.songs[props.songId].favorite =
-    !profile.value.songs[props.songId].favorite;
+// async function toggleFavorite() {
+//   profile.value.songs[props.songId].favorite =
+//     !profile.value.songs[props.songId].favorite;
 
-  await $fetch(
-    `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/favorites/${props.songId}/toggle`,
-    {
-      method: "POST",
-    }
-  );
-}
+//   await $fetch(
+//     `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/favorites/${props.songId}/toggle`,
+//     {
+//       method: "POST",
+//     }
+//   );
+// }
 </script>
