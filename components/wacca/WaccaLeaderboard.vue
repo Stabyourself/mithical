@@ -69,7 +69,7 @@
               :key="entry.key"
               :class="{ highlight: entry.isMe }"
             >
-              <td class="text-right rank">{{ entry.rankLabel }}</td>
+              <td class="text-right rank">{{ entry.rank }}</td>
               <td>
                 <div class="player">
                   <WaccaIcon
@@ -101,7 +101,7 @@
           <!-- you, if outside top 100 -->
           <tbody v-if="outsideRow" class="you-body">
             <tr class="highlight">
-              <td class="text-right rank">{{ outsideRow.rankLabel }}</td>
+              <td class="text-right rank">{{ outsideRow.rank }}</td>
               <td>
                 <div class="player">
                   <WaccaIcon class="highscore-icon" :icon="yourIcon" />
@@ -434,23 +434,15 @@ function isYou(entry) {
   );
 }
 
-// ties share a rank
+// ties only show the rank on the first row
 const ranked = computed(() => {
   const list = highscores.value;
-  const tieCounts = {};
-  for (const s of list) tieCounts[s.score] = (tieCounts[s.score] ?? 0) + 1;
-
-  let rank = 0;
-  return list.map((score, i) => {
-    if (i === 0 || list[i - 1].score !== score.score) rank = i + 1;
-    return {
-      score,
-      key: `${score.api_id}-${score.user_play_date}`,
-      rank,
-      rankLabel: tieCounts[score.score] > 1 ? `=${rank}` : `${rank}`,
-      isMe: isYou(score),
-    };
-  });
+  return list.map((score, i) => ({
+    score,
+    key: `${score.api_id}-${score.user_play_date}`,
+    rank: i === 0 || list[i - 1].score !== score.score ? i + 1 : null,
+    isMe: isYou(score),
+  }));
 });
 
 const yourEntry = computed(() => ranked.value.find((e) => e.isMe));
@@ -466,15 +458,13 @@ function histogramRank(difficulty) {
 
   let total = 0;
   let above = 0;
-  let same = 0;
   for (const e of entries) {
     const score = Number(e.score);
     const count = parseInt(e.count) || 0;
     total += count;
     if (score > best) above += count;
-    else if (score === best) same += count;
   }
-  return { rank: above + 1, total, tied: same > 1 };
+  return { rank: above + 1, total };
 }
 
 const ranks = computed(() => props.sheets.map((_, i) => histogramRank(i + 1)));
@@ -487,7 +477,7 @@ const outsideRow = computed(() => {
   const play = yourBestPlays.value[0];
   const date = play?.info.user_play_date;
   return {
-    rankLabel: rank ? `${rank.tied ? "=" : ""}${rank.rank}` : "—",
+    rank: rank?.rank ?? "—",
     score: yourBest.value,
     grade: play?.info.grade ?? 0,
     date: date && date !== UNDATED ? date : null,
