@@ -192,7 +192,8 @@ function resolveSettings(options) {
 export default class PlayfieldRenderer {
   constructor(canvas) {
     this.canvas = canvas;
-    this.ctx = canvas.getContext("2d", { alpha: false });
+    // Not alpha: false, Firefox shows garbage behind the rounded corners of an opaque canvas
+    this.ctx = canvas.getContext("2d");
     // Plain background, also used for masked lanes
     this.backgroundLayer = document.createElement("canvas");
     // Everything static under the notes, copied at the start of each frame
