@@ -185,7 +185,6 @@ const props = defineProps({
     default: 0, 
   }
 });
-console.log(props.diff)
 const container = ref(null);
 const canvas = ref(null);
 const expanded = ref(false);
