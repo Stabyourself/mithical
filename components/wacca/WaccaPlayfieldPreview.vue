@@ -232,6 +232,11 @@ const props = defineProps({
     default: "all-marvelous",
     validator: (value) => ["miss-up", "good-up", "great-up", "all-marvelous"].includes(value),
   },
+  // Turn off auto play if desired
+  initPaused: {
+    type: Boolean,
+    default: false,
+  }
 });
 const container = ref(null);
 const canvas = ref(null);
@@ -248,6 +253,7 @@ let active = true;
 
 // Start paused for reduced motion
 const paused = ref(
+  props.initPaused || 
   typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
 );
@@ -437,6 +443,9 @@ let chartRequest = 0;
 
 async function loadChart(url) {
   if (!url) return;
+  if(!url.includes("demo")){
+    paused.value = true
+  }
   const request = ++chartRequest;
   try {
     const text = await $fetch(url, { responseType: "text" });
@@ -452,7 +461,6 @@ async function loadChart(url) {
   }
 }
 
-watch(() => props.chartUrl.includes("demo") ? props.chartUrl : props.chartUrl + props.diff + ".mer", loadChart);
 watch(() => props.chartUrl, loadChart);
 const features = computed(() => ({
   ring: props.ring,
@@ -546,14 +554,6 @@ onMounted(() => {
   // Redraw a paused preview once the game font is in
   renderer.fontsReady.then(() => renderer && updateLoop());
   songLength.value = renderer.songLength;
-  if(props.chartUrl.includes("demo"))
-  {
-    loadChart(props.chartUrl);
-  }
-  else
-  {
-    loadChart(props.chartUrl + props.diff + ".mer");
-  }
   renderer.setChartInfo(props.chartInfo);
   renderer.setFeatures(features.value);
   loadChart(props.chartUrl);

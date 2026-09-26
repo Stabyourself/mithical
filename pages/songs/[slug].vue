@@ -166,7 +166,12 @@
         </v-btn-toggle>
       </h2>
       <div ref="previewColumn" class="settings-preview">
-        <WaccaPlayfieldPreview :options="profile.options" :chart-url="previewChart" :diff="chartView" />
+        <WaccaPlayfieldPreview 
+          :options="profile.options" 
+          :chart-url="chartData?.url ?? '/wacca/demo.mer'"
+          :chart-info="chartData?.info ?? null"
+          :init-paused=true
+        />
       </div>
     </v-container>
     
@@ -311,6 +316,8 @@
 .playfield-preview {
   width: min(100%, 560px);
   margin: 0 auto 32px;
+  padding-bottom: 1rem;
+  padding-top: 0.5rem;
 }
 
 .chartview-heading {
@@ -334,6 +341,9 @@ import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import waccaCategories from "~/assets/wacca/waccaCategories";
 import { getSongSlug, findSongBySlug } from "~/assets/wacca/songSlug.js";
+import { formatDifficulty } from "~/assets/js/util";
+import { getSongById } from "~/assets/wacca/getSongs.js";
+import { chartPath } from "~/assets/wacca/playfield/merChart.js";
 
 const profile = useState("profile");
 definePageMeta({
@@ -392,10 +402,6 @@ const chartView = ref("0");
 
 const playerHistory = shallowRef([]);
 
-const previewChart = computed(() => {
-  const chart = `/wacca/MusicData/${song.value.id}/${song.value.id}_0`;
-  return chart;
-});
 function loadHistograms() {
   histogramsLoading.value = true;
   $fetch(
@@ -519,6 +525,21 @@ const ogDescription = computed(() => {
   ]
     .filter(Boolean)
     .join(" · ");
+});
+
+const chartData = computed(() => {
+  const chartDataId = Number(song.value.id);
+  const chartDataSong = Number.isInteger(chartDataId) ? getSongById(song.value, chartDataId) : null;
+  const chartDataSheet = chartDataSong?.sheets[Number(chartView.value)];
+  if (!chartDataSheet) return null;
+  return {
+    url: chartPath(chartDataSong.id, Number(chartView.value)),
+    info: {
+      title: chartDataSong.title,
+      difficulty: Number(chartView.value) + 1,
+      level: String(formatDifficulty(chartDataSheet.difficulty, false)),
+    },
+  };
 });
 
 useSeoMeta({
