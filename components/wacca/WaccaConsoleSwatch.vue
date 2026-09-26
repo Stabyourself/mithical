@@ -41,6 +41,8 @@
 </style>
 
 <script setup>
+import { ledColor } from "~/assets/wacca/playfield/noteColors.js";
+
 // Mini touch ring for the "Customize Colors" dropdown, like the icon in the official
 // tutorial: masked lanes (top) in the first color, open lanes in the second and a
 // touched spot in the third. Dark version inside, bright outside, like the real cells
@@ -65,7 +67,8 @@ const sections = [
   { name: "touched", index: 2, from: 65, to: 115 },
 ];
 
-const rgb = (color) => `rgb(${color.join(", ")})`;
+// Like the LEDs show it, see ledColor
+const rgb = (color) => `rgb(${ledColor(color).join(", ")})`;
 
 function point(radius, angle) {
   const radians = (angle * Math.PI) / 180;

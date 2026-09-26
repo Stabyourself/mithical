@@ -15,6 +15,7 @@ import {
   holdGradientsActive,
   holdGradientStops,
   paletteIndex,
+  ledColor,
   capColors,
   syncColors,
 } from "./noteColors.js";
@@ -22,7 +23,6 @@ import { parseMer, buildChart } from "./merChart.js";
 import waccaSymbolColors from "../waccaSymbolColors.js";
 
 const DEG = Math.PI / 180;
-
 
 // Note widths per thickness setting, in 1060px canvas units
 const STROKE_WIDTHS = [16, 22, 34, 46, 58];
@@ -76,18 +76,20 @@ const BACKGROUND_STOPS = [
 
 // Center display = max possible score minus this
 const CENTER_BORDERS = { 4: 900000, 5: 950000, 6: 990000, 7: 985000 };
+// Score displays have no label
 const CENTER_LABELS = {
   1: "COMBO",
-  2: "SCORE",
-  3: "SCORE",
   4: "S BORDER",
   5: "SS BORDER",
   6: "SSS BORDER",
   7: "PERSONAL BEST",
 };
 
-// Same font and gradients as the recent plays judgement labels
-const JUDGEMENT_FONT = '"SHINBI", sans-serif';
+// Fonts the game uses, see wacca.scss
+const JUDGEMENT_FONT = '"judgement_font", sans-serif';
+const SCORE_FONT = '"score_font", "ring_font", sans-serif';
+const LABEL_FONT = '"label_font", "ring_font", sans-serif';
+// Same gradients as the recent plays judgement labels
 const JUDGEMENT_STYLES = {
   marvelous: { text: "Marvelous", top: "#ff1e8c", bottom: "#fe8e34" },
   great: { text: "Great", top: "#ffff88", bottom: "#c2e67b" },
@@ -130,7 +132,6 @@ const HIT_WINDOWS = {
   chain: [[-4, 4]],
 };
 const HIT_GRADES = ["marvelous", "great", "good"];
-const MAX_LATE_MS = 10 * FRAME_MS;
 // Letting go of a hold for longer than this drops it for good
 const HOLD_DROP_MS = 200;
 // Back to autoplay after this long without touching anything
@@ -148,6 +149,13 @@ const SPLASH_MS = 250;
 // How far the splash spreads, in lane widths
 const SPLASH_WAVE_REACH = 5;
 const SPLASH_WAVE_OPACITY = 0.35;
+// White overlay on the touched panels, and the glow right around them. The glow is
+// full strength on direct neighbours, then fades out over this many lane widths
+const SPLASH_CORE_OPACITY = 0.7;
+const SPLASH_HALO_OPACITY = 0.5;
+const SPLASH_HALO_FALLOFF = 1.5;
+// How long a pressed panel takes to fade after letting go
+const RELEASE_FADE_MS = 150;
 // Slight dimming between beats
 const BEAT_DIM = 0.08;
 // R notes: rainbow around the whole ring, spreading from the note (Traveller hand cam)
@@ -161,21 +169,58 @@ const RING_R_SWEEP_WIDTH = 1.5;
 // How far each row lags behind the one outside it, in lanes
 const RING_R_SWEEP_SLANT = 2;
 
+// Bot presses the middle two rows (its patch is 2 rows tall), snaps swipe across instead
+const BOT_ROW = 1;
 // The bot plans notes this far ahead
 const BOT_LOOKAHEAD_MS = 150;
+// How often the bot gets each grade per skill level, the name is the worst it gets
+const BOT_SKILLS = {
+  "all-marvelous": { marvelous: 1 },
+  "great-up": { marvelous: 0.85, great: 0.15 },
+  "good-up": { marvelous: 0.75, great: 0.17, good: 0.08 },
+  "miss-up": { marvelous: 0.7, great: 0.16, good: 0.08, miss: 0.06 },
+};
 // Missed holds turn grey-ish
 const MISSED_HOLD_COLORS = ["#ececf0", "#dcdce2", "#cbcbd2", "#bdbdc5", "#b0b0b8", "#a4a4ad"];
 // Snaps need a swipe this far (fraction of the radius) within SWIPE_MS
 const SNAP_SWIPE = 0.06;
 const SWIPE_MS = 200;
 const MAX_BUBBLES = 240;
+// Touch effect (pop) option values
+const POP_DEFAULT = 312001;
+const POP_BUBBLE = 312002;
 const BUBBLE_LIFE_MS = 460;
 
-// Ring text styles, from direct feed videos
-const SONG_COUNT_COLOR = "#f9a3ad";
-const SONG_TITLE_COLOR = "#f0c8ee";
+// Ring text, measured off an in-game screenshot. Sizes and radii are in Rj,
+// radii are where the baseline sits, angles are where the text starts (or its center)
+// Pitch is a fixed cell width per char, the game lays these out monospaced
+const RING_TEXT = {
+  baseline: 0.9844,
+  count: { angle: -132.4, pitch: 0.0587, color: "#f769bd" },
+  countWord: { angle: -125, size: 0.042, pitch: 0.0341 },
+  label: { angle: -103.7, size: 0.0311, color: "#b45121" },
+  score: { baseline: 0.9829, size: 0.0456, pitch: 0.0422, color: "#f8a12a" },
+  difficulty: {
+    angle: -77.4,
+    size: 0.0427,
+    namePitch: 0.0338,
+    levelPitch: 0.0299,
+    dotPitch: 0.0234,
+    digitSize: 0.0543,
+  },
+  title: { angle: -49.6, end: -5, size: 0.042, pitch: 0.041, color: "#f567b9" },
+};
 
-// Random title for the demo song
+// Ring colors per difficulty (1-4). Normal is measured off a screenshot, the rest are guesses
+const DIFFICULTY_LABELS = {
+  1: { name: "NORMAL", color: "#2775f6" },
+  2: { name: "HARD", color: "#f2b51c" },
+  3: { name: "EXPERT", color: "#e01864" },
+  4: { name: "INFERNO", color: "#a13cd8" },
+};
+
+// What the demo chart shows, with a random title
+const DEMO_LABEL = { difficulty: 3, level: "12" };
 const SONG_TITLES = [
   "Nearl the Radiant Knight",
   "Big Blast Sonic",
@@ -186,10 +231,13 @@ const SONG_TITLES = [
   "Mogu Mogu Yummy",
 ];
 
-const FONT = '"Roboto", "Helvetica Neue", Arial, sans-serif';
+// See wacca.scss
+const FONT = '"ring_font", "Roboto", "Helvetica Neue", Arial, sans-serif';
 
 // Farthest past the judgement line anything draws, that's under the ring already
 const PAST_LINE = 1.03;
+// Notes keep going further so their arrows scroll out under the mask instead of popping
+const NOTE_PAST_LINE = 1.1;
 
 function perspective(x) {
   x = Math.min(1.316, x);
@@ -238,7 +286,7 @@ function resolveSettings(options) {
     infoOpacity: clamp(option(options, 140, 5), 0, 5) / 5,
     // 100 = 0.0, one step on the display = one frame, positive = hit later
     judgementOffset: (clamp(option(options, 108, 100), 0, 200) / 10 - 10) * FRAME_MS,
-    touchEffectPop: option(options, 1006, 312001),
+    touchEffectPop: option(options, 1006, POP_DEFAULT),
     // Three colors plus their dark versions
     ringColors: (
       waccaSymbolColors.find((scheme) => scheme.id === option(options, 4, 103001)) ??
@@ -272,11 +320,22 @@ export default class PlayfieldRenderer {
     this.ringLitLayer = document.createElement("canvas");
     // For composing the judgement line
     this.judgementLineLayer = document.createElement("canvas");
-    this.songTitle = SONG_TITLES[Math.floor(Math.random() * SONG_TITLES.length)];
+    this.setChartInfo(null);
     this.laneHidden = new Uint8Array(60);
 
     this.settings = resolveSettings({});
-    document.fonts?.load(`40px ${JUDGEMENT_FONT}`).catch(() => { });
+    this.setFeatures({});
+    // Canvas text doesn't redraw by itself once fonts arrive, so rebuild the text layers then
+    this.fontsReady = Promise.all([
+      document.fonts?.load(`40px ${JUDGEMENT_FONT}`),
+      document.fonts?.load(`40px ${FONT}`),
+      document.fonts?.load(`40px ${SCORE_FONT}`, "0123456789"),
+      document.fonts?.load(`40px ${LABEL_FONT}`, "SCORE"),
+    ])
+      .catch(() => { })
+      .then(() => {
+        this.dirtyText = true;
+      });
     this.cache = new Map();
     // Full rebuild on resize, partial ones on option changes
     this.dirty = true;
@@ -289,8 +348,12 @@ export default class PlayfieldRenderer {
     this.fingers = new Map();
     // Demo ms per real ms, set by whoever drives render()
     this.playbackRate = 1;
+    // Set while someone drags the scrub bar, the bot stays out of it until they let go
+    this.scrubbing = false;
     this.judgedNotes = new Set();
     this.missedHolds = new Set();
+    // Missed notes keep scrolling out, hit ones are gone
+    this.missedNotes = new Set();
     this.activeHolds = [];
     this.bot = { actions: [], holds: [], planned: new Set(), fingerCount: 0 };
     this.bonusSweeps = [];
@@ -299,6 +362,8 @@ export default class PlayfieldRenderer {
     this.lineFlash = new Float64Array(60).fill(-Infinity);
     // When each ring cell was last touched (lane * RING_ROWS + row)
     this.cellTouched = new Float64Array(60 * RING_ROWS).fill(-Infinity);
+    // When each panel was last pressed, the white fades out after letting go
+    this.cellPressed = new Float64Array(60 * RING_ROWS).fill(-Infinity);
     this.flashes = [];
     this.bubbles = [];
     this.shots = [];
@@ -313,6 +378,34 @@ export default class PlayfieldRenderer {
     this.itemCount = 0;
     this.holdSurfaces = [];
     this.textWidths = new Map();
+  }
+
+  // What the preview does besides drawing the chart:
+  //   ring: the console LEDs around the screen, without it the screen fills the canvas
+  //   autoplay: the bot plays whenever nobody else is
+  //   judging: ratings, misses and dropped holds. Off, unhit notes just pass by
+  //   songCount: "1/3 Song" on the ring
+  //   score: the ring score and its "SCORE" label
+  //   progressBar: the clear gauge
+  //   botSkill: how well the bot plays, see BOT_SKILLS
+  setFeatures(features) {
+    const next = {
+      ring: true,
+      autoplay: true,
+      judging: true,
+      songCount: true,
+      score: true,
+      progressBar: true,
+      botSkill: "all-marvelous",
+      ...features,
+    };
+    const previous = this.features;
+    this.features = next;
+    if (!previous) return;
+    if (next.ring !== previous.ring) this.dirty = true;
+    if (next.songCount !== previous.songCount || next.score !== previous.score) this.dirtyText = true;
+    if (!next.autoplay && previous.autoplay) this.resetBot();
+    if (!next.judging) this.judgement = null;
   }
 
   // Only rebuilds what changed so settings don't hitch
@@ -387,6 +480,7 @@ export default class PlayfieldRenderer {
   clearEffects() {
     this.beamUntil.fill(-Infinity);
     this.cellTouched.fill(-Infinity);
+    this.cellPressed.fill(-Infinity);
     this.lineFlash.fill(-Infinity);
     this.bonusSweeps.length = 0;
     this.splashes.length = 0;
@@ -419,14 +513,51 @@ export default class PlayfieldRenderer {
     this.clearEffects();
 
     this.resetStats();
+    // No judging, no stats: nothing to credit for the skipped part
+    if (!this.features.judging && !this.features.autoplay) return;
+
     let passed = 0;
     for (const note of this.chart.notes) {
       if (start + note.time < this.time) passed++;
       if (note.type === "hold" && start + note.endTime < this.time) passed++;
     }
-    this.combo = passed;
-    this.judged = passed;
-    this.earned = (1000000 / this.noteCount()) * passed;
+    if (this.features.judging) {
+      this.combo = passed;
+      this.judged = passed;
+      this.earned = (1000000 / this.noteCount()) * passed;
+      this.gauge = passed + 2 * this.chart.notes.filter((note) => note.bonus && start + note.time < this.time).length;
+    }
+
+    // Landed in the middle of holds: the bot grabs them right away instead of
+    // leaving them unheld until they end
+    if (!this.features.autoplay || this.scrubbing) return;
+    for (const note of this.chart.notes) {
+      if (note.type !== "hold") continue;
+      if (start + note.time >= this.time || start + note.endTime <= this.time) continue;
+      const key = this.noteKey(note, start);
+      this.judgedNotes.add(key);
+      this.activeHolds.push({ note, base: start, key, kind: "marvelous", detail: null, held: true, releasedFor: 0 });
+      this.grabHold(note, start);
+    }
+  }
+
+  // Bot finger on a hold that's already going, no new touch or hit
+  grabHold(note, base) {
+    const { bot } = this;
+    const id = `bot${bot.fingerCount++}`;
+    const shape = this.holdShapeAt(note, this.time - base);
+    const lane = this.botLane(shape.pos, shape.size);
+    const radius = this.rowRadius(BOT_ROW);
+    this.fingers.set(id, {
+      lane,
+      row: this.rowAt(radius),
+      target: this.noteKey(note, base),
+      swipeFrom: radius,
+      swipeStart: this.time,
+      since: this.time,
+      spread: this.fingerSpread(id),
+    });
+    bot.holds.push({ id, note, base, radius });
   }
 
   resetStats() {
@@ -434,6 +565,7 @@ export default class PlayfieldRenderer {
     this.earned = 0;
     this.lost = 0;
     this.judged = 0;
+    this.gauge = 0;
   }
 
   // Advance by dt ms and draw a frame
@@ -451,10 +583,12 @@ export default class PlayfieldRenderer {
       this.resetStats();
     }
 
-    if (this.playing && this.fingers.size === 0 && this.time - this.lastInput > PLAY_IDLE_MS) {
-      this.handBack();
+    if (this.features.autoplay && !this.scrubbing) {
+      if (this.playing && this.fingers.size === 0 && this.time - this.lastInput > PLAY_IDLE_MS) {
+        this.handBack();
+      }
+      if (!this.playing) this.runBot();
     }
-    if (!this.playing) this.runBot();
     this.updateJudging(this.time - previous);
     this.renderClock = performance.now();
     this.updateKeyBeams();
@@ -470,7 +604,7 @@ export default class PlayfieldRenderer {
     return mod60(Math.floor(-angle / 6));
   }
 
-  // Radius as a fraction of the canvas radius
+  // Radius as a fraction of the screen radius (R)
   radiusAt(x, y) {
     return Math.hypot(x - this.cx, y - this.cy) / this.R;
   }
@@ -512,11 +646,14 @@ export default class PlayfieldRenderer {
     return (this.ringInner + (row + 0.5) * rowHeight) / this.R;
   }
 
-  // The bot's fingers have a target note and only hit that one
+  // Bot fingers have a target (the note key they're for) and only hit that one, so
+  // aiming early or late can't hit a neighbour instead. People's fingers hit anything
   fingerDown(id, lane, radius, time, target = null) {
     const row = this.rowAt(radius);
-    this.fingers.set(id, { lane, row, target, swipeFrom: radius, swipeStart: time });
-    this.splashes.push({ lane, row, start: this.time });
+    // since: when it got to this lane, chains care about that
+    const spread = this.fingerSpread(id);
+    this.fingers.set(id, { lane, row, target, swipeFrom: radius, swipeStart: time, since: time, spread });
+    this.splashes.push({ lane, row, spread, start: this.time });
     this.flashLine(lane);
     this.hitNote(this.closestNote(["touch", "hold"], lane, time, target));
   }
@@ -524,13 +661,16 @@ export default class PlayfieldRenderer {
   fingerMove(id, lane, radius, time) {
     const finger = this.fingers.get(id);
     const row = this.rowAt(radius);
-    if (lane !== finger.lane || row !== finger.row) this.splashes.push({ lane, row, start: this.time });
+    if (lane !== finger.lane || row !== finger.row) {
+      this.splashes.push({ lane, row, spread: finger.spread, start: this.time });
+    }
     finger.row = row;
 
     // Moving into another lane counts as a new touch there
     if (lane !== finger.lane) {
       const from = finger.lane;
       finger.lane = lane;
+      finger.since = time;
       this.flashLine(lane);
 
       // Slides: moving at least one lane in their direction (lanes count counterclockwise)
@@ -539,9 +679,7 @@ export default class PlayfieldRenderer {
       if (moved < -30) moved += 60;
       const type = moved > 0 ? "slideCCW" : "slideCW";
       const { target } = finger;
-      this.hitNote(
-        this.closestNote([type], from, time, target) ?? this.closestNote([type], lane, time, target),
-      );
+      this.hitNote(this.closestNote([type], from, time, target) ?? this.closestNote([type], lane, time, target));
 
       // Touch notes, hold starts and slides you move into from outside
       for (const found of [
@@ -586,9 +724,15 @@ export default class PlayfieldRenderer {
     }
     if (this.dirtyBase) this.buildBaseLayer();
     if (this.dirtyRing) this.buildRingLayers();
+    if (this.dirtyText) {
+      // Widths measured before the fonts were in are wrong
+      this.textWidths.clear();
+      this.buildRingTextLayer();
+    }
 
     this.dirtyBackground = false;
     this.dirtyRing = false;
+    this.dirtyText = false;
     this.dirtyThickness = false;
     this.dirtyBase = false;
   }
@@ -602,8 +746,16 @@ export default class PlayfieldRenderer {
     this.ringOuter = outer * 0.995;
     this.ringInner = outer * (1 - RING_WIDTH);
     this.ringBezel = this.ringInner - outer * RING_BEZEL;
-    this.Rj = this.ringInner - outer * RING_GAP;
-    this.R = this.Rj / 0.913;
+    if (this.features.ring) {
+      this.Rj = this.ringInner - outer * RING_GAP;
+      this.R = this.Rj / 0.913;
+    } else {
+      // No console: the screen grows, leaving the same black gap outside the pink circle
+      // as there is up to the LED panels
+      const ringRj = this.ringInner - outer * RING_GAP;
+      this.Rj = (outer * ringRj) / this.ringInner;
+      this.R = this.Rj / 0.913;
+    }
     this.s3 = (this.R * 2) / 1060;
     this.noteWidth = STROKE_WIDTHS[this.settings.thickness] * this.s3;
 
@@ -619,6 +771,7 @@ export default class PlayfieldRenderer {
     this.dirtyThickness = false;
     this.dirtyBase = false;
     this.dirtyRing = false;
+    this.dirtyText = false;
   }
 
   cached(key, create) {
@@ -733,9 +886,8 @@ export default class PlayfieldRenderer {
   // fingers land, holding doesn't keep it white
   drawJudgementLine(now) {
     const { ctx, cx, cy, Rj, laneHidden } = this;
-    const mask = laneHidden.join("");
-    if (mask !== this.lineMask) {
-      this.lineMask = mask;
+    if (this.laneMaskVersion !== this.lineMask) {
+      this.lineMask = this.laneMaskVersion;
       const [inner, outer] = this.judgementLineBand;
       this.linePath = new Path2D();
       for (let lane = 0; lane < 60; lane++) {
@@ -799,22 +951,49 @@ export default class PlayfieldRenderer {
     ctx.stroke();
   }
 
-  // Static ring text, laid out like the direct feed videos
+  // Static ring text, laid out like an in-game screenshot
   buildRingTextLayer() {
     const ctx = this.ringTextLayer.getContext("2d");
-    const { R, Rj } = this;
+    const { Rj } = this;
+    const { baseline, count, countWord, label: scoreLabel, difficulty: diff, title } = RING_TEXT;
+    const label = DIFFICULTY_LABELS[this.difficulty] ?? DIFFICULTY_LABELS[3];
+    const at = (value) => Rj * value;
     ctx.clearRect(0, 0, this.size, this.size);
 
-    const bounds = [
-      this.drawTextOnArc(ctx, "1/3 Song", Rj, -126, R * 0.032, SONG_COUNT_COLOR),
-      this.drawTextOnArc(ctx, "SCORE", Rj, -104, R * 0.026, "#f08a28"),
-      this.drawTextOnArc(ctx, "EXPERT/Lv.12", Rj, -73, R * 0.032, "#e01864"),
-      this.drawTextOnArc(ctx, this.songTitle, Rj, -57, R * 0.032, SONG_TITLE_COLOR, {
-        outline: "rgba(90, 0, 55, 0.6)",
-        align: "start",
-        spacing: 1.15,
-      }),
-    ];
+    const bounds = [];
+    if (this.features.songCount) {
+      bounds.push(
+        // "1/₃ Song", the total is small and sits low
+        this.drawArcRuns(ctx, [
+          { text: "1", size: at(0.0472), family: FONT, color: count.color, pitch: at(count.pitch) },
+          { text: "/", size: at(0.038), family: FONT, color: count.color },
+          { text: "3", size: at(0.0228), family: FONT, color: count.color, pitch: at(0.0226), rise: at(-0.0085) },
+        ], at(baseline), count.angle),
+        this.drawArcRuns(ctx, [
+          { text: "Song", size: at(countWord.size), family: FONT, color: count.color, pitch: at(countWord.pitch) },
+        ], at(baseline), countWord.angle),
+      );
+    }
+    if (this.features.score) {
+      bounds.push(
+        this.drawArcRuns(ctx, [
+          { text: "SCORE", size: at(scoreLabel.size), family: LABEL_FONT, color: scoreLabel.color },
+        ], at(baseline), scoreLabel.angle, { align: "center" }),
+      );
+    }
+    bounds.push(
+      // Name, then a tighter "/Lv", then a bigger level number
+      this.drawArcRuns(ctx, [
+        { text: label.name, size: at(diff.size), family: FONT, color: label.color, pitch: at(diff.namePitch) },
+        { text: "/Lv", size: at(diff.size), family: FONT, color: label.color, pitch: at(diff.levelPitch) },
+        { text: ".", size: at(diff.size), family: FONT, color: label.color, pitch: at(diff.dotPitch) },
+        { text: this.level, size: at(diff.digitSize), family: FONT, color: label.color },
+      ], at(baseline), diff.angle),
+      // Titles are spread wide, long ones get squeezed to fit
+      this.drawArcRuns(ctx, [
+        { text: this.songTitle, size: at(title.size), family: FONT, color: title.color, pitch: at(title.pitch) },
+      ], at(baseline), title.angle, { maxAngle: title.end - title.angle }),
+    );
 
     // Only this part gets copied each frame
     const size = this.canvas.width;
@@ -825,10 +1004,26 @@ export default class PlayfieldRenderer {
     this.ringTextRects = [[left, top, right - left, bottom - top]];
   }
 
+  // Song title and difficulty on the ring. Null is the demo: random title, expert 12.
+  // Difficulty is 1-4 (normal to inferno), level is the text after "Lv."
+  setChartInfo(info) {
+    const { title, difficulty, level } = info ?? {
+      ...DEMO_LABEL,
+      title: SONG_TITLES[Math.floor(Math.random() * SONG_TITLES.length)],
+    };
+    if (title === this.songTitle && difficulty === this.difficulty && level === this.level) return;
+    this.songTitle = title;
+    this.difficulty = difficulty;
+    this.level = level;
+    this.dirtyText = true;
+  }
+
   // Judging
 
   setChart(chart) {
     chart.notes.forEach((note, index) => (note.index = index));
+    // Note times in order, to find the ones near a time quickly
+    this.noteTimes = Float64Array.from(chart.notes, (note) => note.time);
     this.cutHitWindows(chart.notes);
     this.chart = chart;
     if (this.judgedNotes) this.resetJudging();
@@ -884,6 +1079,7 @@ export default class PlayfieldRenderer {
     this.judgeFrom = this.time;
     this.judgedNotes.clear();
     this.missedHolds.clear();
+    this.missedNotes.clear();
     this.activeHolds.length = 0;
     this.resetBot();
   }
@@ -892,14 +1088,30 @@ export default class PlayfieldRenderer {
     return base * 1000 + note.index;
   }
 
+  // First note at or after a chart time
+  noteIndexAt(time) {
+    const times = this.noteTimes;
+    let low = 0;
+    let high = times.length;
+    while (low < high) {
+      const middle = (low + high) >> 1;
+      if (times[middle] < time) low = middle + 1;
+      else high = middle;
+    }
+    return low;
+  }
+
   // Unjudged notes near the given time, with their timing (negative = early)
   *playableNotes(time) {
     const loopIndex = Math.floor(time / this.loopMs);
+    const notes = this.chart.notes;
     for (let k = -1; k <= 1; k++) {
       const base = (loopIndex + k) * this.loopMs;
-      for (const note of this.chart.notes) {
+      for (let i = this.noteIndexAt(time - 400 - base); i < notes.length; i++) {
+        const note = notes[i];
         const t = base + note.time;
-        if (t < this.judgeFrom || Math.abs(time - t) > 400) continue;
+        if (t > time + 400) break;
+        if (t < this.judgeFrom) continue;
         const key = this.noteKey(note, base);
         if (this.judgedNotes.has(key)) continue;
         yield { note, base, key, t, delta: time - this.settings.judgementOffset - t };
@@ -919,6 +1131,7 @@ export default class PlayfieldRenderer {
   closestNote(types, lane, time, target = null) {
     let best = null;
     for (const candidate of this.playableNotes(time)) {
+      if (target !== null && candidate.key !== target) continue;
       if (!types.includes(candidate.note.type)) continue;
       if (!this.covers(candidate.note.pos, candidate.note.size, lane)) continue;
       if (!this.gradeFor(candidate.note, candidate.delta)) continue;
@@ -931,17 +1144,52 @@ export default class PlayfieldRenderer {
     for (let d = -1; d <= 1; d++) this.lineFlash[mod60(lane + d)] = this.time;
   }
 
-  // A finger covers its lane and one on each side
-  covers(pos, size, lane) {
-    for (let offset = -1; offset <= 1; offset++) {
+  // Panels a finger presses, lanes x rows starting at its cell. The bot has big
+  // fingers, it always presses a 2x2 patch, never a single panel
+  fingerSpread(id) {
+    if (typeof id === "string" && id.startsWith("bot")) return { lanes: 2, rows: 2 };
+    return { lanes: 1, rows: 1 };
+  }
+
+  // Where the bot puts its finger so its 2 lane patch lands on the middle of a note
+  botLane(pos, size) {
+    return mod60(Math.round(pos + size / 2) - 1);
+  }
+
+  // First row of a finger's patch, kept on the ring
+  patchRow(row, rows) {
+    return Math.max(0, Math.min(row, RING_ROWS - rows));
+  }
+
+  // Calls fn(lane, row) for every panel a finger presses
+  eachFingerCell(finger, fn) {
+    const { lanes, rows } = finger.spread;
+    const first = this.patchRow(finger.row, rows);
+    for (let d = 0; d < lanes; d++) {
+      for (let row = first; row < first + rows; row++) fn(mod60(finger.lane + d), row);
+    }
+  }
+
+  // A finger covers its lane and one on each side (more for wide fingers)
+  covers(pos, size, lane, reach = 1) {
+    for (let offset = -reach; offset <= reach; offset++) {
       if (mod60(lane + offset - pos) < size) return true;
+    }
+    return false;
+  }
+
+  chainTouched(note, noteTime, delta) {
+    const opened = noteTime + note.windows[0][0];
+    for (const finger of this.fingers.values()) {
+      if (!this.covers(note.pos, note.size, finger.lane, finger.spread.lanes)) continue;
+      if (delta >= 0 || finger.since >= opened) return true;
     }
     return false;
   }
 
   touching(pos, size) {
     for (const finger of this.fingers.values()) {
-      if (this.covers(pos, size, finger.lane)) return true;
+      if (this.covers(pos, size, finger.lane, finger.spread.lanes)) return true;
     }
     return false;
   }
@@ -951,9 +1199,8 @@ export default class PlayfieldRenderer {
     const { note, base, key, delta } = found;
     this.judgedNotes.add(key);
     const detail = kind === "marvelous" ? null : delta < 0 ? "FAST" : "LATE";
-    this.judge(kind, detail);
+    this.judge(kind, detail, note.bonus);
 
-    this.lightLanes(note.pos, note.size, 100);
     this.spawnTouchEffects(note.pos, note.size);
 
     if (note.rNote && this.settings.rNoteEffect) {
@@ -981,15 +1228,16 @@ export default class PlayfieldRenderer {
     for (const candidate of this.playableNotes(now)) {
       const { note, delta } = candidate;
 
-      // Chains have no attack judgement, touching them is enough
-      const contact = note.type === "chain" && delta >= note.windows[0][0];
-      if (contact && this.touching(note.pos, note.size)) {
+      // Chains have no attack judgement, touching them is enough. Touched inside the window
+      // hits right away, already held from before hits right on time
+      if (note.type === "chain" && delta >= note.windows[0][0] && this.chainTouched(note, now - delta, delta)) {
         this.hitNote(candidate, "marvelous");
         continue;
       }
 
-      if (delta > note.lateLimit) {
+      if (delta > note.lateLimit && this.features.judging) {
         this.judgedNotes.add(candidate.key);
+        this.missedNotes.add(candidate.key);
         this.judge("miss", null);
         // Missed hold start means the whole hold is gone
         if (note.type === "hold") {
@@ -1005,7 +1253,7 @@ export default class PlayfieldRenderer {
       const local = now - hold.base;
       const shape = this.holdShapeAt(hold.note, local);
       hold.held = hold.kind !== "miss" && this.touching(Math.round(shape.pos), Math.round(shape.size));
-      if (hold.kind !== "miss") {
+      if (hold.kind !== "miss" && this.features.judging) {
         hold.releasedFor = hold.held ? 0 : hold.releasedFor + dt;
         if (hold.releasedFor > HOLD_DROP_MS) {
           hold.kind = "miss";
@@ -1022,18 +1270,22 @@ export default class PlayfieldRenderer {
     // Forget notes from old loops
     if (this.judgedNotes.size > 400) {
       const oldest = (Math.floor(now / this.loopMs) - 1) * this.loopMs * 1000;
-      for (const set of [this.judgedNotes, this.missedHolds]) {
+      for (const set of [this.judgedNotes, this.missedHolds, this.missedNotes]) {
         for (const key of set) if (key < oldest) set.delete(key);
       }
     }
   }
 
-  judge(kind, detail) {
+  judge(kind, detail, bonus = false) {
+    // No judging: hits still clear notes, but nothing counts
+    if (!this.features.judging) return;
     const perNote = 1000000 / this.noteCount();
     const value = perNote * { marvelous: 1, great: 0.7, good: 0.5, miss: 0 }[kind];
 
     this.combo = kind === "miss" ? 0 : this.combo + 1;
     this.judged++;
+    // Clear gauge: hits fill it, bonus notes count triple (SaturnView)
+    if (kind !== "miss") this.gauge += bonus ? 3 : 1;
     this.earned += value;
     this.lost += perNote - value;
     this.judgement = { kind, detail, start: this.time };
@@ -1053,7 +1305,6 @@ export default class PlayfieldRenderer {
     if (hold.kind === "miss") return;
 
     const last = hold.note.points[hold.note.points.length - 1];
-    this.lightLanes(last.pos, last.size, 100);
     this.spawnTouchEffects(last.pos, last.size, false);
   }
 
@@ -1103,16 +1354,16 @@ export default class PlayfieldRenderer {
       action.run(action.time);
     }
 
-    // Follow held holds
+    // Follow held holds, staying on their middle
     for (let i = bot.holds.length - 1; i >= 0; i--) {
       const { id, note, base, radius } = bot.holds[i];
-      if (now - base >= note.endTime) {
+      if (!this.fingers.has(id) || now - base >= note.endTime) {
         this.fingers.delete(id);
         bot.holds.splice(i, 1);
         continue;
       }
       const shape = this.holdShapeAt(note, now - base);
-      this.fingerMove(id, mod60(Math.round(shape.pos + shape.size / 2)), radius, now);
+      this.fingerMove(id, this.botLane(shape.pos, shape.size), radius, now);
     }
 
     if (bot.planned.size > 400) {
@@ -1121,61 +1372,88 @@ export default class PlayfieldRenderer {
     }
   }
 
-  planBotNote({ note, base, t }) {
+  planBotNote({ note, base, key, t }) {
     const { bot } = this;
     const id = `bot${bot.fingerCount++}`;
-    // Somewhere around the middle, like a hand would
-    const jitter = note.size >= 4 ? Math.floor(Math.random() * 3) - 1 : 0;
-    const lane = mod60(note.pos + Math.floor(note.size / 2) + jitter);
+    // Right on the middle of the note
+    const lane = this.botLane(note.pos, note.size);
     const at = (time, run) => bot.actions.push({ time, run });
 
-    // Always Marvelous for now, while testing the window cuts
-    const time = t + this.settings.judgementOffset;
+    // Roll a grade for the skill level, then aim for that grade's part of the window.
+    // A miss is just not pressing
+    const offset = this.botOffset(note);
+    if (offset === null) return;
+    const time = t + this.settings.judgementOffset + offset;
 
-    const radius = this.rowRadius(1 + Math.floor(Math.random() * 2));
+    const radius = this.rowRadius(BOT_ROW);
 
     if (note.type === "slideCW" || note.type === "slideCCW") {
       // Drag across it a bit, like a hand would
       const direction = note.type === "slideCCW" ? 1 : -1;
-      at(time - 40, (t) => this.fingerDown(id, mod60(lane - direction), radius, t));
+      at(time - 40, (t) => this.fingerDown(id, mod60(lane - direction), radius, t, key));
       for (let step = 0; step < 3; step++) {
         at(time + step * 40, (t) => this.fingerMove(id, mod60(lane + step * direction), radius, t));
       }
-      at(time + 110, () => this.fingers.delete(id));
+      at(time + 170, () => this.fingers.delete(id));
     } else if (note.type === "snapIn" || note.type === "snapOut") {
       // Swipe across the rows, towards the screen for snap in
       const [from, to] = note.type === "snapIn" ? [RING_ROWS - 1, 0] : [0, RING_ROWS - 1];
-      at(time - 40, (t) => this.fingerDown(id, lane, this.rowRadius(from), t));
+      at(time - 40, (t) => this.fingerDown(id, lane, this.rowRadius(from), t, key));
       at(time, (t) => this.fingerMove(id, lane, this.rowRadius(to), t));
-      at(time + 40, () => this.fingers.delete(id));
+      at(time + 80, () => this.fingers.delete(id));
     } else if (note.type === "hold") {
       at(time, (t) => {
-        this.fingerDown(id, lane, radius, t);
+        this.fingerDown(id, lane, radius, t, key);
         bot.holds.push({ id, note, base, radius });
       });
     } else {
-      at(time, (t) => this.fingerDown(id, lane, radius, t));
-      at(time + 60, () => this.fingers.delete(id));
+      at(time, (t) => this.fingerDown(id, lane, radius, t, key));
+      at(time + 110, () => this.fingers.delete(id));
     }
   }
 
-  lightLanes(pos, size, duration) {
-    const until = this.time + duration;
+  // Timing offset (ms) that lands the grade the bot rolled, null for a miss
+  botOffset(note) {
+    const odds = BOT_SKILLS[this.features.botSkill] ?? BOT_SKILLS["all-marvelous"];
+    let roll = Math.random();
+    let grade = "marvelous";
+    for (const [name, chance] of Object.entries(odds)) {
+      grade = name;
+      if ((roll -= chance) < 0) break;
+    }
+    if (grade === "miss") return null;
+
+    // Chains are marvelous or miss. Otherwise the part of the grade's window that's outside
+    // the better grade's, early or late. Cut windows can leave nothing, then it goes up a grade
+    let index = note.type === "chain" ? 0 : HIT_GRADES.indexOf(grade);
+    while (index > 0) {
+      const [early, late] = note.windows[index];
+      const [betterEarly, betterLate] = note.windows[index - 1];
+      const sides = [
+        [early, betterEarly],
+        [betterLate, late],
+      ].filter(([from, to]) => to - from > 2);
+      if (sides.length > 0) {
+        const [from, to] = sides[Math.floor(Math.random() * sides.length)];
+        // Away from the edges so the frame it lands on doesn't matter
+        return from + (to - from) * (0.25 + Math.random() * 0.5);
+      }
+      index--;
+    }
+    return 0;
+  }
+
+  lightLanes(pos, size) {
     for (let i = 0; i < size; i++) {
       const lane = mod60(pos + i);
-      this.beamUntil[lane] = Math.max(this.beamUntil[lane], until);
+      this.beamUntil[lane] = Math.max(this.beamUntil[lane], this.time);
     }
   }
 
+  // Key beams only light where fingers are, not the whole note
   updateKeyBeams() {
-    for (const { lane } of this.fingers.values()) {
-      this.lightLanes(lane - 1, 3, 0);
-    }
-
-    for (const { note, base, held } of this.activeHolds) {
-      if (held === false) continue;
-      const shape = this.holdShapeAt(note, this.time - base);
-      this.lightLanes(Math.round(shape.pos), shape.size, 0);
+    for (const { lane, spread } of this.fingers.values()) {
+      this.lightLanes(lane - 1, spread.lanes + 2);
     }
   }
 
@@ -1201,7 +1479,7 @@ export default class PlayfieldRenderer {
   spawnTouchEffects(pos, size, shoot = true) {
     const { settings } = this;
 
-    if (settings.touchEffectPop === 312001) {
+    if (settings.touchEffectPop === POP_DEFAULT) {
       this.flashes.push({ start: this.time, pos, size });
 
       // Sparkles are part of the default pop, not the shoot
@@ -1211,7 +1489,7 @@ export default class PlayfieldRenderer {
         const kind = roll < 0.35 ? "triangle" : roll < 0.8 ? "dot" : "streak";
         this.spawnParticle(kind, pos + Math.random() * size, 0.35 + Math.random() * 0.65);
       }
-    } else if (settings.touchEffectPop === 312002) {
+    } else if (settings.touchEffectPop === POP_BUBBLE) {
       // One bubble per hit lane
       for (let i = 0; i < size; i++) {
         this.bubbles.push({ start: this.time, angle: -(pos + i + 0.5) * 6 * DEG });
@@ -1295,8 +1573,14 @@ export default class PlayfieldRenderer {
     if (settings.keyBeam) this.drawKeyBeams(now);
 
     this.collectObjects(now);
-    for (const hold of this.holdSurfaces) this.drawHoldSurface(hold.note, hold.base, now, hold.missed);
+    // Notes are only visible inside the pink circle, cut off at the middle of its width
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(this.cx, this.cy, this.Rj, 0, Math.PI * 2);
+    ctx.clip();
+    for (const hold of this.holdSurfaces) this.drawHoldSurface(hold.note, hold.base, now, hold.missed, hold.held);
     this.drawObjects();
+    ctx.restore();
 
     // Hold glow under the judgement line, the line stays pink while holding
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -1308,11 +1592,14 @@ export default class PlayfieldRenderer {
     this.drawTouchEffects(now);
     this.drawInterface();
     this.drawJudgement(now);
-    this.drawRing(now);
+    if (this.features.ring) this.drawRing(now);
   }
 
-  // Which lanes are hidden right now, including the sweep animations
+  // Which lanes are hidden right now, including the sweep animations. laneMaskVersion
+  // goes up whenever that changes, so the layers built from it know when to redo
   updateLaneMasks(now) {
+    const previous = this.previousLaneHidden ?? (this.previousLaneHidden = new Uint8Array(60));
+    previous.set(this.laneHidden);
     // Everything's masked until the chart shows it
     const hidden = this.laneHidden;
     hidden.fill(1);
@@ -1345,6 +1632,13 @@ export default class PlayfieldRenderer {
           const lane = toggle.direction === "cw" ? pos + size - 1 - i : pos + i;
           hidden[mod60(lane)] = value;
         }
+      }
+    }
+
+    for (let lane = 0; lane < 60; lane++) {
+      if (hidden[lane] !== previous[lane]) {
+        this.laneMaskVersion = (this.laneMaskVersion ?? 0) + 1;
+        break;
       }
     }
   }
@@ -1430,7 +1724,8 @@ export default class PlayfieldRenderer {
     const { cx, cy, ringInner, ringOuter, settings } = this;
     const bright = settings.ringColors[index];
     const dark = settings.ringColors[index + 3];
-    const mix = (a, b, t) => `rgb(${a.map((value, i) => Math.round(value + (b[i] - value) * t))})`;
+    // What the LED shows for the mix, see ledColor
+    const mix = (a, b, t) => `rgb(${ledColor(a.map((value, i) => value + (b[i] - value) * t))})`;
     const white = [255, 255, 255];
 
     const gradient = ctx.createRadialGradient(cx, cy, ringInner, cx, cy, ringOuter);
@@ -1460,9 +1755,8 @@ export default class PlayfieldRenderer {
   // Idle ring: masked lanes in the first color, open ones in the second (official
   // tutorial video). Only redrawn when the mask changes
   updateRingIdle() {
-    const mask = this.laneHidden.join("");
-    if (mask === this.ringMask) return;
-    this.ringMask = mask;
+    if (this.laneMaskVersion === this.ringMask) return;
+    this.ringMask = this.laneMaskVersion;
 
     const { cx, cy, size, laneHidden } = this;
     const ctx = this.ringIdleLayer.getContext("2d");
@@ -1512,13 +1806,11 @@ export default class PlayfieldRenderer {
       ctx.fill();
     }
 
-    // Touched lanes light up whole columns in the third color, held holds their whole width
+    // Held holds light their whole width in the third color (the only thing that uses it,
+    // touches are just white)
     const touchLane = (lane) => {
       for (let row = 0; row < RING_ROWS; row++) this.cellTouched[mod60(lane) * RING_ROWS + row] = now;
     };
-    for (const { lane } of this.fingers.values()) {
-      for (let d = -1; d <= 1; d++) touchLane(lane + d);
-    }
     for (const { note, base, held } of this.activeHolds) {
       if (!held) continue;
       const shape = this.holdShapeAt(note, now - base);
@@ -1534,7 +1826,7 @@ export default class PlayfieldRenderer {
 
     this.drawRingREffect(now);
 
-    // Splashes: white on the touched cell, plus a fainter ring spreading out from it
+    // Splashes: white on the touched cell, a glow right around it, and a fainter ring spreading out
     const white = this.ringCellWhite ?? (this.ringCellWhite = new Float32Array(60 * RING_ROWS));
     white.fill(0);
     const rowHeight = (ringOuter - ringInner) / RING_ROWS;
@@ -1548,16 +1840,39 @@ export default class PlayfieldRenderer {
       }
       const fade = 1 - progress;
       const front = SPLASH_WAVE_REACH * (1 - fade * fade);
+      const { lanes = 1, rows = 1 } = splash.spread ?? {};
+      const first = this.patchRow(splash.row, rows);
+      // Far enough for the wave and for the glow on both sides of the patch
+      const glow = Math.ceil(1 + SPLASH_HALO_FALLOFF);
       const reach = Math.ceil(front + 1.5);
-      for (let d = -reach; d <= reach; d++) {
+      for (let d = -Math.max(reach, glow); d <= Math.max(reach, lanes - 1 + glow); d++) {
         for (let row = 0; row < RING_ROWS; row++) {
           // Distance in lane widths
           const distance = Math.hypot(d, ((row - splash.row) * rowHeight) / laneWidth);
-          const core = distance < 0.5 ? 0.95 * fade * fade : 0;
+          const inPatch = d >= 0 && d < lanes && row >= first && row < first + rows;
+          // Solid white only on the pressed panels, rows are too short to go by distance
+          const core = inPatch ? SPLASH_CORE_OPACITY * fade * fade : 0;
+          // Halo: bright right next to the patch, by distance from its edge
+          const laneGap = d < 0 ? -d : Math.max(0, d - lanes + 1);
+          const rowGap = row < first ? first - row : Math.max(0, row - (first + rows - 1));
+          const edge = Math.hypot(laneGap, (rowGap * rowHeight) / laneWidth);
+          const halo = inPatch ? 0 : SPLASH_HALO_OPACITY * fade * fade * clamp(1 - (edge - 1) / SPLASH_HALO_FALLOFF, 0, 1);
           const wave = SPLASH_WAVE_OPACITY * fade * Math.max(0, 1 - Math.abs(distance - front) / 1.2);
           const cell = mod60(splash.lane + d) * RING_ROWS + row;
-          white[cell] = Math.max(white[cell], core, wave);
+          white[cell] = Math.max(white[cell], core, halo, wave);
         }
+      }
+    }
+    // Pressed panels stay white while held, then fade out after letting go
+    for (const finger of this.fingers.values()) {
+      this.eachFingerCell(finger, (lane, row) => {
+        this.cellPressed[lane * RING_ROWS + row] = now;
+      });
+    }
+    for (let cell = 0; cell < white.length; cell++) {
+      const since = now - this.cellPressed[cell];
+      if (since < RELEASE_FADE_MS) {
+        white[cell] = Math.max(white[cell], SPLASH_CORE_OPACITY * (1 - since / RELEASE_FADE_MS));
       }
     }
     ctx.fillStyle = "#ffffff";
@@ -1732,13 +2047,15 @@ export default class PlayfieldRenderer {
 
         if (note.type === "hold") {
           if (progressOf(note.points.at(-1).scaled) > PAST_LINE || progressOf(note.scaled) < 0) continue;
-          this.holdSurfaces.push({ note, base, missed: this.missedHolds.has(key) });
+          const held = this.activeHolds.some((hold) => hold.key === key && hold.held);
+          this.holdSurfaces.push({ note, base, missed: this.missedHolds.has(key), held });
         }
 
-        // Hit notes are gone, unhit ones keep going a bit past the line
-        if (this.judgedNotes.has(key) || t < now - (t >= this.judgeFrom ? MAX_LATE_MS : 0)) continue;
+        // Hit notes are gone. The rest keep going until they've scrolled past the pink circle
+        if (this.judgedNotes.has(key) && !this.missedNotes.has(key)) continue;
+        if (t < this.judgeFrom && t < now) continue;
         const progress = progressOf(note.scaled);
-        if (progress < 0 || progress > PAST_LINE) continue;
+        if (progress < 0 || progress > NOTE_PAST_LINE) continue;
         this.pushItem(0, note, progress, note.size);
       }
 
@@ -2242,7 +2559,7 @@ export default class PlayfieldRenderer {
     ctx.restore();
   }
 
-  drawHoldSurface(note, base, now, missed) {
+  drawHoldSurface(note, base, now, missed, held) {
     const { ctx, cx, cy, Rj, R, settings } = this;
     const view = settings.viewDistance;
     const startTime = base + note.time;
@@ -2305,10 +2622,10 @@ export default class PlayfieldRenderer {
     ctx.closePath();
 
     // Color runs along the hold, radial gradient maps it onto the screen
-    const active = now > startTime && now < endTime;
+    // Active colors only while someone's actually holding it
     const colors = missed
       ? MISSED_HOLD_COLORS
-      : (active ? holdGradientsActive : holdGradients)[settings.colors.hold];
+      : (held ? holdGradientsActive : holdGradients)[settings.colors.hold];
     const duration = endTime - startTime;
     const inner = radiusAt(endTime);
     const outer = Math.min(radiusAt(startTime), R * 1.2);
@@ -2587,6 +2904,7 @@ export default class PlayfieldRenderer {
     this.drawBubbles(now);
 
     ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
     this.drawShots(now);
     ctx.globalCompositeOperation = "lighter";
 
@@ -2660,11 +2978,8 @@ export default class PlayfieldRenderer {
     ctx.globalCompositeOperation = "source-over";
   }
 
-  // Shoot wave, frame by frame from the direct feed (30fps):
-  //   first frame  pink wedge from the rim to ~0.2 of the radius
-  //   +33ms        outer part dimmed to purple
-  //   +67ms        faint purple bit near the front
-  //   +100ms       gone
+  // Shoot: a pink segment shooting from the rim towards the center, turning purple
+  // and fading as it goes
   drawShots(now) {
     const { ctx, cx, cy, Rj } = this;
 
@@ -2679,28 +2994,29 @@ export default class PlayfieldRenderer {
       // Rushes in, then keeps creeping to the center
       const creep = clamp(t / SHOT_MS, 0, 1);
       const front =
-        Rj * (0.06 + 0.2 * (1 - creep * creep * (3 - 2 * creep)) + 0.74 * Math.exp(-t / 8));
-      const outer = Rj;
+        Rj * (0.12 * (1 - creep * creep * (3 - 2 * creep)) + 0.88 * Math.exp(-t / 8));
+      // The tail leaves the rim too and chases the head, so a segment shoots inward
+      const chase = clamp(t / (SHOT_MS * 0.85), 0, 1);
+      const outer = Rj - (Rj - front) * (1 - (1 - chase) * (1 - chase));
       const span = outer - front;
       if (span < 2) continue;
 
-      // Where the bright part ends, moves from the rim to the front
+      // Bright head at the front, the tail dims as it goes. Everything only
+      // ever gets darker once the front has passed, no stops that pop back up
       const u = clamp(t / 140, 0, 1);
-      const fadeEdge = Rj * (1.1 - 0.95 * u * u * (3 - 2 * u));
-      const edge = clamp((fadeEdge - front) / span, 0.25, 1);
+      const dim = u * u * (3 - 2 * u);
 
-      const alpha = 0.85 * (t < 80 ? 1 : Math.max(0, 1 - (t - 80) / (SHOT_MS - 80)));
+      const fade = 0.8 * (1 - t / 240);
+      const alpha = fade * 0.85 * (t < 80 ? 1 : Math.max(0, 1 - (t - 80) / (SHOT_MS - 80)));
       const purple = clamp((t - 30) / 120, 0, 1);
       const mix = (a, b) => Math.round(a + (b - a) * purple);
       const rgba = (r, g, b, a) => `rgba(${mix(r, 150)}, ${mix(g, 70)}, ${mix(b, 190)}, ${a})`;
 
       const gradient = ctx.createRadialGradient(cx, cy, front, cx, cy, outer);
-      gradient.addColorStop(0, `rgba(255, 90, 210, ${alpha})`);
+      gradient.addColorStop(0, rgba(255, 90, 210, alpha));
       gradient.addColorStop(0.05, rgba(250, 120, 225, alpha));
-      gradient.addColorStop(0.2, rgba(245, 150, 230, alpha * 0.95));
-      gradient.addColorStop(Math.max(0.21, edge - 0.12), rgba(245, 175, 238, alpha * 0.9));
-      gradient.addColorStop(Math.min(1, edge + 0.12), `rgba(130, 60, 170, ${alpha * 0.45})`);
-      gradient.addColorStop(1, `rgba(120, 50, 160, ${alpha * 0.35})`);
+      gradient.addColorStop(0.2, rgba(245, 150, 230, alpha * (0.95 - 0.25 * dim)));
+      gradient.addColorStop(1, rgba(245, 175, 238, alpha * (0.9 - 0.55 * dim)));
 
       const start = -shot.pos * 6 * DEG;
       const end = -(shot.pos + shot.size) * 6 * DEG;
@@ -2754,13 +3070,24 @@ export default class PlayfieldRenderer {
 
     // Ring text, only the score changes
     this.drawLayerRects(this.ringTextLayer, this.ringTextRects);
-    const score = String(settings.scoreMinus ? minus : plus).padStart(7, "0");
-    this.drawTextOnArc(ctx, score, this.Rj, -90, R * 0.058, "#ffb52e", { weight: 500 });
+    if (this.features.score) {
+      const score = String(settings.scoreMinus ? minus : plus).padStart(7, "0");
+      const { score: scoreText } = RING_TEXT;
+      this.drawArcRuns(ctx, [
+        {
+          text: score,
+          size: this.Rj * scoreText.size,
+          family: SCORE_FONT,
+          color: scoreText.color,
+          pitch: this.Rj * scoreText.pitch,
+        },
+      ], this.Rj * scoreText.baseline, -90, { align: "center" });
+    }
 
-    // Info opacity only fades the gauge and judgement text, like in game
-    if (settings.infoOpacity > 0) {
+    // Info opacity only fades the progress bar and the judgement (with fast/late), like in game
+    if (settings.infoOpacity > 0 && this.features.progressBar) {
       ctx.globalAlpha = settings.infoOpacity;
-      this.drawClearGauge(this.judged / this.noteCount());
+      this.drawClearGauge(Math.min(1, this.gauge / this.noteCount()));
       ctx.globalAlpha = 1;
     }
 
@@ -2776,12 +3103,14 @@ export default class PlayfieldRenderer {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "#ffffff";
-      ctx.font = `600 ${R * 0.085}px ${FONT}`;
+      ctx.font = `${R * 0.085}px ${JUDGEMENT_FONT}`;
       ctx.fillText(String(value), cx, cy - R * 0.125);
 
-      ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
-      ctx.font = `600 ${R * 0.03}px ${FONT}`;
-      ctx.fillText(CENTER_LABELS[mode], cx, cy - R * 0.06);
+      if (CENTER_LABELS[mode]) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+        ctx.font = `600 ${R * 0.03}px ${FONT}`;
+        ctx.fillText(CENTER_LABELS[mode], cx, cy - R * 0.06);
+      }
     }
 
     ctx.globalAlpha = 1;
@@ -2841,71 +3170,62 @@ export default class PlayfieldRenderer {
     }
   }
 
-  // Text along a circle, clockwise, glyphs centered on the circle.
-  // Angle is the center, or the start with align: "start". Returns the bounds
-  drawTextOnArc(ctx, text, radius, angle, size, color, options = {}) {
-    const {
-      align = "center",
-      spacing = 1.08,
-      weight = 700,
-      family = FONT,
-      outline = null,
-    } = options;
+  // Text along a circle, clockwise, with its baseline on the radius. Runs set font, size,
+  // color and rise, chars take their own width or a fixed pitch (glyph centered in it).
+  // Angle is the start, or the center with align: "center". Returns the bounds
+  drawArcRuns(ctx, runs, radius, angle, options = {}) {
+    const { align = "start", maxAngle = Infinity } = options;
     const { cx, cy } = this;
-    ctx.font = `${weight} ${size}px ${family}`;
-    ctx.fillStyle = color;
+
+    // Lay out first, widths are cached per font and char
+    const chars = [];
+    let total = 0;
+    for (const run of runs) {
+      const font = `${run.size}px ${run.family}`;
+      for (const char of run.text) {
+        const key = `${font}|${char}`;
+        let width = this.textWidths.get(key);
+        if (width === undefined) {
+          ctx.font = font;
+          width = ctx.measureText(char).width;
+          this.textWidths.set(key, width);
+        }
+        // Full width chars (kanji etc) get more room than the pitch, like in game
+        const cell = run.pitch ? Math.max(run.pitch, width * 1.22) : width;
+        chars.push({ char, run, font, cell });
+        total += cell;
+      }
+    }
+
+    // Too long, squeeze everything to fit
+    const limit = maxAngle * DEG * radius;
+    const squeeze = total > limit ? limit / total : 1;
+    let current = angle * DEG - (align === "center" ? (total * squeeze) / radius / 2 : 0);
+
     ctx.textAlign = "center";
     ctx.textBaseline = "alphabetic";
-
-    const widthOf = (char) => {
-      const key = `${family}|${weight}|${size}|${char}`;
-      let width = this.textWidths.get(key);
-      if (width === undefined) {
-        width = ctx.measureText(char).width;
-        this.textWidths.set(key, width);
-      }
-      return width * spacing;
-    };
-
-    // Center the actual glyphs on the circle, not the em box
-    const baselineKey = `${family}|${weight}|${size}|baseline|${text}`;
-    let baseline = this.textWidths.get(baselineKey);
-    if (baseline === undefined) {
-      const metrics = ctx.measureText(text);
-      baseline = (metrics.actualBoundingBoxAscent - metrics.actualBoundingBoxDescent) / 2;
-      this.textWidths.set(baselineKey, baseline);
-    }
-
-    if (outline) {
-      ctx.strokeStyle = outline;
-      ctx.lineWidth = size * 0.16;
-      ctx.lineJoin = "round";
-    }
-
-    let total = 0;
-    for (const char of text) total += widthOf(char);
-
     const bounds = { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity };
-    let current = angle * DEG - (align === "center" ? total / radius / 2 : 0);
-    for (const char of text) {
-      const width = widthOf(char);
-      const middle = current + width / radius / 2;
-      const x = cx + radius * Math.cos(middle);
-      const y = cy + radius * Math.sin(middle);
+    for (const { char, run, font, cell } of chars) {
+      const middle = current + (cell * squeeze) / 2 / radius;
+      const r = radius + (run.rise ?? 0);
+      const x = cx + r * Math.cos(middle);
+      const y = cy + r * Math.sin(middle);
       ctx.setTransform(1, 0, 0, 1, x, y);
       ctx.rotate(middle + Math.PI / 2);
-      if (outline) ctx.strokeText(char, 0, baseline);
-      ctx.fillText(char, 0, baseline);
-      current += width / radius;
+      if (squeeze !== 1) ctx.scale(squeeze, 1);
+      ctx.font = font;
+      ctx.fillStyle = run.color;
+      ctx.fillText(char, 0, 0);
+      current += (cell * squeeze) / radius;
 
-      bounds.left = Math.min(bounds.left, x - size);
-      bounds.top = Math.min(bounds.top, y - size);
-      bounds.right = Math.max(bounds.right, x + size);
-      bounds.bottom = Math.max(bounds.bottom, y + size);
+      const extent = run.size * 1.2;
+      bounds.left = Math.min(bounds.left, x - extent);
+      bounds.top = Math.min(bounds.top, y - extent);
+      bounds.right = Math.max(bounds.right, x + extent);
+      bounds.bottom = Math.max(bounds.bottom, y + extent);
     }
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.lineJoin = "miter";
     return bounds;
   }
 

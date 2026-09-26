@@ -300,7 +300,7 @@ $cover-size: 100px;
   // margin-top: $paddings;
   line-height: 1;
   font-size: 1.5rem;
-  font-family: "SHINBI", sans-serif;
+  font-family: "judgement_font", sans-serif;
   color: white;
   flex-wrap: wrap;
   justify-content: space-around;

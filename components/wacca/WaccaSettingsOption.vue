@@ -18,7 +18,9 @@
         </template>
 
         <template v-slot:prepend>
-          {{ option.format(options[option.id]) }}
+          <span class="slider-value" :style="{ minWidth: valueWidth }">
+            {{ option.format(options[option.id]) }}
+          </span>
         </template>
       </v-slider>
     </div>
@@ -95,6 +97,12 @@
   }
 }
 
+.slider-value {
+  display: inline-block;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
 // Previews for the design dropdowns, bigger in the selected box without making it taller
 .note-preview {
   flex: none;
@@ -140,6 +148,18 @@ const emit = defineEmits(["preview"]);
 function preview(value) {
   emit("preview", value === null ? null : { id: props.option.id, value });
 }
+
+// Room for the longest value so the slider doesn't resize (and jump) while dragging
+const valueWidth = computed(() => {
+  const { type, min, max, step, format } = props.option;
+  if (type !== "slider") return undefined;
+  let longest = 0;
+  for (let value = min; value <= max; value += step) {
+    longest = Math.max(longest, String(format(value)).length);
+  }
+  // Plus a bit for symbols wider than a digit, like % and ×
+  return `${longest + 1}ch`;
+});
 
 // Plain title/value items so unknown saved values don't break the page
 const items = computed(() =>

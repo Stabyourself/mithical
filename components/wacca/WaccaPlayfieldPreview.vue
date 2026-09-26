@@ -21,59 +21,26 @@
             ></canvas>
           </div>
 
-          <div class="playfield-controls">
-            <v-btn-group
-              color="primary"
-              density="comfortable"
-              rounded="pill"
-              divided
+          <!-- One pill like a media player: play, time, seek bar, speed, fullscreen -->
+          <div class="playfield-toolbar">
+            <v-btn
+              icon
+              variant="text"
+              size="small"
+              :aria-label="paused ? 'Play preview' : 'Pause preview'"
+              :title="paused ? 'Play' : 'Pause'"
+              @click="togglePause"
             >
-              <v-btn
-                :aria-label="paused ? 'Play preview' : 'Pause preview'"
-                :title="paused ? 'Play' : 'Pause'"
-                @click="togglePause"
-              >
-                <v-icon>{{ paused ? "mdi-play" : "mdi-pause" }}</v-icon>
-              </v-btn>
-              <v-menu location="top" :z-index="2500">
-                <template v-slot:activator="{ props: menuProps }">
-                  <v-btn
-                    v-bind="menuProps"
-                    class="playfield-speed"
-                    aria-label="Playback speed"
-                    title="Speed"
-                  >
-                    {{ speed }}x
-                  </v-btn>
-                </template>
-                <v-list density="compact">
-                  <v-list-item
-                    v-for="option in SPEEDS"
-                    :key="option"
-                    :active="option === speed"
-                    color="primary"
-                    @click="speed = option"
-                  >
-                    {{ option }}x
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-              <v-btn
-                :aria-label="expanded ? 'Exit fullscreen' : 'Fullscreen preview'"
-                :title="expanded ? 'Exit fullscreen' : 'Fullscreen'"
-                @click="expanded = !expanded"
-              >
-                <v-icon>{{
-                  expanded ? "mdi-fullscreen-exit" : "mdi-fullscreen"
-                }}</v-icon>
-              </v-btn>
-            </v-btn-group>
+              <v-icon>{{ paused ? "mdi-play" : "mdi-pause" }}</v-icon>
+            </v-btn>
 
+            <span class="playfield-time">{{ formatTime(position) }}</span>
             <v-slider
               class="playfield-scrub"
               :model-value="position"
               :max="songLength"
-              color="primary"
+              color="white"
+              track-color="white"
               density="compact"
               hide-details
               aria-label="Song position"
@@ -81,9 +48,46 @@
               @update:model-value="scrub"
               @end="scrubEnd"
             ></v-slider>
-            <span class="playfield-time">
-              {{ formatTime(position) }} / {{ formatTime(songLength) }}
-            </span>
+            <span class="playfield-time">{{ formatTime(songLength) }}</span>
+
+            <v-menu location="top" :z-index="2500">
+              <template v-slot:activator="{ props: menuProps }">
+                <v-btn
+                  v-bind="menuProps"
+                  variant="text"
+                  size="small"
+                  rounded="pill"
+                  class="playfield-speed"
+                  aria-label="Playback speed"
+                  title="Speed"
+                >
+                  {{ speed }}x
+                </v-btn>
+              </template>
+              <v-list density="compact">
+                <v-list-item
+                  v-for="option in SPEEDS"
+                  :key="option"
+                  :active="option === speed"
+                  color="primary"
+                  @click="speed = option"
+                >
+                  {{ option }}x
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <v-btn
+              icon
+              variant="text"
+              size="small"
+              :aria-label="expanded ? 'Exit fullscreen' : 'Fullscreen preview'"
+              :title="expanded ? 'Exit fullscreen' : 'Fullscreen'"
+              @click="expanded = !expanded"
+            >
+              <v-icon>{{
+                expanded ? "mdi-fullscreen-exit" : "mdi-fullscreen"
+              }}</v-icon>
+            </v-btn>
           </div>
         </div>
       </div>
@@ -97,41 +101,44 @@
   margin: 0 auto 32px;
 }
 
-/* Same size as the preview plus controls */
+/* Same size as the preview plus the toolbar */
 .playfield-placeholder {
   aspect-ratio: 1 / 1;
-  margin-bottom: 48px;
+  margin-bottom: 52px;
 }
 
 .playfield-canvas {
   aspect-ratio: 1 / 1;
 }
 
-.playfield-controls {
+.playfield-toolbar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 2px;
+  height: 44px;
   margin-top: 8px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-on-primary));
 }
 
 .playfield-scrub {
   flex: 1;
+  margin: 0 6px;
 }
 
 .playfield-speed {
   text-transform: none;
-  min-width: 52px;
+  min-width: 44px;
+  padding: 0 8px;
 }
 
 .playfield-time {
   font-size: 13px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  opacity: 0.7;
-}
-
-.playfield-lightbox .playfield-time {
-  color: white;
+  padding: 0 2px;
 }
 
 /* Lightbox: as big as the window allows */
@@ -146,7 +153,7 @@
 }
 
 .playfield-lightbox .playfield-stage {
-  width: min(100vw - 32px, 100vh - 32px - 48px);
+  width: min(100vw - 32px, 100vh - 32px - 52px);
 }
 
 canvas {
@@ -183,7 +190,48 @@ const props = defineProps({
   diff: {
     type: String,
     default: 0, 
-  }
+  },
+  // { title, difficulty (1-4), level } for the ring, null for the demo
+  chartInfo: {
+    type: Object,
+    default: null,
+  },
+  // Console LEDs around the screen. Off, the screen grows to fill the space
+  ring: {
+    type: Boolean,
+    default: true,
+  },
+  // Bot plays when nobody else is
+  autoplay: {
+    type: Boolean,
+    default: true,
+  },
+  // Ratings, misses and dropped holds. Off, unhit notes just pass by
+  judging: {
+    type: Boolean,
+    default: true,
+  },
+  // "1/3 Song" on the ring
+  songCount: {
+    type: Boolean,
+    default: true,
+  },
+  // Ring score and its "SCORE" label
+  score: {
+    type: Boolean,
+    default: true,
+  },
+  // Clear gauge
+  progressBar: {
+    type: Boolean,
+    default: true,
+  },
+  // How well the bot plays, named after the worst grade it gets
+  botSkill: {
+    type: String,
+    default: "all-marvelous",
+    validator: (value) => ["miss-up", "good-up", "great-up", "all-marvelous"].includes(value),
+  },
 });
 const container = ref(null);
 const canvas = ref(null);
@@ -363,6 +411,7 @@ let scrubTarget = 0;
 function scrubStart() {
   scrubTarget = renderer?.songTime ?? 0;
   scrubbing = true;
+  if (renderer) renderer.scrubbing = true;
   updateLoop();
 }
 
@@ -378,6 +427,7 @@ function scrub(time) {
 
 function scrubEnd() {
   scrubbing = false;
+  if (renderer) renderer.scrubbing = false;
   renderer?.seek(scrubTarget);
   updateLoop();
 }
@@ -403,6 +453,30 @@ async function loadChart(url) {
 }
 
 watch(() => props.chartUrl.includes("demo") ? props.chartUrl : props.chartUrl + props.diff + ".mer", loadChart);
+watch(() => props.chartUrl, loadChart);
+const features = computed(() => ({
+  ring: props.ring,
+  autoplay: props.autoplay,
+  judging: props.judging,
+  songCount: props.songCount,
+  score: props.score,
+  progressBar: props.progressBar,
+  botSkill: props.botSkill,
+}));
+watch(features, (value) => {
+  if (!renderer) return;
+  renderer.setFeatures(value);
+  updateLoop();
+});
+
+watch(
+  () => props.chartInfo,
+  (info) => {
+    if (!renderer) return;
+    renderer.setChartInfo(info);
+    updateLoop();
+  },
+);
 
 function formatTime(ms) {
   const seconds = Math.floor(ms / 1000);
@@ -469,6 +543,8 @@ watch(
 onMounted(() => {
   renderer = new PlayfieldRenderer(canvas.value);
   renderer.setOptions(props.options);
+  // Redraw a paused preview once the game font is in
+  renderer.fontsReady.then(() => renderer && updateLoop());
   songLength.value = renderer.songLength;
   if(props.chartUrl.includes("demo"))
   {
@@ -478,6 +554,9 @@ onMounted(() => {
   {
     loadChart(props.chartUrl + props.diff + ".mer");
   }
+  renderer.setChartInfo(props.chartInfo);
+  renderer.setFeatures(features.value);
+  loadChart(props.chartUrl);
 
   resizeObserver = new ResizeObserver(([entry]) => {
     cssSize = entry.contentRect.width;
