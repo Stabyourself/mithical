@@ -465,6 +465,8 @@ watch(
 onMounted(() => {
   renderer = new PlayfieldRenderer(canvas.value);
   renderer.setOptions(props.options);
+  // Redraw a paused preview once the game font is in
+  renderer.fontsReady.then(() => renderer && updateLoop());
   songLength.value = renderer.songLength;
   loadChart(props.chartUrl);
 

@@ -16,7 +16,7 @@
 
 .song-medal {
   white-space: nowrap;
-  font-family: "SHINBI", sans-serif;
+  font-family: "judgement_font", sans-serif;
   letter-spacing: -2px;
   font-size: 1.3rem;
 }

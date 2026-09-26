@@ -1,8 +1,33 @@
 @font-face {
-  font-family: "SHINBI";
+  font-family: "judgement_font";
   font-style: normal;
   font-weight: 400;
-  src: url("~/assets/font/SHINBI.woff2") format("woff2");
+  src: url("~/assets/font/judgement_font.woff2") format("woff2");
+}
+
+// The game's ring font. One weight, so claim them all instead of
+// letting the browser fake bold
+@font-face {
+  font-family: "ring_font";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("~/assets/font/ring_font.woff2") format("woff2");
+}
+
+// Ring score digits and its "SCORE" label, only the glyphs those need
+@font-face {
+  font-family: "score_font";
+  font-style: normal;
+  font-weight: 100 900;
+  src: url("~/assets/font/score_font.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "label_font";
+  font-style: normal;
+  font-weight: 100 900;
+  src: url("~/assets/font/label_font.woff2") format("woff2");
 }
 
 @font-face {

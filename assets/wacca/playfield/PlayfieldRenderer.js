@@ -76,10 +76,9 @@ const BACKGROUND_STOPS = [
 
 // Center display = max possible score minus this
 const CENTER_BORDERS = { 4: 900000, 5: 950000, 6: 990000, 7: 985000 };
+// Score displays have no label
 const CENTER_LABELS = {
   1: "COMBO",
-  2: "SCORE",
-  3: "SCORE",
   4: "S BORDER",
   5: "SS BORDER",
   6: "SSS BORDER",
@@ -87,7 +86,10 @@ const CENTER_LABELS = {
 };
 
 // Same font and gradients as the recent plays judgement labels
-const JUDGEMENT_FONT = '"SHINBI", sans-serif';
+// Fonts the game uses, see wacca.scss
+const JUDGEMENT_FONT = '"judgement_font", sans-serif';
+const SCORE_FONT = '"score_font", "ring_font", sans-serif';
+const LABEL_FONT = '"label_font", "ring_font", sans-serif';
 const JUDGEMENT_STYLES = {
   marvelous: { text: "Marvelous", top: "#ff1e8c", bottom: "#fe8e34" },
   great: { text: "Great", top: "#ffff88", bottom: "#c2e67b" },
@@ -172,8 +174,26 @@ const MAX_BUBBLES = 240;
 const BUBBLE_LIFE_MS = 460;
 
 // Ring text styles, from direct feed videos
-const SONG_COUNT_COLOR = "#f9a3ad";
-const SONG_TITLE_COLOR = "#f0c8ee";
+// Ring text, measured off an in-game screenshot. Sizes and radii are in Rj,
+// radii are where the baseline sits, angles are where the text starts (or its center)
+// Pitch is a fixed cell width per char, the game lays these out monospaced
+const RING_TEXT = {
+  baseline: 0.9844,
+  count: { angle: -132.4, pitch: 0.0587, color: "#f769bd" },
+  countWord: { angle: -125, size: 0.042, pitch: 0.0341 },
+  label: { angle: -103.7, size: 0.0311, color: "#b45121" },
+  score: { baseline: 0.9829, size: 0.0456, pitch: 0.0422, color: "#f8a12a" },
+  difficulty: {
+    angle: -77.4,
+    size: 0.0427,
+    namePitch: 0.0338,
+    levelPitch: 0.0299,
+    dotPitch: 0.0234,
+    digitSize: 0.0543,
+    color: "#e01864",
+  },
+  title: { angle: -49.6, end: -5, size: 0.042, pitch: 0.041, color: "#f567b9" },
+};
 
 // Random title for the demo song
 const SONG_TITLES = [
@@ -186,7 +206,8 @@ const SONG_TITLES = [
   "Mogu Mogu Yummy",
 ];
 
-const FONT = '"Roboto", "Helvetica Neue", Arial, sans-serif';
+// See wacca.scss
+const FONT = '"ring_font", "Roboto", "Helvetica Neue", Arial, sans-serif';
 
 // Farthest past the judgement line anything draws, that's under the ring already
 const PAST_LINE = 1.03;
@@ -276,7 +297,17 @@ export default class PlayfieldRenderer {
     this.laneHidden = new Uint8Array(60);
 
     this.settings = resolveSettings({});
-    document.fonts?.load(`40px ${JUDGEMENT_FONT}`).catch(() => { });
+    // Canvas text doesn't redraw by itself once fonts arrive, so rebuild the text layers then
+    this.fontsReady = Promise.all([
+      document.fonts?.load(`40px ${JUDGEMENT_FONT}`),
+      document.fonts?.load(`40px ${FONT}`),
+      document.fonts?.load(`40px ${SCORE_FONT}`, "0123456789"),
+      document.fonts?.load(`40px ${LABEL_FONT}`, "SCORE"),
+    ])
+      .catch(() => { })
+      .then(() => {
+        this.dirty = true;
+      });
     this.cache = new Map();
     // Full rebuild on resize, partial ones on option changes
     this.dirty = true;
@@ -802,18 +833,35 @@ export default class PlayfieldRenderer {
   // Static ring text, laid out like the direct feed videos
   buildRingTextLayer() {
     const ctx = this.ringTextLayer.getContext("2d");
-    const { R, Rj } = this;
+    const { Rj } = this;
+    const { baseline, count, countWord, label, difficulty: diff, title } = RING_TEXT;
+    const at = (value) => Rj * value;
     ctx.clearRect(0, 0, this.size, this.size);
 
     const bounds = [
-      this.drawTextOnArc(ctx, "1/3 Song", Rj, -126, R * 0.032, SONG_COUNT_COLOR),
-      this.drawTextOnArc(ctx, "SCORE", Rj, -104, R * 0.026, "#f08a28"),
-      this.drawTextOnArc(ctx, "EXPERT/Lv.12", Rj, -73, R * 0.032, "#e01864"),
-      this.drawTextOnArc(ctx, this.songTitle, Rj, -57, R * 0.032, SONG_TITLE_COLOR, {
-        outline: "rgba(90, 0, 55, 0.6)",
-        align: "start",
-        spacing: 1.15,
-      }),
+      // "1/₃ Song", the total is small and sits low
+      this.drawArcRuns(ctx, [
+        { text: "1", size: at(0.0472), family: FONT, color: count.color, pitch: at(count.pitch) },
+        { text: "/", size: at(0.038), family: FONT, color: count.color },
+        { text: "3", size: at(0.0228), family: FONT, color: count.color, pitch: at(0.0226), rise: at(-0.0085) },
+      ], at(baseline), count.angle),
+      this.drawArcRuns(ctx, [
+        { text: "Song", size: at(countWord.size), family: FONT, color: count.color, pitch: at(countWord.pitch) },
+      ], at(baseline), countWord.angle),
+      this.drawArcRuns(ctx, [
+        { text: "SCORE", size: at(label.size), family: LABEL_FONT, color: label.color },
+      ], at(baseline), label.angle, { align: "center" }),
+      // Name, then a tighter "/Lv", then a bigger level number
+      this.drawArcRuns(ctx, [
+        { text: "EXPERT", size: at(diff.size), family: FONT, color: diff.color, pitch: at(diff.namePitch) },
+        { text: "/Lv", size: at(diff.size), family: FONT, color: diff.color, pitch: at(diff.levelPitch) },
+        { text: ".", size: at(diff.size), family: FONT, color: diff.color, pitch: at(diff.dotPitch) },
+        { text: "12", size: at(diff.digitSize), family: FONT, color: diff.color },
+      ], at(baseline), diff.angle),
+      // Titles are spread wide, long ones get squeezed to fit
+      this.drawArcRuns(ctx, [
+        { text: this.songTitle, size: at(title.size), family: FONT, color: title.color, pitch: at(title.pitch) },
+      ], at(baseline), title.angle, { maxAngle: title.end - title.angle }),
     ];
 
     // Only this part gets copied each frame
@@ -2749,9 +2797,18 @@ export default class PlayfieldRenderer {
     // Ring text, only the score changes
     this.drawLayerRects(this.ringTextLayer, this.ringTextRects);
     const score = String(settings.scoreMinus ? minus : plus).padStart(7, "0");
-    this.drawTextOnArc(ctx, score, this.Rj, -90, R * 0.058, "#ffb52e", { weight: 500 });
+    const { score: scoreText } = RING_TEXT;
+    this.drawArcRuns(ctx, [
+      {
+        text: score,
+        size: this.Rj * scoreText.size,
+        family: SCORE_FONT,
+        color: scoreText.color,
+        pitch: this.Rj * scoreText.pitch,
+      },
+    ], this.Rj * scoreText.baseline, -90, { align: "center" });
 
-    // Info opacity only fades the gauge and judgement text, like in game
+    // Info opacity only fades the progress bar and the judgement (with fast/late), like in game
     if (settings.infoOpacity > 0) {
       ctx.globalAlpha = settings.infoOpacity;
       this.drawClearGauge(this.judged / this.noteCount());
@@ -2770,12 +2827,14 @@ export default class PlayfieldRenderer {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "#ffffff";
-      ctx.font = `600 ${R * 0.085}px ${FONT}`;
+      ctx.font = `${R * 0.085}px ${JUDGEMENT_FONT}`;
       ctx.fillText(String(value), cx, cy - R * 0.125);
 
-      ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
-      ctx.font = `600 ${R * 0.03}px ${FONT}`;
-      ctx.fillText(CENTER_LABELS[mode], cx, cy - R * 0.06);
+      if (CENTER_LABELS[mode]) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+        ctx.font = `600 ${R * 0.03}px ${FONT}`;
+        ctx.fillText(CENTER_LABELS[mode], cx, cy - R * 0.06);
+      }
     }
 
     ctx.globalAlpha = 1;
@@ -2835,71 +2894,61 @@ export default class PlayfieldRenderer {
     }
   }
 
-  // Text along a circle, clockwise, glyphs centered on the circle.
-  // Angle is the center, or the start with align: "start". Returns the bounds
-  drawTextOnArc(ctx, text, radius, angle, size, color, options = {}) {
-    const {
-      align = "center",
-      spacing = 1.08,
-      weight = 700,
-      family = FONT,
-      outline = null,
-    } = options;
+  // Text along a circle, clockwise, with its baseline on the radius. Runs set font, size,
+  // color and rise, chars take their own width or a fixed pitch (glyph centered in it).
+  // Angle is the start, or the center with align: "center". Returns the bounds
+  drawArcRuns(ctx, runs, radius, angle, options = {}) {
+    const { align = "start", maxAngle = Infinity } = options;
     const { cx, cy } = this;
-    ctx.font = `${weight} ${size}px ${family}`;
-    ctx.fillStyle = color;
+
+    // Lay out first, widths are cached per font and char
+    const chars = [];
+    let total = 0;
+    for (const run of runs) {
+      const font = `${run.size}px ${run.family}`;
+      for (const char of run.text) {
+        const key = `${font}|${char}`;
+        let width = this.textWidths.get(key);
+        if (width === undefined) {
+          ctx.font = font;
+          width = ctx.measureText(char).width;
+          this.textWidths.set(key, width);
+        }
+        const cell = run.pitch ?? width;
+        chars.push({ char, run, font, cell });
+        total += cell;
+      }
+    }
+
+    // Too long, squeeze everything to fit
+    const limit = maxAngle * DEG * radius;
+    const squeeze = total > limit ? limit / total : 1;
+    let current = angle * DEG - (align === "center" ? (total * squeeze) / radius / 2 : 0);
+
     ctx.textAlign = "center";
     ctx.textBaseline = "alphabetic";
-
-    const widthOf = (char) => {
-      const key = `${family}|${weight}|${size}|${char}`;
-      let width = this.textWidths.get(key);
-      if (width === undefined) {
-        width = ctx.measureText(char).width;
-        this.textWidths.set(key, width);
-      }
-      return width * spacing;
-    };
-
-    // Center the actual glyphs on the circle, not the em box
-    const baselineKey = `${family}|${weight}|${size}|baseline|${text}`;
-    let baseline = this.textWidths.get(baselineKey);
-    if (baseline === undefined) {
-      const metrics = ctx.measureText(text);
-      baseline = (metrics.actualBoundingBoxAscent - metrics.actualBoundingBoxDescent) / 2;
-      this.textWidths.set(baselineKey, baseline);
-    }
-
-    if (outline) {
-      ctx.strokeStyle = outline;
-      ctx.lineWidth = size * 0.16;
-      ctx.lineJoin = "round";
-    }
-
-    let total = 0;
-    for (const char of text) total += widthOf(char);
-
     const bounds = { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity };
-    let current = angle * DEG - (align === "center" ? total / radius / 2 : 0);
-    for (const char of text) {
-      const width = widthOf(char);
-      const middle = current + width / radius / 2;
-      const x = cx + radius * Math.cos(middle);
-      const y = cy + radius * Math.sin(middle);
+    for (const { char, run, font, cell } of chars) {
+      const middle = current + (cell * squeeze) / 2 / radius;
+      const r = radius + (run.rise ?? 0);
+      const x = cx + r * Math.cos(middle);
+      const y = cy + r * Math.sin(middle);
       ctx.setTransform(1, 0, 0, 1, x, y);
       ctx.rotate(middle + Math.PI / 2);
-      if (outline) ctx.strokeText(char, 0, baseline);
-      ctx.fillText(char, 0, baseline);
-      current += width / radius;
+      if (squeeze !== 1) ctx.scale(squeeze, 1);
+      ctx.font = font;
+      ctx.fillStyle = run.color;
+      ctx.fillText(char, 0, 0);
+      current += (cell * squeeze) / radius;
 
-      bounds.left = Math.min(bounds.left, x - size);
-      bounds.top = Math.min(bounds.top, y - size);
-      bounds.right = Math.max(bounds.right, x + size);
-      bounds.bottom = Math.max(bounds.bottom, y + size);
+      const extent = run.size * 1.2;
+      bounds.left = Math.min(bounds.left, x - extent);
+      bounds.top = Math.min(bounds.top, y - extent);
+      bounds.right = Math.max(bounds.right, x + extent);
+      bounds.bottom = Math.max(bounds.bottom, y + extent);
     }
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.lineJoin = "miter";
     return bounds;
   }
 
