@@ -147,6 +147,59 @@
       </div>
     </v-container>
 
+        <v-container class="elevation-1 mt-4">
+      <h2 class="container-heading chartview-heading">
+        Chart View
+
+
+        <v-btn-toggle
+          v-model="chartView"
+          mandatory
+          density="compact"
+          variant="outlined"
+          divided
+          class="chartview-toggle"
+        >
+          <v-btn value="0" size="small">Normal</v-btn>
+          <v-btn value="1" size="small">Hard</v-btn>
+          <v-btn value="2" size="small">Expert</v-btn>
+          <v-btn v-if="song.sheets.length > 3" value="3" size="small">Inferno</v-btn>
+        </v-btn-toggle>
+      </h2>
+      <div v-if="histogramsLoading" class="d-flex justify-center">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          :size="80"
+          :width="10"
+          class="mt-4"
+        ></v-progress-circular>
+      </div>
+
+      <div v-else>
+        <v-alert v-if="histogramsLoadingError" type="error" class="mt-4">{{
+          histogramsLoadingError
+        }}</v-alert>
+
+        <div v-else class="playfield-preview">
+        <div ref="previewColumn" class="settings-preview">
+          <WaccaPlayfieldPreview :options="profile.options" :chart-url="previewChart" :diff="chartView" />
+        </div>
+
+        </div>
+      </div>
+    </v-container>
+    
+    <v-container class="elevation-1 mt-4">
+      <h2 class="container-heading">Leaderboards</h2>
+      <WaccaLeaderboard
+        :song="song"
+        :sheets="filteredSheets"
+        :histograms="histograms"
+        :player-history="playerHistory"
+      />
+    </v-container>
+
     <v-container class="elevation-1 mt-4">
       <h2 class="container-heading">Leaderboards</h2>
       <WaccaLeaderboard
@@ -267,6 +320,26 @@
   }
 }
 
+.chartview-toggle {
+  height: 30px !important;
+  margin-left: auto;
+  .v-btn {
+    text-transform: none;
+    letter-spacing: normal;
+  }
+}
+.playfield-preview {
+  width: min(100%, 560px);
+  margin: 0 auto 32px;
+}
+
+.chartview-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 </style>
 
 <script setup>
@@ -283,7 +356,6 @@ import waccaCategories from "~/assets/wacca/waccaCategories";
 import { getSongSlug, findSongBySlug } from "~/assets/wacca/songSlug.js";
 
 const profile = useState("profile");
-
 definePageMeta({
   middleware: ["auth"],
 });
@@ -335,9 +407,21 @@ const histograms = shallowRef([]);
 const histogramsLoading = ref(false);
 const histogramsLoadingError = ref();
 const histogramView = ref("distribution");
+const chartView = ref(0);
+
 
 const playerHistory = shallowRef([]);
 
+const previewChart = computed(() => {
+  const chart = `/wacca/MusicData/S00-003/S00-003_0`;
+  console.log(typeof(chart))
+  console.log(`/${chart.replace(/^\/+/, "")}`)
+  console.log(!/^[\w\-/.]+\.mer$/.test(chart) )
+  if (typeof chart !== "string" || !/^[\w\-/.]+\.mer$/.test(chart) || chart.includes("..")) {
+    return chart;
+  }
+  return `/${chart.replace(/^\/+/, "")}`;
+});
 function loadHistograms() {
   histogramsLoading.value = true;
   $fetch(
