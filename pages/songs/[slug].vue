@@ -318,7 +318,7 @@
 }
 
 .playfield-preview {
-  width: min(100%, 825px);
+  width: min(100%, 850px);
   margin: 0 auto 32px;
   padding-bottom: 1rem;
   padding-top: 0.5rem;
