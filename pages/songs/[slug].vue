@@ -190,16 +190,6 @@
         :player-history="playerHistory"
       />
     </v-container>
-
-    <v-container class="elevation-1 mt-4">
-      <h2 class="container-heading">Leaderboards</h2>
-      <WaccaLeaderboard
-        :song="song"
-        :sheets="filteredSheets"
-        :histograms="histograms"
-        :player-history="playerHistory"
-      />
-    </v-container>
   </WaccaProfileRequired>
 </template>
 
