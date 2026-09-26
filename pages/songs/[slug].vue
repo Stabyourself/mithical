@@ -309,6 +309,14 @@
     letter-spacing: normal;
   }
 }
+
+.chartview-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .playfield-preview {
   width: min(100%, 825px);
   margin: 0 auto 32px;
@@ -318,12 +326,6 @@
   padding-left: 0.5rem;
 }
 
-.chartview-heading {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-}
 
 </style>
 
