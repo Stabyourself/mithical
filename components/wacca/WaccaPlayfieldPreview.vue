@@ -402,7 +402,7 @@ async function loadChart(url) {
   }
 }
 
-watch(() => props.chartUrl + props.diff + ".mer", loadChart);
+watch(() => props.chartUrl.includes("demo") ? props.chartUrl : props.chartUrl + props.diff + ".mer", loadChart);
 
 function formatTime(ms) {
   const seconds = Math.floor(ms / 1000);
@@ -470,7 +470,14 @@ onMounted(() => {
   renderer = new PlayfieldRenderer(canvas.value);
   renderer.setOptions(props.options);
   songLength.value = renderer.songLength;
-  loadChart(props.chartUrl + props.diff + ".mer");
+  if(props.chartUrl.includes("demo"))
+  {
+    loadChart(props.chartUrl);
+  }
+  else
+  {
+    loadChart(props.chartUrl + props.diff + ".mer");
+  }
 
   resizeObserver = new ResizeObserver(([entry]) => {
     cssSize = entry.contentRect.width;
