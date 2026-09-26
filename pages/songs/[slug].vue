@@ -151,7 +151,6 @@
       <h2 class="container-heading chartview-heading">
         Chart View
 
-
         <v-btn-toggle
           v-model="chartView"
           mandatory
@@ -166,27 +165,8 @@
           <v-btn v-if="song.sheets.length > 3" value="3" size="small">Inferno</v-btn>
         </v-btn-toggle>
       </h2>
-      <div v-if="histogramsLoading" class="d-flex justify-center">
-        <v-progress-circular
-          indeterminate
-          color="primary"
-          :size="80"
-          :width="10"
-          class="mt-4"
-        ></v-progress-circular>
-      </div>
-
-      <div v-else>
-        <v-alert v-if="histogramsLoadingError" type="error" class="mt-4">{{
-          histogramsLoadingError
-        }}</v-alert>
-
-        <div v-else class="playfield-preview">
-        <div ref="previewColumn" class="settings-preview">
-          <WaccaPlayfieldPreview :options="profile.options" :chart-url="previewChart" :diff="chartView" />
-        </div>
-
-        </div>
+      <div ref="previewColumn" class="settings-preview">
+        <WaccaPlayfieldPreview :options="profile.options" :chart-url="previewChart" :diff="chartView" />
       </div>
     </v-container>
     
@@ -407,20 +387,14 @@ const histograms = shallowRef([]);
 const histogramsLoading = ref(false);
 const histogramsLoadingError = ref();
 const histogramView = ref("distribution");
-const chartView = ref(0);
+const chartView = ref("0");
 
 
 const playerHistory = shallowRef([]);
 
 const previewChart = computed(() => {
-  const chart = `/wacca/MusicData/S00-003/S00-003_0`;
-  console.log(typeof(chart))
-  console.log(`/${chart.replace(/^\/+/, "")}`)
-  console.log(!/^[\w\-/.]+\.mer$/.test(chart) )
-  if (typeof chart !== "string" || !/^[\w\-/.]+\.mer$/.test(chart) || chart.includes("..")) {
-    return chart;
-  }
-  return `/${chart.replace(/^\/+/, "")}`;
+  const chart = `/wacca/MusicData/${song.value.id}/${song.value.id}_0`;
+  return chart;
 });
 function loadHistograms() {
   histogramsLoading.value = true;
