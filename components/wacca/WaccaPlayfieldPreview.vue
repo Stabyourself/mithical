@@ -13,6 +13,7 @@
           <div ref="container" class="playfield-canvas">
             <canvas
               ref="canvas"
+              :class="{ playing }"
               @pointerdown="onPointerDown"
               @pointermove="onPointerMove"
               @pointerup="onPointerUp"
@@ -97,6 +98,11 @@ canvas {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Swipes shouldn't scroll the page while playing */
+canvas.playing {
+  touch-action: none;
+}
 </style>
 
 <script setup>
@@ -128,6 +134,9 @@ const paused = ref(
   typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
 );
+
+// Easter egg: clicking the preview lets you play it yourself
+const playing = ref(false);
 
 // Real pixel density (up to 3x) so it's sharp on high DPI, capped so fullscreen doesn't get too expensive
 const MAX_PIXEL_RATIO = 3;
@@ -228,6 +237,7 @@ function tick(now) {
 
   const start = performance.now();
   renderer.render(dt);
+  playing.value = renderer.playing;
   adaptResolution(dt, performance.now() - start);
 }
 
@@ -262,6 +272,8 @@ function canvasPoint(event) {
 
 function onPointerDown(event) {
   if (!renderer) return;
+  // Clicking in means you want to play, so unpause
+  if (paused.value) togglePause();
   renderer.pointerDown(event.pointerId, ...canvasPoint(event));
 
   // Keep getting moves when dragging off the canvas

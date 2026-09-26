@@ -116,7 +116,7 @@
 
       <div class="settings-layout">
         <div ref="previewColumn" class="settings-preview">
-          <WaccaPlayfieldPreview :options="profile.options" />
+          <WaccaPlayfieldPreview :options="previewOptions" />
         </div>
 
         <div class="settings-options">
@@ -126,6 +126,7 @@
             :option="option"
             :options="profile.options"
             :language="language"
+            @preview="previewChoice = $event"
           />
         </div>
       </div>
@@ -362,10 +363,6 @@ import waccaUserPlates from "~/assets/wacca/waccaUserPlates.js";
 import waccaTitles from "~/assets/wacca/waccaTitles.js";
 import waccaIcons from "~/assets/wacca/waccaIcons.js";
 import waccaSymbolColors from "~/assets/wacca/waccaSymbolColors.js";
-import {
-  palettes as notePalettes,
-  paletteIndex,
-} from "~/assets/wacca/playfield/noteColors.js";
 
 const runtimeConfig = useRuntimeConfig();
 const language = useState("language");
@@ -486,21 +483,15 @@ const stageupNumberUrl = computed(
   () => `/wacca/img/stageup/number_${selectedVersionData.value.rank}.webp`,
 );
 
-const rgb = ([r, g, b]) => `rgb(${r}, ${g}, ${b})`;
-const colorStrip = (colors) =>
-  `linear-gradient(to right, ${colors
-    .map((color, i) => `${color} ${(i * 100) / colors.length}% ${((i + 1) * 100) / colors.length}%`)
-    .join(", ")})`;
-
 // Color schemes ("My Color") are items, all selectable
-// Swatch: the three main colors with the dark ones as a band below
+// Swatch: a mini touch ring showing where each color goes
 const colorSchemeOptions = waccaSymbolColors.map((scheme) => ({
   text: {
     ja: scheme.name,
     en: scheme.nameEnglish,
   },
   value: scheme.id,
-  swatch: `${colorStrip(scheme.colors.slice(3).map(rgb))} bottom / 100% 30% no-repeat, ${colorStrip(scheme.colors.slice(0, 3).map(rgb))}`,
+  consoleColors: scheme.colors,
 }));
 
 const colorOptions = [
@@ -597,12 +588,6 @@ const colorOptions = [
   },
 ];
 
-// Swatch: mini note body with the same gradient as the preview
-for (const choice of colorOptions) {
-  const { light, base, dark } = notePalettes[paletteIndex(choice.value)];
-  choice.swatch = `linear-gradient(to bottom, ${light} 0%, ${base} 20%, ${dark} 33%, ${dark} 44%, ${base} 64%, ${base} 86%, ${light} 100%)`;
-  choice.noteCaps = true;
-}
 
 const optionCategories = [
   {
@@ -1373,6 +1358,7 @@ const optionCategories = [
         type: "options",
         default: 4,
         choices: colorOptions,
+        noteType: "slideCW",
       },
 
       {
@@ -1388,6 +1374,7 @@ const optionCategories = [
         type: "options",
         default: 3,
         choices: colorOptions,
+        noteType: "slideCCW",
       },
 
       {
@@ -1397,27 +1384,29 @@ const optionCategories = [
           ja: "↑スナップノーツの色",
         },
         description: {
-          en: "Set the color of ↑ Slide Notes.",
+          en: "Set the color of ↑ Snap Notes.",
           ja: "↑スナップノーツの色を設定します。",
         },
         type: "options",
         default: 1,
         choices: colorOptions,
+        noteType: "snapIn",
       },
 
       {
         id: 204,
         title: {
-          en: "↓ Slide Note Color",
+          en: "↓ Snap Note Color",
           ja: "↓スナップノーツの色",
         },
         description: {
-          en: "Set the color of ↓ Slide Notes.",
-          ja: "↓スライドノーツの色を設定します。",
+          en: "Set the color of ↓ Snap Notes.",
+          ja: "↓スナップノーツの色を設定します。",
         },
         type: "options",
         default: 2,
         choices: colorOptions,
+        noteType: "snapOut",
       },
 
       {
@@ -1433,6 +1422,7 @@ const optionCategories = [
         type: "options",
         default: 5,
         choices: colorOptions,
+        noteType: "touch",
       },
 
       {
@@ -1448,6 +1438,7 @@ const optionCategories = [
         type: "options",
         default: 6,
         choices: colorOptions,
+        noteType: "chain",
       },
 
       {
@@ -1463,6 +1454,7 @@ const optionCategories = [
         type: "options",
         default: 7,
         choices: colorOptions,
+        noteType: "hold",
       },
     ],
   },
@@ -1771,6 +1763,15 @@ const optionCategories = [
 ];
 
 const activeCategory = ref(0);
+
+// Hovering a dropdown entry shows it on the preview without picking it
+const previewChoice = ref(null);
+const previewOptions = computed(() =>
+  previewChoice.value
+    ? { ...profile.value.options, [previewChoice.value.id]: previewChoice.value.value }
+    : profile.value.options,
+);
+watch(activeCategory, () => (previewChoice.value = null));
 
 // Sticky offset that centers the preview
 const previewColumn = ref(null);

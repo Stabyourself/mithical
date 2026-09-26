@@ -6,104 +6,78 @@ const palettes = [
     base: "#ff4aee",
     light: "#ffc4ff",
     dark: "#d10ab7",
-    holdEndLight: "#ff58ce",
-    holdEndDark: "#7f2c67",
   },
   // Light Yellow
   {
     base: "#ffe452",
     light: "#ffffcc",
     dark: "#d1a60f",
-    holdEndLight: "#ffaf2f",
-    holdEndDark: "#7f5717",
   },
   // Orange
   {
     base: "#ff9a00",
     light: "#ffffa0",
     dark: "#d14a00",
-    holdEndLight: "#ff8f07",
-    holdEndDark: "#7f4703",
   },
   // Lime
   {
     base: "#39d234",
     light: "#b7ffb4",
     dark: "#028d01",
-    holdEndLight: "#2ec350",
-    holdEndDark: "#176128",
   },
   // Red
   {
     base: "#d10d0d",
     light: "#ffaeae",
     dark: "#970707",
-    holdEndLight: "#d11c47",
-    holdEndDark: "#690e24",
   },
   // Sky Blue
   {
     base: "#34adff",
     light: "#b4ffff",
     dark: "#015ed1",
-    holdEndLight: "#1882ff",
-    holdEndDark: "#0c417f",
   },
   // Dark Yellow
   {
     base: "#9c8d00",
     light: "#ffffa0",
     dark: "#4b3c00",
-    holdEndLight: "#ffae2e",
-    holdEndDark: "#7f5717",
   },
   // Light Red ("Dark Orange" in the English UI)
   {
     base: "#ff5800",
     light: "#ffd2a0",
     dark: "#d11200",
-    holdEndLight: "#ff3d09",
-    holdEndDark: "#7f1e04",
   },
   // Yellow
   {
     base: "#fff100",
     light: "#ffffa0",
     dark: "#d1ba00",
-    holdEndLight: "#ffc101",
-    holdEndDark: "#7f5717",
   },
   // Pure Green
   {
     base: "#4aa170",
     light: "#c4ffec",
     dark: "#0a5123",
-    holdEndLight: "#38a6b4",
-    holdEndDark: "#1c535a",
   },
   // Bright Blue
   {
     base: "#0051ff",
     light: "#a0cbff",
     dark: "#000ed1",
-    holdEndLight: "#393dde",
-    holdEndDark: "#1c1e6f",
   },
   // Light Blue
   {
     base: "#6dcbff",
     light: "#e8ffff",
     dark: "#2184d1",
-    holdEndLight: "#5a99ff",
-    holdEndDark: "#2d4c7f",
   },
   // Light Gray
   {
     base: "#c7c7ca",
     light: "#ffffff",
     dark: "#7e7e82",
-    holdEndLight: "#909090",
-    holdEndDark: "#484848",
   },
 ];
 
