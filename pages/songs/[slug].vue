@@ -324,6 +324,8 @@
   margin: 0 auto 32px;
   padding-bottom: 1rem;
   padding-top: 0.5rem;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
 }
 
 .chartview-heading {
