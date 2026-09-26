@@ -171,6 +171,12 @@
           :chart-url="chartData?.url ?? '/wacca/demo.mer'"
           :chart-info="chartData?.info ?? null"
           :init-paused=true
+          :ring=false
+          :song-count=false
+          :score=false
+          :progress-bar=false
+          :judging=false
+          :autoplay=false
         />
       </div>
     </v-container>
