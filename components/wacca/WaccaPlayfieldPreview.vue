@@ -186,6 +186,11 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  // Diff of the chart
+  diff: {
+    type: String,
+    default: 0, 
+  },
   // { title, difficulty (1-4), level } for the ring, null for the demo
   chartInfo: {
     type: Object,
@@ -227,8 +232,12 @@ const props = defineProps({
     default: "all-marvelous",
     validator: (value) => ["miss-up", "good-up", "great-up", "all-marvelous"].includes(value),
   },
+  // Turn off auto play if desired
+  initPaused: {
+    type: Boolean,
+    default: false,
+  }
 });
-
 const container = ref(null);
 const canvas = ref(null);
 const expanded = ref(false);
@@ -244,6 +253,7 @@ let active = true;
 
 // Start paused for reduced motion
 const paused = ref(
+  props.initPaused || 
   typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
 );
@@ -433,6 +443,9 @@ let chartRequest = 0;
 
 async function loadChart(url) {
   if (!url) return;
+  if(!url.includes("demo")){
+    paused.value = true
+  }
   const request = ++chartRequest;
   try {
     const text = await $fetch(url, { responseType: "text" });

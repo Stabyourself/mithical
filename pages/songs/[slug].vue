@@ -147,6 +147,50 @@
       </div>
     </v-container>
 
+        <v-container class="elevation-1 mt-4">
+      <h2 class="container-heading chartview-heading">
+        Chart View
+
+        <v-btn-toggle
+          v-model="chartView"
+          mandatory
+          density="compact"
+          variant="outlined"
+          divided
+          class="chartview-toggle"
+        >
+          <v-btn value="0" size="small">Normal</v-btn>
+          <v-btn value="1" size="small">Hard</v-btn>
+          <v-btn value="2" size="small">Expert</v-btn>
+          <v-btn v-if="song.sheets.length > 3" value="3" size="small">Inferno</v-btn>
+        </v-btn-toggle>
+      </h2>
+      <div ref="previewColumn" class="settings-preview">
+        <WaccaPlayfieldPreview 
+          :options="profile.options" 
+          :chart-url="chartData?.url ?? '/wacca/demo.mer'"
+          :chart-info="chartData?.info ?? null"
+          :init-paused=true
+          :ring=false
+          :song-count=false
+          :score=false
+          :progress-bar=false
+          :judging=false
+          :autoplay=false
+        />
+      </div>
+    </v-container>
+    
+    <v-container class="elevation-1 mt-4">
+      <h2 class="container-heading">Leaderboards</h2>
+      <WaccaLeaderboard
+        :song="song"
+        :sheets="filteredSheets"
+        :histograms="histograms"
+        :player-history="playerHistory"
+      />
+    </v-container>
+
     <v-container class="elevation-1 mt-4">
       <h2 class="container-heading">Leaderboards</h2>
       <WaccaLeaderboard
@@ -267,6 +311,28 @@
   }
 }
 
+.chartview-toggle {
+  height: 30px !important;
+  margin-left: auto;
+  .v-btn {
+    text-transform: none;
+    letter-spacing: normal;
+  }
+}
+.playfield-preview {
+  width: min(100%, 560px);
+  margin: 0 auto 32px;
+  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+}
+
+.chartview-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 </style>
 
 <script setup>
@@ -281,9 +347,11 @@ import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import waccaCategories from "~/assets/wacca/waccaCategories";
 import { getSongSlug, findSongBySlug } from "~/assets/wacca/songSlug.js";
+import { formatDifficulty } from "~/assets/js/util";
+import { getSongById } from "~/assets/wacca/getSongs.js";
+import { chartPath } from "~/assets/wacca/playfield/merChart.js";
 
 const profile = useState("profile");
-
 definePageMeta({
   middleware: ["auth"],
 });
@@ -335,6 +403,8 @@ const histograms = shallowRef([]);
 const histogramsLoading = ref(false);
 const histogramsLoadingError = ref();
 const histogramView = ref("distribution");
+const chartView = ref("0");
+
 
 const playerHistory = shallowRef([]);
 
@@ -461,6 +531,21 @@ const ogDescription = computed(() => {
   ]
     .filter(Boolean)
     .join(" · ");
+});
+
+const chartData = computed(() => {
+  const chartDataId = Number(song.value.id);
+  const chartDataSong = Number.isInteger(chartDataId) ? getSongById(song.value, chartDataId) : null;
+  const chartDataSheet = chartDataSong?.sheets[Number(chartView.value)];
+  if (!chartDataSheet) return null;
+  return {
+    url: chartPath(chartDataSong.id, Number(chartView.value)),
+    info: {
+      title: chartDataSong.title,
+      difficulty: Number(chartView.value) + 1,
+      level: String(formatDifficulty(chartDataSheet.difficulty, false)),
+    },
+  };
 });
 
 useSeoMeta({
