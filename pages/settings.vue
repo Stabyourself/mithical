@@ -116,7 +116,7 @@
 
       <div class="settings-layout">
         <div ref="previewColumn" class="settings-preview">
-          <WaccaPlayfieldPreview :options="previewOptions" />
+          <WaccaPlayfieldPreview :options="previewOptions" :chart-url="previewChart" />
         </div>
 
         <div class="settings-options">
@@ -1763,6 +1763,17 @@ const optionCategories = [
 ];
 
 const activeCategory = ref(0);
+
+// Demo chart, or any .mer in public with ?chart=, e.g.
+// ?chart=wacca/MusicData/S02-082/S02-082_02.mer
+const route = useRoute();
+const previewChart = computed(() => {
+  const chart = route.query.chart;
+  if (typeof chart !== "string" || !/^[\w\-/.]+\.mer$/.test(chart) || chart.includes("..")) {
+    return "/wacca/demo.mer";
+  }
+  return `/${chart.replace(/^\/+/, "")}`;
+});
 
 // Hovering a dropdown entry shows it on the preview without picking it
 const previewChoice = ref(null);

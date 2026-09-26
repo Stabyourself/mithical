@@ -19,17 +19,10 @@ import {
   syncColors,
 } from "./noteColors.js";
 import { parseMer, buildChart } from "./merChart.js";
-// Bundled at build time, loaded like any other chart
-import demoMer from "./demo.mer?raw";
 import waccaSymbolColors from "../waccaSymbolColors.js";
 
 const DEG = Math.PI / 180;
 
-const demo = parseMer(demoMer);
-const bpm = demo.bpm;
-const loopMs = demo.lengthMs;
-// The demo loops, this many loops count as one "song" for the score
-const loopsPerSong = 4;
 
 // Note widths per thickness setting, in 1060px canvas units
 const STROKE_WIDTHS = [16, 22, 34, 46, 58];
@@ -148,6 +141,8 @@ const RING_BEZEL = 0.01;
 // Gap between the judgement line and the ring, the screen edge hides under the ring
 const RING_GAP = 0.043;
 const RING_ROWS = 4;
+// The judgement line flashes white where a finger lands, fading this fast
+const LINE_FLASH_MS = 150;
 // Touched lanes light up whole columns, the cell you touch splashes white and spreads out
 const SPLASH_MS = 250;
 // How far the splash spreads, in lane widths
@@ -191,7 +186,10 @@ const SONG_TITLES = [
   "Mogu Mogu Yummy",
 ];
 
-const FONT ='"Roboto", "Helvetica Neue", Arial, sans-serif';
+const FONT = '"Roboto", "Helvetica Neue", Arial, sans-serif';
+
+// Farthest past the judgement line anything draws, that's under the ring already
+const PAST_LINE = 1.03;
 
 function perspective(x) {
   x = Math.min(1.316, x);
@@ -273,13 +271,12 @@ export default class PlayfieldRenderer {
     this.ringIdleLayer = document.createElement("canvas");
     this.ringLitLayer = document.createElement("canvas");
     // For composing the judgement line
-    this.scratch = document.createElement("canvas");
+    this.judgementLineLayer = document.createElement("canvas");
     this.songTitle = SONG_TITLES[Math.floor(Math.random() * SONG_TITLES.length)];
     this.laneHidden = new Uint8Array(60);
 
     this.settings = resolveSettings({});
-    document.fonts?.load(`40px ${JUDGEMENT_FONT}`).catch(() => {});
-    this.setChart(buildChart(demo, false));
+    document.fonts?.load(`40px ${JUDGEMENT_FONT}`).catch(() => { });
     this.cache = new Map();
     // Full rebuild on resize, partial ones on option changes
     this.dirty = true;
@@ -290,12 +287,16 @@ export default class PlayfieldRenderer {
     this.beamUntil = new Float64Array(60);
     // Touches from people (pointer ids) and the autoplay bot ("bot" ids)
     this.fingers = new Map();
+    // Demo ms per real ms, set by whoever drives render()
+    this.playbackRate = 1;
     this.judgedNotes = new Set();
     this.missedHolds = new Set();
     this.activeHolds = [];
-    this.bot = { actions: [], holds: [], planned: new Set(), count: 0, fingerCount: 0 };
+    this.bot = { actions: [], holds: [], planned: new Set(), fingerCount: 0 };
     this.bonusSweeps = [];
     this.splashes = [];
+    // When each lane's judgement line was last pressed
+    this.lineFlash = new Float64Array(60).fill(-Infinity);
     // When each ring cell was last touched (lane * RING_ROWS + row)
     this.cellTouched = new Float64Array(60 * RING_ROWS).fill(-Infinity);
     this.flashes = [];
@@ -305,7 +306,8 @@ export default class PlayfieldRenderer {
     for (let i = 0; i < MAX_PARTICLES; i++) {
       this.particles.push({ alive: false });
     }
-    this.reset();
+    // Empty until a chart is loaded
+    this.loadChart("");
 
     this.items = [];
     this.itemCount = 0;
@@ -320,7 +322,7 @@ export default class PlayfieldRenderer {
     this.settings = settings;
 
     if (settings.mirror !== previous.mirror) {
-      this.setChart(buildChart(demo, settings.mirror));
+      this.setChart(buildChart(this.source, settings.mirror));
     }
     if (settings.mask !== previous.mask) this.dirtyBackground = true;
     if (settings.ringColors !== previous.ringColors) this.dirtyRing = true;
@@ -346,7 +348,7 @@ export default class PlayfieldRenderer {
       this.beamLayer,
       this.ringIdleLayer,
       this.ringLitLayer,
-      this.scratch,
+      this.judgementLineLayer,
     ]) {
       layer.width = size;
       layer.height = size;
@@ -354,17 +356,38 @@ export default class PlayfieldRenderer {
     this.dirty = true;
   }
 
+  // Load a MER chart (its text) and start over from the top. The chart loops,
+  // every loop is a fresh play
+  loadChart(text) {
+    this.source = parseMer(text);
+    this.loopMs = this.source.lengthMs;
+    this.bpm = this.source.bpm;
+    this.setChart(buildChart(this.source, this.settings.mirror));
+    this.reset();
+  }
+
+  // How far the notes have scrolled at a demo time (speed changes and stops), over loops
+  scaledAt(time) {
+    const loop = Math.floor(time / this.loopMs);
+    return loop * this.source.scaledLength + this.source.scaledAt(time - loop * this.loopMs);
+  }
+
   // Demo state at the start
   reset() {
     // Start a measure early so notes are already coming in
-    this.time = -loopMs / 4;
-    this.songIndex = Math.floor(this.time / (loopMs * loopsPerSong));
+    this.time = -this.source.msAt(1920);
+    this.loopIndex = Math.floor(this.time / this.loopMs);
     this.resetStats();
     this.playing = false;
     this.fingers.clear();
     this.resetJudging();
+    this.clearEffects();
+  }
 
+  clearEffects() {
     this.beamUntil.fill(-Infinity);
+    this.cellTouched.fill(-Infinity);
+    this.lineFlash.fill(-Infinity);
     this.bonusSweeps.length = 0;
     this.splashes.length = 0;
     this.flashes.length = 0;
@@ -373,6 +396,37 @@ export default class PlayfieldRenderer {
     for (const particle of this.particles) particle.alive = false;
     this.judgement = null;
     this.rEffectStart = -Infinity;
+  }
+
+  // Scrubbing through the chart (ms), the lead-in before it counts as 0
+  get songLength() {
+    return this.loopMs;
+  }
+
+  get songTime() {
+    return this.time < 0 ? 0 : this.time % this.loopMs;
+  }
+
+  // Jump to a point in the current loop, like scrubbing a video. The bot takes over
+  // from there and the score is as if it played everything before
+  seek(songTime) {
+    const start = this.time < 0 ? 0 : this.loopIndex * this.loopMs;
+    this.time = start + clamp(songTime, 0, this.loopMs - 1);
+    this.loopIndex = Math.floor(this.time / this.loopMs);
+    this.playing = false;
+    this.fingers.clear();
+    this.resetJudging();
+    this.clearEffects();
+
+    this.resetStats();
+    let passed = 0;
+    for (const note of this.chart.notes) {
+      if (start + note.time < this.time) passed++;
+      if (note.type === "hold" && start + note.endTime < this.time) passed++;
+    }
+    this.combo = passed;
+    this.judged = passed;
+    this.earned = (1000000 / this.noteCount()) * passed;
   }
 
   resetStats() {
@@ -390,9 +444,10 @@ export default class PlayfieldRenderer {
     // Clamp so coming back from a hidden tab doesn't skip ahead
     this.time += clamp(dt, 0, 100);
 
-    const songIndex = Math.floor(this.time / (loopMs * loopsPerSong));
-    if (songIndex !== this.songIndex) {
-      this.songIndex = songIndex;
+    // New loop, new score
+    const loopIndex = Math.floor(this.time / this.loopMs);
+    if (loopIndex !== this.loopIndex) {
+      this.loopIndex = loopIndex;
       this.resetStats();
     }
 
@@ -423,7 +478,7 @@ export default class PlayfieldRenderer {
   // Demo time of an input, including the time since the last frame
   inputTime() {
     const sinceFrame = this.renderClock ? performance.now() - this.renderClock : 0;
-    return this.time + clamp(sinceFrame, 0, 50);
+    return this.time + clamp(sinceFrame, 0, 50) * this.playbackRate;
   }
 
   // Any click takes over from the bot and counts as a hit, so people find it by accident
@@ -457,11 +512,13 @@ export default class PlayfieldRenderer {
     return (this.ringInner + (row + 0.5) * rowHeight) / this.R;
   }
 
-  fingerDown(id, lane, radius, time) {
+  // The bot's fingers have a target note and only hit that one
+  fingerDown(id, lane, radius, time, target = null) {
     const row = this.rowAt(radius);
-    this.fingers.set(id, { lane, row, swipeFrom: radius, swipeStart: time });
+    this.fingers.set(id, { lane, row, target, swipeFrom: radius, swipeStart: time });
     this.splashes.push({ lane, row, start: this.time });
-    this.hitNote(this.closestNote(["touch", "hold"], lane, time));
+    this.flashLine(lane);
+    this.hitNote(this.closestNote(["touch", "hold"], lane, time, target));
   }
 
   fingerMove(id, lane, radius, time) {
@@ -474,18 +531,22 @@ export default class PlayfieldRenderer {
     if (lane !== finger.lane) {
       const from = finger.lane;
       finger.lane = lane;
+      this.flashLine(lane);
 
       // Slides: moving at least one lane in their direction (lanes count counterclockwise)
       let moved = lane - from;
       if (moved > 30) moved -= 60;
       if (moved < -30) moved += 60;
       const type = moved > 0 ? "slideCCW" : "slideCW";
-      this.hitNote(this.closestNote([type], from, time) ?? this.closestNote([type], lane, time));
+      const { target } = finger;
+      this.hitNote(
+        this.closestNote([type], from, time, target) ?? this.closestNote([type], lane, time, target),
+      );
 
       // Touch notes, hold starts and slides you move into from outside
       for (const found of [
-        this.closestNote(["touch", "hold"], lane, time),
-        this.closestNote(["slideCW", "slideCCW"], lane, time),
+        this.closestNote(["touch", "hold"], lane, time, target),
+        this.closestNote(["slideCW", "slideCCW"], lane, time, target),
       ]) {
         if (found && !this.covers(found.note.pos, found.note.size, from)) this.hitNote(found);
       }
@@ -498,7 +559,9 @@ export default class PlayfieldRenderer {
     }
     const swiped = radius - finger.swipeFrom;
     if (Math.abs(swiped) >= SNAP_SWIPE) {
-      this.hitNote(this.closestNote([swiped < 0 ? "snapIn" : "snapOut"], finger.lane, time));
+      this.hitNote(
+        this.closestNote([swiped < 0 ? "snapIn" : "snapOut"], finger.lane, time, finger.target),
+      );
       finger.swipeFrom = radius;
       finger.swipeStart = time;
     }
@@ -610,7 +673,7 @@ export default class PlayfieldRenderer {
 
     // Judgement line: two color sweep, shaded across its width
     const width = (STROKE_WIDTHS[settings.thickness] + 2) * s3;
-    const lineCtx = this.scratch.getContext("2d");
+    const lineCtx = this.judgementLineLayer.getContext("2d");
     lineCtx.globalCompositeOperation = "source-over";
     lineCtx.clearRect(0, 0, this.size, this.size);
     lineCtx.lineWidth = width * 1.75;
@@ -657,7 +720,51 @@ export default class PlayfieldRenderer {
     lineCtx.stroke();
     lineCtx.globalCompositeOperation = "source-over";
 
-    ctx.drawImage(this.scratch, 0, 0);
+    ctx.drawImage(this.judgementLineLayer, 0, 0);
+
+    // Drawn again on top of the notes each frame (see drawJudgementLine)
+    this.judgementLinePattern = this.ctx.createPattern(this.judgementLineLayer, "no-repeat");
+    this.judgementLineBand = [inner, outer];
+    this.judgementLineWidth = width;
+    this.lineMask = null;
+  }
+
+  // Judgement line on top of the notes, left out on masked lanes. Flashes white where
+  // fingers land, holding doesn't keep it white
+  drawJudgementLine(now) {
+    const { ctx, cx, cy, Rj, laneHidden } = this;
+    const mask = laneHidden.join("");
+    if (mask !== this.lineMask) {
+      this.lineMask = mask;
+      const [inner, outer] = this.judgementLineBand;
+      this.linePath = new Path2D();
+      for (let lane = 0; lane < 60; lane++) {
+        if (laneHidden[lane]) continue;
+        const start = -(lane + 1) * 6 * DEG;
+        const end = -lane * 6 * DEG;
+        this.linePath.moveTo(cx + outer * Math.cos(start), cy + outer * Math.sin(start));
+        this.linePath.arc(cx, cy, outer, start, end);
+        this.linePath.arc(cx, cy, inner, end, start, true);
+        this.linePath.closePath();
+      }
+    }
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = this.judgementLinePattern;
+    ctx.fill(this.linePath);
+
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = this.judgementLineWidth;
+    for (let lane = 0; lane < 60; lane++) {
+      const age = now - this.lineFlash[lane];
+      if (age < 0 || age >= LINE_FLASH_MS || laneHidden[lane]) continue;
+      ctx.globalAlpha = 0.9 * (1 - age / LINE_FLASH_MS);
+      ctx.beginPath();
+      ctx.arc(cx, cy, Rj, -(lane + 1) * 6 * DEG, -lane * 6 * DEG);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
   }
 
   // Copy some rects from a same-size layer
@@ -722,8 +829,54 @@ export default class PlayfieldRenderer {
 
   setChart(chart) {
     chart.notes.forEach((note, index) => (note.index = index));
+    this.cutHitWindows(chart.notes);
     this.chart = chart;
     if (this.judgedNotes) this.resetJudging();
+  }
+
+  // Each note's hit windows in ms, [early, late] for marvelous/great/good. Like SaturnEdit:
+  // notes that share lanes cut each other's windows in the middle, and notes on a hold
+  // end lose their early great/good
+  cutHitWindows(notes) {
+    const base = (note) => HIT_WINDOWS[note.type].map(([early, late]) => [early * FRAME_MS, late * FRAME_MS]);
+    const overlaps = (a, b) => mod60(b.pos - a.pos) < a.size || mod60(a.pos - b.pos) < b.size;
+    const earliest = (windows) => Math.min(...windows.map(([early]) => early));
+    const latest = (windows) => Math.max(...windows.map(([, late]) => late));
+    const holdEnds = notes
+      .filter((note) => note.type === "hold")
+      .map((note) => ({ ...note.points.at(-1), time: note.endTime }));
+
+    for (const note of notes) {
+      note.windows = base(note);
+      if (holdEnds.some((end) => end.time === note.time && overlaps(note, end))) {
+        const marvelousEarly = note.windows[0][0];
+        for (const window of note.windows) window[0] = marvelousEarly;
+      }
+    }
+
+    // Notes are in time order
+    notes.forEach((note, i) => {
+      const from = note.time + earliest(note.windows);
+      const to = note.time + latest(note.windows);
+
+      for (let j = i + 1; j < notes.length; j++) {
+        const next = notes[j];
+        if (next.time === note.time || !overlaps(note, next)) continue;
+        if (next.time + earliest(base(next)) >= to) break;
+        const middle = (next.time - note.time) / 2;
+        for (const window of note.windows) window[1] = Math.min(window[1], middle);
+      }
+
+      for (let j = i - 1; j >= 0; j--) {
+        const previous = notes[j];
+        if (previous.time === note.time || !overlaps(note, previous)) continue;
+        if (previous.time + latest(base(previous)) <= from) break;
+        const middle = (previous.time - note.time) / 2;
+        for (const window of note.windows) window[0] = Math.max(window[0], middle);
+      }
+
+      note.lateLimit = latest(note.windows);
+    });
   }
 
   // Start judging fresh from now, earlier notes are left alone
@@ -741,9 +894,9 @@ export default class PlayfieldRenderer {
 
   // Unjudged notes near the given time, with their timing (negative = early)
   *playableNotes(time) {
-    const loopIndex = Math.floor(time / loopMs);
+    const loopIndex = Math.floor(time / this.loopMs);
     for (let k = -1; k <= 1; k++) {
-      const base = (loopIndex + k) * loopMs;
+      const base = (loopIndex + k) * this.loopMs;
       for (const note of this.chart.notes) {
         const t = base + note.time;
         if (t < this.judgeFrom || Math.abs(time - t) > 400) continue;
@@ -755,16 +908,15 @@ export default class PlayfieldRenderer {
   }
 
   gradeFor(note, delta) {
-    const windows = HIT_WINDOWS[note.type];
-    for (let i = 0; i < windows.length; i++) {
-      const [early, late] = windows[i];
-      if (delta >= early * FRAME_MS && delta <= late * FRAME_MS) return HIT_GRADES[i];
+    for (let i = 0; i < note.windows.length; i++) {
+      const [early, late] = note.windows[i];
+      if (delta >= early && delta <= late) return HIT_GRADES[i];
     }
     return null;
   }
 
   // Closest note of the given types under the finger that's in its window
-  closestNote(types, lane, time) {
+  closestNote(types, lane, time, target = null) {
     let best = null;
     for (const candidate of this.playableNotes(time)) {
       if (!types.includes(candidate.note.type)) continue;
@@ -773,6 +925,10 @@ export default class PlayfieldRenderer {
       if (!best || Math.abs(candidate.delta) < Math.abs(best.delta)) best = candidate;
     }
     return best;
+  }
+
+  flashLine(lane) {
+    for (let d = -1; d <= 1; d++) this.lineFlash[mod60(lane + d)] = this.time;
   }
 
   // A finger covers its lane and one on each side
@@ -808,7 +964,7 @@ export default class PlayfieldRenderer {
     if (note.bonus && this.settings.bonusEffect && note.type.startsWith("slide")) {
       this.bonusSweeps.push({
         start: this.time,
-        duration: bpm >= 200 ? 480000 / bpm : 240000 / bpm,
+        duration: this.bpm >= 200 ? 480000 / this.bpm : 240000 / this.bpm,
         lane: note.pos + Math.floor(note.size / 2),
         counterclockwise: note.type === "slideCCW",
       });
@@ -826,14 +982,13 @@ export default class PlayfieldRenderer {
       const { note, delta } = candidate;
 
       // Chains have no attack judgement, touching them is enough
-      const contact = note.type === "chain" && delta >= HIT_WINDOWS.chain[0][0] * FRAME_MS;
+      const contact = note.type === "chain" && delta >= note.windows[0][0];
       if (contact && this.touching(note.pos, note.size)) {
         this.hitNote(candidate, "marvelous");
         continue;
       }
 
-      const windows = HIT_WINDOWS[note.type];
-      if (delta > windows[windows.length - 1][1] * FRAME_MS) {
+      if (delta > note.lateLimit) {
         this.judgedNotes.add(candidate.key);
         this.judge("miss", null);
         // Missed hold start means the whole hold is gone
@@ -866,7 +1021,7 @@ export default class PlayfieldRenderer {
 
     // Forget notes from old loops
     if (this.judgedNotes.size > 400) {
-      const oldest = (Math.floor(now / loopMs) - 1) * loopMs * 1000;
+      const oldest = (Math.floor(now / this.loopMs) - 1) * this.loopMs * 1000;
       for (const set of [this.judgedNotes, this.missedHolds]) {
         for (const key of set) if (key < oldest) set.delete(key);
       }
@@ -874,7 +1029,7 @@ export default class PlayfieldRenderer {
   }
 
   judge(kind, detail) {
-    const perNote = 1000000 / this.notesPerSong();
+    const perNote = 1000000 / this.noteCount();
     const value = perNote * { marvelous: 1, great: 0.7, good: 0.5, miss: 0 }[kind];
 
     this.combo = kind === "miss" ? 0 : this.combo + 1;
@@ -884,14 +1039,13 @@ export default class PlayfieldRenderer {
     this.judgement = { kind, detail, start: this.time };
   }
 
-  notesPerSong() {
-    if (!this.chart.notesPerLoop) {
-      this.chart.notesPerLoop = this.chart.notes.reduce(
-        (sum, note) => sum + (note.type === "hold" ? 2 : 1),
-        0,
-      );
-    }
-    return this.chart.notesPerLoop * loopsPerSong;
+  // Judged notes in the chart, hold ends count too
+  noteCount() {
+    this.chart.noteCount ??= this.chart.notes.reduce(
+      (sum, note) => sum + (note.type === "hold" ? 2 : 1),
+      0,
+    );
+    return this.chart.noteCount;
   }
 
   endHold(hold) {
@@ -962,7 +1116,7 @@ export default class PlayfieldRenderer {
     }
 
     if (bot.planned.size > 400) {
-      const oldest = (Math.floor(now / loopMs) - 1) * loopMs * 1000;
+      const oldest = (Math.floor(now / this.loopMs) - 1) * this.loopMs * 1000;
       for (const key of bot.planned) if (key < oldest) bot.planned.delete(key);
     }
   }
@@ -975,13 +1129,8 @@ export default class PlayfieldRenderer {
     const lane = mod60(note.pos + Math.floor(note.size / 2) + jitter);
     const at = (time, run) => bot.actions.push({ time, run });
 
-    // Mostly Marvelous, with an occasional Great so FAST/LATE shows up
-    let time = t + this.settings.judgementOffset;
-    bot.count++;
-    if (note.type !== "chain" && bot.count % 11 === 6) {
-      const [early, late] = HIT_WINDOWS[note.type][0];
-      time += bot.count % 22 === 6 ? early * FRAME_MS - 10 : late * FRAME_MS + 10;
-    }
+    // Always Marvelous for now, while testing the window cuts
+    const time = t + this.settings.judgementOffset;
 
     const radius = this.rowRadius(1 + Math.floor(Math.random() * 2));
 
@@ -1054,6 +1203,14 @@ export default class PlayfieldRenderer {
 
     if (settings.touchEffectPop === 312001) {
       this.flashes.push({ start: this.time, pos, size });
+
+      // Sparkles are part of the default pop, not the shoot
+      const count = Math.min(40, size * 3);
+      for (let i = 0; i < count; i++) {
+        const roll = Math.random();
+        const kind = roll < 0.35 ? "triangle" : roll < 0.8 ? "dot" : "streak";
+        this.spawnParticle(kind, pos + Math.random() * size, 0.35 + Math.random() * 0.65);
+      }
     } else if (settings.touchEffectPop === 312002) {
       // One bubble per hit lane
       for (let i = 0; i < size; i++) {
@@ -1064,15 +1221,8 @@ export default class PlayfieldRenderer {
       }
     }
 
-    if (settings.touchEffectShoot) {
-      if (shoot) this.shots.push({ start: this.time, pos, size });
-
-      const count = Math.min(40, size * 3);
-      for (let i = 0; i < count; i++) {
-        const roll = Math.random();
-        const kind = roll < 0.35 ? "triangle" : roll < 0.8 ? "dot" : "streak";
-        this.spawnParticle(kind, pos + Math.random() * size, 0.35 + Math.random() * 0.65);
-      }
+    if (settings.touchEffectShoot && shoot) {
+      this.shots.push({ start: this.time, pos, size });
     }
   }
 
@@ -1148,7 +1298,12 @@ export default class PlayfieldRenderer {
     for (const hold of this.holdSurfaces) this.drawHoldSurface(hold.note, hold.base, now, hold.missed);
     this.drawObjects();
 
+    // Hold glow under the judgement line, the line stays pink while holding
     ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalCompositeOperation = "lighter";
+    this.drawGrindGlow();
+    ctx.globalCompositeOperation = "source-over";
+    this.drawJudgementLine(now);
     this.drawBonusSweeps(now);
     this.drawTouchEffects(now);
     this.drawInterface();
@@ -1162,7 +1317,7 @@ export default class PlayfieldRenderer {
     const hidden = this.laneHidden;
     hidden.fill(1);
 
-    const local = ((now % loopMs) + loopMs) % loopMs;
+    const local = ((now % this.loopMs) + this.loopMs) % this.loopMs;
     for (const toggle of this.chart.laneToggles) {
       if (toggle.time > local) break;
 
@@ -1170,7 +1325,14 @@ export default class PlayfieldRenderer {
       const value = toggle.show ? 0 : 1;
       const { pos, size } = toggle;
 
-      if (toggle.direction === "center") {
+      if (toggle.direction === "center" && !toggle.show) {
+        // Hiding closes in from both edges
+        const steps = Math.floor(Math.ceil(size / 2) * progress);
+        for (let i = 0; i < steps; i++) {
+          hidden[mod60(pos + i)] = value;
+          hidden[mod60(pos + size - 1 - i)] = value;
+        }
+      } else if (toggle.direction === "center") {
         const middle = pos + (size - 1) / 2;
         const steps = Math.floor(Math.ceil(size / 2) * progress);
         for (let i = 0; i < steps; i++) {
@@ -1339,7 +1501,7 @@ export default class PlayfieldRenderer {
     ctx.fill();
 
     // Pulses with the beat
-    const beatMs = 60000 / bpm;
+    const beatMs = 60000 / this.bpm;
     const sinceBeat = ((now % beatMs) + beatMs) % beatMs;
     const dim = BEAT_DIM * (1 - Math.exp(-sinceBeat / 140));
     if (dim > 0.01) {
@@ -1545,46 +1707,51 @@ export default class PlayfieldRenderer {
   collectObjects(now) {
     const { settings, chart } = this;
     const view = settings.viewDistance;
-    const loopIndex = Math.floor(now / loopMs);
+    const loopIndex = Math.floor(now / this.loopMs);
 
     this.itemCount = 0;
     this.holdSurfaces.length = 0;
 
-    const progressOf = (t) => 1 - (t - now) / view;
+    // Positions go by how far things have scrolled, so speed changes show
+    const nowScaled = this.scaledAt(now);
+
+    // During a reverse only its own notes show, and only in this loop
+    const songNow = now - loopIndex * this.loopMs;
+    const reverse = chart.reverses.findIndex((r) => songNow > r.start && songNow <= r.middle);
+    const hidden = (object, k) => reverse !== -1 && (k !== 0 || object.reverse !== reverse);
 
     for (let k = -1; k <= 1; k++) {
-      const base = (loopIndex + k) * loopMs;
+      const base = (loopIndex + k) * this.loopMs;
+      const baseScaled = (loopIndex + k) * this.source.scaledLength;
+      const progressOf = (scaled) => 1 - (baseScaled + scaled - nowScaled) / view;
 
       for (const note of chart.notes) {
+        if (hidden(note, k)) continue;
         const t = base + note.time;
         const key = this.noteKey(note, base);
 
         if (note.type === "hold") {
-          const end = base + note.endTime;
-          if (progressOf(end) > 1.05 || progressOf(t) < 0) continue;
-
+          if (progressOf(note.points.at(-1).scaled) > PAST_LINE || progressOf(note.scaled) < 0) continue;
           this.holdSurfaces.push({ note, base, missed: this.missedHolds.has(key) });
         }
 
         // Hit notes are gone, unhit ones keep going a bit past the line
         if (this.judgedNotes.has(key) || t < now - (t >= this.judgeFrom ? MAX_LATE_MS : 0)) continue;
-        const progress = progressOf(t);
-        if (progress < 0) continue;
+        const progress = progressOf(note.scaled);
+        if (progress < 0 || progress > PAST_LINE) continue;
         this.pushItem(0, note, progress, note.size);
       }
 
       for (const connector of chart.syncConnectors) {
-        const t = base + connector.time;
-        const progress = progressOf(t);
-        if (t < now || progress < 0) continue;
+        const progress = progressOf(connector.scaled);
+        if (hidden(connector, k) || base + connector.time < now || progress < 0 || progress > PAST_LINE) continue;
         this.pushItem(1, connector, progress, 60);
       }
 
       if (settings.barlines) {
-        for (const time of chart.measureLines) {
-          const t = base + time;
-          const progress = progressOf(t);
-          if (t < now || progress < 0) continue;
+        for (const line of chart.measureLines) {
+          const progress = progressOf(line.scaled);
+          if (hidden(line, k) || base + line.time < now || progress < 0 || progress > PAST_LINE) continue;
           this.pushItem(2, null, progress, 60);
         }
       }
@@ -2083,19 +2250,40 @@ export default class PlayfieldRenderer {
 
     // Held holds get eaten at the judgement line
     const from = Math.max(startTime, now);
-    const to = Math.min(endTime, now + view);
+    const nowScaled = this.scaledAt(now);
+
+    // Cut off where it leaves the view (in scrolled distance, so speed changes count)
+    let to = endTime;
+    if (this.scaledAt(to) - nowScaled > view) {
+      let low = from;
+      for (let i = 0; i < 20; i++) {
+        const middle = (low + to) / 2;
+        if (this.scaledAt(middle) - nowScaled > view) to = middle;
+        else low = middle;
+      }
+    }
     if (from >= to) return;
 
-    const radiusAt = (t) => Rj * perspective(clamp(1 - (t - now) / view, 0, 1.03));
-    const straight = note.points.every(
-      (point) => point.pos === note.points[0].pos && point.size === note.points[0].size,
-    );
-    const samples = straight ? 2 : clamp(Math.ceil((to - from) / 20), 2, 48);
+    const radiusAt = (t) =>
+      Rj * perspective(clamp(1 - (this.scaledAt(t) - nowScaled) / view, 0, PAST_LINE));
+    // Vertices at the hold's own points, plus every 20ms between them (4 steps on straight
+    // parts). Fixed in chart time like SaturnView, so they don't shift from frame to frame
+    const times = [from];
+    const points = note.points;
+    for (let i = 0; i < points.length - 1; i++) {
+      const a = base + points[i].time;
+      const b = base + points[i + 1].time;
+      if (b <= from || a >= to) continue;
+      const straight = points[i].pos === points[i + 1].pos && points[i].size === points[i + 1].size;
+      const step = straight ? (b - a) / 4 : 20;
+      for (let t = a + step; t < b; t += step) if (t > from && t < to) times.push(t);
+      if (b > from && b < to) times.push(b);
+    }
+    times.push(to);
 
     const edgeA = [];
     const edgeB = [];
-    for (let i = 0; i < samples; i++) {
-      const t = from + ((to - from) * i) / (samples - 1);
+    for (const t of times) {
       const shape = this.holdShapeAt(note, t - base);
       const radius = radiusAt(t);
       const full = shape.size >= 60;
@@ -2105,15 +2293,15 @@ export default class PlayfieldRenderer {
       edgeB.push([radius, b]);
     }
 
+    // Outline: along one edge, across the far end, back along the other edge
+    const last = times.length - 1;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.beginPath();
-    const [firstRadius, firstA] = edgeA[0];
-    ctx.moveTo(...this.pointAt(firstRadius, firstA));
-    for (let i = 1; i < samples; i++) ctx.lineTo(...this.pointAt(...edgeA[i]));
-    const [lastRadius, lastA] = edgeA[samples - 1];
-    this.arc(ctx, lastRadius, lastA, edgeB[samples - 1][1] - lastA);
-    for (let i = samples - 1; i >= 0; i--) ctx.lineTo(...this.pointAt(...edgeB[i]));
-    this.arc(ctx, firstRadius, edgeB[0][1], firstA - edgeB[0][1]);
+    ctx.moveTo(...this.pointAt(...edgeA[0]));
+    for (let i = 1; i <= last; i++) ctx.lineTo(...this.pointAt(...edgeA[i]));
+    this.arc(ctx, edgeA[last][0], edgeA[last][1], edgeB[last][1] - edgeA[last][1]);
+    for (let i = last; i >= 0; i--) ctx.lineTo(...this.pointAt(...edgeB[i]));
+    this.arc(ctx, edgeA[0][0], edgeB[0][1], edgeA[0][1] - edgeB[0][1]);
     ctx.closePath();
 
     // Color runs along the hold, radial gradient maps it onto the screen
@@ -2397,7 +2585,6 @@ export default class PlayfieldRenderer {
     }
 
     this.drawBubbles(now);
-    this.drawGrindGlow();
 
     ctx.globalCompositeOperation = "source-over";
     this.drawShots(now);
@@ -2573,7 +2760,7 @@ export default class PlayfieldRenderer {
     // Info opacity only fades the gauge and judgement text, like in game
     if (settings.infoOpacity > 0) {
       ctx.globalAlpha = settings.infoOpacity;
-      this.drawClearGauge(this.judged / this.notesPerSong());
+      this.drawClearGauge(this.judged / this.noteCount());
       ctx.globalAlpha = 1;
     }
 

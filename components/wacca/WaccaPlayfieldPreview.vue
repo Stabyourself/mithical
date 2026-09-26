@@ -35,6 +35,29 @@
               >
                 <v-icon>{{ paused ? "mdi-play" : "mdi-pause" }}</v-icon>
               </v-btn>
+              <v-menu location="top" :z-index="2500">
+                <template v-slot:activator="{ props: menuProps }">
+                  <v-btn
+                    v-bind="menuProps"
+                    class="playfield-speed"
+                    aria-label="Playback speed"
+                    title="Speed"
+                  >
+                    {{ speed }}x
+                  </v-btn>
+                </template>
+                <v-list density="compact">
+                  <v-list-item
+                    v-for="option in SPEEDS"
+                    :key="option"
+                    :active="option === speed"
+                    color="primary"
+                    @click="speed = option"
+                  >
+                    {{ option }}x
+                  </v-list-item>
+                </v-list>
+              </v-menu>
               <v-btn
                 :aria-label="expanded ? 'Exit fullscreen' : 'Fullscreen preview'"
                 :title="expanded ? 'Exit fullscreen' : 'Fullscreen'"
@@ -45,6 +68,22 @@
                 }}</v-icon>
               </v-btn>
             </v-btn-group>
+
+            <v-slider
+              class="playfield-scrub"
+              :model-value="position"
+              :max="songLength"
+              color="primary"
+              density="compact"
+              hide-details
+              aria-label="Song position"
+              @start="scrubStart"
+              @update:model-value="scrub"
+              @end="scrubEnd"
+            ></v-slider>
+            <span class="playfield-time">
+              {{ formatTime(position) }} / {{ formatTime(songLength) }}
+            </span>
           </div>
         </div>
       </div>
@@ -70,8 +109,29 @@
 
 .playfield-controls {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  gap: 12px;
   margin-top: 8px;
+}
+
+.playfield-scrub {
+  flex: 1;
+}
+
+.playfield-speed {
+  text-transform: none;
+  min-width: 52px;
+}
+
+.playfield-time {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+.playfield-lightbox .playfield-time {
+  color: white;
 }
 
 /* Lightbox: as big as the window allows */
@@ -113,6 +173,11 @@ const props = defineProps({
   options: {
     type: Object,
     default: () => ({}),
+  },
+  // MER chart to play, fetched from public/
+  chartUrl: {
+    type: String,
+    default: null,
   },
 });
 
@@ -236,14 +301,24 @@ function tick(now) {
   lastFrameTime = now;
 
   const start = performance.now();
-  renderer.render(dt);
+  if (scrubbing) {
+    // Glide towards where the scrub bar is instead of jumping there
+    const current = renderer.songTime;
+    const next = Math.abs(scrubTarget - current) < 5 ? scrubTarget : current + (scrubTarget - current) * 0.3;
+    renderer.seek(next);
+    renderer.render(0);
+  } else {
+    renderer.render(dt * speed.value);
+  }
   playing.value = renderer.playing;
+  // The bar follows the drag, not the gliding preview
+  if (!scrubbing) updatePosition();
   adaptResolution(dt, performance.now() - start);
 }
 
 function updateLoop() {
   const canDraw = renderer && onScreen && active && cssSize > 0;
-  const shouldRun = canDraw && !paused.value;
+  const shouldRun = canDraw && (!paused.value || scrubbing);
 
   if (shouldRun && frame === null) {
     lastFrameTime = null;
@@ -256,7 +331,78 @@ function updateLoop() {
   // Paused: still redraw so option changes show
   if (canDraw && !shouldRun) {
     renderer.render(0);
+    updatePosition();
   }
+}
+
+// Playback speed, for looking at things in slow motion
+const SPEEDS = [0.1, 0.5, 1, 2];
+const speed = ref(1);
+watch(speed, (value) => {
+  if (renderer) renderer.playbackRate = value;
+});
+
+// Scrub bar: where in the demo song we are
+const position = ref(0);
+const songLength = ref(1);
+let scrubbing = false;
+
+// About every 0.1s is plenty for the bar, no need to update it every frame
+function updatePosition() {
+  const time = renderer.songTime;
+  if (Math.abs(time - position.value) >= 100) position.value = time;
+}
+
+// Dragging holds the demo where the bar is (gliding there), letting go picks up again
+let scrubTarget = 0;
+
+function scrubStart() {
+  scrubTarget = renderer?.songTime ?? 0;
+  scrubbing = true;
+  updateLoop();
+}
+
+function scrub(time) {
+  position.value = time;
+  scrubTarget = time;
+  // Clicks without a drag jump straight there
+  if (!scrubbing) {
+    renderer?.seek(time);
+    renderer?.render(0);
+  }
+}
+
+function scrubEnd() {
+  scrubbing = false;
+  renderer?.seek(scrubTarget);
+  updateLoop();
+}
+
+// Charts load on request, only the latest one counts if it changes quickly
+let chartRequest = 0;
+
+async function loadChart(url) {
+  if (!url) return;
+  const request = ++chartRequest;
+  try {
+    const text = await $fetch(url, { responseType: "text" });
+    if (request !== chartRequest || !renderer) return;
+    // Missing files come back as the app's html, not a 404
+    if (!/^#BODY\s*$/m.test(text)) throw new Error("not a .mer file");
+    renderer.loadChart(text);
+    songLength.value = renderer.songLength;
+    position.value = 0;
+    updateLoop();
+  } catch (error) {
+    console.error(`Couldn't load chart ${url}`, error);
+  }
+}
+
+watch(() => props.chartUrl, loadChart);
+
+function formatTime(ms) {
+  const seconds = Math.floor(ms / 1000);
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
 }
 
 function togglePause() {
@@ -319,6 +465,8 @@ watch(
 onMounted(() => {
   renderer = new PlayfieldRenderer(canvas.value);
   renderer.setOptions(props.options);
+  songLength.value = renderer.songLength;
+  loadChart(props.chartUrl);
 
   resizeObserver = new ResizeObserver(([entry]) => {
     cssSize = entry.contentRect.width;

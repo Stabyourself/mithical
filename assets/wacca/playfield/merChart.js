@@ -35,12 +35,19 @@ const MASK_DIRECTIONS = ["ccw", "cw", "center"];
 // Gimmick ids
 const BPM_CHANGE = 2;
 const TIME_SIG_CHANGE = 3;
+const SPEED_CHANGE = 5;
+const STOP_START = 9;
+const STOP_END = 10;
+const REVERSE_START = 6;
+const REVERSE_MIDDLE = 7;
+const REVERSE_END = 8;
 
 // Raw chart: gimmicks and objects in ticks, holds linked up
 function parseMer(text) {
   const lines = text.split(/\r?\n/);
   const body = lines.indexOf("#BODY");
-  const chart = { gimmicks: [], notes: [], masks: [], endTick: null };
+  const chart = { gimmicks: [], speedEvents: [], reverses: [], notes: [], masks: [], endTick: null };
+  let reverse = null;
   const objects = new Map();
 
   for (const line of lines.slice(body + 1)) {
@@ -52,6 +59,18 @@ function parseMer(text) {
 
     if (objectId !== 1) {
       if (objectId === BPM_CHANGE) chart.gimmicks.push({ tick, bpm: Number(fields[3]) });
+      if (objectId === SPEED_CHANGE) chart.speedEvents.push({ tick, speed: Number(fields[3]) });
+      if (objectId === STOP_START) chart.speedEvents.push({ tick, stop: true });
+      if (objectId === STOP_END) chart.speedEvents.push({ tick, stop: false });
+
+      // Reverse comes in three parts, broken ones get skipped like SaturnData does
+      if (objectId === REVERSE_START) reverse = { start: tick };
+      if (objectId === REVERSE_MIDDLE && reverse && reverse.start <= tick) reverse.middle = tick;
+      if (objectId === REVERSE_END && reverse?.middle !== undefined && reverse.middle <= tick) {
+        reverse.end = tick;
+        chart.reverses.push(reverse);
+        reverse = null;
+      }
       if (objectId === TIME_SIG_CHANGE) {
         // Some old charts only have the numerator
         chart.gimmicks.push({ tick, upper: Number(fields[3]), lower: Number(fields[4] ?? 4) });
@@ -89,6 +108,10 @@ function parseMer(text) {
         point = objects.get(point.next);
         points.push(point);
       }
+      // Hidden points (render flag 0) still count. SaturnView skips them, but the game puts one
+      // per lane on fast sweeps so they come out curved instead of as straight chords
+      points.sort((a, b) => a.tick - b.tick);
+
       chart.notes.push({
         type: "hold",
         tick: object.tick,
@@ -117,11 +140,72 @@ function parseMer(text) {
   chart.bpm = chart.gimmicks.find((gimmick) => gimmick.bpm)?.bpm ?? 120;
   chart.msAt = timing(chart.gimmicks);
   chart.lengthMs = chart.msAt(chart.endTick);
+  chart.scaledAt = reversing(chart.reverses, chart.msAt, scrolling(chart.speedEvents, chart.msAt));
+  chart.scaledLength = chart.scaledAt(chart.lengthMs);
   return chart;
 }
 
 // Tick -> ms, going through the BPM and time signature changes.
 // A measure is (upper / lower) whole notes, BPM counts quarter notes
+// Ms -> "scaled" ms, how far the notes have scrolled. Like SaturnData: speed changes
+// scale the scroll speed, stops pause it (and speed changes during a stop wait for it)
+function scrolling(events, msAt) {
+  const segments = [{ time: 0, scaled: 0, speed: 1 }];
+  let speed = 1;
+  let stopped = false;
+
+  for (const event of [...events].sort((a, b) => a.tick - b.tick)) {
+    const time = msAt(event.tick);
+    const last = segments.at(-1);
+    const scaled = last.scaled + (time - last.time) * last.speed;
+    if (event.speed !== undefined) speed = event.speed;
+    if (event.stop !== undefined) stopped = event.stop;
+    segments.push({ time, scaled, speed: stopped ? 0 : speed });
+  }
+
+  return (time) => {
+    let segment = segments[0];
+    for (const next of segments) if (next.time <= time) segment = next;
+    return segment.scaled + (time - segment.time) * segment.speed;
+  };
+}
+
+// Reverse, like SaturnData: from start to middle the scroll runs backwards from end to
+// middle on an eased curve, so the notes in there fly back out. Everything else scrolls normally
+function reversing(reverses, msAt, scaledAt) {
+  const sections = reverses.map((reverse) => ({
+    start: msAt(reverse.start),
+    middle: msAt(reverse.middle),
+    middleScaled: scaledAt(msAt(reverse.middle)),
+    endScaled: scaledAt(msAt(reverse.end)),
+  }));
+  if (sections.length === 0) return scaledAt;
+
+  return (time) => {
+    for (const section of sections) {
+      if (time <= section.start || time > section.middle) continue;
+      const t = reverseEase((time - section.start) / (section.middle - section.start));
+      return section.endScaled + t * (section.middleScaled - section.endScaled);
+    }
+    return scaledAt(time);
+  };
+}
+
+// SaturnData's reverse curve, fast at first and settling in at the end
+function reverseEase(t) {
+  if (t >= 1) return t;
+  if (t >= 0.965) return (t - 0.965) * 0.23162 + 0.991893;
+  if (t >= 0.93) return (t - 0.93) * 0.233 + 0.983738;
+  if (t >= 0.91) return (t - 0.91) * 0.311 + 0.977518;
+  if (t >= 0.893) return (t - 0.893) * 0.467 + 0.969579;
+  if (t >= 0.875) return (t - 0.875) * 0.623 + 0.958365;
+  if (t >= 0.855) return (t - 0.855) * 0.791 + 0.942545;
+  if (t >= 0.715) return (t - 0.715) * 0.934 + 0.811785;
+  if (t >= 0.57) return (t - 0.57) * 1.011 + 0.66519;
+  if (t >= 0) return t * 1.167;
+  return t;
+}
+
 function timing(gimmicks) {
   const segments = [];
   let bpm = 120;
@@ -166,32 +250,55 @@ function buildChart(chart, mirror) {
     return item;
   };
 
+  // Which reverse something shows in. Only the notes between middle and end show during one,
+  // holds have to end in there too. Measure lines count on the edges, SaturnData does that too
+  const reverses = chart.reverses.map((reverse) => ({
+    start: chart.msAt(reverse.start),
+    middle: chart.msAt(reverse.middle),
+    middleTick: reverse.middle,
+    endTick: reverse.end,
+  }));
+  const reverseOf = (tick, lastTick = tick, edges = false) =>
+    reverses.findIndex((reverse) =>
+      edges
+        ? tick >= reverse.middleTick && tick <= reverse.endTick
+        : tick > reverse.middleTick && tick < reverse.endTick && lastTick < reverse.endTick,
+    );
+
   const notes = chart.notes.map((source) => {
     const note = flip({
       type: mirror ? (MIRRORED_TYPES[source.type] ?? source.type) : source.type,
       time: chart.msAt(source.tick),
+      scaled: chart.scaledAt(chart.msAt(source.tick)),
       pos: source.pos,
       size: source.size,
       rNote: source.rNote,
       bonus: source.bonus,
       sync: false,
+      reverse: reverseOf(source.tick, source.points?.at(-1).tick),
     });
 
     if (source.points) {
       note.points = source.points.map((point) =>
-        flip({ time: chart.msAt(point.tick), pos: point.pos, size: point.size }),
+        flip({
+          time: chart.msAt(point.tick),
+          scaled: chart.scaledAt(chart.msAt(point.tick)),
+          pos: point.pos,
+          size: point.size,
+        }),
       );
       note.endTime = note.points.at(-1).time;
     }
     return note;
   });
 
-  // Same timestamp = sync outline + connector. Chains don't count
+  // Same timestamp = sync outline + connector. Chains only count when they're R,
+  // two notes in the exact same spot don't count (SaturnData)
   const syncConnectors = [];
   const byTime = new Map();
 
   for (const note of notes) {
-    if (note.type === "chain") continue;
+    if (note.type === "chain" && !note.rNote) continue;
     if (!byTime.has(note.time)) byTime.set(note.time, []);
     byTime.get(note.time).push(note);
   }
@@ -201,12 +308,12 @@ function buildChart(chart, mirror) {
 
     group.sort((a, b) => a.pos - b.pos);
 
-    for (let i = 0; i < group.length; i++) {
-      group[i].sync = true;
-      if (i === 0) continue;
-
+    for (let i = 1; i < group.length; i++) {
       const current = group[i];
       const previous = group[i - 1];
+      if (current.pos === previous.pos && current.size === previous.size) continue;
+      current.sync = true;
+      previous.sync = true;
 
       const position0 = mod60(current.pos + current.size - 1);
       const size0 = mod60(previous.pos - position0) + 1;
@@ -217,7 +324,9 @@ function buildChart(chart, mirror) {
       if (size > 30) continue;
 
       syncConnectors.push({
+        scaled: chart.scaledAt(time),
         time,
+        reverse: current.reverse === previous.reverse ? current.reverse : -1,
         pos: size0 > size1 ? position1 : position0,
         size,
       });
@@ -236,18 +345,29 @@ function buildChart(chart, mirror) {
       toggle.direction = toggle.direction === "cw" ? "ccw" : "cw";
     }
 
-    // Sweep speed from SaturnView: 8ms per lane, 4ms from the center. Right at the start
-    // it's instant, so looping doesn't replay the reveal
-    toggle.duration = toggle.time <= 0 ? 0 : toggle.size * (toggle.direction === "center" ? 4 : 8);
+    // Sweep speed from SaturnData: half a frame per lane, a quarter from/to the center.
+    // Right at the start it's instant, so looping doesn't replay the reveal
+    toggle.duration = toggle.time <= 0 ? 0 : (toggle.size * (toggle.direction === "center" ? 1 : 2) * 1000) / 240;
     return toggle;
   });
 
   const measureLines = [];
   for (let tick = 0; tick < chart.endTick; tick += TICKS_PER_MEASURE) {
-    measureLines.push(chart.msAt(tick));
+    measureLines.push({
+      time: chart.msAt(tick),
+      scaled: chart.scaledAt(chart.msAt(tick)),
+      reverse: reverseOf(tick, tick, true),
+    });
   }
 
-  return { notes, syncConnectors, measureLines, laneToggles };
+  return { notes, syncConnectors, measureLines, laneToggles, reverses };
 }
 
-export { parseMer, buildChart };
+// Where a song's chart lives in public/wacca/MusicData. Song 3011 is folder S03-011,
+// difficulty 0-3 is normal/hard/expert/inferno
+function chartPath(songId, difficulty) {
+  const folder = `S${String(Math.floor(songId / 1000)).padStart(2, "0")}-${String(songId % 1000).padStart(3, "0")}`;
+  return `/wacca/MusicData/${folder}/${folder}_${String(difficulty).padStart(2, "0")}.mer`;
+}
+
+export { parseMer, buildChart, chartPath };
