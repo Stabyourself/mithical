@@ -26,7 +26,6 @@ const BONUS_IDS = new Set([2, 6, 8]);
 const R_NOTE_IDS = new Set([20, 21, 22, 23, 24, 25, 26]);
 const HOLD_START_IDS = new Set([9, 25]);
 const HOLD_POINT_ID = 10;
-const HOLD_END_ID = 11;
 const MASK_ADD_ID = 12;
 const MASK_REMOVE_ID = 13;
 const END_OF_CHART_ID = 14;
@@ -45,7 +44,7 @@ const REVERSE_END = 8;
 // Raw chart: gimmicks and objects in ticks, holds linked up
 function parseMer(text) {
   const lines = text.split(/\r?\n/);
-  const body = lines.indexOf("#BODY");
+  const body = lines.findIndex((line) => line.trim() === "#BODY");
   const chart = { gimmicks: [], speedEvents: [], reverses: [], notes: [], masks: [], endTick: null };
   let reverse = null;
   const objects = new Map();
@@ -136,7 +135,9 @@ function parseMer(text) {
   chart.notes.sort((a, b) => a.tick - b.tick);
   chart.masks.sort((a, b) => a.tick - b.tick);
   chart.gimmicks.sort((a, b) => a.tick - b.tick);
-  chart.endTick ??= Math.ceil((chart.notes.at(-1)?.tick ?? 0) / TICKS_PER_MEASURE + 1) * TICKS_PER_MEASURE;
+  // No end marker: a measure after the last thing, hold ends included
+  const lastTick = Math.max(0, ...chart.notes.map((note) => note.points?.at(-1).tick ?? note.tick));
+  chart.endTick ??= Math.ceil(lastTick / TICKS_PER_MEASURE + 1) * TICKS_PER_MEASURE;
   chart.bpm = chart.gimmicks.find((gimmick) => gimmick.bpm)?.bpm ?? 120;
   chart.msAt = timing(chart.gimmicks);
   chart.lengthMs = chart.msAt(chart.endTick);
@@ -145,8 +146,18 @@ function parseMer(text) {
   return chart;
 }
 
-// Tick -> ms, going through the BPM and time signature changes.
-// A measure is (upper / lower) whole notes, BPM counts quarter notes
+// Last segment starting at or before value (segments sorted by key)
+function segmentAt(segments, key, value) {
+  let low = 0;
+  let high = segments.length - 1;
+  while (low < high) {
+    const middle = (low + high + 1) >> 1;
+    if (segments[middle][key] <= value) low = middle;
+    else high = middle - 1;
+  }
+  return segments[low];
+}
+
 // Ms -> "scaled" ms, how far the notes have scrolled. Like SaturnData: speed changes
 // scale the scroll speed, stops pause it (and speed changes during a stop wait for it)
 function scrolling(events, msAt) {
@@ -164,8 +175,7 @@ function scrolling(events, msAt) {
   }
 
   return (time) => {
-    let segment = segments[0];
-    for (const next of segments) if (next.time <= time) segment = next;
+    const segment = segmentAt(segments, "time", time);
     return segment.scaled + (time - segment.time) * segment.speed;
   };
 }
@@ -206,6 +216,8 @@ function reverseEase(t) {
   return t;
 }
 
+// Tick -> ms, going through the BPM and time signature changes.
+// A measure is (upper / lower) whole notes, BPM counts quarter notes
 function timing(gimmicks) {
   const segments = [];
   let bpm = 120;
@@ -224,8 +236,7 @@ function timing(gimmicks) {
   if (segments.length === 0) segments.push({ tick: 0, ms: 0, msPerTick: msPerTick() });
 
   return (target) => {
-    let segment = segments[0];
-    for (const next of segments) if (next.tick <= target) segment = next;
+    const segment = segmentAt(segments, "tick", target);
     return segment.ms + (target - segment.tick) * segment.msPerTick;
   };
 }
@@ -363,11 +374,10 @@ function buildChart(chart, mirror) {
   return { notes, syncConnectors, measureLines, laneToggles, reverses };
 }
 
-// Where a song's chart lives in public/wacca/MusicData. Song 3011 is folder S03-011,
-// difficulty 0-3 is normal/hard/expert/inferno
+// Where a song's chart lives in public/wacca/MusicData, e.g. 3011/3011_03.mer.
+// Difficulty 0-3 is normal/hard/expert/inferno
 function chartPath(songId, difficulty) {
-  const folder = `S${String(Math.floor(songId / 1000)).padStart(2, "0")}-${String(songId % 1000).padStart(3, "0")}`;
-  return `/wacca/MusicData/${folder}/${folder}_${String(difficulty).padStart(2, "0")}.mer`;
+  return `/wacca/MusicData/${songId}/${songId}_${String(difficulty).padStart(2, "0")}.mer`;
 }
 
 export { parseMer, buildChart, chartPath };

@@ -116,7 +116,12 @@
 
       <div class="settings-layout">
         <div ref="previewColumn" class="settings-preview">
-          <WaccaPlayfieldPreview :options="previewOptions" :chart-url="previewChart" />
+          <WaccaPlayfieldPreview
+            :options="previewOptions"
+            :chart-url="previewChart?.url ?? '/wacca/demo.mer'"
+            :chart-info="previewChart?.info ?? null"
+            bot-skill="good-up"
+          />
         </div>
 
         <div class="settings-options">
@@ -363,6 +368,10 @@ import waccaUserPlates from "~/assets/wacca/waccaUserPlates.js";
 import waccaTitles from "~/assets/wacca/waccaTitles.js";
 import waccaIcons from "~/assets/wacca/waccaIcons.js";
 import waccaSymbolColors from "~/assets/wacca/waccaSymbolColors.js";
+import waccaSoundEffects from "~/assets/wacca/waccaSoundEffects.js";
+import { getSongById } from "~/assets/wacca/getSongs.js";
+import { chartPath } from "~/assets/wacca/playfield/merChart.js";
+import { formatDifficulty } from "~/assets/js/util";
 
 const runtimeConfig = useRuntimeConfig();
 const language = useState("language");
@@ -494,6 +503,23 @@ const colorSchemeOptions = waccaSymbolColors.map((scheme) => ({
   consoleColors: scheme.colors,
 }));
 
+// Note touch sounds ("入力SE") are items, only owned ones can be picked.
+// The current one stays listed even if it's not owned so it still shows
+const ownsItem = useOwnedItems();
+const noteSoundOptions = computed(() =>
+  waccaSoundEffects
+    .filter(
+      (sound) => ownsItem(sound.id) || sound.id === profile.value.options[3],
+    )
+    .map((sound) => ({
+      text: {
+        ja: sound.name,
+        en: sound.nameEnglish,
+      },
+      value: sound.id,
+    })),
+);
+
 const colorOptions = [
   {
     text: {
@@ -588,10 +614,10 @@ const colorOptions = [
   },
 ];
 
-
+// Same tabs and order as the in-game option menus (MusicSelectOption* tables)
 const optionCategories = [
   {
-    name: "Game Options",
+    name: "Game Settings",
     options: [
       {
         id: 1,
@@ -612,20 +638,6 @@ const optionCategories = [
       },
 
       {
-        id: 101,
-        title: {
-          en: "Mirror Settings (MISSING FUNCTIONALITY)",
-          ja: "ミラー設定",
-        },
-        description: {
-          en: "Choose whether to mirror the notes.",
-          ja: "ノーツをミラーするか設定を変更します。",
-        },
-        type: "toggle",
-        default: 0,
-      },
-
-      {
         id: 108,
         title: {
           en: "Judgment Timing Settings",
@@ -636,21 +648,69 @@ const optionCategories = [
           ja: "入力判定タイミングを調整できます。",
         },
         type: "slider",
-        default: 0,
+        default: 100,
         min: 0,
         max: 200,
         step: 1,
-        format: (value) => `${(value / 10 - 10).toFixed(1)}`,
+        format: (value) => {
+          const offset = (value - 100) / 10;
+          return offset > 0 ? `+${offset}` : `${offset}`;
+        },
       },
 
       {
-        id: 109,
+        id: 2,
         title: {
-          en: "BonusEffectSetting",
+          en: "Mask Opacity",
+          ja: "マスク濃度",
         },
         description: {
-          en: "MISSING 109",
+          en: "Adjust the background mask opacity.",
+          ja: "マスク濃度の設定を調整します。",
         },
+        type: "slider",
+        default: 0,
+        min: 0,
+        max: 4,
+        step: 1,
+        format: (value) => value,
+      },
+
+      {
+        id: 7,
+        title: {
+          en: "Background Video Settings",
+          ja: "背景動画設定",
+        },
+        description: {
+          en: "Choose how songs with videos are displayed before playing them.",
+          ja: "動画再生対応楽曲をプレイする前に動画再生を確認するか設定を変更します。",
+        },
+        type: "options",
+        default: 0,
+        choices: [
+          {
+            text: {
+              ja: "毎回確認",
+              en: "Ask",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "OFF",
+              en: "OFF",
+            },
+            value: 1,
+          },
+          {
+            text: {
+              ja: "ON",
+              en: "ON",
+            },
+            value: 2,
+          },
+        ],
       },
 
       {
@@ -660,27 +720,25 @@ const optionCategories = [
           ja: "ボーナス効果",
         },
         description: {
-          en: "Choose the bonus effect.",
+          en: "Choose whether bonus notes have their bonus effect.",
           ja: "ボーナス効果の設定を行います。",
         },
-        type: "options",
+        type: "toggle",
         default: 1,
-        choices: [
-          {
-            text: {
-              ja: "ボーナス効果をＯＦＦにする。",
-              en: "Turn Bonus Notes OFF",
-            },
-            value: 0,
-          },
-          {
-            text: {
-              ja: "ボーナス効果をＯＮにする。",
-              en: "Turn Bonus Notes ON",
-            },
-            value: 1,
-          },
-        ],
+      },
+
+      {
+        id: 101,
+        title: {
+          en: "Mirror Settings",
+          ja: "ミラー設定",
+        },
+        description: {
+          en: "Choose whether to mirror the notes left to right.",
+          ja: "プレイ中のノーツ配置を入れ替えます。",
+        },
+        type: "toggle",
+        default: 0,
       },
 
       {
@@ -740,94 +798,11 @@ const optionCategories = [
           },
         ],
       },
-
-      {
-        id: 132,
-        title: {
-          en: "Gate Skip",
-          ja: "ゲート簡易演出",
-        },
-        description: {
-          en: "You can turn choose to quickly skip Gates.",
-          ja: "ゲート進行の簡易演出を設定できます。",
-        },
-        type: "toggle",
-        default: 0,
-      },
-
-      {
-        id: 141,
-        title: {
-          en: "WACCA Bingo Skip",
-          ja: "WACCA BINGO簡易演出",
-        },
-        description: {
-          en: "You can turn choose to quickly skip WACCA Bingo.",
-          ja: "WACCA BINGOの簡易演出を設定できます。",
-        },
-        type: "toggle",
-        default: 0,
-      },
     ],
   },
   {
-    name: "Display Options",
+    name: "Display Info Settings",
     options: [
-      {
-        id: 2,
-        title: {
-          en: "Mask Opacity",
-          ja: "マスク濃度",
-        },
-        description: {
-          en: "Adjust the background mask opacity.",
-          ja: "マスク濃度の設定を調整します。",
-        },
-        type: "slider",
-        default: 0,
-        min: 0,
-        max: 4,
-        step: 1,
-        format: (value) => value,
-      },
-
-      {
-        id: 7,
-        title: {
-          en: "Background Video Settings",
-          ja: "背景動画設定",
-        },
-        description: {
-          en: "Choose how songs with videos are displayed before playing them.",
-          ja: "動画再生対応楽曲をプレイする前に動画再生を確認するか設定を変更します。",
-        },
-        type: "options",
-        default: 0,
-        choices: [
-          {
-            text: {
-              ja: "背景動画がある場合、毎回確認します。",
-              en: "Ask whether or not to play background videos each time.",
-            },
-            value: 0,
-          },
-          {
-            text: {
-              ja: "背景動画を再生しません。",
-              en: "Never play background videos.",
-            },
-            value: 1,
-          },
-          {
-            text: {
-              ja: "背景動画を常に再生します。",
-              en: "Always play background videos.",
-            },
-            value: 2,
-          },
-        ],
-      },
-
       {
         id: 102,
         title: {
@@ -883,106 +858,7 @@ const optionCategories = [
           ja: "「Ｍａｒｖｅｌｏｕｓ」以外の判定の時に「ＦＡＳＴ／ＬＡＴＥ」の表示を追加できます。",
         },
         type: "toggle",
-      },
-
-      {
-        id: 104,
-        title: {
-          en: "GuideLineAreaLine",
-        },
-        description: {
-          en: "MISSING 104",
-        },
-      },
-
-      {
-        id: 105,
-        title: {
-          en: "Barline Display",
-          ja: "小節線表示",
-        },
-        description: {
-          en: "You can show or hide barlines.",
-          ja: "小節線の表示を設定できます。",
-        },
-        type: "toggle",
-        default: 1,
-      },
-
-      {
-        id: 106,
-        title: {
-          en: "Guideline Intensity",
-          ja: "ガイドラインの濃度",
-        },
-        description: {
-          en: "You can adjust the intensity of the guidelines.",
-          ja: "ガイドラインの濃度を調整できます。",
-        },
-        type: "slider",
-        default: 5,
-        min: 0,
-        max: 5,
-        step: 1,
-        format: (value) => value,
-      },
-
-      {
-        id: 107,
-        title: {
-          en: "Combo Display (obsolete)",
-        },
-        description: {
-          en: "MISSING 107",
-        },
-      },
-
-      {
-        id: 110,
-        title: {
-          en: "Note Thickness",
-          ja: "ノーツ幅設定",
-        },
-        description: {
-          en: "Adjust how thick notes are displayed.",
-          ja: "ノーツの幅を設定できます。",
-        },
-        type: "slider",
-        default: 3,
-        min: 1,
-        max: 5,
-        step: 1,
-        format: (value) => value,
-      },
-
-      {
-        id: 116,
-        title: {
-          en: "Score Display",
-          ja: "スコア表示方式",
-        },
-        description: {
-          en: "Choose which method to display your score.",
-          ja: "ゲーム中のスコアの表示方式を変更できます。",
-        },
-        type: "options",
         default: 0,
-        choices: [
-          {
-            text: {
-              ja: "プラス方式",
-              en: "Plus Method",
-            },
-            value: 0,
-          },
-          {
-            text: {
-              ja: "マイナス方式",
-              en: "Minus Method",
-            },
-            value: 1,
-          },
-        ],
       },
 
       {
@@ -1058,6 +934,56 @@ const optionCategories = [
       },
 
       {
+        id: 106,
+        title: {
+          en: "Guideline Intensity",
+          ja: "ガイドラインの濃度",
+        },
+        description: {
+          en: "You can adjust the intensity of the guidelines.",
+          ja: "ガイドラインの濃度を調整できます。",
+        },
+        type: "slider",
+        default: 5,
+        min: 0,
+        max: 5,
+        step: 1,
+        format: (value) => value,
+      },
+
+      {
+        id: 140,
+        title: {
+          en: "Display Information Opacity",
+          ja: "表示情報の濃度",
+        },
+        description: {
+          en: "You can make the displayed information transparent.",
+          ja: "表示情報の濃度を調整できます。",
+        },
+        type: "slider",
+        default: 5,
+        min: 0,
+        max: 5,
+        step: 1,
+        format: (value) => value,
+      },
+
+      {
+        id: 105,
+        title: {
+          en: "Barline Display",
+          ja: "小節線表示",
+        },
+        description: {
+          en: "You can show or hide barlines.",
+          ja: "小節線の表示を設定できます。",
+        },
+        type: "toggle",
+        default: 1,
+      },
+
+      {
         id: 119,
         title: {
           en: "Center Display",
@@ -1130,6 +1056,36 @@ const optionCategories = [
       },
 
       {
+        id: 116,
+        title: {
+          en: "Score Display",
+          ja: "スコア表示方式",
+        },
+        description: {
+          en: "Choose which method to display your score.",
+          ja: "ゲーム中のスコアの表示方式を変更できます。",
+        },
+        type: "options",
+        default: 0,
+        choices: [
+          {
+            text: {
+              ja: "プラス方式",
+              en: "Plus Method",
+            },
+            value: 0,
+          },
+          {
+            text: {
+              ja: "マイナス方式",
+              en: "Minus Method",
+            },
+            value: 1,
+          },
+        ],
+      },
+
+      {
         id: 120,
         title: {
           en: "Ranking Display",
@@ -1186,149 +1142,36 @@ const optionCategories = [
       },
 
       {
-        id: 124,
+        id: 132,
         title: {
-          en: "Touch Effect (Pop) (obsolete)",
+          en: "Gate Skip",
+          ja: "ゲート簡易演出",
         },
         description: {
-          en: "This version was a toggle",
-        },
-      },
-
-      {
-        id: 133,
-        title: {
-          en: "Key Beam",
-          ja: "キービーム",
-        },
-        description: {
-          en: "Choose whether to show the key beam effect.",
-          ja: "キービームの表示を設定できます。",
-        },
-        type: "toggle",
-        default: 1,
-      },
-
-      {
-        id: 134,
-        title: {
-          en: "Unknown",
-        },
-        description: {
-          en: "MISSING 134",
-        },
-      },
-
-      {
-        id: 136,
-        title: {
-          en: "Invert Slide Notes",
-          ja: "スライドカラー反転",
-        },
-        description: {
-          en: "Inverts the slide color gradient.",
-          ja: "スライドのグラデーションを反転します。",
+          en: "Choose whether to shorten the Gate progress animations.",
+          ja: "ゲート進行の簡易演出を設定できます。",
         },
         type: "toggle",
         default: 0,
       },
 
       {
-        id: 137,
+        id: 141,
         title: {
-          en: "Unknown",
+          en: "WACCA Bingo Skip",
+          ja: "WACCA BINGO簡易演出",
         },
         description: {
-          en: "MISSING 137",
-        },
-      },
-
-      {
-        id: 138,
-        title: {
-          en: "Touch Effect (Shoot)",
-          ja: "タッチエフェクト(シュート)",
-        },
-        description: {
-          en: "Choose whether to show shooting touch effects.",
-          ja: "タッチエフェクト(シュート)の表示を設定できます。",
+          en: "Choose whether to shorten the WACCA Bingo animations.",
+          ja: "WACCA BINGOの簡易演出を設定できます。",
         },
         type: "toggle",
-        default: 1,
-      },
-
-      {
-        id: 139,
-        title: {
-          en: "R Note Effect",
-          ja: "Ｒノーツエフェクト",
-        },
-        description: {
-          en: "Choose whether to show R note effects.",
-          ja: "Ｒノーツエフェクトの表示を設定できます。",
-        },
-        type: "toggle",
-        default: 1,
-      },
-
-      {
-        id: 140,
-        title: {
-          en: "Display Information Opacity",
-          ja: "表示情報の濃度",
-        },
-        description: {
-          en: "You can make the displayed information transparent.",
-          ja: "表示情報の濃度を調整できます。",
-        },
-        type: "slider",
-        default: 5,
-        min: 0,
-        max: 5,
-        step: 1,
-        format: (value) => value,
-      },
-
-      {
-        id: 1006,
-        title: {
-          en: "Touch Effect (Pop)",
-          ja: "タッチエフェクト(ポップ)",
-        },
-        description: {
-          en: "Choose which popping touch effects are shown. (NEEDS ITEMS)",
-          ja: "タッチエフェクト(ポップ)の表示を設定できます。",
-        },
-        type: "options",
-        default: 312001,
-        choices: [
-          {
-            text: {
-              ja: "OFF",
-              en: "OFF",
-            },
-            value: 312000,
-          },
-          {
-            text: {
-              ja: "デフォルト",
-              en: "Default",
-            },
-            value: 312001,
-          },
-          {
-            text: {
-              ja: "バブル",
-              en: "Bubble",
-            },
-            value: 312002,
-          },
-        ],
+        default: 0,
       },
     ],
   },
   {
-    name: "Design options",
+    name: "Design Settings",
     options: [
       {
         id: 4,
@@ -1341,8 +1184,58 @@ const optionCategories = [
           ja: "ＷＡＣＣＡコンソールのカラーパターンを変更します。",
         },
         type: "options",
-        default: 303001,
+        default: 103001,
         choices: colorSchemeOptions,
+      },
+
+      {
+        id: 110,
+        title: {
+          en: "Note Thickness",
+          ja: "ノーツ幅設定",
+        },
+        description: {
+          en: "Adjust how thick notes are displayed.",
+          ja: "ノーツの幅を設定できます。",
+        },
+        type: "slider",
+        default: 3,
+        min: 1,
+        max: 5,
+        step: 1,
+        format: (value) => value,
+      },
+
+      {
+        id: 205,
+        title: {
+          en: "Touch Note Color",
+          ja: "タッチノーツの色",
+        },
+        description: {
+          en: "Set the color of Touch Notes.",
+          ja: "タッチノーツの色を設定します。",
+        },
+        type: "options",
+        default: 5,
+        choices: colorOptions,
+        noteType: "touch",
+      },
+
+      {
+        id: 206,
+        title: {
+          en: "Chain Note Color",
+          ja: "チェインノーツの色",
+        },
+        description: {
+          en: "Set the color of Chain Notes.",
+          ja: "チェインノーツの色を設定します。",
+        },
+        type: "options",
+        default: 6,
+        choices: colorOptions,
+        noteType: "chain",
       },
 
       {
@@ -1410,38 +1303,6 @@ const optionCategories = [
       },
 
       {
-        id: 205,
-        title: {
-          en: "Touch Note Color",
-          ja: "タッチノーツの色",
-        },
-        description: {
-          en: "Set the color of Touch Notes.",
-          ja: "タッチノーツの色を設定します。",
-        },
-        type: "options",
-        default: 5,
-        choices: colorOptions,
-        noteType: "touch",
-      },
-
-      {
-        id: 206,
-        title: {
-          en: "Chain Note Color",
-          ja: "チェインノーツの色",
-        },
-        description: {
-          en: "Set the color of Chain Notes.",
-          ja: "チェインノーツの色を設定します。",
-        },
-        type: "options",
-        default: 6,
-        choices: colorOptions,
-        noteType: "chain",
-      },
-
-      {
         id: 207,
         title: {
           en: "Hold Note Color",
@@ -1456,10 +1317,103 @@ const optionCategories = [
         choices: colorOptions,
         noteType: "hold",
       },
+
+      {
+        id: 136,
+        title: {
+          en: "Invert Slide Colors",
+          ja: "スライドカラー反転",
+        },
+        description: {
+          en: "Inverts the slide color gradient.",
+          ja: "スライドのグラデーションを反転します。",
+        },
+        type: "toggle",
+        default: 0,
+      },
+
+      {
+        id: 1006,
+        title: {
+          en: "Touch Effect (Pop)",
+          ja: "タッチエフェクト(ポップ)",
+        },
+        description: {
+          en: "Choose which popping touch effects are shown.",
+          ja: "タッチエフェクト(ポップ)の表示を設定できます。",
+        },
+        type: "options",
+        default: 312001,
+        choices: [
+          {
+            text: {
+              ja: "OFF",
+              en: "OFF",
+            },
+            value: 312000,
+          },
+          {
+            text: {
+              ja: "デフォルト",
+              en: "Default",
+            },
+            value: 312001,
+          },
+          {
+            text: {
+              ja: "バブル",
+              en: "Bubble",
+            },
+            value: 312002,
+          },
+        ],
+      },
+
+      {
+        id: 138,
+        title: {
+          en: "Touch Effect (Shoot)",
+          ja: "タッチエフェクト(シュート)",
+        },
+        description: {
+          en: "Choose whether to show shooting touch effects.",
+          ja: "タッチエフェクト(シュート)の表示を設定できます。",
+        },
+        type: "toggle",
+        default: 1,
+      },
+
+      {
+        id: 133,
+        title: {
+          en: "Key Beam",
+          ja: "キービーム",
+        },
+        description: {
+          en: "Choose whether to show the key beam effect.",
+          ja: "キービームの表示を設定できます。",
+        },
+        type: "toggle",
+        default: 1,
+      },
+
+      {
+        id: 139,
+        title: {
+          en: "R Note Effect",
+          ja: "Ｒノーツエフェクト",
+        },
+        description: {
+          en: "Choose whether to show R note effects.",
+          ja: "Ｒノーツエフェクトの表示を設定できます。",
+        },
+        type: "toggle",
+        default: 1,
+      },
     ],
   },
   {
-    name: "Sound Options",
+    name: "Sound Settings",
     options: [
       {
         id: 3,
@@ -1468,55 +1422,15 @@ const optionCategories = [
           ja: "ノーツタッチＳＥ",
         },
         description: {
-          en: "Change the sound effect when notes are touched. (NEEDS ITEMS?)",
+          en: "Change the sound effect when notes are touched.",
           ja: "ノーツをタッチしたときのＳＥを変更します。",
         },
         type: "options",
         default: 105001,
-        choices: [
-          {
-            text: {
-              ja: "デフォルト(WACCA Lily R)",
-              en: "デフォルト(WACCA Lily R)",
-            },
-            value: 105001,
-          },
-          {
-            text: {
-              ja: "ウッド",
-              en: "ウッド",
-            },
-            value: 105002,
-          },
-          {
-            text: {
-              ja: "スターライト",
-              en: "スターライト",
-            },
-            value: 105005,
-          },
-          {
-            text: {
-              ja: "クラップ",
-              en: "クラップ",
-            },
-            value: 105008,
-          },
-          {
-            text: {
-              ja: "タンバリン",
-              en: "タンバリン",
-            },
-            value: 205003,
-          },
-          {
-            text: {
-              ja: "デフォルト(WACCA)",
-              en: "デフォルト(WACCA)",
-            },
-            value: 205005,
-          },
-        ],
+        // Getter so the list follows the owned items
+        get choices() {
+          return noteSoundOptions.value;
+        },
       },
 
       {
@@ -1538,68 +1452,6 @@ const optionCategories = [
       },
 
       {
-        id: 6,
-        title: {
-          en: "SE Volume (obsolete)",
-          ja: "ＳＥボリューム",
-        },
-        description: {
-          en: "Adjust the volume of sound effects.",
-          ja: "ＳＥの音量を調整します。",
-        },
-        type: "slider",
-        default: 10,
-        min: 0,
-        max: 10,
-        step: 1,
-        format: (value) => `${value * 10}%`,
-      },
-
-      {
-        id: 111,
-        title: {
-          en: "GuideSoundSetting",
-        },
-        description: {
-          en: "MISSING 111",
-        },
-      },
-
-      {
-        id: 112,
-        title: {
-          en: "MiscSoundEffectVolume",
-        },
-        description: {
-          en: "MISSING 112",
-        },
-      },
-
-      {
-        id: 113,
-        title: {
-          en: "SongStartSound",
-        },
-        description: {
-          en: "MISSING 113",
-        },
-      },
-
-      {
-        id: 115,
-        title: {
-          en: "Character Voices",
-          ja: "キャラクター音声",
-        },
-        description: {
-          en: "You can turn character voices on or off.",
-          ja: "プレイ中（演奏中）のキャラクター音声をＯＮ／ＯＦＦできます",
-        },
-        type: "toggle",
-        default: 1,
-      },
-
-      {
         id: 125,
         title: {
           en: "Guide Sound Volume",
@@ -1610,7 +1462,7 @@ const optionCategories = [
           ja: "プレイ中(演奏中)のガイド音の音量を調整します。",
         },
         type: "slider",
-        default: 10,
+        default: 3,
         min: 0,
         max: 10,
         step: 1,
@@ -1628,7 +1480,7 @@ const optionCategories = [
           ja: "プレイ中(演奏中)のタッチノーツ音の音量を調整します。",
         },
         type: "slider",
-        default: 10,
+        default: 8,
         min: 0,
         max: 10,
         step: 1,
@@ -1646,7 +1498,7 @@ const optionCategories = [
           ja: "プレイ中(演奏中)のホールドノーツ音の音量を調整します。",
         },
         type: "slider",
-        default: 10,
+        default: 8,
         min: 0,
         max: 10,
         step: 1,
@@ -1664,7 +1516,7 @@ const optionCategories = [
           ja: "プレイ中(演奏中)のスライドノーツ音の音量を調整します。",
         },
         type: "slider",
-        default: 10,
+        default: 8,
         min: 0,
         max: 10,
         step: 1,
@@ -1674,7 +1526,7 @@ const optionCategories = [
       {
         id: 129,
         title: {
-          en: "Snap Sound Volume",
+          en: "Snap Note Volume",
           ja: "スナップノーツボリューム",
         },
         description: {
@@ -1682,7 +1534,7 @@ const optionCategories = [
           ja: "プレイ中(演奏中)のスナップノーツ音の音量を調整します。",
         },
         type: "slider",
-        default: 10,
+        default: 8,
         min: 0,
         max: 10,
         step: 1,
@@ -1700,7 +1552,7 @@ const optionCategories = [
           ja: "プレイ中(演奏中)のチェインノーツ音の音量を調整します。",
         },
         type: "slider",
-        default: 10,
+        default: 8,
         min: 0,
         max: 10,
         step: 1,
@@ -1718,7 +1570,7 @@ const optionCategories = [
           ja: "プレイ中(演奏中)のボーナスノーツ音の音量を調整します。",
         },
         type: "slider",
-        default: 10,
+        default: 8,
         min: 0,
         max: 10,
         step: 1,
@@ -1736,7 +1588,7 @@ const optionCategories = [
           ja: "プレイ中(演奏中)のＲノーツ音の音量を調整します。",
         },
         type: "slider",
-        default: 10,
+        default: 8,
         min: 0,
         max: 10,
         step: 1,
@@ -1744,12 +1596,28 @@ const optionCategories = [
       },
 
       {
-        id: 1001,
+        id: 115,
         title: {
-          en: "Headphone Volume",
+          en: "Character Voices",
+          ja: "キャラクター音声",
         },
         description: {
-          en: "Adjust the volume of the headphone audio.",
+          en: "You can turn character voices on or off.",
+          ja: "プレイ中（演奏中）のキャラクター音声をＯＮ／ＯＦＦできます",
+        },
+        type: "toggle",
+        default: 1,
+      },
+
+      {
+        id: 1001,
+        title: {
+          en: "Master Volume",
+          ja: "マスタボリューム",
+        },
+        description: {
+          en: "Set with the volume buttons on the cabinet, saved to your profile.",
+          ja: "筐体のボリュームボタンで調整した音量です。",
         },
         type: "slider",
         default: 0,
@@ -1764,22 +1632,33 @@ const optionCategories = [
 
 const activeCategory = ref(0);
 
-// Demo chart, or any .mer in public with ?chart=, e.g.
-// ?chart=wacca/MusicData/S02-082/S02-082_02.mer
+// Demo chart, or a song's chart with ?song=2082&difficulty=3 (1-4, normal to inferno).
+// Unknown songs or difficulties fall back to the demo
 const route = useRoute();
 const previewChart = computed(() => {
-  const chart = route.query.chart;
-  if (typeof chart !== "string" || !/^[\w\-/.]+\.mer$/.test(chart) || chart.includes("..")) {
-    return "/wacca/demo.mer";
-  }
-  return `/${chart.replace(/^\/+/, "")}`;
+  const id = Number(route.query.song);
+  const difficulty = Number(route.query.difficulty);
+  const song = Number.isInteger(id) ? getSongById(version.value, id) : null;
+  const sheet = song?.sheets[difficulty - 1];
+  if (!sheet) return null;
+  return {
+    url: chartPath(song.id, difficulty - 1),
+    info: {
+      title: song.title,
+      difficulty,
+      level: String(formatDifficulty(sheet.difficulty, false)),
+    },
+  };
 });
 
 // Hovering a dropdown entry shows it on the preview without picking it
 const previewChoice = ref(null);
 const previewOptions = computed(() =>
   previewChoice.value
-    ? { ...profile.value.options, [previewChoice.value.id]: previewChoice.value.value }
+    ? {
+        ...profile.value.options,
+        [previewChoice.value.id]: previewChoice.value.value,
+      }
     : profile.value.options,
 );
 watch(activeCategory, () => (previewChoice.value = null));

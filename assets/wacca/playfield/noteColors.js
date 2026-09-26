@@ -151,7 +151,20 @@ const syncColors = {
   dark: "#003260",
 };
 
+// Console LEDs don't dim like screen pixels, dark scheme colors still show their color
+// (Deep Purple's near black one is visibly purple, Darkness stays about black). Lifts the
+// brightness on a gentle curve and keeps the hue: every channel scales by the same factor
+const LED_CURVE = 0.7;
+
+function ledColor([r, g, b]) {
+  const max = Math.max(r, g, b);
+  if (max === 0) return [0, 0, 0];
+  const scale = (255 * Math.pow(max / 255, LED_CURVE)) / max;
+  return [r, g, b].map((value) => Math.round(value * scale));
+}
+
 export {
+  ledColor,
   palettes,
   holdGradients,
   holdGradientsActive,
