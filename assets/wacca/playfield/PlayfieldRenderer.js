@@ -953,7 +953,6 @@ export default class PlayfieldRenderer {
     const detail = kind === "marvelous" ? null : delta < 0 ? "FAST" : "LATE";
     this.judge(kind, detail);
 
-    this.lightLanes(note.pos, note.size, 100);
     this.spawnTouchEffects(note.pos, note.size);
 
     if (note.rNote && this.settings.rNoteEffect) {
@@ -1053,7 +1052,6 @@ export default class PlayfieldRenderer {
     if (hold.kind === "miss") return;
 
     const last = hold.note.points[hold.note.points.length - 1];
-    this.lightLanes(last.pos, last.size, 100);
     this.spawnTouchEffects(last.pos, last.size, false);
   }
 
@@ -1159,23 +1157,17 @@ export default class PlayfieldRenderer {
     }
   }
 
-  lightLanes(pos, size, duration) {
-    const until = this.time + duration;
+  lightLanes(pos, size) {
     for (let i = 0; i < size; i++) {
       const lane = mod60(pos + i);
-      this.beamUntil[lane] = Math.max(this.beamUntil[lane], until);
+      this.beamUntil[lane] = Math.max(this.beamUntil[lane], this.time);
     }
   }
 
+  // Key beams only light where fingers are, not the whole note
   updateKeyBeams() {
     for (const { lane } of this.fingers.values()) {
-      this.lightLanes(lane - 1, 3, 0);
-    }
-
-    for (const { note, base, held } of this.activeHolds) {
-      if (held === false) continue;
-      const shape = this.holdShapeAt(note, this.time - base);
-      this.lightLanes(Math.round(shape.pos), shape.size, 0);
+      this.lightLanes(lane - 1, 3);
     }
   }
 
@@ -2587,6 +2579,7 @@ export default class PlayfieldRenderer {
     this.drawBubbles(now);
 
     ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
     this.drawShots(now);
     ctx.globalCompositeOperation = "lighter";
 
@@ -2679,28 +2672,29 @@ export default class PlayfieldRenderer {
       // Rushes in, then keeps creeping to the center
       const creep = clamp(t / SHOT_MS, 0, 1);
       const front =
-        Rj * (0.06 + 0.2 * (1 - creep * creep * (3 - 2 * creep)) + 0.74 * Math.exp(-t / 8));
+        Rj * (0.12 * (1 - creep * creep * (3 - 2 * creep)) + 0.88 * Math.exp(-t / 8));
       const outer = Rj;
       const span = outer - front;
       if (span < 2) continue;
 
-      // Where the bright part ends, moves from the rim to the front
+      // Bright head at the front, the tail towards the rim dims as it goes. Everything only
+      // ever gets darker once the front has passed, no stops that pop back up
       const u = clamp(t / 140, 0, 1);
-      const fadeEdge = Rj * (1.1 - 0.95 * u * u * (3 - 2 * u));
-      const edge = clamp((fadeEdge - front) / span, 0.25, 1);
+      const dim = u * u * (3 - 2 * u);
 
-      const alpha = 0.85 * (t < 80 ? 1 : Math.max(0, 1 - (t - 80) / (SHOT_MS - 80)));
+      // Own fade, it used to borrow the oldest pop flash's globalAlpha by accident, which
+      // jumped up whenever that flash ran out
+      const fade = 0.8 * (1 - t / 240);
+      const alpha = fade * 0.85 * (t < 80 ? 1 : Math.max(0, 1 - (t - 80) / (SHOT_MS - 80)));
       const purple = clamp((t - 30) / 120, 0, 1);
       const mix = (a, b) => Math.round(a + (b - a) * purple);
       const rgba = (r, g, b, a) => `rgba(${mix(r, 150)}, ${mix(g, 70)}, ${mix(b, 190)}, ${a})`;
 
       const gradient = ctx.createRadialGradient(cx, cy, front, cx, cy, outer);
-      gradient.addColorStop(0, `rgba(255, 90, 210, ${alpha})`);
+      gradient.addColorStop(0, rgba(255, 90, 210, alpha));
       gradient.addColorStop(0.05, rgba(250, 120, 225, alpha));
-      gradient.addColorStop(0.2, rgba(245, 150, 230, alpha * 0.95));
-      gradient.addColorStop(Math.max(0.21, edge - 0.12), rgba(245, 175, 238, alpha * 0.9));
-      gradient.addColorStop(Math.min(1, edge + 0.12), `rgba(130, 60, 170, ${alpha * 0.45})`);
-      gradient.addColorStop(1, `rgba(120, 50, 160, ${alpha * 0.35})`);
+      gradient.addColorStop(0.2, rgba(245, 150, 230, alpha * (0.95 - 0.25 * dim)));
+      gradient.addColorStop(1, rgba(245, 175, 238, alpha * (0.9 - 0.55 * dim)));
 
       const start = -shot.pos * 6 * DEG;
       const end = -(shot.pos + shot.size) * 6 * DEG;
