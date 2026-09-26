@@ -310,7 +310,7 @@
   }
 }
 .playfield-preview {
-  width: min(100%, 560px);
+  width: min(100%, 900px);
   margin: 0 auto 32px;
   padding-bottom: 1rem;
   padding-top: 0.5rem;
