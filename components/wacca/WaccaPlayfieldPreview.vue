@@ -188,7 +188,6 @@ canvas.playing {
   background: rgb(var(--v-theme-surface));
   color: rgb(var(--v-theme-on-surface));
   border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
   font-variant-numeric: tabular-nums;
 
   .stats-text {
