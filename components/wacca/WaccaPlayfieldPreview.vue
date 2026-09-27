@@ -11,6 +11,8 @@
       >
         <div class="playfield-stage">
           <WaccaPlayfieldCanvas
+            :key="view"
+            :view="view"
             :controller="controller"
             :options="options"
             :features="features"
@@ -148,7 +150,12 @@ const props = defineProps({
   showStats: {
     type: Boolean,
     default:false,
-  }
+  },
+  view: {
+    type: String,
+    default: "circle",
+    validator: (value) => ["circle", "unrolled"].includes(value),
+  },
 });
 const features = computed(() => ({
   ring: props.ring,
