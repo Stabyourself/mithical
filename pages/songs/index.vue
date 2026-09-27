@@ -498,16 +498,21 @@ const sortOptions = [
         text: "Inferno Difficulty",
         subText: "Inferno",
         sortFunction(a, b) {
-          let aDiff = 16;
-          let bDiff = 16;
+          const aInf= a.sheets[3] && a.sheets[3].gameVersion <= version.value;
+          const bInf = b.sheets[3] && b.sheets[3].gameVersion <= version.value;
 
-          if (a.sheets[3] && a.sheets[3].gameVersion <= version.value) {
-            aDiff = a.sheets[3].difficulty;
+          if(!aInf && !bInf) {
+            return 0;
+          }
+          if(!aInf) {
+            return 1;
+          }
+          if(!bInf) {
+            return -1;
           }
 
-          if (b.sheets[3] && b.sheets[3].gameVersion <= version.value) {
-            bDiff = b.sheets[3].difficulty;
-          }
+          const aDiff = a.sheets[3].difficulty;
+          const bDiff = b.sheets[3].difficulty;
 
           if (sortOrder.value == "asc") {
             return aDiff - bDiff;
