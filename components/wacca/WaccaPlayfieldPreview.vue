@@ -1,11 +1,11 @@
 <template>
-  <div class="playfield-preview">
-    <div ref="statsTop" class="stats">
-      <div v-if="showStats" class="stats-text">
+    <div v-if="showStats" ref="statsTop" class="stats">
+      <div class="stats-text">
           {{`Total Notes: ${songTotalNotes.length}
           Song BPM: ${songBpm}`}}
       </div>
     </div>
+  <div class="playfield-preview">
     <!-- Holds the spot in the layout while in the lightbox -->
     <div v-if="expanded" class="playfield-placeholder"></div>
 
@@ -102,7 +102,7 @@
 
 <style scoped>
 .playfield-preview {
-  width: min(100%, 560px);
+  width: min(100%, 825px);
   margin: 0 auto 32px;
 }
 
@@ -179,10 +179,11 @@ canvas.playing {
 }
 
 .stats {
-  width: min(100%, 8rem);
+  width: min(100%, 10rem);
   float: right;
   white-space: pre-line;
   padding: 5px 7px;
+  margin-bottom: 5px;
   border-radius: 8px;
   background: rgb(var(--v-theme-surface));
   color: rgb(var(--v-theme-on-surface));
