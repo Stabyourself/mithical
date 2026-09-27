@@ -24,12 +24,6 @@ export function usePlayfieldSession({ chartUrl = () => null, options = () => ({}
   const position = ref(0);
   const songLength = ref(session.songLength);
 
-  const showStats = computed(() => features()?.showStats ?? false);
-
-  // Song stats
-  const songTotalNotes = ref(0);
-  const songBpm = ref(0);
-
   // A chart is being fetched, and why the last one failed if it did
   const loading = ref(false);
   const loadError = ref(null);
@@ -162,8 +156,6 @@ export function usePlayfieldSession({ chartUrl = () => null, options = () => ({}
       if (!/^#BODY\s*$/m.test(text)) throw new Error("not a .mer file");
       session.loadChart(text);
       songLength.value = session.songLength;
-      songTotalNotes.value = session.songTotalNotes;
-      songBpm.value = session.songBpm;
       position.value = 0;
       updateLoop();
     } catch (error) {
@@ -219,9 +211,6 @@ export function usePlayfieldSession({ chartUrl = () => null, options = () => ({}
     speed,
     position,
     songLength,
-    songTotalNotes,
-    songBpm,
-    showStats,
     loading,
     loadError,
     addView,

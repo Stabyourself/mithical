@@ -483,8 +483,6 @@ export default class PlayfieldRenderer {
       songCount: features.songCount ?? true,
       score: features.score ?? true,
       progressBar: features.progressBar ?? true,
-      initPaused: features.initPaused ?? true,
-      showStats: features.showStats ?? true,
     };
     const previous = this.features;
     this.features = next;

@@ -141,16 +141,6 @@ const props = defineProps({
     default: "all-marvelous",
     validator: (value) => ["miss-up", "good-up", "great-up", "all-marvelous"].includes(value),
   },
-  // Turn off auto play if desired
-  initPaused: {
-    type: Boolean,
-    default: false,
-  },
-  // Show stats if desired
-  showStats: {
-    type: Boolean,
-    default:false,
-  },
   view: {
     type: String,
     default: "circle",
@@ -165,8 +155,6 @@ const features = computed(() => ({
   score: props.score,
   progressBar: props.progressBar,
   botSkill: props.botSkill,
-  initPaused: props.initPaused,
-  showStats: props.showStats,
 }));
 
 const controller = usePlayfieldSession({

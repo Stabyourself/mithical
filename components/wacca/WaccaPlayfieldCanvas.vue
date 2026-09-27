@@ -1,10 +1,4 @@
 <template>
-  <div v-if="showStats" ref="statsTop" class="stats">
-    <div class="stats-text">
-        {{`Total Notes: ${songTotalNotes.length}
-        Song BPM: ${songBpm}`}}
-    </div>
-  </div>
   <div ref="container" class="playfield-canvas" :class="view" :style="{ aspectRatio: aspect }">
     <canvas
       ref="canvas"
@@ -163,7 +157,7 @@ const props = defineProps({
   },
 });
 
-const { session, playing, loading, loadError, songTotalNotes, songBpm, showStats } = props.controller;
+const { session, playing, loading, loadError } = props.controller;
 const container = ref(null);
 const canvas = ref(null);
 const textCanvas = ref(null);
