@@ -165,7 +165,7 @@
           <v-btn v-if="song.sheets.length > 3" value="3" size="small">Inferno</v-btn>
         </v-btn-toggle>
       </h2>
-      <div ref="previewColumn" class="settings-preview">
+      <div ref="previewColumn" class="playfield-preview">
         <WaccaPlayfieldPreview 
           :options="profile.options" 
           :chart-url="chartData?.url ?? '/wacca/demo.mer'"
@@ -177,6 +177,7 @@
           :progress-bar=false
           :judging=false
           :autoplay=false
+          :show-stats="true"
         />
       </div>
     </v-container>
@@ -318,9 +319,9 @@
 }
 
 .playfield-preview {
-  width: min(100%, 825px);
-  margin: 0 auto 32px;
-  padding-bottom: 1rem;
+  width: min(100%, 1000px);
+  margin: 0 auto 16px;
+  padding-bottom: 0.1rem;
   padding-top: 0.5rem;
   padding-right: 0.5rem;
   padding-left: 0.5rem;

@@ -455,6 +455,7 @@ export default class PlayfieldRenderer {
     this.source = parseMer(text);
     this.loopMs = this.source.lengthMs;
     this.bpm = this.source.bpm;
+    this.totalNotes = this.source.notes
     this.setChart(buildChart(this.source, this.settings.mirror));
     this.reset();
   }
@@ -495,6 +496,14 @@ export default class PlayfieldRenderer {
   // Scrubbing through the chart (ms), the lead-in before it counts as 0
   get songLength() {
     return this.loopMs;
+  }
+
+  get songTotalNotes() {
+    return this.totalNotes;
+  }
+
+  get songBpm() {
+    return this.bpm;
   }
 
   get songTime() {

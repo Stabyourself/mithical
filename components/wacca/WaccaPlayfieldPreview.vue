@@ -1,5 +1,11 @@
 <template>
   <div class="playfield-preview">
+    <div ref="statsTop" class="stats">
+      <div v-if="showStats" class="stats-text">
+          {{`Total Notes: ${songTotalNotes.length}
+          Song BPM: ${songBpm}`}}
+      </div>
+    </div>
     <!-- Holds the spot in the layout while in the lightbox -->
     <div v-if="expanded" class="playfield-placeholder"></div>
 
@@ -20,7 +26,6 @@
               @pointercancel="onPointerUp"
             ></canvas>
           </div>
-
           <!-- One pill like a media player: play, time, seek bar, speed, fullscreen -->
           <div class="playfield-toolbar">
             <v-btn
@@ -172,6 +177,26 @@ canvas {
 canvas.playing {
   touch-action: none;
 }
+
+.stats {
+  width: min(100%, 8rem);
+  float: right;
+  white-space: pre-line;
+  padding: 5px 7px;
+  border-radius: 8px;
+  background: rgb(var(--v-theme-surface));
+  color: rgb(var(--v-theme-on-surface));
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  font-variant-numeric: tabular-nums;
+
+  .stats-text {
+    font-size: .85rem;
+    font-weight: 700;
+    text-align:center;
+  }
+}
+
 </style>
 
 <script setup>
@@ -238,6 +263,11 @@ const props = defineProps({
   initPaused: {
     type: Boolean,
     default: false,
+  },
+  // Show stats if desired
+  showStats: {
+    type: Boolean,
+    default:false,
   }
 });
 const container = ref(null);
@@ -407,6 +437,10 @@ const position = ref(0);
 const songLength = ref(1);
 let scrubbing = false;
 
+// Song stats
+const songTotalNotes = ref(0);
+const songBpm = ref(0);
+
 // About every 0.1s is plenty for the bar, no need to update it every frame
 function updatePosition() {
   const time = renderer.songTime;
@@ -456,6 +490,8 @@ async function loadChart(url) {
     if (!/^#BODY\s*$/m.test(text)) throw new Error("not a .mer file");
     renderer.loadChart(text);
     songLength.value = renderer.songLength;
+    songTotalNotes.value = renderer.songTotalNotes;
+    songBpm.value = renderer.songBpm;
     position.value = 0;
     updateLoop();
   } catch (error) {
@@ -559,7 +595,6 @@ onMounted(() => {
   renderer.setChartInfo(props.chartInfo);
   renderer.setFeatures(features.value);
   loadChart(props.chartUrl);
-
   resizeObserver = new ResizeObserver(([entry]) => {
     cssSize = entry.contentRect.width;
     devicePixelSize = entry.devicePixelContentBoxSize?.[0]?.inlineSize ?? 0;
