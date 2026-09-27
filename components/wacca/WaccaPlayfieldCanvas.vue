@@ -98,24 +98,6 @@ canvas.playing {
   border-radius: 8px;
 }
 
-.stats {
-  width: min(100%, 10rem);
-  margin-left: auto;
-  white-space: pre-line;
-  padding: 5px 7px;
-  margin-bottom: 5px;
-  border-radius: 8px;
-  background: rgb(var(--v-theme-surface));
-  color: rgb(var(--v-theme-on-surface));
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
-  font-variant-numeric: tabular-nums;
-
-  .stats-text {
-    font-size: .875rem;
-    font-weight: 700;
-    text-align:center;
-  }
-}
 </style>
 
 <script setup>

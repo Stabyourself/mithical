@@ -66,25 +66,6 @@
   width: min(100vw - 32px, 100vh - 32px - 52px);
 }
 
-.stats {
-  width: min(100%, 10rem);
-  float: right;
-  white-space: pre-line;
-  padding: 5px 7px;
-  margin-bottom: 5px;
-  border-radius: 8px;
-  background: rgb(var(--v-theme-surface));
-  color: rgb(var(--v-theme-on-surface));
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
-  font-variant-numeric: tabular-nums;
-
-  .stats-text {
-    font-size: .85rem;
-    font-weight: 700;
-    text-align:center;
-  }
-}
-
 </style>
 
 <script setup>
