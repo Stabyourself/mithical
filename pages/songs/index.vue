@@ -498,7 +498,7 @@ const sortOptions = [
         text: "Inferno Difficulty",
         subText: "Inferno",
         sortFunction(a, b) {
-          const aInf= a.sheets[3] && a.sheets[3].gameVersion <= version.value;
+          const aInf = a.sheets[3] && a.sheets[3].gameVersion <= version.value;
           const bInf = b.sheets[3] && b.sheets[3].gameVersion <= version.value;
 
           if(!aInf && !bInf) {
