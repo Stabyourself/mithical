@@ -181,7 +181,6 @@ export default class PlayfieldSession {
     this.source = parseMer(text);
     this.loopMs = this.source.lengthMs;
     this.bpm = this.source.bpm;
-    this.totalNotes = this.source.notes
     this.setChart(buildChart(this.source, this.mirror));
     this.reset();
   }
@@ -204,14 +203,6 @@ export default class PlayfieldSession {
     this.resetJudging();
     this.judgement = null;
     this.emit("reset");
-  }
-
-  get songTotalNotes() {
-    return this.totalNotes;
-  }
-
-  get songBpm() {
-    return this.bpm;
   }
   
   // Scrubbing through the chart (ms), the lead-in before it counts as 0
