@@ -114,6 +114,9 @@ const holdGradientsActive = [
   ["#f4f4f4", "#ededed", "#dfdfdf", "#d0d0d0", "#c3c3c3", "#bebebe"],
 ];
 
+// Missed holds turn grey-ish, start to end
+const missedHoldColors = ["#ececf0", "#dcdce2", "#cbcbd2", "#bdbdc5", "#b0b0b8", "#a4a4ad"];
+
 // Where each gradient sample sits along the hold (0 = start, 1 = end)
 const holdGradientStops = [0.006, 0.082, 0.25, 0.5, 0.75, 0.996];
 
@@ -169,6 +172,7 @@ export {
   holdGradients,
   holdGradientsActive,
   holdGradientStops,
+  missedHoldColors,
   paletteIndex,
   capColors,
   syncColors,

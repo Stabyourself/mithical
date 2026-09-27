@@ -177,7 +177,7 @@
           :progress-bar=false
           :judging=false
           :autoplay=false
-          :show-stats="true"
+          :show-stats=true
         />
       </div>
     </v-container>

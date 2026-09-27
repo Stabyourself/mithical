@@ -1,0 +1,335 @@
+<template>
+  <div v-if="showStats" ref="statsTop" class="stats">
+    <div class="stats-text">
+        {{`Total Notes: ${songTotalNotes.length}
+        Song BPM: ${songBpm}`}}
+    </div>
+  </div>
+  <div ref="container" class="playfield-canvas" :class="view" :style="{ aspectRatio: aspect }">
+    <canvas
+      ref="canvas"
+      :class="{ playing }"
+      @pointerdown="onPointerDown"
+      @pointermove="onPointerMove"
+      @pointerup="onPointerUp"
+      @pointercancel="onPointerUp"
+    ></canvas>
+    <!-- Text over the round view, always at full resolution -->
+    <canvas v-if="view === 'circle'" ref="textCanvas" class="text-layer"></canvas>
+
+    <!-- The previous chart keeps playing underneath until the new one is in -->
+    <div
+      class="playfield-status"
+      :class="{ visible: loading || loadError, error: loadError && !loading }"
+      role="status"
+      aria-live="polite"
+    >
+      <template v-if="loading">
+        <v-progress-circular indeterminate size="28" width="3"></v-progress-circular>
+        <span>Loading chart…</span>
+      </template>
+      <template v-else-if="loadError">
+        <v-icon>mdi-alert-circle-outline</v-icon>
+        <span>{{ loadError }}</span>
+      </template>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.playfield-canvas {
+  position: relative;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.circle canvas {
+  border-radius: 50%;
+}
+
+.text-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.unrolled canvas {
+  border-radius: 8px;
+}
+
+/* Swipes shouldn't scroll the page while playing */
+canvas.playing {
+  touch-action: none;
+}
+
+/* Loading and errors over the view. Fades in late so quick loads don't flash it */
+.playfield-status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+.playfield-status.visible {
+  opacity: 1;
+  transition-delay: 0.15s;
+}
+
+/* Errors stay up until the next load, dimmed less since the old chart keeps going */
+.playfield-status.error {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.circle .playfield-status {
+  border-radius: 50%;
+}
+
+.unrolled .playfield-status {
+  border-radius: 8px;
+}
+
+.stats {
+  width: min(100%, 10rem);
+  margin-left: auto;
+  white-space: pre-line;
+  padding: 5px 7px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  background: rgb(var(--v-theme-surface));
+  color: rgb(var(--v-theme-on-surface));
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+  font-variant-numeric: tabular-nums;
+
+  .stats-text {
+    font-size: .875rem;
+    font-weight: 700;
+    text-align:center;
+  }
+}
+</style>
+
+<script setup>
+import PlayfieldRenderer from "~/assets/wacca/playfield/PlayfieldRenderer.js";
+import UnrolledRenderer from "~/assets/wacca/playfield/UnrolledRenderer.js";
+
+// One view of a song from usePlayfieldSession. Several can share one song
+const props = defineProps({
+  // What usePlayfieldSession returned
+  controller: {
+    type: Object,
+    required: true,
+  },
+  // circle: the round screen like in game, unrolled: the same lanes flattened into a strip
+  view: {
+    type: String,
+    default: "circle",
+    validator: (value) => ["circle", "unrolled"].includes(value),
+  },
+  // Width / height
+  aspect: {
+    type: Number,
+    default: 1,
+  },
+  // Profile options by id
+  options: {
+    type: Object,
+    default: () => ({}),
+  },
+  // What the view shows, see the renderers' setFeatures
+  features: {
+    type: Object,
+    default: () => ({}),
+  },
+  // { title, difficulty (1-4), level } for the ring, null for the demo
+  chartInfo: {
+    type: Object,
+    default: null,
+  },
+});
+
+const { session, playing, loading, loadError, songTotalNotes, songBpm, showStats } = props.controller;
+const container = ref(null);
+const canvas = ref(null);
+const textCanvas = ref(null);
+
+let renderer = null;
+let removeView = null;
+let resizeObserver = null;
+let intersectionObserver = null;
+let onScreen = false;
+
+// Real pixel density (up to 3x) so it's sharp on high DPI, capped so fullscreen doesn't get too expensive
+const MAX_PIXEL_RATIO = 3;
+// Firefox can draw in its GPU process where lag doesn't show up in frame timing,
+// so it gets a lower cap
+const IS_FIREFOX = typeof navigator !== "undefined" && /firefox/i.test(navigator.userAgent);
+const MAX_CANVAS_SIZE = IS_FIREFOX ? 1400 : 2000;
+
+let cssWidth = 0;
+let cssHeight = 0;
+// Exact device pixel width, if the browser tells us
+let deviceWidth = 0;
+let pixelRatioQuery = null;
+
+function pixelRatio() {
+  return window.devicePixelRatio || 1;
+}
+
+// Canvas pixels per CSS pixel
+function canvasPixelRatio() {
+  // Match device pixels exactly so it doesn't get resampled,
+  // unless it disagrees with the pixel ratio (device emulation)
+  const estimated = cssWidth * pixelRatio();
+  const exact = deviceWidth && Math.abs(deviceWidth - estimated) <= 2 ? deviceWidth / cssWidth : pixelRatio();
+  return Math.min(exact, MAX_PIXEL_RATIO, MAX_CANVAS_SIZE / Math.max(cssWidth, cssHeight));
+}
+
+function applySize() {
+  if (!renderer || cssWidth === 0) return;
+
+  const ratio = canvasPixelRatio();
+  renderer.resize(Math.round(cssWidth * ratio), Math.round(cssHeight * ratio));
+  renderer.resizeText?.(Math.round(cssWidth * ratio));
+}
+
+// Re-render when moving to another screen or zooming
+function watchPixelRatio() {
+  pixelRatioQuery?.removeEventListener("change", onPixelRatioChange);
+  pixelRatioQuery = window.matchMedia(`(resolution: ${pixelRatio()}dppx)`);
+  pixelRatioQuery.addEventListener("change", onPixelRatioChange);
+}
+
+function onPixelRatioChange() {
+  applySize();
+  props.controller.updateLoop();
+  watchPixelRatio();
+}
+
+// What the frame loop in usePlayfieldSession calls
+const loopHooks = {
+  canDraw: () => renderer !== null && onScreen && cssWidth > 0,
+  draw() {
+    renderer.draw();
+  },
+};
+
+function canvasPoint(event) {
+  const rect = canvas.value.getBoundingClientRect();
+  return [
+    (event.clientX - rect.left) * (canvas.value.width / rect.width),
+    (event.clientY - rect.top) * (canvas.value.height / rect.height),
+  ];
+}
+
+// Easter egg: clicking a view lets you play it yourself
+function onPointerDown(event) {
+  if (!renderer) return;
+  // Clicking in means you want to play, so unpause
+  props.controller.play();
+  renderer.pointerDown(event.pointerId, ...canvasPoint(event));
+
+  // Keep getting moves when dragging off the canvas
+  try {
+    canvas.value.setPointerCapture(event.pointerId);
+  } catch {
+    // Pointer already gone
+  }
+}
+
+function onPointerMove(event) {
+  renderer?.pointerMove(event.pointerId, ...canvasPoint(event));
+}
+
+function onPointerUp(event) {
+  renderer?.pointerUp(event.pointerId);
+}
+
+watch(
+  () => props.options,
+  (options) => {
+    if (!renderer) return;
+    renderer.setOptions(options);
+    props.controller.updateLoop();
+  },
+  { deep: true },
+);
+
+watch(
+  () => props.features,
+  (features) => {
+    if (!renderer) return;
+    renderer.setFeatures(features);
+    props.controller.updateLoop();
+  },
+  { deep: true },
+);
+
+watch(
+  () => props.chartInfo,
+  (info) => {
+    if (!renderer) return;
+    renderer.setChartInfo(info);
+    props.controller.updateLoop();
+  },
+);
+
+onMounted(() => {
+  renderer =
+    props.view === "unrolled"
+      ? new UnrolledRenderer(canvas.value, session)
+      : new PlayfieldRenderer(canvas.value, session, textCanvas.value);
+  renderer.setOptions(props.options);
+  renderer.setFeatures(props.features);
+  renderer.setChartInfo(props.chartInfo);
+  // Redraw a paused view once the game font is in
+  renderer.fontsReady.then(() => renderer && props.controller.updateLoop());
+
+  resizeObserver = new ResizeObserver(([entry]) => {
+    cssWidth = entry.contentRect.width;
+    cssHeight = entry.contentRect.height;
+    deviceWidth = entry.devicePixelContentBoxSize?.[0]?.inlineSize ?? 0;
+    applySize();
+    props.controller.updateLoop();
+  });
+  try {
+    resizeObserver.observe(canvas.value, { box: "device-pixel-content-box" });
+  } catch {
+    // Not supported (Safari), fall back to CSS size × devicePixelRatio
+    resizeObserver.observe(canvas.value);
+  }
+  watchPixelRatio();
+
+  intersectionObserver = new IntersectionObserver(([entry]) => {
+    onScreen = entry.isIntersecting;
+    props.controller.updateLoop();
+  });
+  intersectionObserver.observe(container.value);
+
+  removeView = props.controller.addView(loopHooks);
+});
+
+onBeforeUnmount(() => {
+  removeView?.();
+  resizeObserver?.disconnect();
+  intersectionObserver?.disconnect();
+  pixelRatioQuery?.removeEventListener("change", onPixelRatioChange);
+  renderer?.destroy();
+  renderer = null;
+});
+</script>
