@@ -95,6 +95,8 @@ function parseMer(text) {
         pos,
         size,
         next: HOLD_START_IDS.has(id) || id === HOLD_POINT_ID ? Number(fields[8]) : null,
+        // Hold points with render flag 0 are hidden
+        hidden: fields[7] === "0",
       });
     }
   }
@@ -107,9 +109,13 @@ function parseMer(text) {
         point = objects.get(point.next);
         points.push(point);
       }
-      // Hidden points (render flag 0) still count. SaturnView skips them, but the game puts one
-      // per lane on fast sweeps so they come out curved instead of as straight chords
       points.sort((a, b) => a.tick - b.tick);
+      // Hidden points (render flag 0) are left out like SaturnView does, except the first and
+      // last. Official charts put one per lane on sweeps, those are on the path anyway (the
+      // renderers follow the circle between points). But some charts use them for other
+      // shapes, e.g. MEGA TSKR's ending snaps its holds back to their first shape between
+      // visible points, which only looks right without them
+      const shown = points.filter((point, i) => !point.hidden || i === 0 || i === points.length - 1);
 
       chart.notes.push({
         type: "hold",
@@ -118,7 +124,7 @@ function parseMer(text) {
         size: object.size,
         rNote: R_NOTE_IDS.has(object.id),
         bonus: false,
-        points: points.map(({ tick, pos, size }) => ({ tick, pos, size })),
+        points: shown.map(({ tick, pos, size }) => ({ tick, pos, size })),
       });
     } else if (NOTE_TYPES[object.id]) {
       chart.notes.push({
