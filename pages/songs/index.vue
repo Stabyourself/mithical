@@ -278,7 +278,7 @@
 
 // keep the filter rows as compact as they were in the old pop-up menu
 .song-filters {
-  max-width: 480px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -288,6 +288,7 @@
   justify-content: space-between;
   gap: 10px;
   width: 100%;
+  max-width: 1000px;
   font-weight: 700;
   text-transform: uppercase;
 
@@ -309,6 +310,8 @@
 
 .song-filter-row {
   .song-filter-buttons {
+    max-width: 480px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -318,6 +321,8 @@
 
   .song-filter-help {
     width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -334,11 +339,12 @@
   }
 
   .song-filter-range-slider {
+    max-width: 480px;
+    margin: 0 auto;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 7px 0;
 
     .v-slider {
       width: 100%;
@@ -641,6 +647,10 @@ const sortOptions = [
 ];
 
 const filters = ref([
+  {
+    type: "heading",
+    text: "Options"
+  },
   {
     type: "help",
     help: ["All", "No", "Yes"]
