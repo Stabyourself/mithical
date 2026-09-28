@@ -376,7 +376,6 @@ import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import waccaCategories from "~/assets/wacca/waccaCategories";
 import { getSongSlug, findSongBySlug } from "~/assets/wacca/songSlug.js";
 import { formatDifficulty } from "~/assets/js/util";
-import { getSongById } from "~/assets/wacca/getSongs.js";
 import { chartPath } from "~/assets/wacca/playfield/merChart.js";
 
 const profile = useState("profile");
@@ -563,14 +562,12 @@ const ogDescription = computed(() => {
 });
 
 const chartData = computed(() => {
-  const chartDataId = Number(song.value.id);
-  const chartDataSong = Number.isInteger(chartDataId) ? getSongById(song.value, chartDataId) : null;
-  const chartDataSheet = chartDataSong?.sheets[Number(chartView.value)];
+  const chartDataSheet = song.value.sheets[Number(chartView.value)];
   if (!chartDataSheet) return null;
   return {
-    url: chartPath(chartDataSong.id, Number(chartView.value)),
+    url: chartPath(song.value.id, Number(chartView.value)),
     info: {
-      title: chartDataSong.title,
+      title: song.value.title,
       difficulty: Number(chartView.value) + 1,
       level: String(formatDifficulty(chartDataSheet.difficulty, false)),
     },
