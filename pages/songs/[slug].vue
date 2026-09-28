@@ -156,11 +156,12 @@
           divided
           class="chartview-toggle"
         >
-          <v-btn value="0" size="small">Normal</v-btn>
-          <v-btn value="1" size="small">Hard</v-btn>
-          <v-btn value="2" size="small">Expert</v-btn>
-          <v-btn v-if="song.sheets.length > 3" value="3" size="small"
-            >Inferno</v-btn
+          <v-btn
+            v-for="(sheet, i) in filteredSheets"
+            :key="i"
+            :value="i"
+            size="small"
+            >{{ waccaDifficulties[i].name }}</v-btn
           >
         </v-btn-toggle>
       </h2>
@@ -427,7 +428,7 @@ const histograms = shallowRef([]);
 const histogramsLoading = ref(false);
 const histogramsLoadingError = ref();
 const histogramView = ref("distribution");
-const chartView = ref("0");
+const chartView = ref(0);
 const chartType = ref("circle");
 
 const playerHistory = shallowRef([]);
@@ -558,13 +559,13 @@ const ogDescription = computed(() => {
 });
 
 const chartData = computed(() => {
-  const chartDataSheet = song.value.sheets[Number(chartView.value)];
+  const chartDataSheet = filteredSheets.value[chartView.value];
   if (!chartDataSheet) return null;
   return {
-    url: chartPath(song.value.id, Number(chartView.value)),
+    url: chartPath(song.value.id, chartView.value),
     info: {
       title: song.value.title,
-      difficulty: Number(chartView.value) + 1,
+      difficulty: chartView.value + 1,
       level: String(formatDifficulty(chartDataSheet.difficulty, false)),
     },
   };
