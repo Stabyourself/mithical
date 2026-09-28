@@ -68,7 +68,7 @@ const NORMA = {
 // Letting go of a hold for longer than this drops it for good
 const HOLD_DROP_MS = 200;
 // Back to autoplay after this long without touching anything
-const PLAY_IDLE_MS = 6000;
+const PLAY_IDLE_MS = 3000;
 // Touch ring around the screen, lit like the cabinet, and the black margin between them.
 // Fractions of the canvas radius
 const RING_WIDTH = 0.13;

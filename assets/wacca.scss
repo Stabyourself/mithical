@@ -147,3 +147,15 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
+
+// Button toggles: only the picked (or hovered) option in its color, the
+// others a faint tint of the text color (light in light themes, dark in dark)
+.toggle-option {
+  font-weight: 700;
+  transition: background-color 0.2s;
+
+  &:not(.v-btn--active):not(:hover) {
+    background-color: rgba(var(--v-theme-on-surface), 0.1) !important;
+    color: rgba(var(--v-theme-on-surface), 0.75) !important;
+  }
+}

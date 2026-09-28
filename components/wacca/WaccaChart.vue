@@ -33,12 +33,20 @@
           v-model="xMode"
           mandatory
           density="compact"
-          variant="outlined"
           divided
           class="mode-toggle"
         >
-          <v-btn value="time" size="small">By date</v-btn>
-          <v-btn value="play" size="small">By play</v-btn>
+          <v-btn
+            v-for="mode in ['time', 'play']"
+            :key="mode"
+            :value="mode"
+            color="primary"
+            base-color="primary"
+            variant="flat"
+            size="small"
+            class="toggle-option"
+            >{{ mode == "time" ? "By date" : "By play" }}</v-btn
+          >
         </v-btn-toggle>
       </div>
     </div>

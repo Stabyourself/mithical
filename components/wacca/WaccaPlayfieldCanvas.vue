@@ -236,8 +236,12 @@ function canvasPoint(event) {
 // Easter egg: clicking a view lets you play it yourself
 function onPointerDown(event) {
   if (!renderer) return;
-  // Clicking in means you want to play, so unpause
-  props.controller.play();
+  // Clicking a paused view only starts it, so the bot keeps playing. Clicking
+  // again once it runs is what takes over
+  if (props.controller.paused.value) {
+    props.controller.play();
+    return;
+  }
   renderer.pointerDown(event.pointerId, ...canvasPoint(event));
 
   // Keep getting moves when dragging off the canvas

@@ -72,6 +72,148 @@
     </v-container>
 
     <v-container class="elevation-1 mt-4">
+      <h2 class="container-heading chartview-heading">
+        Chart View
+
+        <div class="chartview-controls">
+          <v-btn-toggle
+            v-model="chartView"
+            mandatory
+            density="compact"
+            divided
+            class="chartview-toggle chartview-difficulties"
+          >
+            <v-btn
+              v-for="(difficulty, i) in chartDifficulties"
+              :key="i"
+              :value="i"
+              :color="difficulty.color"
+              :base-color="difficulty.color"
+              variant="flat"
+              size="small"
+              class="toggle-option chartview-difficulty"
+              >{{ difficulty.name
+              }}<span class="chartview-level"
+                ><span class="chartview-level-prefix">/Lv.</span
+                >{{ difficulty.level }}</span
+              ></v-btn
+            >
+          </v-btn-toggle>
+
+          <v-btn-toggle
+            v-model="chartType"
+            mandatory
+            density="compact"
+            divided
+            class="chartview-toggle"
+          >
+            <v-btn
+              v-for="type in ['circle', 'unrolled']"
+              :key="type"
+              :value="type"
+              color="primary"
+              base-color="primary"
+              variant="flat"
+              size="small"
+              class="toggle-option"
+              >{{ type == "circle" ? "3D" : "2D" }}</v-btn
+            >
+          </v-btn-toggle>
+
+          <v-btn-toggle
+            v-model="chartOptionsOpen"
+            density="compact"
+            class="chartview-toggle"
+          >
+            <v-btn
+              :value="true"
+              color="primary"
+              base-color="primary"
+              variant="flat"
+              size="small"
+              class="toggle-option"
+              aria-label="Chart view options"
+              title="Options"
+            >
+              <v-icon>mdi-cog</v-icon>
+            </v-btn>
+          </v-btn-toggle>
+        </div>
+      </h2>
+
+      <Collapse :when="!!chartOptionsOpen">
+        <div class="chartview-options">
+          <div class="chartview-options-row">
+            <span class="chartview-options-label">Show</span>
+            <v-btn-toggle
+              v-model="shownFeatures"
+              multiple
+              density="compact"
+              divided
+              class="chartview-toggle"
+            >
+              <v-btn
+                v-for="toggle in CHART_TOGGLES"
+                :key="toggle.key"
+                :value="toggle.key"
+                :title="toggle.title"
+                color="primary"
+                base-color="primary"
+                variant="flat"
+                size="small"
+                class="toggle-option"
+                >{{ toggle.label }}</v-btn
+              >
+            </v-btn-toggle>
+          </div>
+
+          <div class="chartview-options-row">
+            <span class="chartview-options-label">Bot</span>
+            <v-btn-toggle
+              v-model="chartFeatures.bot"
+              mandatory
+              density="compact"
+              divided
+              class="chartview-toggle"
+            >
+              <v-btn
+                v-for="skill in BOT_SKILLS"
+                :key="skill.value"
+                :value="skill.value"
+                :title="skill.description"
+                color="primary"
+                base-color="primary"
+                variant="flat"
+                size="small"
+                class="toggle-option"
+                >{{ skill.title }}</v-btn
+              >
+            </v-btn-toggle>
+          </div>
+        </div>
+      </Collapse>
+
+      <div class="chart-preview">
+        <WaccaPlayfieldPreview
+          :view="chartType"
+          :options="profile.options"
+          :chart-url="chartData?.url ?? null"
+          :chart-info="chartData?.info ?? null"
+          :ring="chartFeatures.ring"
+          :song-count="chartFeatures.songCount"
+          :score="chartFeatures.score"
+          :progress-bar="chartFeatures.progressBar"
+          :judging="chartFeatures.judging"
+          :autoplay="chartFeatures.bot != 'none'"
+          :bot-skill="
+            chartFeatures.bot == 'none' ? undefined : chartFeatures.bot
+          "
+          start-paused
+        />
+      </div>
+    </v-container>
+
+    <v-container class="elevation-1 mt-4">
       <h2 class="container-heading">Your scores</h2>
 
       <WaccaSongSheets :song="song" :player-data="profile.songs[song.id]" />
@@ -104,12 +246,20 @@
           v-model="histogramView"
           mandatory
           density="compact"
-          variant="outlined"
           divided
           class="histogram-toggle"
         >
-          <v-btn value="distribution" size="small">Distribution</v-btn>
-          <v-btn value="cumulative" size="small">Cumulative</v-btn>
+          <v-btn
+            v-for="view in ['distribution', 'cumulative']"
+            :key="view"
+            :value="view"
+            color="primary"
+            base-color="primary"
+            variant="flat"
+            size="small"
+            class="toggle-option"
+            >{{ view == "distribution" ? "Distribution" : "Cumulative" }}</v-btn
+          >
         </v-btn-toggle>
       </h2>
       <div v-if="histogramsLoading" class="d-flex justify-center">
@@ -141,61 +291,6 @@
             "
           />
         </div>
-      </div>
-    </v-container>
-
-    <v-container class="elevation-1 mt-4">
-      <h2 class="container-heading chartview-heading">
-        Chart View
-
-        <div class="chartview-controls">
-          <v-btn-toggle
-            v-model="chartView"
-            mandatory
-            density="compact"
-            divided
-            class="chartview-toggle"
-          >
-            <v-btn
-              v-for="(difficulty, i) in chartDifficulties"
-              :key="i"
-              :value="i"
-              :color="difficulty.color"
-              :base-color="difficulty.color"
-              variant="flat"
-              size="small"
-              class="chartview-difficulty"
-              >{{ difficulty.name }}/Lv.{{ difficulty.level }}</v-btn
-            >
-          </v-btn-toggle>
-
-          <v-btn-toggle
-            v-model="chartType"
-            mandatory
-            density="compact"
-            variant="outlined"
-            divided
-            class="chartview-toggle"
-          >
-            <v-btn value="circle" size="small">3D</v-btn>
-            <v-btn value="unrolled" size="small">2D</v-btn>
-          </v-btn-toggle>
-        </div>
-      </h2>
-      <div class="chart-preview">
-        <WaccaPlayfieldPreview
-          :view="chartType"
-          :options="profile.options"
-          :chart-url="chartData?.url ?? null"
-          :chart-info="chartData?.info ?? null"
-          :ring="false"
-          :song-count="false"
-          :score="false"
-          :progress-bar="false"
-          :judging="false"
-          :autoplay="false"
-          start-paused
-        />
       </div>
     </v-container>
 
@@ -335,12 +430,26 @@
   }
 }
 
-// Every difficulty in its color, the ones not picked faded
-.chartview-difficulty {
-  font-weight: 700;
+// On phones four difficulties don't fit as "INFERNO/Lv.13+", so they show as
+// "INFERNO 13+" (the level light like on the difficulty pills) across the
+// whole width
+@media (max-width: 600px) {
+  .chartview-difficulties {
+    width: 100%;
+  }
 
-  &:not(.v-btn--active) {
-    opacity: 0.45;
+  .chartview-difficulty {
+    flex: 1 1 auto;
+    padding: 0 6px !important;
+  }
+
+  .chartview-level {
+    margin-left: 4px;
+    font-weight: 400;
+  }
+
+  .chartview-level-prefix {
+    display: none;
   }
 }
 
@@ -349,6 +458,47 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+// Chart view options: one row per group under the heading's controls, lined
+// up on the right like them
+.chartview-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 0 10px 6px;
+
+  // the heading's controls wrap to the left on phones, so follow them
+  @media (max-width: 600px) {
+    align-items: flex-start;
+  }
+}
+
+.chartview-options-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  // labels above the groups on phones, the Bot group needs the whole width
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}
+
+// same width for both, so the groups line up
+.chartview-options-label {
+  min-width: 2.5em;
+  text-align: right;
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.7;
+
+  @media (max-width: 600px) {
+    min-width: 0;
+  }
 }
 
 .chart-preview {
@@ -376,6 +526,7 @@ import waccaCategories from "~/assets/wacca/waccaCategories";
 import { getSongSlug, findSongBySlug } from "~/assets/wacca/songSlug.js";
 import { formatDifficulty } from "~/assets/js/util";
 import { chartPath } from "~/assets/wacca/playfield/merChart.js";
+import { Collapse } from "vue-collapsed";
 
 const profile = useState("profile");
 definePageMeta({
@@ -458,6 +609,58 @@ watch(
   () => (chartView.value = startDifficulty.value)
 );
 const chartType = ref("circle");
+
+// Chart view options: what the preview shows and whether a bot plays
+const chartOptionsOpen = ref();
+const CHART_TOGGLES = [
+  {
+    key: "judging",
+    label: "Judging",
+    title: "Ratings, misses and dropped holds. Off, unhit notes just pass by"
+  },
+  {
+    key: "ring",
+    label: "Ring",
+    title:
+      "The console's LED ring around the view. Off, the lanes fill the space"
+  },
+  { key: "songCount", label: "Song no.", title: '"1/3 Song" on the ring' },
+  { key: "score", label: "Score", title: "The score on the ring" },
+  {
+    key: "progressBar",
+    label: "Gauge",
+    title: "The clear gauge in the round view"
+  }
+];
+// Named after the worst judgement the bot gets. Off leaves the playing to you
+const BOT_SKILLS = [
+  {
+    title: "Off",
+    value: "none",
+    description: "No bot, the playing is up to you"
+  },
+  {
+    title: "All Marvelous",
+    value: "all-marvelous",
+    description: "Hits everything perfectly"
+  },
+  { title: "Great+", value: "great-up", description: "Greats at worst" },
+  { title: "Good+", value: "good-up", description: "Goods at worst" },
+  { title: "Miss+", value: "miss-up", description: "Misses now and then" }
+];
+// Remembered for every song, see plugins/preferences.js
+const chartFeatures = useState("chartViewFeatures");
+// The Show toggles as the list of what's on, for the button group
+const shownFeatures = computed({
+  get: () =>
+    CHART_TOGGLES.map(({ key }) => key).filter(
+      (key) => chartFeatures.value[key]
+    ),
+  set: (keys) =>
+    CHART_TOGGLES.forEach(({ key }) => {
+      chartFeatures.value[key] = keys.includes(key);
+    })
+});
 
 const playerHistory = shallowRef([]);
 
