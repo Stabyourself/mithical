@@ -172,7 +172,7 @@
           density="compact"
           variant="outlined"
           divided
-          class="charttype-toggle"
+          class="chartview-toggle"
         >
           <v-btn value="circle" size="small">3D</v-btn>
           <v-btn value="unrolled" size="small">2D</v-btn>
@@ -180,7 +180,7 @@
       </div>
       <div class="chart-preview">
         <WaccaPlayfieldPreview
-          :view="chartRender"
+          :view="chartType"
           :options="profile.options"
           :chart-url="chartData?.url ?? null"
           :chart-info="chartData?.info ?? null"
@@ -215,10 +215,6 @@
 
 .container-heading {
   padding: 5px 10px;
-}
-
-.view-heading {
-  padding: 0px 10px;
 }
 
 .single-song {
@@ -333,22 +329,6 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-}
-
-.charttype-heading {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.charttype-toggle {
-  height: 30px !important;
-  margin-left: auto;
-  .v-btn {
-    text-transform: none;
-    letter-spacing: normal;
-  }
 }
 
 .chart-preview {
@@ -572,9 +552,6 @@ const chartData = computed(() => {
   };
 });
 
-const chartRender = computed(() => {
-  return chartType.value;
-});
 useSeoMeta({
   title: `Mithical | ${getTitle.value}`,
   ogTitle: `Mithical | ${getTitle.value}`,
