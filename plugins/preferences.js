@@ -31,6 +31,8 @@ export default defineNuxtPlugin({
       }
       return {
         judging: false,
+        // Your profile's options instead of the defaults
+        userOptions: true,
         ring: false,
         songCount: false,
         score: false,

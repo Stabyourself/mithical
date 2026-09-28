@@ -20,6 +20,12 @@
       class="text-layer"
     ></canvas>
 
+    <!-- Started paused: say what a click does. Clicks go through to the canvas, which starts it -->
+    <div v-if="waitingToStart && !loading" class="playfield-hint" aria-hidden="true">
+      <span class="hint-click">Click to play</span>
+      <span class="hint-tap">Tap to play</span>
+    </div>
+
     <!-- The previous chart keeps playing underneath until the new one is in -->
     <div
       class="playfield-status"
@@ -74,6 +80,81 @@ canvas {
 /* Swipes shouldn't scroll the page while playing */
 canvas.playing {
   touch-action: none;
+}
+
+/* Click to play: Expert pink in the game's judgement font, with a shine of slashes sweeping across now and then */
+.playfield-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  /* Text sized to the view. On the overlay, which the view sizes, not on the view itself */
+  container-type: inline-size;
+}
+
+.playfield-hint span {
+  font-family: "judgement_font", sans-serif;
+  font-size: clamp(22px, 9cqi, 56px);
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  /* The Expert difficulty color (plugins/vuetify.ts), with a white shine over it: a band of
+     slashes of different widths on a layer three times as wide as the text, starting off to the
+     right, and sliding over to off the left */
+  background:
+    linear-gradient(
+        115deg,
+        transparent 0 40%,
+        #fff 40% 41.5%,
+        transparent 41.5% 43%,
+        #fff 43% 46.5%,
+        transparent 46.5% 48%,
+        #fff 48% 48.6%,
+        transparent 48.6% 50.5%,
+        #fff 50.5% 52.5%,
+        transparent 52.5%
+      )
+      0 0 / 300% 100% no-repeat,
+    rgb(var(--v-theme-difficulty-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* Just enough to read it on bright notes */
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.7));
+  animation: hint-shine 7s ease-in-out infinite;
+}
+
+/* Tap on touch screens */
+.hint-tap {
+  display: none;
+}
+
+@media (hover: none) {
+  .hint-click {
+    display: none;
+  }
+
+  .hint-tap {
+    display: inline;
+  }
+}
+
+/* Sweep right to left (~2.5s), then rest until the next one */
+@keyframes hint-shine {
+  0% {
+    background-position: 0% 0;
+  }
+  35%,
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playfield-hint span {
+    animation: none;
+  }
 }
 
 /* Loading and errors over the view. Fades in late so quick loads don't flash it */
@@ -151,7 +232,7 @@ const props = defineProps({
   }
 });
 
-const { session, playing, loading, loadError } = props.controller;
+const { session, playing, loading, loadError, waitingToStart } = props.controller;
 const container = ref(null);
 const canvas = ref(null);
 const textCanvas = ref(null);
