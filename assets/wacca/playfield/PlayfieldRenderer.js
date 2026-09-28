@@ -1056,11 +1056,12 @@ export default class PlayfieldRenderer {
     this.drawJudgementLine(now);
     // Outside the line the beam is solid white over the line's glow, like in game
     if (settings.keyBeam) this.drawKeyBeams(now, this.judgementLineEdge);
+    if (this.features.ring) this.drawRing(now);
+    // Hit effects over the ring, so it doesn't cut off the parts that reach past the line
     this.drawBonusSweeps(now);
     this.drawTouchEffects(now);
     this.drawInterface();
     if (!this.text) this.drawJudgement(now);
-    if (this.features.ring) this.drawRing(now);
     if (this.text) this.drawText(now);
   }
 
