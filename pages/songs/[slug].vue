@@ -148,26 +148,24 @@
             :key="group.label"
             class="chartview-options-row"
           >
-            <span class="chartview-options-label">{{ group.label }}</span>
+            <span class="chartview-options-label">Judgements</span>
             <v-btn-toggle
-              :model-value="enabledToggles(group)"
-              multiple
+              v-model="chartJudgements"
+              mandatory
               density="compact"
               divided
               class="chartview-toggle"
-              @update:model-value="(keys) => setEnabledToggles(group, keys)"
             >
               <v-btn
-                v-for="toggle in group.toggles"
-                :key="toggle.key"
-                :value="toggle.key"
-                :title="toggle.title"
+                v-for="type in ['on', 'off']"
+                :key="type"
+                :value="type"
                 color="primary"
                 base-color="primary"
                 variant="flat"
                 size="small"
                 class="toggle-option"
-                >{{ toggle.label }}</v-btn
+                >{{ type == "on" ? "On" : "Off" }}</v-btn
               >
             </v-btn-toggle>
           </div>
@@ -197,9 +195,9 @@
           </div>
 
           <div class="chartview-options-row">
-            <span class="chartview-options-label">Cosmetics</span>
+            <span class="chartview-options-label">Display Settings</span>
             <v-btn-toggle
-              v-model="chartCosmetics"
+              v-model="chartDisplaySettings"
               mandatory
               density="compact"
               divided
@@ -248,7 +246,7 @@
           :song-count="chartFeatures.songCount"
           :score="chartFeatures.score"
           :progress-bar="chartFeatures.progressBar"
-          :judging="chartFeatures.judging"
+          :judging="judging"
           :autoplay="chartFeatures.bot != 'none'"
           :bot-skill="
             chartFeatures.bot == 'none' ? undefined : chartFeatures.bot
@@ -683,22 +681,15 @@ watch(
   () => (chartView.value = startDifficulty.value)
 );
 const chartType = ref("circle");
-const chartCosmetics = ref("userColor");
+const chartDisplaySettings = ref("userColor");
+const chartJudgements = ref("off");
 
+const judging = computed(() => {
+  return chartJudgements.value === "on";
+});
 // Chart view options: what the preview shows and whether a bot plays
 const chartOptionsOpen = ref();
 const CHART_TOGGLE_GROUPS = [
-  {
-    label: "Play",
-    toggles: [
-      {
-        key: "judging",
-        label: "Judging",
-        title:
-          "Ratings, misses and dropped holds. Off, unhit notes just pass by"
-      },
-    ]
-  },
   {
     label: "Show",
     toggles: [
@@ -901,7 +892,7 @@ const noteSpeed = ref(profile.value?.options?.[1]);
 
 // Checks which option is picked and updates the note speed bar accodringly
 watch(
-  [chartCosmetics, () => profile.value?.options?.[1]],
+  [chartDisplaySettings, () => profile.value?.options?.[1]],
   ([option, speed]) => {
     noteSpeed.value = option === "defaultColor" ? 5 : speed;
   },
@@ -910,19 +901,18 @@ watch(
 
 // Sets the cosmetic display options, respects scroll speed changes after first set
 const options = computed(() => {
-  if (chartCosmetics.value === "defaultColor"){
+  if (chartDisplaySettings.value === "defaultColor"){
     return { 
       ...{}, 
       1: noteSpeed.value,
     };
   }
-  if (chartCosmetics.value === "userColor"){
+  if (chartDisplaySettings.value === "userColor"){
     return { 
       ...profile.value?.options, 
       1: noteSpeed.value,
     };
   }
-
 });
 
 // Like in game (and on the settings page): option 0-50 shows as ×1.0 to ×6.0
