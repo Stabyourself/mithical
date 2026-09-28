@@ -17,7 +17,7 @@ import {
   syncColors,
 } from "./noteColors.js";
 import { RING_ROWS, clamp, mod60, ringLayout } from "./PlayfieldSession.js";
-import { resolveSettings } from "./PlayfieldRenderer.js";
+import { resolveSettings, DIFFICULTY_LABELS, FONT, TITLE_COLOR } from "./PlayfieldRenderer.js";
 
 // Lane in the first column: lane 15 starts at 12 o'clock, lanes count counterclockwise from there
 const CUT = 15;
@@ -31,6 +31,9 @@ const NOTE_HEIGHTS = [4, 5.5, 7, 8.5, 10];
 const NOTE_INSET = 0.3;
 const JUDGEMENT_LINE_COLORS = ["#f11a9b", "#bd01fa"];
 const BACKGROUND = ["#1d1450", "#0a0818"];
+// Song info in the top right, in units
+const INFO_MARGIN = 8;
+const INFO_SIZE = 15;
 const LINE_FLASH_MS = 150;
 const HIT_FLASH_MS = 180;
 
@@ -45,7 +48,13 @@ export default class UnrolledRenderer {
     this.session = session;
     this.settings = resolveSettings({});
     this.setFeatures({});
-    this.fontsReady = document.fonts?.ready?.catch(() => {}) ?? Promise.resolve();
+    this.setChartInfo(null);
+    // Canvas text doesn't redraw by itself once the font arrives, so rebuild the info then
+    this.fontsReady = Promise.resolve(document.fonts?.load(`40px ${FONT}`))
+      .catch(() => {})
+      .then(() => {
+        this.infoKey = null;
+      });
 
     this.lineFlash = new Float64Array(60).fill(-Infinity);
     this.hitFlashes = [];
@@ -54,6 +63,8 @@ export default class UnrolledRenderer {
     // Background, guidelines and the idle ring, see updateStaticLayer
     this.staticLayer = document.createElement("canvas");
     this.staticKey = null;
+    // Song title and difficulty, see updateInfoLayer
+    this.infoLayer = document.createElement("canvas");
     this.ringLit = new Uint8Array(60);
     this.resize(canvas.width || 1, canvas.height || 1);
     this.unsubscribe = session.subscribe((type, detail) => this.onSessionEvent(type, detail));
@@ -97,8 +108,11 @@ export default class UnrolledRenderer {
     if (this.width) this.layout();
   }
 
-  // Song title and difficulty, nothing to show them on here
-  setChartInfo() {}
+  // { title, difficulty (1-4), level }, null shows nothing
+  setChartInfo(info) {
+    this.chartInfo = info;
+    this.infoKey = null;
+  }
 
   resize(width, height = width) {
     const w = Math.max(1, Math.round(width));
@@ -110,8 +124,7 @@ export default class UnrolledRenderer {
     this.layout();
   }
 
-  // Where the line and the ring rows go. Without the ring the lanes take the space, and
-  // touches under the line still pick rows as if it was there
+  // Where the line and the ring rows go. Without the ring the lanes take the space
   layout() {
     const { width: w, height: h } = this;
     this.unit = Math.min(w, h) / 500;
@@ -178,7 +191,13 @@ export default class UnrolledRenderer {
     if (y <= this.lineY) radius = (y / this.lineY) * Rj;
     else if (y <= this.ringTop) radius = Rj + ((y - this.lineY) / (this.ringTop - this.lineY)) * (ringInner - Rj);
     else radius = ringInner + ((y - this.ringTop) / (this.ringBottom - this.ringTop)) * (ringOuter - ringInner);
-    const row = clamp(Math.floor((y - this.ringTop) / rowHeight), 0, RING_ROWS - 1);
+    // Above the ring (or anywhere without it) the whole area splits evenly into the rows,
+    // top is the innermost. On the ring it's the row you're on
+    const top = this.features.ring ? this.ringTop : this.height;
+    const row =
+      y < top
+        ? clamp(Math.floor((y / top) * RING_ROWS), 0, RING_ROWS - 1)
+        : clamp(Math.floor((y - this.ringTop) / rowHeight), 0, RING_ROWS - 1);
     return [lane, radius / R, row];
   }
 
@@ -208,6 +227,9 @@ export default class UnrolledRenderer {
     // Static layer is opaque, so this is a plain copy
     this.updateStaticLayer();
     ctx.drawImage(this.staticLayer, 0, 0);
+    // Under everything that moves, so notes pass over it
+    this.updateInfoLayer();
+    ctx.drawImage(this.infoLayer, 0, 0);
     if (settings.keyBeam) this.drawKeyBeams();
 
     this.visible = session.visibleObjects(settings.viewDistance, { barlines: settings.barlines, linear: features.linear });
@@ -259,6 +281,42 @@ export default class UnrolledRenderer {
     this.drawBackground(ctx);
     this.drawGuidelines(ctx);
     if (features.ring) this.drawIdleRing(ctx);
+  }
+
+  // Difficulty and song title turned 90° clockwise in the top right, like on a spine:
+  // the difficulty on the outside, the title next to it. Both stop above the line
+  updateInfoLayer() {
+    const { width, height, unit, lineY, chartInfo } = this;
+    const key = this.infoKey;
+    if (key && key.width === width && key.height === height && key.lineY === lineY) return;
+    this.infoKey = { width, height, lineY };
+
+    const layer = this.infoLayer;
+    if (layer.width !== width) layer.width = width;
+    if (layer.height !== height) layer.height = height;
+    const ctx = layer.getContext("2d");
+    ctx.clearRect(0, 0, width, height);
+    if (!chartInfo) return;
+
+    const label = DIFFICULTY_LABELS[chartInfo.difficulty] ?? DIFFICULTY_LABELS[3];
+    const margin = INFO_MARGIN * unit;
+    const size = INFO_SIZE * unit;
+    // Long titles get squeezed to fit
+    const length = lineY - 2 * margin;
+
+    ctx.save();
+    // Turned clockwise, lines run down the screen and stack leftwards
+    ctx.translate(width - margin, margin);
+    ctx.rotate(Math.PI / 2);
+    ctx.textBaseline = "top";
+    ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+    ctx.shadowBlur = 3 * unit;
+    ctx.font = `${size}px ${FONT}`;
+    ctx.fillStyle = label.color;
+    ctx.fillText(`${label.name}/Lv.${chartInfo.level}`, 0, 0, length);
+    ctx.fillStyle = TITLE_COLOR;
+    ctx.fillText(chartInfo.title, 0, size * 1.25, length);
+    ctx.restore();
   }
 
   drawBackground(ctx) {

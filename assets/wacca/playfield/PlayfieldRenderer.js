@@ -185,6 +185,9 @@ const POP_DEFAULT = 312001;
 const POP_BUBBLE = 312002;
 const BUBBLE_LIFE_MS = 460;
 
+// Song title on the ring, the unrolled view uses it too
+export const TITLE_COLOR = "#f567b9";
+
 // Ring text, measured off an in-game screenshot. Sizes and radii are in Rj,
 // radii are where the baseline sits, angles are where the text starts (or its center)
 // Pitch is a fixed cell width per char, the game lays these out monospaced
@@ -202,11 +205,11 @@ const RING_TEXT = {
     dotPitch: 0.0234,
     digitSize: 0.0543,
   },
-  title: { angle: -49.6, end: -5, size: 0.042, pitch: 0.041, color: "#f567b9" },
+  title: { angle: -49.6, end: -5, size: 0.042, pitch: 0.041, color: TITLE_COLOR },
 };
 
 // Ring colors per difficulty (1-4). Normal is measured off a screenshot, the rest are guesses
-const DIFFICULTY_LABELS = {
+export const DIFFICULTY_LABELS = {
   1: { name: "NORMAL", color: "#2775f6" },
   2: { name: "HARD", color: "#f2b51c" },
   3: { name: "EXPERT", color: "#e01864" },
@@ -226,7 +229,7 @@ const SONG_TITLES = [
 ];
 
 // See wacca.scss
-const FONT = '"ring_font", "Roboto", "Helvetica Neue", Arial, sans-serif';
+export const FONT = '"ring_font", "Roboto", "Helvetica Neue", Arial, sans-serif';
 
 function perspective(x) {
   x = Math.min(1.316, x);
