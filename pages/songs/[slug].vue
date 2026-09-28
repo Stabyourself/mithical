@@ -190,6 +190,7 @@
           :progress-bar=false
           :judging=false
           :autoplay=false
+          start-paused
         />
       </div>
     </v-container>

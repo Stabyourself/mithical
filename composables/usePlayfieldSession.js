@@ -5,17 +5,24 @@
 //   chartUrl: getter for the MER chart to play, fetched from public/
 //   options: getter for profile options by id (mirror and judgement timing matter here)
 //   features: getter for { autoplay, judging, botSkill }, see PlayfieldSession.setFeatures
+//   startPaused: start paused instead of playing right away
 import PlayfieldSession from "~/assets/wacca/playfield/PlayfieldSession.js";
 
 // Playback speed, for looking at things in slow motion
 const SPEEDS = [0.1, 0.5, 1, 2];
 
-export function usePlayfieldSession({ chartUrl = () => null, options = () => ({}), features = () => ({}) } = {}) {
+export function usePlayfieldSession({
+  chartUrl = () => null,
+  options = () => ({}),
+  features = () => ({}),
+  startPaused = false,
+} = {}) {
   const session = new PlayfieldSession();
 
-  // Start paused for reduced motion
+  // Start paused when asked to, or for reduced motion
   const paused = ref(
-    typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
+    startPaused ||
+      (typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches),
   );
   // Someone clicked in and is playing instead of the bot
   const playing = ref(false);
@@ -143,9 +150,6 @@ export function usePlayfieldSession({ chartUrl = () => null, options = () => ({}
 
   async function loadChart(url) {
     if (!url) return;
-    if(!url.includes("demo")){
-      paused.value = true;
-    }
     const request = ++chartRequest;
     loading.value = true;
     loadError.value = null;

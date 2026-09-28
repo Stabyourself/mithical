@@ -91,6 +91,11 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  // Wait for play instead of starting right away
+  startPaused: {
+    type: Boolean,
+    default: false,
+  },
   // Bot plays when nobody else is
   autoplay: {
     type: Boolean,
@@ -142,6 +147,7 @@ const controller = usePlayfieldSession({
   chartUrl: () => props.chartUrl,
   options: () => props.options,
   features: () => features.value,
+  startPaused: props.startPaused,
 });
 
 const expanded = useLightbox();
