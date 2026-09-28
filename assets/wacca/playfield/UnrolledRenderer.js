@@ -9,8 +9,7 @@
 
 import {
   palettes,
-  holdGradients,
-  holdGradientsActive,
+  holdColorsAt,
   holdGradientStops,
   missedHoldColors,
   capColors,
@@ -406,7 +405,7 @@ export default class UnrolledRenderer {
     }
   }
 
-  drawHold({ note, base, missed, held }, now) {
+  drawHold({ note, base, missed, active }, now) {
     const { ctx, session, settings, features, laneWidth, width } = this;
     const view = settings.viewDistance;
     const linear = features.linear;
@@ -469,7 +468,7 @@ export default class UnrolledRenderer {
     path.closePath();
 
     // Color runs along the hold, start to end
-    const colors = missed ? missedHoldColors : (held ? holdGradientsActive : holdGradients)[settings.colors.hold];
+    const colors = missed ? missedHoldColors : holdColorsAt(settings.colors.hold, active);
     const top = yAt(Math.min(endTime, to));
     const bottom = yAt(startTime);
     if (bottom - top > 1) {

@@ -56,6 +56,8 @@ const SWIPE_MS = 200;
 export const PAST_LINE = 1.03;
 // Notes keep going further so their arrows scroll out under the mask instead of popping
 export const NOTE_PAST_LINE = 1.1;
+// Without judging, holds take on their held colors this fast once they reach the line
+const HOLD_ACTIVE_FADE_MS = 100;
 
 export function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
@@ -962,7 +964,13 @@ export default class PlayfieldSession {
         if (note.type === "hold") {
           if (progressOf(note.points.at(-1)) > PAST_LINE || progressOf(note) < 0) continue;
           const held = this.activeHolds.some((hold) => hold.key === key && hold.held);
-          out.holds.push({ note, base, missed: this.missedHolds.has(key), held });
+          // How held it looks, 0-1. With nobody judging, as if held once it reaches the line
+          const active = held
+            ? 1
+            : this.isJudging()
+              ? 0
+              : clamp((now - (base + note.time)) / HOLD_ACTIVE_FADE_MS, 0, 1);
+          out.holds.push({ note, base, missed: this.missedHolds.has(key), held, active });
         }
 
         // Hit notes are gone. The rest keep going until they've scrolled past the line, notes

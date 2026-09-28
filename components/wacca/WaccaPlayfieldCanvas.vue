@@ -297,6 +297,14 @@ onMounted(() => {
   });
   intersectionObserver.observe(container.value);
 
+  // The observers only report after the first paint, which would show a blank canvas for a
+  // frame (switching views flashes). Measure now so adding the view draws before that
+  const rect = canvas.value.getBoundingClientRect();
+  cssWidth = rect.width;
+  cssHeight = rect.height;
+  onScreen = rect.bottom > 0 && rect.top < window.innerHeight;
+  applySize();
+
   removeView = props.controller.addView(loopHooks);
 });
 

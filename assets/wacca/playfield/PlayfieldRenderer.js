@@ -11,8 +11,7 @@
 
 import {
   palettes,
-  holdGradients,
-  holdGradientsActive,
+  holdColorsAt,
   holdGradientStops,
   missedHoldColors,
   paletteIndex,
@@ -1047,7 +1046,7 @@ export default class PlayfieldRenderer {
     ctx.beginPath();
     ctx.arc(this.cx, this.cy, this.Rj, 0, Math.PI * 2);
     ctx.clip();
-    for (const hold of this.visible.holds) this.drawHoldSurface(hold.note, hold.base, now, hold.missed, hold.held);
+    for (const hold of this.visible.holds) this.drawHoldSurface(hold.note, hold.base, now, hold.missed, hold.active);
     this.drawObjects();
     ctx.restore();
     // Measure lines aren't cut off, they go under the judgement line out to the edge
@@ -2034,7 +2033,7 @@ export default class PlayfieldRenderer {
     ctx.restore();
   }
 
-  drawHoldSurface(note, base, now, missed, held) {
+  drawHoldSurface(note, base, now, missed, active) {
     const { ctx, cx, cy, Rj, R, settings } = this;
     const view = settings.viewDistance;
     const startTime = base + note.time;
@@ -2085,11 +2084,9 @@ export default class PlayfieldRenderer {
     this.arc(ctx, edgeA[0][0], edgeB[0][1], edgeA[0][1] - edgeB[0][1]);
     ctx.closePath();
 
-    // Color runs along the hold, radial gradient maps it onto the screen
-    // Active colors only while someone's actually holding it
-    const colors = missed
-      ? missedHoldColors
-      : (held ? holdGradientsActive : holdGradients)[settings.colors.hold];
+    // Color runs along the hold, radial gradient maps it onto the screen.
+    // Active colors while it's held, see PlayfieldSession.visibleObjects
+    const colors = missed ? missedHoldColors : holdColorsAt(settings.colors.hold, active);
     const duration = endTime - startTime;
     const inner = radiusAt(endTime);
     const outer = Math.min(radiusAt(startTime), R * 1.2);

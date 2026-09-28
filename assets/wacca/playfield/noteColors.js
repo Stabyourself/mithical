@@ -166,8 +166,38 @@ function ledColor([r, g, b]) {
   return [r, g, b].map((value) => Math.round(value * scale));
 }
 
+// Hold colors partway from normal (0) to held (1). In steps, so they can be cached
+const HOLD_MIX_STEPS = 32;
+const holdMixes = new Map();
+
+function mixHex(from, to, amount) {
+  const channel = (hex, i) => parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16);
+  let out = "#";
+  for (let i = 0; i < 3; i++) {
+    const value = Math.round(channel(from, i) + (channel(to, i) - channel(from, i)) * amount);
+    out += value.toString(16).padStart(2, "0");
+  }
+  return out;
+}
+
+function holdColorsAt(index, active) {
+  if (active <= 0) return holdGradients[index];
+  if (active >= 1) return holdGradientsActive[index];
+  const step = Math.round(active * HOLD_MIX_STEPS);
+  const key = index * (HOLD_MIX_STEPS + 1) + step;
+  let colors = holdMixes.get(key);
+  if (!colors) {
+    colors = holdGradients[index].map((from, i) =>
+      mixHex(from, holdGradientsActive[index][i], step / HOLD_MIX_STEPS),
+    );
+    holdMixes.set(key, colors);
+  }
+  return colors;
+}
+
 export {
   ledColor,
+  holdColorsAt,
   palettes,
   holdGradients,
   holdGradientsActive,
