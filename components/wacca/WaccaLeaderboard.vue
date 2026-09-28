@@ -27,7 +27,10 @@
       </div>
     </div>
 
-    <div v-if="loading && !highscores.length" class="d-flex justify-center py-5">
+    <div
+      v-if="loading && !highscores.length"
+      class="d-flex justify-center py-5"
+    >
       <v-progress-circular
         indeterminate
         color="primary"
@@ -289,6 +292,7 @@ import waccaGradeBorders from "~/assets/wacca/waccaGradeBorders";
 const props = defineProps({
   song: Object,
   sheets: Array,
+  startDifficulty: Number,
   histograms: Array,
   playerHistory: Array,
 });
@@ -299,7 +303,7 @@ const profile = useState("profile");
 // server's date for scores with no timestamp
 const UNDATED = "1970-01-01T00:00:00+00:00";
 
-const selectedDifficulty = ref(props.sheets.length);
+const selectedDifficulty = ref(props.startDifficulty ?? props.sheets.length);
 const highscores = shallowRef([]);
 const loading = ref(false);
 const error = ref(null);
@@ -396,7 +400,7 @@ loadData();
 watch(
   () => props.song.id,
   () => {
-    selectedDifficulty.value = props.sheets.length;
+    selectedDifficulty.value = props.startDifficulty ?? props.sheets.length;
     highscores.value = [];
     loadData();
   },
@@ -417,7 +421,8 @@ const yourBestPlays = computed(() =>
         !p.info.clear_status.is_give_up,
     )
     .sort(
-      (a, b) => new Date(a.info.user_play_date) - new Date(b.info.user_play_date),
+      (a, b) =>
+        new Date(a.info.user_play_date) - new Date(b.info.user_play_date),
     ),
 );
 

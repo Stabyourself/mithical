@@ -203,6 +203,7 @@
       <WaccaLeaderboard
         :song="song"
         :sheets="filteredSheets"
+        :start-difficulty="startDifficulty + 1"
         :histograms="histograms"
         :player-history="playerHistory"
       />
@@ -422,12 +423,32 @@ const filteredSheets = computed(() => {
   );
 });
 
+// Where the chart view and leaderboard start: the difficulty you've played the most
+// (the harder one on a tie), the highest if you haven't played it
+const startDifficulty = computed(() => {
+  const scores = profile.value?.songs[song.value.id]?.scores ?? [];
+  let start = filteredSheets.value.length - 1;
+  let mostPlays = 0;
+  filteredSheets.value.forEach((sheet, i) => {
+    const plays = scores[i]?.play_count ?? 0;
+    if (plays > 0 && plays >= mostPlays) {
+      start = i;
+      mostPlays = plays;
+    }
+  });
+  return start;
+});
+
 const yourScoreDifficulty = ref(null);
 const histograms = shallowRef([]);
 const histogramsLoading = ref(false);
 const histogramsLoadingError = ref();
 const histogramView = ref("distribution");
-const chartView = ref(0);
+const chartView = ref(startDifficulty.value);
+watch(
+  () => song.value.id,
+  () => (chartView.value = startDifficulty.value),
+);
 const chartType = ref("circle");
 
 const playerHistory = shallowRef([]);
