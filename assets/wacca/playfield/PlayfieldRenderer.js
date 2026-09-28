@@ -215,6 +215,10 @@ export const DIFFICULTY_LABELS = {
   4: { name: "INFERNO", color: "#a13cd8" },
 };
 
+// Where the clear line sits on the gauge per difficulty (1-4), from the game's
+// MusicParameterTable: every song uses these
+const CLEAR_RATES = { 1: 0.45, 2: 0.55, 3: 0.8, 4: 0.8 };
+
 // What the demo chart shows, with a random title
 const DEMO_LABEL = { difficulty: 3, level: "12" };
 const SONG_TITLES = [
@@ -633,7 +637,7 @@ export default class PlayfieldRenderer {
     const layout = ringLayout(this.features.ring);
     this.ringOuter = outer * layout.ringOuter;
     this.ringInner = outer * layout.ringInner;
-    this.ringBezel = outer * layout.ringBezel;
+    this.screen = outer * layout.screen;
     this.Rj = outer * layout.Rj;
     this.R = outer * layout.R;
     this.s3 = (this.R * 2) / 1060;
@@ -710,14 +714,22 @@ export default class PlayfieldRenderer {
 
     this.drawGuidelines(ctx);
 
-    // Judgement line: two color sweep, shaded across its width
+    // Judgement line: two color sweep, shaded across its width. The glow fades in inside it, and
+    // outside fades out to a bit past the edge of the screen, where the canvas edge or the
+    // console's margin cuts it off
     const width = (STROKE_WIDTHS[settings.thickness] + 2) * s3;
     const lineCtx = this.judgementLineLayer.getContext("2d");
     lineCtx.globalCompositeOperation = "source-over";
     lineCtx.clearRect(0, 0, this.size, this.size);
-    lineCtx.lineWidth = width * 1.75;
+
+    const r = (offset) => Rj + width * offset;
+    const inner = r(-0.875);
+    const outer = Math.max(r(0.875), this.screen + width * 0.1875);
+    const at = (radius) => (radius - inner) / (outer - inner);
+
+    lineCtx.lineWidth = outer - inner;
     lineCtx.beginPath();
-    lineCtx.arc(cx, cy, Rj, 0, Math.PI * 2);
+    lineCtx.arc(cx, cy, (inner + outer) / 2, 0, Math.PI * 2);
 
     if (lineCtx.createConicGradient) {
       const sweep = lineCtx.createConicGradient(0, cx, cy);
@@ -732,11 +744,6 @@ export default class PlayfieldRenderer {
       lineCtx.strokeStyle = JUDGEMENT_LINE_COLORS[0];
     }
     lineCtx.stroke();
-
-    const r = (offset) => Rj + width * offset;
-    const inner = r(-0.875);
-    const outer = r(0.875);
-    const at = (radius) => (radius - inner) / (outer - inner);
 
     const shade = lineCtx.createRadialGradient(cx, cy, inner, cx, cy, outer);
     shade.addColorStop(0, "rgba(0, 0, 0, 0)");
@@ -757,9 +764,21 @@ export default class PlayfieldRenderer {
     lineCtx.globalCompositeOperation = "source-atop";
     lineCtx.strokeStyle = darken;
     lineCtx.stroke();
-    lineCtx.globalCompositeOperation = "source-over";
 
     ctx.drawImage(this.judgementLineLayer, 0, 0);
+
+    // The outer glow is opaque: what's under it gets baked in, so it looks the same but covers
+    // everything going past the line, like the solid part does. That's the base with the line
+    // already on it, since the line gets drawn over it again every frame
+    lineCtx.save();
+    lineCtx.beginPath();
+    lineCtx.arc(cx, cy, outer, 0, Math.PI * 2);
+    lineCtx.arc(cx, cy, r(0.5) - 1, 0, Math.PI * 2, true);
+    lineCtx.clip();
+    lineCtx.globalCompositeOperation = "destination-over";
+    lineCtx.drawImage(this.baseLayer, 0, 0);
+    lineCtx.restore();
+    lineCtx.globalCompositeOperation = "source-over";
 
     // Drawn again on top of the notes each frame (see drawJudgementLine)
     this.judgementLineBand = [inner, outer];
@@ -1041,16 +1060,10 @@ export default class PlayfieldRenderer {
     if (settings.keyBeam) this.drawKeyBeams(now);
 
     this.visible = this.session.visibleObjects(settings.viewDistance, { barlines: settings.barlines });
-    // Notes are only visible inside the pink circle, cut off at the middle of its width
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(this.cx, this.cy, this.Rj, 0, Math.PI * 2);
-    ctx.clip();
+    // Nothing's cut off at the judgement line: everything goes on under it out to the edge,
+    // where its opaque outer glow covers it
     for (const hold of this.visible.holds) this.drawHoldSurface(hold.note, hold.base, now, hold.missed, hold.active);
     this.drawObjects();
-    ctx.restore();
-    // Measure lines aren't cut off, they go under the judgement line out to the edge
-    this.drawMeasureLinesPastLine();
 
     // Hold glow under the judgement line, the line stays pink while holding
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -1260,11 +1273,11 @@ export default class PlayfieldRenderer {
     const { laneHidden } = this.session;
     const ctx = this.ringIdleLayer.getContext("2d");
     ctx.clearRect(0, 0, size, size);
-    // Bezel and seams, out to the canvas edge
-    ctx.fillStyle = "#08070d";
+    // Black margin around the screen and the seams, out to the canvas edge
+    ctx.fillStyle = "#000";
     ctx.beginPath();
     ctx.arc(cx, cy, size / 2, 0, Math.PI * 2);
-    ctx.arc(cx, cy, this.ringBezel, 0, Math.PI * 2, true);
+    ctx.arc(cx, cy, this.screen, 0, Math.PI * 2, true);
     ctx.fill();
 
     const open = [];
@@ -1510,17 +1523,7 @@ export default class PlayfieldRenderer {
       this.setScale(scale);
       if (item.kind === 0) this.drawNote(item.object, item.progress);
       else if (item.kind === 1) this.drawSyncConnector(item.object);
-      else if (item.progress <= 1) this.drawMeasureLine(item.progress, scale);
-    }
-  }
-
-  // The measure lines that have gone past the judgement line, outside the clip to it
-  drawMeasureLinesPastLine() {
-    for (const item of this.visible.sorted) {
-      if (item.kind !== 2 || item.progress <= 1) continue;
-      const scale = perspective(item.progress);
-      this.setScale(scale);
-      this.drawMeasureLine(item.progress, scale);
+      else this.drawMeasureLine(item.progress, scale);
     }
   }
 
@@ -2039,8 +2042,9 @@ export default class PlayfieldRenderer {
     const startTime = base + note.time;
     const endTime = base + note.endTime;
 
-    // Held holds get eaten at the judgement line
-    const from = Math.max(startTime, now);
+    // Holds go on past the judgement line out to the edge, like everything else
+    const from = this.session.holdShownFrom(note, base, view);
+    if (from === null) return;
     const nowScaled = this.session.scaledAt(now);
 
     // Cut off where it leaves the view (in scrolled distance, so speed changes count)
@@ -2499,7 +2503,7 @@ export default class PlayfieldRenderer {
     // Info opacity only fades the progress bar and the judgement (with fast/late), like in game
     if (settings.infoOpacity > 0 && this.features.progressBar) {
       ctx.globalAlpha = settings.infoOpacity;
-      this.drawClearGauge(Math.min(1, this.session.gauge / this.session.noteCount()));
+      this.drawClearGauge(this.session.gaugeFill());
       ctx.globalAlpha = 1;
     }
 
@@ -2588,11 +2592,13 @@ export default class PlayfieldRenderer {
     ctx.fillStyle = "rgba(58, 36, 80, 0.85)";
     ctx.fill();
 
-    // Clear border, under the fill
-    const borderStart = left + width * 0.77;
+    // Clear border, under the fill. Its solid edge is where the fill has to reach to clear
+    const inset = height * 0.18;
+    const clearRate = CLEAR_RATES[this.difficulty] ?? CLEAR_RATES[3];
+    const borderStart = left + inset + clearRate * (width - inset * 2);
     const borderEnd = borderStart + width * 0.06;
     bar(borderStart, borderEnd);
-    ctx.fillStyle = this.cached("gaugeBorder", () => {
+    ctx.fillStyle = this.cached(`gaugeBorder${clearRate}`, () => {
       const gradient = ctx.createLinearGradient(borderStart, 0, borderEnd + slant, 0);
       gradient.addColorStop(0, "rgba(255, 42, 127, 1)");
       gradient.addColorStop(1, "rgba(255, 42, 127, 0)");
@@ -2601,7 +2607,6 @@ export default class PlayfieldRenderer {
     ctx.fill();
 
     // Fill, a bit inset and brighter on top
-    const inset = height * 0.18;
     const filled = clamp(progress, 0, 1) * (width - inset * 2);
     if (filled > 0) {
       bar(left + inset, left + inset + filled, inset);

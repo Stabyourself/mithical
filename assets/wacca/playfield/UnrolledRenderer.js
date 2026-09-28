@@ -20,10 +20,6 @@ import { resolveSettings, DIFFICULTY_LABELS, FONT, TITLE_COLOR } from "./Playfie
 
 // Lane in the first column: lane 15 starts at 12 o'clock, lanes count counterclockwise from there
 const CUT = 15;
-// Where things are, as a fraction of the canvas height
-const LINE_Y = 0.85;
-const RING_TOP = 0.87;
-const LINE_Y_NO_RING = 0.95;
 // Note height per thickness setting, in units (a 500px view is 500 units)
 const NOTE_HEIGHTS = [4, 5.5, 7, 8.5, 10];
 // Gap at each end of a note, in lanes. Notes don't touch like in game
@@ -62,6 +58,8 @@ export default class UnrolledRenderer {
     // Background, guidelines and the idle ring, see updateStaticLayer
     this.staticLayer = document.createElement("canvas");
     this.staticKey = null;
+    // Judgement line with its glow, see buildLineLayer
+    this.lineLayer = document.createElement("canvas");
     // Song title and difficulty, see updateInfoLayer
     this.infoLayer = document.createElement("canvas");
     this.ringLit = new Uint8Array(60);
@@ -123,25 +121,20 @@ export default class UnrolledRenderer {
     this.layout();
   }
 
-  // Where the line and the ring rows go. Without the ring the lanes take the space
+  // Same layout as the round view (see ringLayout), its radii as fractions of the height: the
+  // screen, and with the ring a black margin and the ring's rows under it. The line sits right at
+  // the bottom of the screen though, with no glow under it
   layout() {
     const { width: w, height: h } = this;
     this.unit = Math.min(w, h) / 500;
     this.laneWidth = w / 60;
-    if (this.features.ring) {
-      this.lineY = h * LINE_Y;
-      this.ringTop = h * RING_TOP;
-      this.ringBottom = h - 2 * this.unit;
-      // The lanes go on past the line like the round screen does, up to a thin bezel over the ring
-      this.screenBottom = this.ringTop - 2 * this.unit;
-    } else {
-      this.lineY = h * LINE_Y_NO_RING;
-      this.ringTop = this.lineY;
-      this.ringBottom = h;
-      this.screenBottom = h;
-    }
     this.noteHeight = NOTE_HEIGHTS[this.settings.thickness] * this.unit;
     this.lineHeight = this.noteHeight * 1.2;
+    const layout = ringLayout(this.features.ring);
+    this.screenBottom = Math.round(h * layout.screen);
+    this.lineY = this.screenBottom - this.lineHeight / 2;
+    this.ringTop = h * layout.ringInner;
+    this.ringBottom = h * layout.ringOuter;
 
     // Gradients that only depend on the layout
     const { ctx } = this;
@@ -233,10 +226,11 @@ export default class UnrolledRenderer {
 
     this.visible = session.visibleObjects(settings.viewDistance, { barlines: settings.barlines, linear: features.linear });
 
-    // Notes only show above the line, like inside the pink circle
+    // Nothing's cut off at the judgement line: everything goes on under it to the bottom of the
+    // screen, where the line covers it
     ctx.save();
     ctx.beginPath();
-    ctx.rect(0, 0, this.width, this.lineY);
+    ctx.rect(0, 0, this.width, this.screenBottom);
     ctx.clip();
     for (const hold of this.visible.holds) this.drawHold(hold, now);
     this.drawObjects();
@@ -257,6 +251,8 @@ export default class UnrolledRenderer {
       key &&
       key.width === width &&
       key.height === height &&
+      key.lineY === this.lineY &&
+      key.thickness === settings.thickness &&
       key.mask === settings.mask &&
       key.ringColors === settings.ringColors &&
       key.ring === features.ring &&
@@ -267,6 +263,8 @@ export default class UnrolledRenderer {
     this.staticKey = {
       width,
       height,
+      lineY: this.lineY,
+      thickness: settings.thickness,
       mask: settings.mask,
       ringColors: settings.ringColors,
       ring: features.ring,
@@ -280,6 +278,54 @@ export default class UnrolledRenderer {
     this.drawBackground(ctx);
     this.drawGuidelines(ctx);
     if (features.ring) this.drawIdleRing(ctx);
+    this.buildLineLayer(ctx);
+  }
+
+  // Judgement line like the round view's (see its buildBaseLayer), on the open lanes: the glow
+  // fades in above it, and the solid part goes down to the bottom of the screen. It goes into the
+  // static layer, and over the notes again each frame, covering everything going past the line
+  buildLineLayer(staticCtx) {
+    const { width, height, lineY, lineHeight: size, screenBottom } = this;
+    const { laneHidden } = this.session;
+    const layer = this.lineLayer;
+    if (layer.width !== width) layer.width = width;
+    if (layer.height !== height) layer.height = height;
+    const ctx = layer.getContext("2d");
+    ctx.globalCompositeOperation = "source-over";
+    ctx.clearRect(0, 0, width, height);
+
+    const y = (offset) => lineY + size * offset;
+    const top = y(-0.875);
+    const bottom = screenBottom;
+    const at = (value) => (value - top) / (bottom - top);
+
+    ctx.beginPath();
+    for (let lane = 0; lane < 60; lane++) {
+      if (!laneHidden[lane]) this.eachSpan(lane, 1, (x, w) => ctx.rect(x, top, w + 0.5, bottom - top));
+    }
+    ctx.fillStyle = this.lineGradient;
+    ctx.fill();
+
+    const shade = ctx.createLinearGradient(0, top, 0, bottom);
+    shade.addColorStop(0, "rgba(0, 0, 0, 0)");
+    shade.addColorStop(at(y(-0.5)), "rgba(0, 0, 0, 0.31)");
+    shade.addColorStop(at(y(-0.5) + 1), "rgba(0, 0, 0, 1)");
+    shade.addColorStop(1, "rgba(0, 0, 0, 1)");
+    ctx.globalCompositeOperation = "destination-in";
+    ctx.fillStyle = shade;
+    ctx.fillRect(0, top, width, bottom - top);
+
+    const darken = ctx.createLinearGradient(0, top, 0, bottom);
+    darken.addColorStop(at(y(-0.5) + 1), "rgba(0, 0, 0, 0)");
+    darken.addColorStop(at(y(-0.08)), "rgba(0, 0, 0, 0.33)");
+    darken.addColorStop(at(y(0.08)), "rgba(0, 0, 0, 0.33)");
+    darken.addColorStop(at(y(0.5) - 1), "rgba(0, 0, 0, 0)");
+    ctx.globalCompositeOperation = "source-atop";
+    ctx.fillStyle = darken;
+    ctx.fillRect(0, top, width, bottom - top);
+    ctx.globalCompositeOperation = "source-over";
+
+    staticCtx.drawImage(layer, 0, 0);
   }
 
   // Difficulty and song title turned 90° clockwise in the top right, like on a spine:
@@ -327,9 +373,9 @@ export default class UnrolledRenderer {
     gradient.addColorStop(1, BACKGROUND[1]);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, screenBottom);
-    // Bezel behind the ring rows
+    // Black margin and the backing of the ring rows
     if (screenBottom < height) {
-      ctx.fillStyle = "#08070d";
+      ctx.fillStyle = "#000";
       ctx.fillRect(0, screenBottom, width, height - screenBottom);
     }
 
@@ -416,8 +462,9 @@ export default class UnrolledRenderer {
     const at = linear ? (t) => t : (t) => session.scaledAt(t);
     const nowAt = at(now);
 
-    // Held holds get eaten at the line
-    const from = Math.max(startTime, now);
+    // Holds go on past the line to the bottom of the screen, like everything else
+    const from = session.holdShownFrom(note, base, view, linear);
+    if (from === null) return;
     // Cut off where it leaves the view
     let to = endTime;
     if (at(to) - nowAt > view) {
@@ -679,20 +726,9 @@ export default class UnrolledRenderer {
   // Two color sweep like the round line, left out on masked lanes, white where fingers land
   drawJudgementLine(now) {
     const { ctx, lineY, lineHeight: h } = this;
-    const { laneHidden, laneMaskVersion } = this.session;
+    const { laneHidden } = this.session;
 
-    // Open lanes in one path, only redone when the masks or the size change
-    const key = `${laneMaskVersion}|${this.width}|${lineY}|${h}`;
-    if (this.linePathKey !== key) {
-      this.linePathKey = key;
-      const path = new Path2D();
-      for (let lane = 0; lane < 60; lane++) {
-        if (!laneHidden[lane]) this.eachSpan(lane, 1, (x, w) => path.rect(x, lineY - h / 2, w + 0.5, h));
-      }
-      this.linePath = path;
-    }
-    ctx.fillStyle = this.lineGradient;
-    ctx.fill(this.linePath);
+    ctx.drawImage(this.lineLayer, 0, 0);
 
     ctx.fillStyle = "#ffffff";
     for (let lane = 0; lane < 60; lane++) {

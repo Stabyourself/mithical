@@ -129,7 +129,7 @@
 
         <div v-else class="histograms">
           <WaccaHistogram
-            v-for="(histogram, i) in histograms"
+            v-for="(histogram, i) in shownHistograms"
             :key="i"
             :scores="histogram.score_entries"
             :difficulty="histogram.music_difficulty"
@@ -422,6 +422,13 @@ const filteredSheets = computed(() => {
     (sheet) => sheet.gameVersion <= version.value,
   );
 });
+
+// The API has histograms for every difficulty anyone played, only show the ones in this version
+const shownHistograms = computed(() =>
+  histograms.value.filter(
+    (histogram) => filteredSheets.value[histogram.music_difficulty - 1],
+  ),
+);
 
 // Where the chart view and leaderboard start: the difficulty you've played the most
 // (the harder one on a tie), the highest if you haven't played it

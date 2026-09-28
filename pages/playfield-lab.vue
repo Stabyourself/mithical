@@ -15,14 +15,10 @@
         :loading="loading"
         class="lab-song"
       ></v-autocomplete>
-      <v-btn-toggle
-        v-model="difficulty"
-        mandatory
-        density="compact"
-        variant="outlined"
-        divided
-        :disabled="!song"
-      >
+      <v-btn-toggle v-if="!song" v-model="demo" mandatory density="compact" variant="outlined" divided>
+        <v-btn v-for="(entry, index) in DEMOS" :key="entry.url" :value="index">{{ entry.label }}</v-btn>
+      </v-btn-toggle>
+      <v-btn-toggle v-else v-model="difficulty" mandatory density="compact" variant="outlined" divided>
         <v-btn
           v-for="(label, index) in DIFFICULTIES"
           :key="label"
@@ -187,12 +183,17 @@
 
 <script setup>
 // Test page: one song shown both as the round playfield and unrolled into a strip.
-// Pick a chart with ?song=2082&difficulty=3 (1-4, normal to inferno), the demo otherwise
+// Pick a chart with ?song=2082&difficulty=3 (1-4, normal to inferno), a demo otherwise (?demo=1)
 import getSongs, { getSongById } from "~/assets/wacca/getSongs.js";
 import { chartPath } from "~/assets/wacca/playfield/merChart.js";
 import { formatDifficulty } from "~/assets/js/util";
 
 const DIFFICULTIES = ["Normal", "Hard", "Expert", "Inferno"];
+// Charts for when no song is picked. The second is the same with only the right half unmasked
+const DEMOS = [
+  { label: "Demo", url: "/wacca/demo.mer" },
+  { label: "Half masked", url: "/wacca/demo-half-mask.mer" },
+];
 // Bot skills are named after the worst grade the bot gets. No bot leaves the playing to you
 const BOT_SKILLS = [
   { title: "No bot", value: "none" },
@@ -219,6 +220,11 @@ const song = computed(() => (songId.value ? getSongById(songVersion.value, songI
 const difficulty = computed({
   get: () => Number(route.query.difficulty) || song.value?.sheets.length || 3,
   set: (value) => router.replace({ query: { ...route.query, difficulty: value } }),
+});
+
+const demo = computed({
+  get: () => (DEMOS[Number(route.query.demo)] ? Number(route.query.demo) : 0),
+  set: (value) => router.replace({ query: { ...route.query, demo: value || undefined } }),
 });
 
 const chart = computed(() => {
@@ -257,7 +263,7 @@ const toggles = reactive(Object.fromEntries(TOGGLES.map(({ key }) => [key, true]
 const stripFeatures = computed(() => ({ linear: linear.value, ring: toggles.ring }));
 
 const controller = usePlayfieldSession({
-  chartUrl: () => chart.value?.url ?? "/wacca/demo.mer",
+  chartUrl: () => chart.value?.url ?? DEMOS[demo.value].url,
   options: () => options.value,
   features: () => ({
     judging: toggles.judging,

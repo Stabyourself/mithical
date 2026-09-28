@@ -26,15 +26,31 @@ const HIT_WINDOWS = {
   chain: [[-4, 4]],
 };
 const HIT_GRADES = ["marvelous", "great", "good"];
+// Score per grade as a share of a note's value, from the game's GameScoreTable.
+// R notes are worth double, hold ends count as notes of their own
+const SCORE_RATES = { marvelous: 1, great: 0.7, good: 0.5, miss: 0 };
+// Clear gauge per grade by note type, from the game's NormaTable. Only touches and slides have
+// bonus versions, which fill more with the bonus effect option on. The gauge is full when
+// everything is Marvelous
+const NORMA = {
+  normal: { marvelous: 10, great: 7, good: 4, miss: -5 },
+  normalBonus: { marvelous: 15, great: 10, good: 7, miss: -5 },
+  hold: { marvelous: 10, great: 7, good: 4, miss: -5 },
+  chain: { marvelous: 2, great: 1, good: 1, miss: -5 },
+  slide: { marvelous: 10, great: 7, good: 4, miss: -5 },
+  slideBonus: { marvelous: 15, great: 10, good: 7, miss: -5 },
+  snap: { marvelous: 10, great: 7, good: 4, miss: -5 },
+};
 // Letting go of a hold for longer than this drops it for good
 const HOLD_DROP_MS = 200;
 // Back to autoplay after this long without touching anything
 const PLAY_IDLE_MS = 6000;
-// Touch ring around the screen, lit like the cabinet. Sizes are fractions of the canvas radius
+// Touch ring around the screen, lit like the cabinet, and the black margin between them.
+// Fractions of the canvas radius
 const RING_WIDTH = 0.13;
-const RING_BEZEL = 0.01;
-// Gap between the judgement line and the ring, the screen edge hides under the ring
-const RING_GAP = 0.043;
+const RING_MARGIN = 0.01;
+// Judgement line radius as a fraction of the screen's
+const JUDGEMENT_RADIUS = 0.9506;
 export const RING_ROWS = 4;
 
 // Bot presses the middle two rows (its patch is 2 rows tall), snaps swipe across instead
@@ -52,8 +68,9 @@ const BOT_SKILLS = {
 const SNAP_SWIPE = 0.06;
 const SWIPE_MS = 200;
 
-// Farthest past the judgement line anything shows (in progress, 1 = on the line)
-export const PAST_LINE = 1.03;
+// Farthest past the judgement line anything shows (in progress, 1 = on the line). A bit past
+// the edge of the screen in either view, where the line's glow and the margin cover it
+export const PAST_LINE = 1.06;
 // Notes keep going further so their arrows scroll out under the mask instead of popping
 export const NOTE_PAST_LINE = 1.1;
 // Without judging, holds take on their held colors this fast once they reach the line
@@ -72,19 +89,15 @@ export function option(options, id, fallback) {
   return value === undefined || value === null ? fallback : Number(value);
 }
 
-// Screen and touch ring radii as fractions of the canvas radius. Without the ring the
-// screen grows, leaving the same black gap outside the pink circle as there is up to the LED panels
+// Screen, judgement line and touch ring radii as fractions of the canvas radius (the unrolled
+// view uses them as fractions of its height). The screen fills the canvas, or with the ring it
+// shrinks to make room for a thin black margin and the ring around it. Everything on the screen
+// scales with it, so it looks the same either way
 export function ringLayout(ring) {
   const ringInner = 1 - RING_WIDTH;
-  const ringRj = ringInner - RING_GAP;
-  const Rj = ring ? ringRj : ringRj / ringInner;
-  return {
-    ringOuter: 0.995,
-    ringInner,
-    ringBezel: ringInner - RING_BEZEL,
-    Rj,
-    R: Rj / 0.913,
-  };
+  const screen = ring ? ringInner - RING_MARGIN : 1;
+  const Rj = screen * JUDGEMENT_RADIUS;
+  return { ringOuter: 0.995, ringInner, screen, Rj, R: Rj / 0.913 };
 }
 
 // Where the bot's fingers go, on the cabinet (with the ring)
@@ -169,6 +182,8 @@ export default class PlayfieldSession {
   setOptions(options) {
     // 100 = 0.0, one step on the display = one frame, positive = hit later
     this.judgementOffset = (clamp(option(options, 108, 100), 0, 200) / 10 - 10) * FRAME_MS;
+    // Bonus notes fill the clear gauge more
+    this.bonusEffect = option(options, 114, 1) === 1;
 
     const mirror = option(options, 101, 0) === 1;
     if (mirror !== this.mirror) {
@@ -238,15 +253,22 @@ export default class PlayfieldSession {
 
     // Hold ends right at the seek point count too, the bot only grabs holds that are still going
     let passed = 0;
+    let earned = 0;
+    let gauge = 0;
+    const credit = (note) => {
+      passed++;
+      earned += this.noteValue(note);
+      gauge += this.normaFor(note).marvelous;
+    };
     for (const note of this.chart.notes) {
-      if (start + note.time < this.time) passed++;
-      if (note.type === "hold" && start + note.endTime <= this.time) passed++;
+      if (start + note.time < this.time) credit(note);
+      if (note.type === "hold" && start + note.endTime <= this.time) credit(note);
     }
     if (this.isJudging()) {
       this.combo = passed;
       this.judged = passed;
-      this.earned = (1000000 / this.noteCount()) * passed;
-      this.gauge = passed + 2 * this.chart.notes.filter((note) => note.bonus && start + note.time < this.time).length;
+      this.earned = earned;
+      this.gauge = gauge;
     }
 
     // Landed in the middle of holds: the bot grabs them right away instead of
@@ -601,7 +623,7 @@ export default class PlayfieldSession {
     const { note, base, key, delta } = found;
     this.judgedNotes.add(key);
     const detail = kind === "marvelous" ? null : delta < 0 ? "FAST" : "LATE";
-    this.judge(kind, detail, note.bonus);
+    this.judge(kind, detail, note);
     this.emit("hit", { note });
 
     if (note.type === "hold") {
@@ -625,7 +647,7 @@ export default class PlayfieldSession {
       if (delta > note.lateLimit && this.isJudging()) {
         this.judgedNotes.add(candidate.key);
         this.missedNotes.add(candidate.key);
-        this.judge("miss", null);
+        this.judge("miss", null, note);
         // Missed hold start means the whole hold is gone
         if (note.type === "hold") {
           this.missedHolds.add(candidate.key);
@@ -663,32 +685,71 @@ export default class PlayfieldSession {
     }
   }
 
-  judge(kind, detail, bonus = false) {
+  judge(kind, detail, note) {
     // No judging: hits still clear notes, but nothing counts
     if (!this.isJudging()) return;
-    const perNote = 1000000 / this.noteCount();
-    const value = perNote * { marvelous: 1, great: 0.7, good: 0.5, miss: 0 }[kind];
+    const value = this.noteValue(note);
+    const rate = SCORE_RATES[kind];
 
     this.combo = kind === "miss" ? 0 : this.combo + 1;
     this.judged++;
-    // Clear gauge: hits fill it, bonus notes count triple (SaturnView)
-    if (kind !== "miss") this.gauge += bonus ? 3 : 1;
-    this.earned += value;
-    this.lost += perNote - value;
+    // Misses drain the clear gauge, it doesn't go below empty
+    this.gauge = Math.max(0, this.gauge + this.normaFor(note)[kind]);
+    this.earned += value * rate;
+    this.lost += value * (1 - rate);
     this.judgement = { kind, detail, start: this.time };
   }
 
-  // Judged notes in the chart, hold ends count too
-  noteCount() {
-    this.chart.noteCount ??= this.chart.notes.reduce(
-      (sum, note) => sum + (note.type === "hold" ? 2 : 1),
-      0,
-    );
-    return this.chart.noteCount;
+  // Score a note (or a hold's start or end) is worth at Marvelous: an even share of 1,000,000,
+  // R notes get two shares
+  noteValue(note) {
+    return (1000000 * (note.rNote ? 2 : 1)) / this.totals().shares;
+  }
+
+  // What a note (or a hold's start or end) does to the clear gauge per grade, see NORMA
+  normaFor(note) {
+    const bonus = note.bonus && this.bonusEffect !== false;
+    switch (note.type) {
+      case "hold":
+        return NORMA.hold;
+      case "chain":
+        return NORMA.chain;
+      case "slideCW":
+      case "slideCCW":
+        return bonus ? NORMA.slideBonus : NORMA.slide;
+      case "snapIn":
+      case "snapOut":
+        return NORMA.snap;
+      default:
+        return bonus ? NORMA.normalBonus : NORMA.normal;
+    }
+  }
+
+  // Score shares in the whole chart and the clear gauge All Marvelous ends up at. Hold ends
+  // count as notes too
+  totals() {
+    const bonusEffect = this.bonusEffect !== false;
+    if (this.chart.totals?.bonusEffect !== bonusEffect) {
+      let shares = 0;
+      let gauge = 0;
+      for (const note of this.chart.notes) {
+        const parts = note.type === "hold" ? 2 : 1;
+        shares += (note.rNote ? 2 : 1) * parts;
+        gauge += this.normaFor(note).marvelous * parts;
+      }
+      this.chart.totals = { bonusEffect, shares, gauge };
+    }
+    return this.chart.totals;
+  }
+
+  // How full the clear gauge is, 0-1
+  gaugeFill() {
+    const { gauge } = this.totals();
+    return gauge > 0 ? Math.min(1, this.gauge / gauge) : 0;
   }
 
   endHold(hold) {
-    this.judge(hold.kind, hold.detail);
+    this.judge(hold.kind, hold.detail, hold.note);
     if (hold.kind === "miss") return;
     this.emit("holdEnd", { note: hold.note });
   }
@@ -1012,6 +1073,26 @@ export default class PlayfieldSession {
       return b.size - a.size;
     });
     return out;
+  }
+
+  // Earliest moment of a hold that's still shown: holds go past the judgement line until they're
+  // PAST_LINE out, what's further gets left off. Null when all of it is. Linear goes by plain
+  // time instead of scroll distance, like visibleObjects
+  holdShownFrom(note, base, view, linear = false) {
+    const at = linear ? (t) => t : (t) => this.scaledAt(t);
+    const nowAt = at(this.time);
+    const gone = (t) => nowAt - at(t) > view * (PAST_LINE - 1);
+    const end = base + note.endTime;
+    if (gone(end)) return null;
+    let from = base + note.time;
+    if (!gone(from)) return from;
+    let shown = end;
+    for (let i = 0; i < 20; i++) {
+      const middle = (from + shown) / 2;
+      if (gone(middle)) from = middle;
+      else shown = middle;
+    }
+    return shown;
   }
 
   // Which lanes are hidden right now, including the sweep animations

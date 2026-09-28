@@ -1,5 +1,5 @@
 <template>
-  <v-theme-provider :theme="`wacca${themeModded}`">
+  <v-theme-provider :theme="themeName">
     <div class="modal" :class="{ on: settingsVisible }" @click="hideSettings">
       <div class="modal-content" @click.stop>
         <v-card>
@@ -78,12 +78,7 @@
 
 <script setup>
 const settingsVisible = useState("settingsVisible", () => false);
-const storageVersion = localStorage.getItem("version");
-const version = useState("version", () => parseInt(storageVersion) || 400);
-
-if (version.value != 300 && version.value != 400) {
-  version.value = 400;
-}
+const version = useState("version");
 
 function hideSettings() {
   settingsVisible.value = false;
@@ -115,26 +110,7 @@ const themes = [
   { name: "OLED", value: "Oled" },
 ];
 const theme = useState("theme");
-
-const themeModded = computed(() => {
-  let out = theme.value;
-
-  if (version.value == 400) {
-    out += "Plus";
-  }
-
-  return out;
-});
-
-watch(theme, (newVal) => {
-  localStorage.setItem("theme", newVal);
-});
-
-// Version
-
-watch(version, (newVal) => {
-  localStorage.setItem("version", newVal);
-});
+const themeName = useWaccaTheme();
 
 // Difficulty rounding
 const storageDifficultyInternal =

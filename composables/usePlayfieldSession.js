@@ -10,6 +10,9 @@ import PlayfieldSession from "~/assets/wacca/playfield/PlayfieldSession.js";
 
 // Playback speed, for looking at things in slow motion
 const SPEEDS = [0.1, 0.5, 1, 2];
+// Scrubbing glides after the bar: this long (ms) to cover about two thirds of the way,
+// the same at any frame rate
+const SCRUB_GLIDE_MS = 90;
 
 export function usePlayfieldSession({
   chartUrl = () => null,
@@ -56,7 +59,8 @@ export function usePlayfieldSession({
     if (scrubbing) {
       // Glide towards where the scrub bar is instead of jumping there
       const current = session.songTime;
-      const next = Math.abs(scrubTarget - current) < 5 ? scrubTarget : current + (scrubTarget - current) * 0.3;
+      const glide = 1 - Math.exp(-dt / SCRUB_GLIDE_MS);
+      const next = Math.abs(scrubTarget - current) < 5 ? scrubTarget : current + (scrubTarget - current) * glide;
       session.seek(next);
       session.step(0);
     } else {

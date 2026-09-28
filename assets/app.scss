@@ -36,6 +36,11 @@ body {
 
   .nav-select {
     max-width: 200px;
+
+    // No underline under the card picker
+    .v-field__outline {
+      display: none;
+    }
   }
 
   .language-select {

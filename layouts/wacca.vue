@@ -1,6 +1,6 @@
 <template>
   <v-theme-provider
-    :theme="`wacca${themeModded}`"
+    :theme="themeName"
     class="wacca"
     with-background
   >
@@ -31,7 +31,7 @@
 import { toRaw } from "vue";
 import getSongs from "~/assets/wacca/getSongs.js";
 
-const theme = useState("theme");
+const themeName = useWaccaTheme();
 const runtimeConfig = useRuntimeConfig();
 const activeCard = useState("activeCard");
 
@@ -57,7 +57,6 @@ async function loadProfile() {
         profileLoading.value = false;
 
         cachePlayerSongs();
-        selectVersion();
       })
       .catch((err) => {
         console.error(err);
@@ -95,18 +94,6 @@ function cacheSongInfo(song, musicByKey, favorites) {
   };
 }
 
-function selectVersion() {
-  if (localStorage.getItem("version")) {
-    return;
-  }
-
-  if (profile.value.version_data[300]) {
-    version.value = 400;
-  } else {
-    version.value = 300;
-  }
-}
-
 function cachePlayerSongs() {
   // raw data so we're not going through vue's proxies for every lookup
   const raw = toRaw(profile.value);
@@ -124,16 +111,6 @@ function cachePlayerSongs() {
   }
   profile.value.songs = songs;
 }
-
-const themeModded = computed(() => {
-  let out = theme.value;
-
-  if (version.value == 400) {
-    out += "Plus";
-  }
-
-  return out;
-});
 
 loadProfile();
 watch(activeCard, loadProfile);

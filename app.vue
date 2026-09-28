@@ -22,22 +22,15 @@
 <script setup>
 import { useTheme } from "vuetify";
 
-const theme = useState("theme");
-const version = useState("version");
-
-let defaultDark =
-  window.matchMedia &&
-  window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-// defualt to light for now...
-defaultDark = false;
-
-const storageTheme = localStorage.getItem("theme");
-if (storageTheme) {
-  theme.value = storageTheme;
-} else {
-  theme.value = defaultDark ? "Dark" : "Light";
-}
+// Theme (Light, Dark or Oled) and WACCA version, remembered in localStorage.
+// Light and Plus unless picked otherwise in the settings
+const theme = useState("theme", () => localStorage.getItem("theme") || "Light");
+const version = useState("version", () => {
+  const stored = parseInt(localStorage.getItem("version"));
+  return stored === 300 || stored === 400 ? stored : 400;
+});
+watch(theme, (value) => localStorage.setItem("theme", value));
+watch(version, (value) => localStorage.setItem("version", value));
 
 useHead({
   title: "Mithical",
@@ -55,19 +48,10 @@ useSeoMeta({
 });
 
 const vuetifyTheme = useTheme();
-
-function updateTheme() {
-  let themeModded = theme.value;
-  if (version.value == 400) {
-    themeModded += "Plus";
-  }
-
-  vuetifyTheme.global.name.value = "wacca" + themeModded;
-}
-
-watch(theme, updateTheme);
-watch(version, updateTheme);
-updateTheme();
+const themeName = useWaccaTheme();
+watchEffect(() => {
+  vuetifyTheme.global.name.value = themeName.value;
+});
 
 // load cards from localStorage
 
