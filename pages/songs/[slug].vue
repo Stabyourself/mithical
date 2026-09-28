@@ -74,10 +74,7 @@
     <v-container class="elevation-1 mt-4">
       <h2 class="container-heading">Your scores</h2>
 
-      <WaccaSongSheets
-        :song="song"
-        :player-data="profile.songs[song.id]"
-      />
+      <WaccaSongSheets :song="song" :player-data="profile.songs[song.id]" />
       <WaccaChart
         :player-history="playerHistory"
         :loading="playerHistoryLoading"
@@ -147,7 +144,7 @@
       </div>
     </v-container>
 
-        <v-container class="elevation-1 mt-4">
+    <v-container class="elevation-1 mt-4">
       <h2 class="container-heading chartview-heading">
         Chart View
 
@@ -162,7 +159,9 @@
           <v-btn value="0" size="small">Normal</v-btn>
           <v-btn value="1" size="small">Hard</v-btn>
           <v-btn value="2" size="small">Expert</v-btn>
-          <v-btn v-if="song.sheets.length > 3" value="3" size="small">Inferno</v-btn>
+          <v-btn v-if="song.sheets.length > 3" value="3" size="small"
+            >Inferno</v-btn
+          >
         </v-btn-toggle>
       </h2>
       <div class="container-heading chartview-heading">
@@ -179,22 +178,22 @@
         </v-btn-toggle>
       </div>
       <div ref="previewColumn" class="playfield-preview">
-        <WaccaPlayfieldPreview 
+        <WaccaPlayfieldPreview
           :view="chartRender"
-          :options="profile.options" 
-          :chart-url="chartData?.url ?? '/wacca/demo.mer'"
+          :options="profile.options"
+          :chart-url="chartData?.url ?? null"
           :chart-info="chartData?.info ?? null"
-          :ring=false
-          :song-count=false
-          :score=false
-          :progress-bar=false
-          :judging=false
-          :autoplay=false
+          :ring="false"
+          :song-count="false"
+          :score="false"
+          :progress-bar="false"
+          :judging="false"
+          :autoplay="false"
           start-paused
         />
       </div>
     </v-container>
-    
+
     <v-container class="elevation-1 mt-4">
       <h2 class="container-heading">Leaderboards</h2>
       <WaccaLeaderboard
@@ -359,8 +358,6 @@
   padding-right: 0.5rem;
   padding-left: 0.5rem;
 }
-
-
 </style>
 
 <script setup>
@@ -432,7 +429,6 @@ const histogramsLoadingError = ref();
 const histogramView = ref("distribution");
 const chartView = ref("0");
 const chartType = ref("circle");
-
 
 const playerHistory = shallowRef([]);
 
@@ -576,7 +572,7 @@ const chartData = computed(() => {
 
 const chartRender = computed(() => {
   return chartType.value;
-})
+});
 useSeoMeta({
   title: `Mithical | ${getTitle.value}`,
   ogTitle: `Mithical | ${getTitle.value}`,

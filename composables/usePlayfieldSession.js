@@ -22,7 +22,7 @@ export function usePlayfieldSession({
   // Start paused when asked to, or for reduced motion
   const paused = ref(
     startPaused ||
-      (typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches),
+    (typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches),
   );
   // Someone clicked in and is playing instead of the bot
   const playing = ref(false);
@@ -148,20 +148,28 @@ export function usePlayfieldSession({
   // Charts load on request, only the latest one counts if it changes quickly
   let chartRequest = 0;
 
+  function showChart(text) {
+    session.loadChart(text);
+    songLength.value = session.songLength;
+    position.value = 0;
+    updateLoop();
+  }
+
   async function loadChart(url) {
-    if (!url) return;
     const request = ++chartRequest;
-    loading.value = true;
     loadError.value = null;
+    if (!url) {
+      loading.value = false;
+      showChart("");
+      return;
+    }
+    loading.value = true;
     try {
       const text = await $fetch(url, { responseType: "text" });
       if (request !== chartRequest) return;
       // Missing files come back as the app's html, not a 404
       if (!/^#BODY\s*$/m.test(text)) throw new Error("not a .mer file");
-      session.loadChart(text);
-      songLength.value = session.songLength;
-      position.value = 0;
-      updateLoop();
+      showChart(text);
     } catch (error) {
       console.error(`Couldn't load chart ${url}`, error);
       if (request === chartRequest) loadError.value = "Couldn't load this chart";
