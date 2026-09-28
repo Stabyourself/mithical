@@ -363,14 +363,13 @@ function buildChart(chart, mirror) {
     }
 
     // Sweep speed from SaturnData: half a frame per lane, a quarter from/to the center.
-    // Right at the start it's instant, so looping doesn't replay the reveal
-    toggle.duration = toggle.time <= 0 ? 0 : (toggle.size * (toggle.direction === "center" ? 1 : 2) * 1000) / 240;
+    // The session skips it for ones right at the start, unless played from there
+    toggle.duration = (toggle.size * (toggle.direction === "center" ? 1 : 2) * 1000) / 240;
     return toggle;
   });
 
-  // None right at the start of the song
   const measureLines = [];
-  for (let tick = TICKS_PER_MEASURE; tick < chart.endTick; tick += TICKS_PER_MEASURE) {
+  for (let tick = 0; tick < chart.endTick; tick += TICKS_PER_MEASURE) {
     measureLines.push({
       time: chart.msAt(tick),
       scaled: chart.scaledAt(chart.msAt(tick)),

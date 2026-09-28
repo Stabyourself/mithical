@@ -194,9 +194,10 @@ export default class PlayfieldSession {
   // Demo state at the start
   reset() {
     this.version++;
-    // Start a measure early so notes are already coming in
-    this.time = -this.source.msAt(1920);
-    this.loopIndex = Math.floor(this.time / this.loopMs);
+    this.time = 0;
+    this.loopIndex = 0;
+    // Played from the start the chart's opening reveal sweeps in, like in game
+    this.revealLoop = 0;
     this.resetStats();
     this.playing = false;
     this.fingers.clear();
@@ -205,22 +206,24 @@ export default class PlayfieldSession {
     this.emit("reset");
   }
   
-  // Scrubbing through the chart (ms), the lead-in before it counts as 0
+  // Scrubbing through the chart (ms)
   get songLength() {
     return this.loopMs;
   }
 
   get songTime() {
-    return this.time < 0 ? 0 : this.time % this.loopMs;
+    return this.time % this.loopMs;
   }
 
   // Jump to a point in the current loop, like scrubbing a video. The bot takes over
   // from there and the score is as if it played everything before
   seek(songTime) {
     this.version++;
-    const start = this.time < 0 ? 0 : this.loopIndex * this.loopMs;
+    const start = this.loopIndex * this.loopMs;
     this.time = start + clamp(songTime, 0, this.loopMs - 1);
     this.loopIndex = Math.floor(this.time / this.loopMs);
+    // Jumping to the start plays the opening reveal, anywhere else it's just there
+    this.revealLoop = songTime <= 0 ? this.loopIndex : null;
     this.playing = false;
     this.fingers.clear();
     this.resetJudging();
@@ -943,7 +946,7 @@ export default class PlayfieldSession {
 
     // This loop, and the ones before and after when they reach into view
     for (let k = -1; k <= 1; k++) {
-      // Nothing from before the song, the lead-in would show the end of it
+      // Nothing from before the song, the start would show the end of it
       if (loopIndex + k < 0) continue;
       const base = (loopIndex + k) * loopMs;
       const baseScaled = linear ? base : (loopIndex + k) * this.source.scaledLength;
@@ -976,9 +979,13 @@ export default class PlayfieldSession {
         push(1, connector, progress, 60);
       }
 
-      // Measure lines keep going past the judgement line, out to the edge of the screen
+      // Measure lines keep going past the judgement line, out to the edge of the screen.
+      // The one at the very start only shows when the song loops back into it,
+      // the first time through it would sit on the line at 0:00
       if (barlines) {
-        for (const line of chart.measureLines) {
+        const lines = chart.measureLines;
+        for (let i = loopIndex + k === 0 ? 1 : 0; i < lines.length; i++) {
+          const line = lines[i];
           const progress = progressOf(line);
           if (hidden(line, k) || progress < 0 || progress > PAST_LINE) continue;
           push(2, line, progress, 60);
@@ -1007,11 +1014,15 @@ export default class PlayfieldSession {
     const hidden = this.laneHidden;
     hidden.fill(1);
 
-    const local = ((this.time % this.loopMs) + this.loopMs) % this.loopMs;
+    const local = this.time % this.loopMs;
+    // Reveals right at the start only sweep in when the song is played from its start,
+    // after seeking past it or when the song loops they're instant
+    const sweepStart = Math.floor(this.time / this.loopMs) === this.revealLoop;
     for (const toggle of this.chart.laneToggles) {
       if (toggle.time > local) break;
 
-      const progress = toggle.duration > 0 ? clamp((local - toggle.time) / toggle.duration, 0, 1) : 1;
+      const duration = toggle.time > 0 || sweepStart ? toggle.duration : 0;
+      const progress = duration > 0 ? clamp((local - toggle.time) / duration, 0, 1) : 1;
       const value = toggle.show ? 0 : 1;
       const { pos, size } = toggle;
 
