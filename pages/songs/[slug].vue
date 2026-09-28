@@ -148,36 +148,39 @@
       <h2 class="container-heading chartview-heading">
         Chart View
 
-        <v-btn-toggle
-          v-model="chartView"
-          mandatory
-          density="compact"
-          variant="outlined"
-          divided
-          class="chartview-toggle"
-        >
-          <v-btn
-            v-for="(sheet, i) in filteredSheets"
-            :key="i"
-            :value="i"
-            size="small"
-            >{{ waccaDifficulties[i].name }}</v-btn
+        <div class="chartview-controls">
+          <v-btn-toggle
+            v-model="chartView"
+            mandatory
+            density="compact"
+            divided
+            class="chartview-toggle"
           >
-        </v-btn-toggle>
+            <v-btn
+              v-for="(difficulty, i) in chartDifficulties"
+              :key="i"
+              :value="i"
+              :color="difficulty.color"
+              variant="flat"
+              size="small"
+              class="chartview-difficulty"
+              >{{ difficulty.name }}/Lv.{{ difficulty.level }}</v-btn
+            >
+          </v-btn-toggle>
+
+          <v-btn-toggle
+            v-model="chartType"
+            mandatory
+            density="compact"
+            variant="outlined"
+            divided
+            class="chartview-toggle"
+          >
+            <v-btn value="circle" size="small">3D</v-btn>
+            <v-btn value="unrolled" size="small">2D</v-btn>
+          </v-btn-toggle>
+        </div>
       </h2>
-      <div class="container-heading chartview-heading">
-        <v-btn-toggle
-          v-model="chartType"
-          mandatory
-          density="compact"
-          variant="outlined"
-          divided
-          class="chartview-toggle"
-        >
-          <v-btn value="circle" size="small">3D</v-btn>
-          <v-btn value="unrolled" size="small">2D</v-btn>
-        </v-btn-toggle>
-      </div>
       <div class="chart-preview">
         <WaccaPlayfieldPreview
           :view="chartType"
@@ -315,12 +318,27 @@
   }
 }
 
+.chartview-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-left: auto;
+}
+
 .chartview-toggle {
   height: 30px !important;
-  margin-left: auto;
   .v-btn {
     text-transform: none;
     letter-spacing: normal;
+  }
+}
+
+// Every difficulty in its color, the ones not picked faded
+.chartview-difficulty {
+  font-weight: 700;
+
+  &:not(.v-btn--active) {
+    opacity: 0.45;
   }
 }
 
@@ -539,15 +557,23 @@ const ogDescription = computed(() => {
     .join(" · ");
 });
 
+const chartDifficulties = computed(() =>
+  filteredSheets.value.map((sheet, i) => ({
+    name: waccaDifficulties[i].name.toUpperCase(),
+    color: waccaDifficulties[i].color,
+    level: String(formatDifficulty(sheet.difficulty, false)),
+  })),
+);
+
 const chartData = computed(() => {
-  const chartDataSheet = filteredSheets.value[chartView.value];
-  if (!chartDataSheet) return null;
+  const difficulty = chartDifficulties.value[chartView.value];
+  if (!difficulty) return null;
   return {
     url: chartPath(song.value.id, chartView.value),
     info: {
       title: song.value.title,
       difficulty: chartView.value + 1,
-      level: String(formatDifficulty(chartDataSheet.difficulty, false)),
+      level: difficulty.level,
     },
   };
 });
