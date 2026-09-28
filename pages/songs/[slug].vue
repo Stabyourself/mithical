@@ -214,7 +214,7 @@
                 variant="flat"
                 size="small"
                 class="toggle-option"
-                >{{ type == "defaultColor" ? "Default" : "User" }}</v-btn
+                >{{ type == "defaultColor" ? "Use default display settings" : "Use my display settings" }}</v-btn
               >
             </v-btn-toggle>
           </div>
@@ -697,12 +697,6 @@ const CHART_TOGGLE_GROUPS = [
         title:
           "Ratings, misses and dropped holds. Off, unhit notes just pass by"
       },
-      {
-        key: "userOptions",
-        label: "Use my display settings",
-        title:
-          "Your note speed, mirror, colors and so on. Off, the defaults with a note speed that fits the difficulty"
-      }
     ]
   },
   {
@@ -754,15 +748,6 @@ function setEnabledToggles(group, keys) {
     chartFeatures.value[key] = keys.includes(key);
   });
 }
-
-// Note speed (option 1, 0-50 for x1.0 to x6.0) when not using your options:
-// x2.0 for Normal up to x3.5 for Inferno. Everything else at its default
-const DEFAULT_NOTE_SPEEDS = [10, 15, 20, 25];
-const previewOptions = computed(() =>
-  chartFeatures.value.userOptions
-    ? profile.value.options
-    : { 1: DEFAULT_NOTE_SPEEDS[chartView.value] }
-);
 
 const playerHistory = shallowRef([]);
 
