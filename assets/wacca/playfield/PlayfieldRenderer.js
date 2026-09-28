@@ -1047,6 +1047,8 @@ export default class PlayfieldRenderer {
     for (const hold of this.visible.holds) this.drawHoldSurface(hold.note, hold.base, now, hold.missed, hold.held);
     this.drawObjects();
     ctx.restore();
+    // Measure lines aren't cut off, they go under the judgement line out to the edge
+    this.drawMeasureLinesPastLine();
 
     // Hold glow under the judgement line, the line stays pink while holding
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -1506,7 +1508,17 @@ export default class PlayfieldRenderer {
       this.setScale(scale);
       if (item.kind === 0) this.drawNote(item.object, item.progress);
       else if (item.kind === 1) this.drawSyncConnector(item.object);
-      else this.drawMeasureLine(item.progress, scale);
+      else if (item.progress <= 1) this.drawMeasureLine(item.progress, scale);
+    }
+  }
+
+  // The measure lines that have gone past the judgement line, outside the clip to it
+  drawMeasureLinesPastLine() {
+    for (const item of this.visible.sorted) {
+      if (item.kind !== 2 || item.progress <= 1) continue;
+      const scale = perspective(item.progress);
+      this.setScale(scale);
+      this.drawMeasureLine(item.progress, scale);
     }
   }
 

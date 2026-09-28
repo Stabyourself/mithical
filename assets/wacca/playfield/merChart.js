@@ -368,8 +368,9 @@ function buildChart(chart, mirror) {
     return toggle;
   });
 
+  // None right at the start of the song
   const measureLines = [];
-  for (let tick = 0; tick < chart.endTick; tick += TICKS_PER_MEASURE) {
+  for (let tick = TICKS_PER_MEASURE; tick < chart.endTick; tick += TICKS_PER_MEASURE) {
     measureLines.push({
       time: chart.msAt(tick),
       scaled: chart.scaledAt(chart.msAt(tick)),

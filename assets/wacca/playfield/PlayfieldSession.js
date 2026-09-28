@@ -943,6 +943,8 @@ export default class PlayfieldSession {
 
     // This loop, and the ones before and after when they reach into view
     for (let k = -1; k <= 1; k++) {
+      // Nothing from before the song, the lead-in would show the end of it
+      if (loopIndex + k < 0) continue;
       const base = (loopIndex + k) * loopMs;
       const baseScaled = linear ? base : (loopIndex + k) * this.source.scaledLength;
       if (baseScaled + highest < nowScaled - view * (NOTE_PAST_LINE - 1) || baseScaled + lowest > nowScaled + view) {
@@ -974,10 +976,11 @@ export default class PlayfieldSession {
         push(1, connector, progress, 60);
       }
 
+      // Measure lines keep going past the judgement line, out to the edge of the screen
       if (barlines) {
         for (const line of chart.measureLines) {
           const progress = progressOf(line);
-          if (hidden(line, k) || base + line.time < now || progress < 0 || progress > PAST_LINE) continue;
+          if (hidden(line, k) || progress < 0 || progress > PAST_LINE) continue;
           push(2, line, progress, 60);
         }
       }
