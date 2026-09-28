@@ -190,13 +190,53 @@
               >
             </v-btn-toggle>
           </div>
+
+          <div class="chartview-options-row">
+            <span class="chartview-options-label">Cosmetics</span>
+            <v-btn-toggle
+              v-model="chartCosmetics"
+              mandatory
+              density="compact"
+              divided
+              class="chartview-toggle"
+            >
+              <v-btn
+                v-for="type in ['defaultColor', 'userColor']"
+                :key="type"
+                :value="type"
+                color="primary"
+                base-color="primary"
+                variant="flat"
+                size="small"
+                class="toggle-option"
+                >{{ type == "defaultColor" ? "Default" : "User" }}</v-btn
+              >
+            </v-btn-toggle>
+          </div>
+
+          <div class="chartview-scroll-options-row">
+            <span class="chartview-options-label">Scroll</span>
+            <v-slider
+              v-model="noteSpeed"
+              :min="0"
+              :max="50"
+              :step="1"
+              :label="`${formatSpeed(noteSpeed)}`"
+              density="compact"
+              hide-details
+              thumb-label
+              class="lab-speed"
+              >
+                <template #thumb-label="{ modelValue }">{{ formatSpeed(modelValue) }}</template>
+            </v-slider>
+          </div>
         </div>
       </Collapse>
 
       <div class="chart-preview">
         <WaccaPlayfieldPreview
           :view="chartType"
-          :options="profile.options"
+          :options="options"
           :chart-url="chartData?.url ?? null"
           :chart-info="chartData?.info ?? null"
           :ring="chartFeatures.ring"
@@ -488,6 +528,35 @@
   }
 }
 
+.chartview-scroll-options-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: min(100%, 400px);
+}
+
+.lab-speed {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .chartview-scroll-options-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    width: min(100%, 400px);
+  }
+
+  .chartview-scroll-options-row .chartview-options-label {
+    align-self: flex-start;
+  }
+
+  .lab-speed {
+    width: 100%;
+  }
+
+}
+
 // same width for both, so the groups line up
 .chartview-options-label {
   min-width: 2.5em;
@@ -609,6 +678,7 @@ watch(
   () => (chartView.value = startDifficulty.value)
 );
 const chartType = ref("circle");
+const chartCosmetics = ref("userColor");
 
 // Chart view options: what the preview shows and whether a bot plays
 const chartOptionsOpen = ref();
@@ -809,6 +879,37 @@ const chartData = computed(() => {
     }
   };
 });
+
+const noteSpeed = ref(profile.value?.options?.[1]);
+
+watch(
+  [chartCosmetics, () => profile.value?.options?.[1]],
+  ([option, speed]) => {
+    noteSpeed.value = option === "defaultColor" ? 5 : speed;
+  },
+  { immediate: true },
+);
+
+const options = computed(() => {
+  if (chartCosmetics.value === "defaultColor"){
+    return { 
+      ...{}, 
+      1: noteSpeed.value,
+    };
+  }
+  if (chartCosmetics.value === "userColor"){
+    return { 
+      ...profile.value?.options, 
+      1: noteSpeed.value,
+    };
+  }
+
+});
+
+// Like in game (and on the settings page): option 0-50 shows as ×1.0 to ×6.0
+function formatSpeed(value) {
+  return `×${(value / 10 + 1).toFixed(1)}`;
+}
 
 useSeoMeta({
   title: `Mithical | ${getTitle.value}`,
