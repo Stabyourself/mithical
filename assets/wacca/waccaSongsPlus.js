@@ -14592,7 +14592,7 @@ const waccaSongs = [
     dateAdded: 20260322,
     dateRemoved: 0,
     gameVersion: 400,
-    bpm: 205,
+    bpm: 155,
     imageName: "S04/uT_J_S04_120.webp",
     category: "バラエティ",
     releaseDate: "2026-03-18",

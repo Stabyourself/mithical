@@ -74,6 +74,8 @@
 .playfield-scrub {
   flex: 1;
   margin: 0 6px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .playfield-speed {

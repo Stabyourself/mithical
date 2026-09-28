@@ -11,6 +11,8 @@
       >
         <div class="playfield-stage">
           <WaccaPlayfieldCanvas
+            :key="view"
+            :view="view"
             :controller="controller"
             :options="options"
             :features="features"
@@ -39,7 +41,7 @@
 
 <style scoped>
 .playfield-preview {
-  width: min(100%, 560px);
+  width: min(100%, 825px);
   margin: 0 auto 32px;
 }
 
@@ -63,6 +65,7 @@
 .playfield-lightbox .playfield-stage {
   width: min(100vw - 32px, 100vh - 32px - 52px);
 }
+
 </style>
 
 <script setup>
@@ -119,8 +122,12 @@ const props = defineProps({
     default: "all-marvelous",
     validator: (value) => ["miss-up", "good-up", "great-up", "all-marvelous"].includes(value),
   },
+  view: {
+    type: String,
+    default: "circle",
+    validator: (value) => ["circle", "unrolled"].includes(value),
+  },
 });
-
 const features = computed(() => ({
   ring: props.ring,
   autoplay: props.autoplay,
