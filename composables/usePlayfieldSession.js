@@ -23,7 +23,6 @@ export function usePlayfieldSession({ chartUrl = () => null, options = () => ({}
   // Scrub bar: where in the song we are
   const position = ref(0);
   const songLength = ref(session.songLength);
-
   // A chart is being fetched, and why the last one failed if it did
   const loading = ref(false);
   const loadError = ref(null);

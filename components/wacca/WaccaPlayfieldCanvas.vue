@@ -97,7 +97,6 @@ canvas.playing {
 .unrolled .playfield-status {
   border-radius: 8px;
 }
-
 </style>
 
 <script setup>

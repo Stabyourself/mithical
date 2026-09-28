@@ -65,7 +65,6 @@
 .playfield-lightbox .playfield-stage {
   width: min(100vw - 32px, 100vh - 32px - 52px);
 }
-
 </style>
 
 <script setup>
@@ -128,6 +127,7 @@ const props = defineProps({
     validator: (value) => ["circle", "unrolled"].includes(value),
   },
 });
+
 const features = computed(() => ({
   ring: props.ring,
   autoplay: props.autoplay,

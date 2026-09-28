@@ -204,7 +204,7 @@ export default class PlayfieldSession {
     this.judgement = null;
     this.emit("reset");
   }
-  
+
   // Scrubbing through the chart (ms), the lead-in before it counts as 0
   get songLength() {
     return this.loopMs;

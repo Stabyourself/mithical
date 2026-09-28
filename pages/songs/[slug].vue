@@ -379,6 +379,7 @@ import { getSongById } from "~/assets/wacca/getSongs.js";
 import { chartPath } from "~/assets/wacca/playfield/merChart.js";
 
 const profile = useState("profile");
+
 definePageMeta({
   middleware: ["auth"],
 });
@@ -432,8 +433,6 @@ const histogramsLoadingError = ref();
 const histogramView = ref("distribution");
 const chartView = ref("0");
 const chartType = ref("circle");
-
-
 const playerHistory = shallowRef([]);
 
 function loadHistograms() {
