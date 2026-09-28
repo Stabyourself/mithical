@@ -143,17 +143,22 @@
 
       <Collapse :when="!!chartOptionsOpen">
         <div class="chartview-options">
-          <div class="chartview-options-row">
-            <span class="chartview-options-label">Show</span>
+          <div
+            v-for="group in CHART_TOGGLE_GROUPS"
+            :key="group.label"
+            class="chartview-options-row"
+          >
+            <span class="chartview-options-label">{{ group.label }}</span>
             <v-btn-toggle
-              v-model="shownFeatures"
+              :model-value="enabledToggles(group)"
               multiple
               density="compact"
               divided
               class="chartview-toggle"
+              @update:model-value="(keys) => setEnabledToggles(group, keys)"
             >
               <v-btn
-                v-for="toggle in CHART_TOGGLES"
+                v-for="toggle in group.toggles"
                 :key="toggle.key"
                 :value="toggle.key"
                 :title="toggle.title"
@@ -196,7 +201,7 @@
       <div class="chart-preview">
         <WaccaPlayfieldPreview
           :view="chartType"
-          :options="profile.options"
+          :options="previewOptions"
           :chart-url="chartData?.url ?? null"
           :chart-info="chartData?.info ?? null"
           :ring="chartFeatures.ring"
@@ -612,24 +617,41 @@ const chartType = ref("circle");
 
 // Chart view options: what the preview shows and whether a bot plays
 const chartOptionsOpen = ref();
-const CHART_TOGGLES = [
+const CHART_TOGGLE_GROUPS = [
   {
-    key: "judging",
-    label: "Judging",
-    title: "Ratings, misses and dropped holds. Off, unhit notes just pass by"
+    label: "Play",
+    toggles: [
+      {
+        key: "judging",
+        label: "Judging",
+        title:
+          "Ratings, misses and dropped holds. Off, unhit notes just pass by"
+      },
+      {
+        key: "userOptions",
+        label: "Use my display settings",
+        title:
+          "Your note speed, mirror, colors and so on. Off, the defaults with a note speed that fits the difficulty"
+      }
+    ]
   },
   {
-    key: "ring",
-    label: "Ring",
-    title:
-      "The console's LED ring around the view. Off, the lanes fill the space"
-  },
-  { key: "songCount", label: "Song no.", title: '"1/3 Song" on the ring' },
-  { key: "score", label: "Score", title: "The score on the ring" },
-  {
-    key: "progressBar",
-    label: "Gauge",
-    title: "The clear gauge in the round view"
+    label: "Show",
+    toggles: [
+      {
+        key: "ring",
+        label: "Ring",
+        title:
+          "The console's LED ring around the view. Off, the lanes fill the space"
+      },
+      { key: "songCount", label: "Song no.", title: '"1/3 Song" on the ring' },
+      { key: "score", label: "Score", title: "The score on the ring" },
+      {
+        key: "progressBar",
+        label: "Gauge",
+        title: "The clear gauge in the round view"
+      }
+    ]
   }
 ];
 // Named after the worst judgement the bot gets. Off leaves the playing to you
@@ -637,7 +659,7 @@ const BOT_SKILLS = [
   {
     title: "Off",
     value: "none",
-    description: "No bot, the playing is up to you"
+    description: "No bot"
   },
   {
     title: "All Marvelous",
@@ -650,17 +672,27 @@ const BOT_SKILLS = [
 ];
 // Remembered for every song, see plugins/preferences.js
 const chartFeatures = useState("chartViewFeatures");
-// The Show toggles as the list of what's on, for the button group
-const shownFeatures = computed({
-  get: () =>
-    CHART_TOGGLES.map(({ key }) => key).filter(
-      (key) => chartFeatures.value[key]
-    ),
-  set: (keys) =>
-    CHART_TOGGLES.forEach(({ key }) => {
-      chartFeatures.value[key] = keys.includes(key);
-    })
-});
+// A group's toggles as the list of what's on, for its button group
+function enabledToggles(group) {
+  return group.toggles
+    .map(({ key }) => key)
+    .filter((key) => chartFeatures.value[key]);
+}
+
+function setEnabledToggles(group, keys) {
+  group.toggles.forEach(({ key }) => {
+    chartFeatures.value[key] = keys.includes(key);
+  });
+}
+
+// Note speed (option 1, 0-50 for x1.0 to x6.0) when not using your options:
+// x2.0 for Normal up to x3.5 for Inferno. Everything else at its default
+const DEFAULT_NOTE_SPEEDS = [10, 15, 20, 25];
+const previewOptions = computed(() =>
+  chartFeatures.value.userOptions
+    ? profile.value.options
+    : { 1: DEFAULT_NOTE_SPEEDS[chartView.value] }
+);
 
 const playerHistory = shallowRef([]);
 

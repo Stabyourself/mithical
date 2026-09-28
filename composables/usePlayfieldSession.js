@@ -28,6 +28,8 @@ export function usePlayfieldSession({
       (typeof window !== "undefined" &&
         window.matchMedia?.("(prefers-reduced-motion: reduce)").matches)
   );
+  // Started paused and nobody has pressed play yet, views show a hint
+  const waitingToStart = ref(startPaused);
   // Someone clicked in and is playing instead of the bot
   const playing = ref(false);
   const speed = ref(1);
@@ -111,6 +113,7 @@ export function usePlayfieldSession({
 
   function togglePause() {
     paused.value = !paused.value;
+    if (!paused.value) waitingToStart.value = false;
     updateLoop();
   }
 
@@ -228,6 +231,7 @@ export function usePlayfieldSession({
     session,
     SPEEDS,
     paused,
+    waitingToStart,
     playing,
     speed,
     position,

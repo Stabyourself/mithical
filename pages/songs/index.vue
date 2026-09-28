@@ -432,11 +432,9 @@ definePageMeta({
 defineOptions({ name: "SongsPage" });
 
 const sortOptions = [
+  // Keeps the list order (reversed when descending), see songsFiltered
   {
-    text: "Default",
-    sortFunction: () => {
-      return sortOrder.value == "asc" ? 1 : -1;
-    }
+    text: "Default"
   },
   {
     text: "Title",
@@ -1376,10 +1374,10 @@ const songsFiltered = computed(() => {
     }
   });
 
-  // search
+  // search: best matches first. That order wins over the chosen sort, which applies again
+  // once the search is cleared
   if (search.value && search.value.length > 2) {
-    // perform search
-    results = fuzzysort
+    return fuzzysort
       .go(search.value, results, {
         keys: ["title", "artist", "titleEnglish"]
       })
@@ -1387,7 +1385,11 @@ const songsFiltered = computed(() => {
   }
 
   // sort
-  results = results.sort(activeSort.value.sortFunction);
+  if (!activeSort.value.sortFunction) {
+    if (sortOrder.value == "desc") results.reverse();
+  } else {
+    results.sort(activeSort.value.sortFunction);
+  }
 
   return results;
 });

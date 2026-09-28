@@ -176,7 +176,7 @@ export default class PlayfieldSession {
   }
 
   // What the session does besides moving the chart along:
-  //   autoplay: the bot plays whenever nobody else is. Off, nothing gets judged until someone clicks in
+  //   autoplay: the bot plays whenever nobody else is. Off, notes nobody hits are misses
   //   judging: ratings, misses and dropped holds. Off, unhit notes just pass by
   //   botSkill: how well the bot plays, see BOT_SKILLS
   // Other keys are for the views and get ignored
@@ -194,12 +194,14 @@ export default class PlayfieldSession {
       // The bot's score isn't anyone's
       if (!this.playing) this.resetStats();
     }
+    // Turned on: judge from here, notes that just went by aren't misses
+    if (next.judging && !previous.judging) this.judgeFrom = this.time;
     if (!this.isJudging()) this.judgement = null;
   }
 
-  // Judging counts right now: it's on and someone's playing, the bot or a person
+  // Judging counts: whoever plays, the bot, a person or nobody (all misses)
   isJudging() {
-    return this.features.judging && (this.features.autoplay || this.playing);
+    return this.features.judging;
   }
 
   // Profile options that change the song itself: mirror and judgement timing
@@ -862,18 +864,9 @@ export default class PlayfieldSession {
 
     this.playing = true;
     this.resetBot();
+    // Your play starts fresh, what the bot (or nobody) did before isn't yours
     this.resetStats();
     this.judgement = null;
-
-    // Without the bot nothing was judged before now. Notes already past their window
-    // just go by instead of all turning into misses at once
-    if (!this.features.autoplay) {
-      for (const candidate of this.playableNotes(this.time)) {
-        if (candidate.delta <= candidate.note.lateLimit) continue;
-        this.judgedNotes.add(candidate.key);
-        this.missedNotes.add(candidate.key);
-      }
-    }
   }
 
   // Back to the bot (or to nobody), skipping whatever is already at the line
