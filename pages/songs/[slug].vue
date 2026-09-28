@@ -143,11 +143,7 @@
 
       <Collapse :when="!!chartOptionsOpen">
         <div class="chartview-options">
-          <div
-            v-for="group in CHART_TOGGLE_GROUPS"
-            :key="group.label"
-            class="chartview-options-row"
-          >
+          <div class="chartview-options-row">
             <span class="chartview-options-label">Judgements</span>
             <v-btn-toggle
               v-model="chartJudgements"
@@ -157,7 +153,7 @@
               class="chartview-toggle"
             >
               <v-btn
-                v-for="type in ['on', 'off']"
+                v-for="type in [ 'off', 'on' ]"
                 :key="type"
                 :value="type"
                 color="primary"
@@ -204,7 +200,7 @@
               class="chartview-toggle"
             >
               <v-btn
-                v-for="type in ['defaultColor', 'userColor']"
+                v-for="type in ['userColor', 'defaultColor']"
                 :key="type"
                 :value="type"
                 color="primary"
