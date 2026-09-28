@@ -178,7 +178,7 @@
           <v-btn value="unrolled" size="small">2D</v-btn>
         </v-btn-toggle>
       </div>
-      <div ref="previewColumn" class="playfield-preview">
+      <div class="chart-preview">
         <WaccaPlayfieldPreview
           :view="chartRender"
           :options="profile.options"
@@ -351,13 +351,14 @@
   }
 }
 
-.playfield-preview {
-  width: min(100%, 1000px);
-  margin: 0 auto 16px;
-  padding-bottom: 0.1rem;
-  padding-top: 0.5rem;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+.chart-preview {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0.5rem 16px;
+
+  :deep(.playfield-preview) {
+    width: min(100%, 825px);
+  }
 }
 </style>
 
