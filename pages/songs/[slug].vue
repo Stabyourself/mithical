@@ -490,6 +490,12 @@
   .chartview-level-prefix {
     display: none;
   }
+
+  .chartview-controls {
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+  }
 }
 
 .chartview-heading {
