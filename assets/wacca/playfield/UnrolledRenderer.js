@@ -222,8 +222,9 @@ export default class UnrolledRenderer {
     ctx.restore();
 
     this.drawJudgementLine(now);
-    this.drawHitFlashes(now);
     if (features.ring) this.drawRingLights();
+    // Hit effects over the ring, so it doesn't cut off the parts that reach past the line
+    this.drawHitFlashes(now);
   }
 
   // Everything that only changes with the size, options, the ring or the lane masks, drawn
