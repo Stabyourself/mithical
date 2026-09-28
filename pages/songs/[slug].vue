@@ -899,6 +899,7 @@ const chartData = computed(() => {
 
 const noteSpeed = ref(profile.value?.options?.[1]);
 
+// Checks which option is picked and updates the note speed bar accodringly
 watch(
   [chartCosmetics, () => profile.value?.options?.[1]],
   ([option, speed]) => {
@@ -907,6 +908,7 @@ watch(
   { immediate: true },
 );
 
+// Sets the cosmetic display options, respects scroll speed changes after first set
 const options = computed(() => {
   if (chartCosmetics.value === "defaultColor"){
     return { 
