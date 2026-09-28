@@ -10,7 +10,7 @@ function ownedSet(items) {
     cache = {
       items: raw,
       length: raw.length,
-      set: new Set(raw.map((item) => item.item_id)),
+      set: new Set(raw.map((item) => item.item_id))
     };
   }
   return cache.set;

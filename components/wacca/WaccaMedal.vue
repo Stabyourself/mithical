@@ -126,7 +126,7 @@
 
 <script setup>
 const props = defineProps({
-  medal: String,
+  medal: String
 });
 
 const medalNames = {
@@ -134,6 +134,6 @@ const medalNames = {
   fullcombo: "Full Combo!",
   missless: "Missless!",
   clear: "Clear!",
-  failed: "Failed",
+  failed: "Failed"
 };
 </script>

@@ -8,12 +8,12 @@
     <div
       class="box-image"
       :style="{
-        'background-image': `url(${box.image})`,
+        'background-image': `url(${box.image})`
       }"
     ></div>
 
     <div class="pa-4">
-      <h1 class="text-h1">{{ boxName(box) }}</h1>
+      <h1>{{ boxName(box) }}</h1>
     </div>
 
     <div class="gacha-border">
@@ -35,7 +35,7 @@
     <div class="pa-4">
       <div class="gamba-buttons">
         <v-btn
-          class="elevation-3"
+          class="elevation-2"
           @click="spin(1)"
           color="primary"
           size="x-large"
@@ -50,7 +50,7 @@
 
         <v-btn
           v-if="props.tenspin"
-          class="elevation-3"
+          class="elevation-2"
           @click="spin(10)"
           color="primary"
           size="x-large"
@@ -145,8 +145,14 @@
   background-position: top left;
 }
 
+// Vuetify 3's text-h1, Vuetify 4 doesn't have one this big
 h1 {
   position: relative;
+  font-family: "Roboto", sans-serif;
+  font-size: 6rem;
+  font-weight: 300;
+  line-height: 6rem;
+  letter-spacing: -0.015625em;
   text-shadow: black 0px 0px 10px;
 }
 
@@ -323,7 +329,7 @@ const activeCard = useState("activeCard");
 
 const props = defineProps({
   box: Object,
-  tenspin: Boolean,
+  tenspin: Boolean
 });
 
 const itemList = ref([]);
@@ -371,7 +377,7 @@ function spin(amount) {
 
   let gachaUrl = `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/gacha/${props.box.id}/${amount}`;
   $fetch(gachaUrl, {
-    method: "POST",
+    method: "POST"
   })
     .then((data) => {
       spinLoading.value = false;
@@ -414,12 +420,12 @@ let lastRouletteItem = 0;
 
 const rouletteClickSound = new Howl({
   src: "/wacca/sound/rouletteclick.wav",
-  volume: 0.5,
+  volume: 0.5
 });
 
 const rouletteGetSound = new Howl({
   src: "/wacca/sound/rouletteget.wav",
-  volume: 0.5,
+  volume: 0.5
 });
 
 function animateSpin(currentTime) {
@@ -488,7 +494,7 @@ function closeResult() {
   receivedItems.value.forEach((item) => {
     profile.value.items.push({
       item_kind: item.kind,
-      item_id: item.id,
+      item_id: item.id
     });
   });
 }

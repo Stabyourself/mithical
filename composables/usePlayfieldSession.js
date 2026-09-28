@@ -18,14 +18,15 @@ export function usePlayfieldSession({
   chartUrl = () => null,
   options = () => ({}),
   features = () => ({}),
-  startPaused = false,
+  startPaused = false
 } = {}) {
   const session = new PlayfieldSession();
 
   // Start paused when asked to, or for reduced motion
   const paused = ref(
     startPaused ||
-    (typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches),
+      (typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches)
   );
   // Someone clicked in and is playing instead of the bot
   const playing = ref(false);
@@ -60,7 +61,10 @@ export function usePlayfieldSession({
       // Glide towards where the scrub bar is instead of jumping there
       const current = session.songTime;
       const glide = 1 - Math.exp(-dt / SCRUB_GLIDE_MS);
-      const next = Math.abs(scrubTarget - current) < 5 ? scrubTarget : current + (scrubTarget - current) * glide;
+      const next =
+        Math.abs(scrubTarget - current) < 5
+          ? scrubTarget
+          : current + (scrubTarget - current) * glide;
       session.seek(next);
       session.step(0);
     } else {
@@ -176,7 +180,8 @@ export function usePlayfieldSession({
       showChart(text);
     } catch (error) {
       console.error(`Couldn't load chart ${url}`, error);
-      if (request === chartRequest) loadError.value = "Couldn't load this chart";
+      if (request === chartRequest)
+        loadError.value = "Couldn't load this chart";
     } finally {
       if (request === chartRequest) loading.value = false;
     }
@@ -189,7 +194,7 @@ export function usePlayfieldSession({
       session.setOptions(value);
       updateLoop();
     },
-    { deep: true, immediate: true },
+    { deep: true, immediate: true }
   );
   watch(
     features,
@@ -197,7 +202,7 @@ export function usePlayfieldSession({
       session.setFeatures(value);
       updateLoop();
     },
-    { deep: true, immediate: true },
+    { deep: true, immediate: true }
   );
 
   onMounted(() => loadChart(chartUrl()));
@@ -235,6 +240,6 @@ export function usePlayfieldSession({
     play,
     scrubStart,
     scrub,
-    scrubEnd,
+    scrubEnd
   };
 }

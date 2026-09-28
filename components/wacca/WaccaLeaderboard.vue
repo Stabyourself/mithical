@@ -135,11 +135,16 @@
 .pill-rank {
   margin: -12px 12px 0;
   padding: 14px 8px 6px;
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.15);
+  border: 1px solid
+    color-mix(in srgb, rgb(var(--v-theme-on-surface)) 15%, transparent);
   border-top: none;
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
-  background: rgba(var(--v-theme-on-surface), 0.03);
+  background: color-mix(
+    in srgb,
+    rgb(var(--v-theme-on-surface)) 3%,
+    transparent
+  );
   // the pill row sets white text
   color: rgb(var(--v-theme-on-surface));
   text-align: center;
@@ -150,7 +155,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(var(--v-theme-on-surface), 0.5);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 50%, transparent);
 }
 
 .pill-rank-value {
@@ -172,7 +177,7 @@
 .pill-rank-total {
   font-size: 0.8rem;
   font-weight: 500;
-  color: rgba(var(--v-theme-on-surface), 0.55);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 55%, transparent);
 }
 
 .difficulty-selection {
@@ -236,11 +241,16 @@
 }
 
 tr.highlight {
-  background-color: rgba(var(--v-theme-primary), 0.1);
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--v-theme-primary)) 10%,
+    transparent
+  );
 }
 
 .you-body tr td {
-  border-top: 2px dashed rgba(var(--v-theme-on-surface), 0.2);
+  border-top: 2px dashed
+    color-mix(in srgb, rgb(var(--v-theme-on-surface)) 20%, transparent);
 }
 
 // no leave animation, it made the table jump
@@ -294,7 +304,7 @@ const props = defineProps({
   sheets: Array,
   startDifficulty: Number,
   histograms: Array,
-  playerHistory: Array,
+  playerHistory: Array
 });
 
 const runtimeConfig = useRuntimeConfig();
@@ -326,7 +336,7 @@ function loadData() {
   loading.value = true;
 
   $fetch(
-    `${runtimeConfig.public.apiUrl}/wacca/music/${props.song.id}/highscores/${selectedDifficulty.value}`,
+    `${runtimeConfig.public.apiUrl}/wacca/music/${props.song.id}/highscores/${selectedDifficulty.value}`
   )
     .then((data) => {
       if (seq !== requestSeq) return;
@@ -403,13 +413,13 @@ watch(
     selectedDifficulty.value = props.startDifficulty ?? props.sheets.length;
     highscores.value = [];
     loadData();
-  },
+  }
 );
 
 const yourBest = computed(
   () =>
     profile.value?.songs[props.song.id]?.scores[selectedDifficulty.value - 1]
-      ?.score ?? 0,
+      ?.score ?? 0
 );
 
 const yourBestPlays = computed(() =>
@@ -418,12 +428,12 @@ const yourBestPlays = computed(() =>
       (p) =>
         p.info.music_difficulty === selectedDifficulty.value &&
         p.info.score === yourBest.value &&
-        !p.info.clear_status.is_give_up,
+        !p.info.clear_status.is_give_up
     )
     .sort(
       (a, b) =>
-        new Date(a.info.user_play_date) - new Date(b.info.user_play_date),
-    ),
+        new Date(a.info.user_play_date) - new Date(b.info.user_play_date)
+    )
 );
 
 // api doesn't give us our own api_id, so match score + play date
@@ -435,7 +445,7 @@ function isYou(entry) {
   }
   const time = new Date(entry.user_play_date).getTime();
   return yourBestPlays.value.some(
-    (p) => new Date(p.info.user_play_date).getTime() === time,
+    (p) => new Date(p.info.user_play_date).getTime() === time
   );
 }
 
@@ -446,7 +456,7 @@ const ranked = computed(() => {
     score,
     key: `${score.api_id}-${score.user_play_date}`,
     rank: i === 0 || list[i - 1].score !== score.score ? i + 1 : null,
-    isMe: isYou(score),
+    isMe: isYou(score)
   }));
 });
 
@@ -485,7 +495,7 @@ const outsideRow = computed(() => {
     rank: rank?.rank ?? "—",
     score: yourBest.value,
     grade: play?.info.grade ?? 0,
-    date: date && date !== UNDATED ? date : null,
+    date: date && date !== UNDATED ? date : null
   };
 });
 

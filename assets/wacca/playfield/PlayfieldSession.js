@@ -16,14 +16,38 @@ import { parseMer, buildChart } from "./merChart.js";
 export const FRAME_MS = 1000 / 60;
 // Hit windows in 60fps frames, [early, late] for marvelous/great/good, from SaturnEdit
 const HIT_WINDOWS = {
-  touch: [[-3, 3], [-5, 5], [-6, 6]],
-  hold: [[-3, 3], [-5, 5], [-6, 6]],
-  snapIn: [[-5, 7], [-8, 10], [-10, 10]],
-  snapOut: [[-7, 5], [-10, 8], [-10, 10]],
-  slideCW: [[-5, 5], [-8, 10], [-10, 10]],
-  slideCCW: [[-5, 5], [-8, 10], [-10, 10]],
+  touch: [
+    [-3, 3],
+    [-5, 5],
+    [-6, 6]
+  ],
+  hold: [
+    [-3, 3],
+    [-5, 5],
+    [-6, 6]
+  ],
+  snapIn: [
+    [-5, 7],
+    [-8, 10],
+    [-10, 10]
+  ],
+  snapOut: [
+    [-7, 5],
+    [-10, 8],
+    [-10, 10]
+  ],
+  slideCW: [
+    [-5, 5],
+    [-8, 10],
+    [-10, 10]
+  ],
+  slideCCW: [
+    [-5, 5],
+    [-8, 10],
+    [-10, 10]
+  ],
   // Chains are marvelous or miss
-  chain: [[-4, 4]],
+  chain: [[-4, 4]]
 };
 const HIT_GRADES = ["marvelous", "great", "good"];
 // Score per grade as a share of a note's value, from the game's GameScoreTable.
@@ -39,7 +63,7 @@ const NORMA = {
   chain: { marvelous: 2, great: 1, good: 1, miss: -5 },
   slide: { marvelous: 10, great: 7, good: 4, miss: -5 },
   slideBonus: { marvelous: 15, great: 10, good: 7, miss: -5 },
-  snap: { marvelous: 10, great: 7, good: 4, miss: -5 },
+  snap: { marvelous: 10, great: 7, good: 4, miss: -5 }
 };
 // Letting go of a hold for longer than this drops it for good
 const HOLD_DROP_MS = 200;
@@ -62,7 +86,7 @@ const BOT_SKILLS = {
   "all-marvelous": { marvelous: 1 },
   "great-up": { marvelous: 0.85, great: 0.15 },
   "good-up": { marvelous: 0.75, great: 0.17, good: 0.08 },
-  "miss-up": { marvelous: 0.7, great: 0.16, good: 0.08, miss: 0.06 },
+  "miss-up": { marvelous: 0.7, great: 0.16, good: 0.08, miss: 0.06 }
 };
 // Snaps need a swipe this far (fraction of the radius) within SWIPE_MS
 const SNAP_SWIPE = 0.06;
@@ -160,7 +184,7 @@ export default class PlayfieldSession {
     const next = {
       autoplay: features.autoplay ?? true,
       judging: features.judging ?? true,
-      botSkill: features.botSkill ?? "all-marvelous",
+      botSkill: features.botSkill ?? "all-marvelous"
     };
     const previous = this.features;
     this.features = next;
@@ -181,7 +205,8 @@ export default class PlayfieldSession {
   // Profile options that change the song itself: mirror and judgement timing
   setOptions(options) {
     // 100 = 0.0, one step on the display = one frame, positive = hit later
-    this.judgementOffset = (clamp(option(options, 108, 100), 0, 200) / 10 - 10) * FRAME_MS;
+    this.judgementOffset =
+      (clamp(option(options, 108, 100), 0, 200) / 10 - 10) * FRAME_MS;
     // Bonus notes fill the clear gauge more
     this.bonusEffect = option(options, 114, 1) === 1;
 
@@ -205,7 +230,10 @@ export default class PlayfieldSession {
   // How far the notes have scrolled at a demo time (speed changes and stops), over loops
   scaledAt(time) {
     const loop = Math.floor(time / this.loopMs);
-    return loop * this.source.scaledLength + this.source.scaledAt(time - loop * this.loopMs);
+    return (
+      loop * this.source.scaledLength +
+      this.source.scaledAt(time - loop * this.loopMs)
+    );
   }
 
   // Demo state at the start
@@ -222,7 +250,7 @@ export default class PlayfieldSession {
     this.judgement = null;
     this.emit("reset");
   }
-  
+
   // Scrubbing through the chart (ms)
   get songLength() {
     return this.loopMs;
@@ -262,7 +290,8 @@ export default class PlayfieldSession {
     };
     for (const note of this.chart.notes) {
       if (start + note.time < this.time) credit(note);
-      if (note.type === "hold" && start + note.endTime <= this.time) credit(note);
+      if (note.type === "hold" && start + note.endTime <= this.time)
+        credit(note);
     }
     if (this.isJudging()) {
       this.combo = passed;
@@ -276,10 +305,19 @@ export default class PlayfieldSession {
     if (this.scrubbing) return;
     for (const note of this.chart.notes) {
       if (note.type !== "hold") continue;
-      if (start + note.time >= this.time || start + note.endTime <= this.time) continue;
+      if (start + note.time >= this.time || start + note.endTime <= this.time)
+        continue;
       const key = this.noteKey(note, start);
       this.judgedNotes.add(key);
-      this.activeHolds.push({ note, base: start, key, kind: "marvelous", detail: null, held: true, releasedFor: 0 });
+      this.activeHolds.push({
+        note,
+        base: start,
+        key,
+        kind: "marvelous",
+        detail: null,
+        held: true,
+        releasedFor: 0
+      });
       this.grabHold(note, start);
     }
   }
@@ -298,7 +336,7 @@ export default class PlayfieldSession {
       swipeFrom: radius,
       swipeStart: this.time,
       since: this.time,
-      spread: this.fingerSpread(id),
+      spread: this.fingerSpread(id)
     });
     bot.holds.push({ id, note, base, row: BOT_ROW });
   }
@@ -333,7 +371,11 @@ export default class PlayfieldSession {
 
     if (!this.scrubbing) {
       // Nobody touched anything for a while: back to the bot, or to just watching without one
-      if (this.playing && this.fingers.size === 0 && this.time - this.lastInput > PLAY_IDLE_MS) {
+      if (
+        this.playing &&
+        this.fingers.size === 0 &&
+        this.time - this.lastInput > PLAY_IDLE_MS
+      ) {
         this.handBack();
       }
       if (this.features.autoplay && !this.playing) this.runBot();
@@ -379,7 +421,15 @@ export default class PlayfieldSession {
   fingerDown(id, lane, radius, row, time, target = null) {
     // since: when it got to this lane, chains care about that
     const spread = this.fingerSpread(id);
-    this.fingers.set(id, { lane, row, target, swipeFrom: radius, swipeStart: time, since: time, spread });
+    this.fingers.set(id, {
+      lane,
+      row,
+      target,
+      swipeFrom: radius,
+      swipeStart: time,
+      since: time,
+      spread
+    });
     this.emit("touch", { lane, row, spread, laneChanged: true });
     this.hitNote(this.closestNote(["touch", "hold"], lane, time, target));
   }
@@ -387,7 +437,12 @@ export default class PlayfieldSession {
   fingerMove(id, lane, radius, row, time) {
     const finger = this.fingers.get(id);
     if (lane !== finger.lane || row !== finger.row) {
-      this.emit("touch", { lane, row, spread: finger.spread, laneChanged: lane !== finger.lane });
+      this.emit("touch", {
+        lane,
+        row,
+        spread: finger.spread,
+        laneChanged: lane !== finger.lane
+      });
     }
     finger.row = row;
 
@@ -403,14 +458,18 @@ export default class PlayfieldSession {
       if (moved < -30) moved += 60;
       const type = moved > 0 ? "slideCCW" : "slideCW";
       const { target } = finger;
-      this.hitNote(this.closestNote([type], from, time, target) ?? this.closestNote([type], lane, time, target));
+      this.hitNote(
+        this.closestNote([type], from, time, target) ??
+          this.closestNote([type], lane, time, target)
+      );
 
       // Touch notes, hold starts and slides you move into from outside
       for (const found of [
         this.closestNote(["touch", "hold"], lane, time, target),
-        this.closestNote(["slideCW", "slideCCW"], lane, time, target),
+        this.closestNote(["slideCW", "slideCCW"], lane, time, target)
       ]) {
-        if (found && !this.covers(found.note.pos, found.note.size, from)) this.hitNote(found);
+        if (found && !this.covers(found.note.pos, found.note.size, from))
+          this.hitNote(found);
       }
     }
 
@@ -422,7 +481,12 @@ export default class PlayfieldSession {
     const swiped = radius - finger.swipeFrom;
     if (Math.abs(swiped) >= SNAP_SWIPE) {
       this.hitNote(
-        this.closestNote([swiped < 0 ? "snapIn" : "snapOut"], finger.lane, time, finger.target),
+        this.closestNote(
+          [swiped < 0 ? "snapIn" : "snapOut"],
+          finger.lane,
+          time,
+          finger.target
+        )
       );
       finger.swipeFrom = radius;
       finger.swipeStart = time;
@@ -461,8 +525,13 @@ export default class PlayfieldSession {
   // notes that share lanes cut each other's windows in the middle, and notes on a hold
   // end lose their early great/good
   cutHitWindows(notes) {
-    const base = (note) => HIT_WINDOWS[note.type].map(([early, late]) => [early * FRAME_MS, late * FRAME_MS]);
-    const overlaps = (a, b) => mod60(b.pos - a.pos) < a.size || mod60(a.pos - b.pos) < b.size;
+    const base = (note) =>
+      HIT_WINDOWS[note.type].map(([early, late]) => [
+        early * FRAME_MS,
+        late * FRAME_MS
+      ]);
+    const overlaps = (a, b) =>
+      mod60(b.pos - a.pos) < a.size || mod60(a.pos - b.pos) < b.size;
     const earliest = (windows) => Math.min(...windows.map(([early]) => early));
     const latest = (windows) => Math.max(...windows.map(([, late]) => late));
     const holdEnds = notes
@@ -471,7 +540,9 @@ export default class PlayfieldSession {
 
     for (const note of notes) {
       note.windows = base(note);
-      if (holdEnds.some((end) => end.time === note.time && overlaps(note, end))) {
+      if (
+        holdEnds.some((end) => end.time === note.time && overlaps(note, end))
+      ) {
         const marvelousEarly = note.windows[0][0];
         for (const window of note.windows) window[0] = marvelousEarly;
       }
@@ -487,7 +558,8 @@ export default class PlayfieldSession {
         if (next.time === note.time || !overlaps(note, next)) continue;
         if (next.time + earliest(base(next)) >= to) break;
         const middle = (next.time - note.time) / 2;
-        for (const window of note.windows) window[1] = Math.min(window[1], middle);
+        for (const window of note.windows)
+          window[1] = Math.min(window[1], middle);
       }
 
       for (let j = i - 1; j >= 0; j--) {
@@ -495,7 +567,8 @@ export default class PlayfieldSession {
         if (previous.time === note.time || !overlaps(note, previous)) continue;
         if (previous.time + latest(base(previous)) <= from) break;
         const middle = (previous.time - note.time) / 2;
-        for (const window of note.windows) window[0] = Math.max(window[0], middle);
+        for (const window of note.windows)
+          window[0] = Math.max(window[0], middle);
       }
 
       note.lateLimit = latest(note.windows);
@@ -563,7 +636,8 @@ export default class PlayfieldSession {
       if (!types.includes(candidate.note.type)) continue;
       if (!this.covers(candidate.note.pos, candidate.note.size, lane)) continue;
       if (!this.gradeFor(candidate.note, candidate.delta)) continue;
-      if (!best || Math.abs(candidate.delta) < Math.abs(best.delta)) best = candidate;
+      if (!best || Math.abs(candidate.delta) < Math.abs(best.delta))
+        best = candidate;
     }
     return best;
   }
@@ -571,7 +645,8 @@ export default class PlayfieldSession {
   // Panels a finger presses, lanes x rows starting at its cell. The bot has big
   // fingers, it always presses a 2x2 patch, never a single panel
   fingerSpread(id) {
-    if (typeof id === "string" && id.startsWith("bot")) return { lanes: 2, rows: 2 };
+    if (typeof id === "string" && id.startsWith("bot"))
+      return { lanes: 2, rows: 2 };
     return { lanes: 1, rows: 1 };
   }
 
@@ -590,7 +665,8 @@ export default class PlayfieldSession {
     const { lanes, rows } = finger.spread;
     const first = this.patchRow(finger.row, rows);
     for (let d = 0; d < lanes; d++) {
-      for (let row = first; row < first + rows; row++) fn(mod60(finger.lane + d), row);
+      for (let row = first; row < first + rows; row++)
+        fn(mod60(finger.lane + d), row);
     }
   }
 
@@ -605,7 +681,8 @@ export default class PlayfieldSession {
   chainTouched(note, noteTime, delta) {
     const opened = noteTime + note.windows[0][0];
     for (const finger of this.fingers.values()) {
-      if (!this.covers(note.pos, note.size, finger.lane, finger.spread.lanes)) continue;
+      if (!this.covers(note.pos, note.size, finger.lane, finger.spread.lanes))
+        continue;
       if (delta >= 0 || finger.since >= opened) return true;
     }
     return false;
@@ -627,7 +704,15 @@ export default class PlayfieldSession {
     this.emit("hit", { note });
 
     if (note.type === "hold") {
-      this.activeHolds.push({ note, base, key, kind, detail, held: true, releasedFor: 0 });
+      this.activeHolds.push({
+        note,
+        base,
+        key,
+        kind,
+        detail,
+        held: true,
+        releasedFor: 0
+      });
     }
   }
 
@@ -639,7 +724,11 @@ export default class PlayfieldSession {
 
       // Chains have no attack judgement, touching them is enough. Touched inside the window
       // hits right away, already held from before hits right on time
-      if (note.type === "chain" && delta >= note.windows[0][0] && this.chainTouched(note, now - delta, delta)) {
+      if (
+        note.type === "chain" &&
+        delta >= note.windows[0][0] &&
+        this.chainTouched(note, now - delta, delta)
+      ) {
         this.hitNote(candidate, "marvelous");
         continue;
       }
@@ -651,7 +740,12 @@ export default class PlayfieldSession {
         // Missed hold start means the whole hold is gone
         if (note.type === "hold") {
           this.missedHolds.add(candidate.key);
-          this.activeHolds.push({ ...candidate, kind: "miss", detail: null, held: false });
+          this.activeHolds.push({
+            ...candidate,
+            kind: "miss",
+            detail: null,
+            held: false
+          });
         }
       }
     }
@@ -661,7 +755,9 @@ export default class PlayfieldSession {
       const hold = this.activeHolds[i];
       const local = now - hold.base;
       const shape = this.holdShapeAt(hold.note, local);
-      hold.held = hold.kind !== "miss" && this.touching(Math.round(shape.pos), Math.round(shape.size));
+      hold.held =
+        hold.kind !== "miss" &&
+        this.touching(Math.round(shape.pos), Math.round(shape.size));
       if (hold.kind !== "miss" && this.isJudging()) {
         hold.releasedFor = hold.held ? 0 : hold.releasedFor + dt;
         if (hold.releasedFor > HOLD_DROP_MS) {
@@ -679,7 +775,11 @@ export default class PlayfieldSession {
     // Forget notes from old loops
     if (this.judgedNotes.size > 400) {
       const oldest = (Math.floor(now / this.loopMs) - 1) * this.loopMs * 1000;
-      for (const set of [this.judgedNotes, this.missedHolds, this.missedNotes]) {
+      for (const set of [
+        this.judgedNotes,
+        this.missedHolds,
+        this.missedNotes
+      ]) {
         for (const key of set) if (key < oldest) set.delete(key);
       }
     }
@@ -785,7 +885,8 @@ export default class PlayfieldSession {
   resetBot() {
     const bot = this.bot;
     for (const id of this.fingers.keys()) {
-      if (typeof id === "string" && id.startsWith("bot")) this.fingers.delete(id);
+      if (typeof id === "string" && id.startsWith("bot"))
+        this.fingers.delete(id);
     }
     bot.actions.length = 0;
     bot.holds.length = 0;
@@ -798,7 +899,8 @@ export default class PlayfieldSession {
 
     for (const candidate of this.playableNotes(now)) {
       // A frame or two late is still a Marvelous
-      if (candidate.t < now - 30 || candidate.t > now + BOT_LOOKAHEAD_MS) continue;
+      if (candidate.t < now - 30 || candidate.t > now + BOT_LOOKAHEAD_MS)
+        continue;
       if (bot.planned.has(candidate.key)) continue;
       bot.planned.add(candidate.key);
       this.planBotNote(candidate);
@@ -819,7 +921,13 @@ export default class PlayfieldSession {
         continue;
       }
       const shape = this.holdShapeAt(note, now - base);
-      this.fingerMove(id, this.botLane(shape.pos, shape.size), rowRadius(row), row, now);
+      this.fingerMove(
+        id,
+        this.botLane(shape.pos, shape.size),
+        rowRadius(row),
+        row,
+        now
+      );
     }
 
     if (bot.planned.size > 400) {
@@ -847,15 +955,22 @@ export default class PlayfieldSession {
     if (note.type === "slideCW" || note.type === "slideCCW") {
       // Drag across it a bit, like a hand would
       const direction = note.type === "slideCCW" ? 1 : -1;
-      at(time - 40, (t) => this.fingerDown(id, mod60(lane - direction), radius, row, t, key));
+      at(time - 40, (t) =>
+        this.fingerDown(id, mod60(lane - direction), radius, row, t, key)
+      );
       for (let step = 0; step < 3; step++) {
-        at(time + step * 40, (t) => this.fingerMove(id, mod60(lane + step * direction), radius, row, t));
+        at(time + step * 40, (t) =>
+          this.fingerMove(id, mod60(lane + step * direction), radius, row, t)
+        );
       }
       at(time + 170, () => this.fingers.delete(id));
     } else if (note.type === "snapIn" || note.type === "snapOut") {
       // Swipe across the rows, towards the screen for snap in
-      const [from, to] = note.type === "snapIn" ? [RING_ROWS - 1, 0] : [0, RING_ROWS - 1];
-      at(time - 40, (t) => this.fingerDown(id, lane, rowRadius(from), from, t, key));
+      const [from, to] =
+        note.type === "snapIn" ? [RING_ROWS - 1, 0] : [0, RING_ROWS - 1];
+      at(time - 40, (t) =>
+        this.fingerDown(id, lane, rowRadius(from), from, t, key)
+      );
       at(time, (t) => this.fingerMove(id, lane, rowRadius(to), to, t));
       at(time + 80, () => this.fingers.delete(id));
     } else if (note.type === "hold") {
@@ -871,7 +986,8 @@ export default class PlayfieldSession {
 
   // Timing offset (ms) that lands the grade the bot rolled, null for a miss
   botOffset(note) {
-    const odds = BOT_SKILLS[this.features.botSkill] ?? BOT_SKILLS["all-marvelous"];
+    const odds =
+      BOT_SKILLS[this.features.botSkill] ?? BOT_SKILLS["all-marvelous"];
     let roll = Math.random();
     let grade = "marvelous";
     for (const [name, chance] of Object.entries(odds)) {
@@ -888,7 +1004,7 @@ export default class PlayfieldSession {
       const [betterEarly, betterLate] = note.windows[index - 1];
       const sides = [
         [early, betterEarly],
-        [betterLate, late],
+        [betterLate, late]
       ].filter(([from, to]) => to - from > 2);
       if (sides.length > 0) {
         const [from, to] = sides[Math.floor(Math.random() * sides.length)];
@@ -931,11 +1047,19 @@ export default class PlayfieldSession {
       if (b <= from || a >= to) continue;
       const [left, right] = this.holdSegment(start, points[i + 1]);
       const straight = left === 0 && right === 0;
-      const steps = Math.max(straight ? 4 : Math.ceil((b - a) / 20), Math.ceil(Math.max(Math.abs(left), Math.abs(right))));
+      const steps = Math.max(
+        straight ? 4 : Math.ceil((b - a) / 20),
+        Math.ceil(Math.max(Math.abs(left), Math.abs(right)))
+      );
       for (let step = 1; step <= steps; step++) {
         const f = step / steps;
         const t = a + (b - a) * f;
-        if (t > from && t < to) samples.push([t, start.pos + left * f, start.size + (right - left) * f]);
+        if (t > from && t < to)
+          samples.push([
+            t,
+            start.pos + left * f,
+            start.size + (right - left) * f
+          ]);
       }
     }
     shapeAt(to);
@@ -949,12 +1073,15 @@ export default class PlayfieldSession {
 
     const a = points[i];
     const b = points[i + 1];
-    const t = b.time === a.time ? 1 : clamp((localTime - a.time) / (b.time - a.time), 0, 1);
+    const t =
+      b.time === a.time
+        ? 1
+        : clamp((localTime - a.time) / (b.time - a.time), 0, 1);
     const [left, right] = this.holdSegment(a, b);
 
     return {
       pos: a.pos + left * t,
-      size: a.size + (right - left) * t,
+      size: a.size + (right - left) * t
     };
   }
 
@@ -1004,34 +1131,59 @@ export default class PlayfieldSession {
 
     // During a reverse only its own notes show, and only in this loop
     const songNow = now - loopIndex * loopMs;
-    const reverse = linear ? -1 : chart.reverses.findIndex((r) => songNow > r.start && songNow <= r.middle);
-    const hidden = (object, k) => reverse !== -1 && (k !== 0 || object.reverse !== reverse);
+    const reverse = linear
+      ? -1
+      : chart.reverses.findIndex(
+          (r) => songNow > r.start && songNow <= r.middle
+        );
+    const hidden = (object, k) =>
+      reverse !== -1 && (k !== 0 || object.reverse !== reverse);
 
     // This loop, and the ones before and after when they reach into view
     for (let k = -1; k <= 1; k++) {
       // Nothing from before the song, the start would show the end of it
       if (loopIndex + k < 0) continue;
       const base = (loopIndex + k) * loopMs;
-      const baseScaled = linear ? base : (loopIndex + k) * this.source.scaledLength;
-      if (baseScaled + highest < nowScaled - view * (NOTE_PAST_LINE - 1) || baseScaled + lowest > nowScaled + view) {
+      const baseScaled = linear
+        ? base
+        : (loopIndex + k) * this.source.scaledLength;
+      if (
+        baseScaled + highest < nowScaled - view * (NOTE_PAST_LINE - 1) ||
+        baseScaled + lowest > nowScaled + view
+      ) {
         continue;
       }
-      const progressOf = (object) => 1 - (baseScaled + (linear ? object.time : object.scaled) - nowScaled) / view;
+      const progressOf = (object) =>
+        1 -
+        (baseScaled + (linear ? object.time : object.scaled) - nowScaled) /
+          view;
 
       for (const note of chart.notes) {
         if (hidden(note, k)) continue;
         const key = this.noteKey(note, base);
 
         if (note.type === "hold") {
-          if (progressOf(note.points.at(-1)) > PAST_LINE || progressOf(note) < 0) continue;
-          const held = this.activeHolds.some((hold) => hold.key === key && hold.held);
+          if (
+            progressOf(note.points.at(-1)) > PAST_LINE ||
+            progressOf(note) < 0
+          )
+            continue;
+          const held = this.activeHolds.some(
+            (hold) => hold.key === key && hold.held
+          );
           // How held it looks, 0-1. With nobody judging, as if held once it reaches the line
           const active = held
             ? 1
             : this.isJudging()
               ? 0
               : clamp((now - (base + note.time)) / HOLD_ACTIVE_FADE_MS, 0, 1);
-          out.holds.push({ note, base, missed: this.missedHolds.has(key), held, active });
+          out.holds.push({
+            note,
+            base,
+            missed: this.missedHolds.has(key),
+            held,
+            active
+          });
         }
 
         // Hit notes are gone. The rest keep going until they've scrolled past the line, notes
@@ -1044,7 +1196,13 @@ export default class PlayfieldSession {
 
       for (const connector of chart.syncConnectors) {
         const progress = progressOf(connector);
-        if (hidden(connector, k) || base + connector.time < now || progress < 0 || progress > PAST_LINE) continue;
+        if (
+          hidden(connector, k) ||
+          base + connector.time < now ||
+          progress < 0 ||
+          progress > PAST_LINE
+        )
+          continue;
         push(1, connector, progress, 60);
       }
 
@@ -1111,7 +1269,8 @@ export default class PlayfieldSession {
       if (toggle.time > local) break;
 
       const duration = toggle.time > 0 || sweepStart ? toggle.duration : 0;
-      const progress = duration > 0 ? clamp((local - toggle.time) / duration, 0, 1) : 1;
+      const progress =
+        duration > 0 ? clamp((local - toggle.time) / duration, 0, 1) : 1;
       const value = toggle.show ? 0 : 1;
       const { pos, size } = toggle;
 

@@ -33,7 +33,6 @@
 </template>
 
 <style scoped lang="scss">
-$news-bg-alpha: 0.65;
 $news-padding-x: 24px;
 $news-padding-y: 14px;
 
@@ -44,7 +43,7 @@ $news-padding-y: 14px;
 .news-card {
   position: relative;
   z-index: 1;
-  background: rgba(var(--v-theme-boxcolor), $news-bg-alpha);
+  background: rgb(var(--v-theme-box-glass));
   backdrop-filter: blur(8px);
   color: white;
   overflow: hidden;
@@ -61,9 +60,9 @@ $news-padding-y: 14px;
   }
 }
 
-.v-theme--waccaOled .news-card,
-.v-theme--waccaOledPlus .news-card {
-  border: 1px solid white;
+// Outlined on OLED, see plugins/vuetify.ts
+.news-card {
+  border: var(--v-box-border);
   border-top: none;
 }
 
@@ -111,6 +110,18 @@ $news-padding-y: 14px;
 
 .news-date-segment {
   flex: 0 0 auto;
+}
+
+// on phones the date gets its own bar below the title
+@media (max-width: 600px) {
+  .news-title-bar {
+    flex-direction: column;
+  }
+
+  .news-date-segment {
+    justify-content: center;
+    padding: 2px 20px;
+  }
 }
 
 .news-title {
@@ -298,7 +309,7 @@ const props = defineProps({
   date: { type: [String, Date], required: true },
   body: { type: String, required: true },
   peekHeight: { type: Number, default: 80 },
-  accentColor: { type: String, default: "#009de6" },
+  accentColor: { type: String, default: "rgb(var(--v-theme-difficulty-1))" }
 });
 
 const { accentColor } = toRefs(props);
@@ -333,7 +344,7 @@ const formattedDate = computed(() => {
   return new Date(props.date).toLocaleDateString(undefined, {
     year: "numeric",
     month: "long",
-    day: "numeric",
+    day: "numeric"
   });
 });
 
@@ -343,7 +354,7 @@ function initLightbox() {
   lightbox?.destroy();
   lightbox = GLightbox({
     selector: `.${lightboxClass}`,
-    loop: true,
+    loop: true
   });
 }
 

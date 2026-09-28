@@ -38,14 +38,18 @@
 .playlog-hr {
   display: flex;
   align-items: center;
-  color: rgba(var(--v-theme-on-background), 0.5);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-background)) 50%, transparent);
   gap: 10px;
 }
 .playlog-hr:before,
 .playlog-hr:after {
   content: "";
   flex-grow: 1;
-  background: rgba(var(--v-theme-on-background), 0.5);
+  background: color-mix(
+    in srgb,
+    rgb(var(--v-theme-on-background)) 50%,
+    transparent
+  );
   height: 1px;
   font-size: 0px;
   line-height: 0px;
@@ -54,7 +58,7 @@
 
 <script setup>
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["auth"]
 });
 
 import { getSongById } from "~~/assets/wacca/getSongs.js";
@@ -93,7 +97,7 @@ const playlogGrouped = computed(() => {
     } else {
       grouped.push({
         date: dateStr,
-        plays: [play],
+        plays: [play]
       });
     }
   });

@@ -1,5 +1,10 @@
 <template>
-  <div ref="container" class="playfield-canvas" :class="view" :style="{ aspectRatio: aspect }">
+  <div
+    ref="container"
+    class="playfield-canvas"
+    :class="view"
+    :style="{ aspectRatio: aspect }"
+  >
     <canvas
       ref="canvas"
       :class="{ playing }"
@@ -9,7 +14,11 @@
       @pointercancel="onPointerUp"
     ></canvas>
     <!-- Text over the round view, always at full resolution -->
-    <canvas v-if="view === 'circle'" ref="textCanvas" class="text-layer"></canvas>
+    <canvas
+      v-if="view === 'circle'"
+      ref="textCanvas"
+      class="text-layer"
+    ></canvas>
 
     <!-- The previous chart keeps playing underneath until the new one is in -->
     <div
@@ -19,7 +28,11 @@
       aria-live="polite"
     >
       <template v-if="loading">
-        <v-progress-circular indeterminate size="28" width="3"></v-progress-circular>
+        <v-progress-circular
+          indeterminate
+          size="28"
+          width="3"
+        ></v-progress-circular>
         <span>Loading chart…</span>
       </template>
       <template v-else-if="loadError">
@@ -97,7 +110,6 @@ canvas.playing {
 .unrolled .playfield-status {
   border-radius: 8px;
 }
-
 </style>
 
 <script setup>
@@ -109,34 +121,34 @@ const props = defineProps({
   // What usePlayfieldSession returned
   controller: {
     type: Object,
-    required: true,
+    required: true
   },
   // circle: the round screen like in game, unrolled: the same lanes flattened into a strip
   view: {
     type: String,
     default: "circle",
-    validator: (value) => ["circle", "unrolled"].includes(value),
+    validator: (value) => ["circle", "unrolled"].includes(value)
   },
   // Width / height
   aspect: {
     type: Number,
-    default: 1,
+    default: 1
   },
   // Profile options by id
   options: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   // What the view shows, see the renderers' setFeatures
   features: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   // { title, difficulty (1-4), level } for the ring, null for the demo
   chartInfo: {
     type: Object,
-    default: null,
-  },
+    default: null
+  }
 });
 
 const { session, playing, loading, loadError } = props.controller;
@@ -154,7 +166,8 @@ let onScreen = false;
 const MAX_PIXEL_RATIO = 3;
 // Firefox can draw in its GPU process where lag doesn't show up in frame timing,
 // so it gets a lower cap
-const IS_FIREFOX = typeof navigator !== "undefined" && /firefox/i.test(navigator.userAgent);
+const IS_FIREFOX =
+  typeof navigator !== "undefined" && /firefox/i.test(navigator.userAgent);
 const MAX_CANVAS_SIZE = IS_FIREFOX ? 1400 : 2000;
 
 let cssWidth = 0;
@@ -172,8 +185,15 @@ function canvasPixelRatio() {
   // Match device pixels exactly so it doesn't get resampled,
   // unless it disagrees with the pixel ratio (device emulation)
   const estimated = cssWidth * pixelRatio();
-  const exact = deviceWidth && Math.abs(deviceWidth - estimated) <= 2 ? deviceWidth / cssWidth : pixelRatio();
-  return Math.min(exact, MAX_PIXEL_RATIO, MAX_CANVAS_SIZE / Math.max(cssWidth, cssHeight));
+  const exact =
+    deviceWidth && Math.abs(deviceWidth - estimated) <= 2
+      ? deviceWidth / cssWidth
+      : pixelRatio();
+  return Math.min(
+    exact,
+    MAX_PIXEL_RATIO,
+    MAX_CANVAS_SIZE / Math.max(cssWidth, cssHeight)
+  );
 }
 
 function applySize() {
@@ -202,14 +222,14 @@ const loopHooks = {
   canDraw: () => renderer !== null && onScreen && cssWidth > 0,
   draw() {
     renderer.draw();
-  },
+  }
 };
 
 function canvasPoint(event) {
   const rect = canvas.value.getBoundingClientRect();
   return [
     (event.clientX - rect.left) * (canvas.value.width / rect.width),
-    (event.clientY - rect.top) * (canvas.value.height / rect.height),
+    (event.clientY - rect.top) * (canvas.value.height / rect.height)
   ];
 }
 
@@ -243,7 +263,7 @@ watch(
     renderer.setOptions(options);
     props.controller.updateLoop();
   },
-  { deep: true },
+  { deep: true }
 );
 
 watch(
@@ -253,7 +273,7 @@ watch(
     renderer.setFeatures(features);
     props.controller.updateLoop();
   },
-  { deep: true },
+  { deep: true }
 );
 
 watch(
@@ -262,7 +282,7 @@ watch(
     if (!renderer) return;
     renderer.setChartInfo(info);
     props.controller.updateLoop();
-  },
+  }
 );
 
 onMounted(() => {

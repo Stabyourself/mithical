@@ -16,19 +16,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 4,
@@ -47,19 +47,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 5,
@@ -78,19 +78,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 6,
@@ -109,24 +109,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "TII★GER",
-      },
-    ],
+        charter: "TII★GER"
+      }
+    ]
   },
   {
     id: 7,
@@ -145,19 +145,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 8,
@@ -176,19 +176,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 9,
@@ -207,19 +207,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 10,
@@ -238,19 +238,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 20,
@@ -269,19 +269,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 21,
@@ -300,19 +300,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 23,
@@ -331,19 +331,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 24,
@@ -362,19 +362,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.9,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 25,
@@ -393,19 +393,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 26,
@@ -424,24 +424,24 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 27,
@@ -460,19 +460,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 30,
@@ -491,19 +491,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 31,
@@ -522,24 +522,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "Dj",
-      },
-    ],
+        charter: "Dj"
+      }
+    ]
   },
   {
     id: 32,
@@ -558,24 +558,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1003,
@@ -594,19 +594,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1006,
@@ -625,19 +625,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1010,
@@ -656,19 +656,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1011,
@@ -687,19 +687,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1014,
@@ -718,19 +718,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1017,
@@ -749,19 +749,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1027,
@@ -780,19 +780,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1035,
@@ -811,24 +811,24 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 400,
-        charter: "Leitmotif, Watching the Sea Lilies",
-      },
-    ],
+        charter: "Leitmotif, Watching the Sea Lilies"
+      }
+    ]
   },
   {
     id: 1036,
@@ -847,19 +847,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1041,
@@ -878,19 +878,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1049,
@@ -909,19 +909,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1051,
@@ -940,19 +940,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1054,
@@ -971,19 +971,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1055,
@@ -1002,19 +1002,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1056,
@@ -1033,24 +1033,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1057,
@@ -1069,24 +1069,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1058,
@@ -1105,19 +1105,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1059,
@@ -1136,19 +1136,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1060,
@@ -1167,19 +1167,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.1,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1069,
@@ -1198,19 +1198,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.3,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1070,
@@ -1229,19 +1229,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1071,
@@ -1260,19 +1260,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.1,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1072,
@@ -1291,19 +1291,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1073,
@@ -1322,19 +1322,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1076,
@@ -1353,24 +1353,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1088,
@@ -1389,19 +1389,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1089,
@@ -1420,19 +1420,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1090,
@@ -1452,19 +1452,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1094,
@@ -1483,19 +1483,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1095,
@@ -1514,19 +1514,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1099,
@@ -1545,19 +1545,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.2,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1100,
@@ -1576,19 +1576,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1101,
@@ -1607,19 +1607,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1079,
@@ -1638,19 +1638,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.3,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1081,
@@ -1669,24 +1669,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 400,
-        charter: "さけ",
-      },
-    ],
+        charter: "さけ"
+      }
+    ]
   },
   {
     id: 1104,
@@ -1705,19 +1705,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1105,
@@ -1736,24 +1736,24 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1043,
@@ -1772,19 +1772,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1044,
@@ -1803,24 +1803,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1026,
@@ -1839,19 +1839,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1068,
@@ -1870,19 +1870,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.2,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1082,
@@ -1901,19 +1901,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1093,
@@ -1932,24 +1932,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 0,
         gameVersion: 400,
-        charter: "DO YOU REMEMBER THE CODE? [ 覚 ]",
-      },
-    ],
+        charter: "DO YOU REMEMBER THE CODE? [ 覚 ]"
+      }
+    ]
   },
   {
     id: 1062,
@@ -1968,24 +1968,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "Eulogy of a Dandel1on",
-      },
-    ],
+        charter: "Eulogy of a Dandel1on"
+      }
+    ]
   },
   {
     id: 1064,
@@ -2004,19 +2004,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1065,
@@ -2035,19 +2035,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1077,
@@ -2066,24 +2066,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "REiEZU vs やくさんす？",
-      },
-    ],
+        charter: "REiEZU vs やくさんす？"
+      }
+    ]
   },
   {
     id: 1080,
@@ -2102,19 +2102,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.3,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1015,
@@ -2133,19 +2133,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1016,
@@ -2164,19 +2164,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1037,
@@ -2195,19 +2195,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.2,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1083,
@@ -2226,19 +2226,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1084,
@@ -2257,24 +2257,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 400,
-        charter: "XVII:THE STARS/WACCA PLUS FUMEN TEAM",
-      },
-    ],
+        charter: "XVII:THE STARS/WACCA PLUS FUMEN TEAM"
+      }
+    ]
   },
   {
     id: 1001,
@@ -2293,24 +2293,24 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 400,
-        charter: "BAD ENGINE",
-      },
-    ],
+        charter: "BAD ENGINE"
+      }
+    ]
   },
   {
     id: 1002,
@@ -2329,19 +2329,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1119,
@@ -2360,24 +2360,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 400,
-        charter: "ゴルマス 「地獄の蝕」",
-      },
-    ],
+        charter: "ゴルマス 「地獄の蝕」"
+      }
+    ]
   },
   {
     id: 1124,
@@ -2396,19 +2396,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1125,
@@ -2427,19 +2427,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1052,
@@ -2458,19 +2458,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1107,
@@ -2489,19 +2489,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1108,
@@ -2520,19 +2520,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1118,
@@ -2551,19 +2551,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1063,
@@ -2582,24 +2582,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "VII:THE CHARIOT/YUKIDAMA",
-      },
-    ],
+        charter: "VII:THE CHARIOT/YUKIDAMA"
+      }
+    ]
   },
   {
     id: 1097,
@@ -2618,19 +2618,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.1,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1098,
@@ -2649,19 +2649,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1109,
@@ -2680,19 +2680,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.2,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1018,
@@ -2711,19 +2711,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1078,
@@ -2742,19 +2742,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1091,
@@ -2773,19 +2773,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.3,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1110,
@@ -2804,19 +2804,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1121,
@@ -2835,24 +2835,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "fraudulentRAV#R",
-      },
-    ],
+        charter: "fraudulentRAV#R"
+      }
+    ]
   },
   {
     id: 1004,
@@ -2871,19 +2871,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1005,
@@ -2902,19 +2902,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1042,
@@ -2933,24 +2933,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "Lightning Sword vs 深红鬼",
-      },
-    ],
+        charter: "Lightning Sword vs 深红鬼"
+      }
+    ]
   },
   {
     id: 1122,
@@ -2969,24 +2969,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "YUKIDAMA",
-      },
-    ],
+        charter: "YUKIDAMA"
+      }
+    ]
   },
   {
     id: 1127,
@@ -3005,19 +3005,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.1,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1030,
@@ -3036,19 +3036,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1061,
@@ -3067,19 +3067,19 @@ const waccaSongs = [
       {
         difficulty: 7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.2,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1111,
@@ -3098,19 +3098,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1045,
@@ -3129,24 +3129,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 400,
-        charter: "Djäger",
-      },
-    ],
+        charter: "Djäger"
+      }
+    ]
   },
   {
     id: 1047,
@@ -3165,19 +3165,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.7,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1050,
@@ -3196,19 +3196,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1123,
@@ -3227,19 +3227,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.2,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1126,
@@ -3258,19 +3258,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.6,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.4,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1085,
@@ -3289,19 +3289,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1117,
@@ -3320,19 +3320,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.2,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1128,
@@ -3351,19 +3351,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 100,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 100,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1009,
@@ -3382,19 +3382,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1013,
@@ -3413,19 +3413,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1086,
@@ -3444,19 +3444,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1113,
@@ -3475,19 +3475,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1115,
@@ -3506,19 +3506,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.1,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1207,
@@ -3537,19 +3537,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1208,
@@ -3568,19 +3568,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1210,
@@ -3599,19 +3599,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1211,
@@ -3630,19 +3630,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.4,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1212,
@@ -3661,19 +3661,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1213,
@@ -3692,19 +3692,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1214,
@@ -3723,19 +3723,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1217,
@@ -3754,19 +3754,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.1,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1265,
@@ -3785,19 +3785,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.1,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1267,
@@ -3816,19 +3816,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1268,
@@ -3847,19 +3847,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.1,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1215,
@@ -3878,19 +3878,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1216,
@@ -3909,19 +3909,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1218,
@@ -3940,19 +3940,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.1,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1269,
@@ -3971,19 +3971,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1270,
@@ -4002,19 +4002,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.2,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1273,
@@ -4033,19 +4033,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1021,
@@ -4064,19 +4064,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.4,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1203,
@@ -4095,19 +4095,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.1,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1221,
@@ -4126,19 +4126,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.1,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1222,
@@ -4157,19 +4157,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1272,
@@ -4188,19 +4188,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.1,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1226,
@@ -4219,19 +4219,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1227,
@@ -4250,19 +4250,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1228,
@@ -4281,19 +4281,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.1,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1229,
@@ -4312,19 +4312,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1274,
@@ -4343,19 +4343,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.1,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1230,
@@ -4374,19 +4374,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.1,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1275,
@@ -4405,24 +4405,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "スターリー・バニー",
-      },
-    ],
+        charter: "スターリー・バニー"
+      }
+    ]
   },
   {
     id: 1092,
@@ -4441,19 +4441,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1114,
@@ -4472,19 +4472,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1232,
@@ -4503,19 +4503,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1242,
@@ -4534,19 +4534,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1243,
@@ -4565,19 +4565,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1260,
@@ -4596,19 +4596,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1262,
@@ -4627,19 +4627,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1261,
@@ -4658,19 +4658,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.6,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1263,
@@ -4689,19 +4689,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1116,
@@ -4720,19 +4720,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1258,
@@ -4751,19 +4751,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1259,
@@ -4782,19 +4782,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1102,
@@ -4813,19 +4813,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1278,
@@ -4844,19 +4844,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.1,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1279,
@@ -4875,19 +4875,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1236,
@@ -4906,19 +4906,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.5,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1237,
@@ -4937,19 +4937,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1031,
@@ -4968,19 +4968,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1244,
@@ -4999,19 +4999,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1245,
@@ -5030,19 +5030,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1246,
@@ -5061,19 +5061,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.1,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1247,
@@ -5092,24 +5092,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 400,
-        charter: "kitsura",
-      },
-    ],
+        charter: "kitsura"
+      }
+    ]
   },
   {
     id: 1248,
@@ -5128,19 +5128,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.1,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1249,
@@ -5159,19 +5159,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1250,
@@ -5190,24 +5190,24 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1251,
@@ -5226,24 +5226,24 @@ const waccaSongs = [
       {
         difficulty: 7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.1,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1276,
@@ -5262,19 +5262,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.4,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1205,
@@ -5293,24 +5293,24 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.8,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1206,
@@ -5329,19 +5329,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1238,
@@ -5360,19 +5360,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.5,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1254,
@@ -5391,19 +5391,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1255,
@@ -5422,19 +5422,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 150,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 150,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1008,
@@ -5453,19 +5453,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1020,
@@ -5484,19 +5484,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.1,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1087,
@@ -5515,19 +5515,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1224,
@@ -5546,19 +5546,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1231,
@@ -5577,24 +5577,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 400,
-        charter: "LIGHTNING;SWORD",
-      },
-    ],
+        charter: "LIGHTNING;SWORD"
+      }
+    ]
   },
   {
     id: 1264,
@@ -5613,19 +5613,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2001,
@@ -5644,19 +5644,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2002,
@@ -5676,19 +5676,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2003,
@@ -5707,19 +5707,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2004,
@@ -5738,19 +5738,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2005,
@@ -5769,19 +5769,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2006,
@@ -5800,19 +5800,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2007,
@@ -5831,19 +5831,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2008,
@@ -5862,19 +5862,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2009,
@@ -5893,19 +5893,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2011,
@@ -5924,19 +5924,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2012,
@@ -5955,24 +5955,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2013,
@@ -5991,24 +5991,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 400,
-        charter: "Lightning Sword",
-      },
-    ],
+        charter: "Lightning Sword"
+      }
+    ]
   },
   {
     id: 2014,
@@ -6027,19 +6027,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2015,
@@ -6058,19 +6058,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2016,
@@ -6089,19 +6089,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2017,
@@ -6120,19 +6120,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.1,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2019,
@@ -6151,19 +6151,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2023,
@@ -6182,19 +6182,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.5,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2027,
@@ -6213,19 +6213,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2028,
@@ -6244,19 +6244,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2029,
@@ -6275,19 +6275,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.1,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2030,
@@ -6306,19 +6306,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 5.1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.4,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2031,
@@ -6337,19 +6337,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2065,
@@ -6368,19 +6368,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.3,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2032,
@@ -6399,19 +6399,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.9,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2033,
@@ -6430,19 +6430,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2034,
@@ -6461,19 +6461,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2010,
@@ -6492,19 +6492,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.2,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2036,
@@ -6523,19 +6523,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2047,
@@ -6554,24 +6554,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 400,
-        charter: "ダンデライオン",
-      },
-    ],
+        charter: "ダンデライオン"
+      }
+    ]
   },
   {
     id: 1240,
@@ -6590,19 +6590,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2040,
@@ -6621,19 +6621,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2042,
@@ -6652,19 +6652,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2068,
@@ -6683,19 +6683,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2069,
@@ -6714,19 +6714,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2084,
@@ -6745,19 +6745,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1204,
@@ -6776,19 +6776,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2043,
@@ -6807,19 +6807,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2021,
@@ -6838,24 +6838,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.2,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2024,
@@ -6874,19 +6874,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2066,
@@ -6905,19 +6905,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.3,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2067,
@@ -6936,19 +6936,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2037,
@@ -6967,19 +6967,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2048,
@@ -6998,19 +6998,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2049,
@@ -7029,19 +7029,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2070,
@@ -7060,19 +7060,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2088,
@@ -7091,19 +7091,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2089,
@@ -7122,19 +7122,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2090,
@@ -7153,19 +7153,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2091,
@@ -7184,19 +7184,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1256,
@@ -7215,19 +7215,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2059,
@@ -7246,19 +7246,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2060,
@@ -7277,19 +7277,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2062,
@@ -7308,19 +7308,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2075,
@@ -7339,19 +7339,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1239,
@@ -7370,19 +7370,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2076,
@@ -7401,19 +7401,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2077,
@@ -7432,19 +7432,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2078,
@@ -7463,19 +7463,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2071,
@@ -7494,19 +7494,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.8,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2072,
@@ -7525,19 +7525,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2073,
@@ -7556,19 +7556,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2074,
@@ -7587,19 +7587,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2046,
@@ -7618,19 +7618,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2053,
@@ -7649,24 +7649,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "↓Rafraud↓",
-      },
-    ],
+        charter: "↓Rafraud↓"
+      }
+    ]
   },
   {
     id: 2054,
@@ -7685,19 +7685,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.1,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2055,
@@ -7716,19 +7716,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2056,
@@ -7747,19 +7747,19 @@ const waccaSongs = [
       {
         difficulty: 7,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 200,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.2,
         gameVersion: 200,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1209,
@@ -7778,19 +7778,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1219,
@@ -7809,19 +7809,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1241,
@@ -7840,19 +7840,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.5,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2058,
@@ -7871,19 +7871,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.1,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2079,
@@ -7902,19 +7902,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2080,
@@ -7933,19 +7933,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.6,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2081,
@@ -7964,19 +7964,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2082,
@@ -7995,19 +7995,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2083,
@@ -8026,19 +8026,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2092,
@@ -8057,19 +8057,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2202,
@@ -8088,19 +8088,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.9,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2203,
@@ -8119,19 +8119,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2206,
@@ -8150,19 +8150,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.1,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2207,
@@ -8181,19 +8181,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.1,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2208,
@@ -8212,19 +8212,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2209,
@@ -8243,24 +8243,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.2,
         gameVersion: 400,
-        charter: "やくさんす？ VS レイエズ",
-      },
-    ],
+        charter: "やくさんす？ VS レイエズ"
+      }
+    ]
   },
   {
     id: 2210,
@@ -8279,19 +8279,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2211,
@@ -8310,19 +8310,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2212,
@@ -8341,19 +8341,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2213,
@@ -8372,19 +8372,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2205,
@@ -8403,19 +8403,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.9,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2214,
@@ -8434,19 +8434,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2215,
@@ -8465,19 +8465,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2216,
@@ -8496,19 +8496,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.1,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2038,
@@ -8527,19 +8527,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.2,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2039,
@@ -8558,19 +8558,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2085,
@@ -8589,19 +8589,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2217,
@@ -8620,19 +8620,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2218,
@@ -8651,19 +8651,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2219,
@@ -8682,19 +8682,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2220,
@@ -8713,19 +8713,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2221,
@@ -8744,19 +8744,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2222,
@@ -8775,19 +8775,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2223,
@@ -8806,19 +8806,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.3,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2224,
@@ -8837,19 +8837,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2225,
@@ -8868,19 +8868,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2226,
@@ -8899,19 +8899,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2243,
@@ -8930,24 +8930,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2244,
@@ -8966,19 +8966,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.4,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2245,
@@ -8997,19 +8997,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2246,
@@ -9028,19 +9028,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.5,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2251,
@@ -9059,19 +9059,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.1,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2247,
@@ -9090,19 +9090,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.1,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2248,
@@ -9121,19 +9121,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2249,
@@ -9152,19 +9152,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2250,
@@ -9183,19 +9183,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2229,
@@ -9214,19 +9214,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6.8,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2230,
@@ -9245,19 +9245,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2231,
@@ -9276,24 +9276,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "YUKIDAMA",
-      },
-    ],
+        charter: "YUKIDAMA"
+      }
+    ]
   },
   {
     id: 2252,
@@ -9312,19 +9312,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2253,
@@ -9343,19 +9343,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2254,
@@ -9374,19 +9374,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2232,
@@ -9405,19 +9405,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.1,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2234,
@@ -9436,19 +9436,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2235,
@@ -9467,24 +9467,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.2,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2236,
@@ -9503,24 +9503,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.0,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2255,
@@ -9539,19 +9539,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2256,
@@ -9570,19 +9570,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 250,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 250,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2239,
@@ -9601,19 +9601,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3003,
@@ -9632,19 +9632,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.9,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3005,
@@ -9663,19 +9663,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3006,
@@ -9694,19 +9694,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3007,
@@ -9725,19 +9725,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.9,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3008,
@@ -9756,19 +9756,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3009,
@@ -9787,19 +9787,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3011,
@@ -9818,24 +9818,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.2,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3012,
@@ -9854,24 +9854,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "PastelTangent",
-      },
-    ],
+        charter: "PastelTangent"
+      }
+    ]
   },
   {
     id: 3013,
@@ -9890,19 +9890,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3015,
@@ -9921,19 +9921,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3016,
@@ -9952,19 +9952,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.1,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3017,
@@ -9983,19 +9983,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3018,
@@ -10014,19 +10014,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3019,
@@ -10045,19 +10045,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3020,
@@ -10076,19 +10076,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3021,
@@ -10107,19 +10107,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3022,
@@ -10138,19 +10138,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3023,
@@ -10169,24 +10169,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.2,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3028,
@@ -10205,19 +10205,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3029,
@@ -10236,19 +10236,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.1,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2204,
@@ -10267,24 +10267,24 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2227,
@@ -10303,19 +10303,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2228,
@@ -10334,19 +10334,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3031,
@@ -10365,19 +10365,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3033,
@@ -10396,19 +10396,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3034,
@@ -10427,19 +10427,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.1,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2240,
@@ -10458,19 +10458,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3024,
@@ -10489,19 +10489,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3026,
@@ -10520,19 +10520,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3035,
@@ -10551,19 +10551,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 1032,
@@ -10582,19 +10582,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 2238,
@@ -10613,19 +10613,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.2,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3025,
@@ -10644,19 +10644,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3036,
@@ -10675,19 +10675,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3040,
@@ -10706,19 +10706,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.1,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3041,
@@ -10737,19 +10737,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3037,
@@ -10768,19 +10768,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.4,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3038,
@@ -10799,19 +10799,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3039,
@@ -10830,19 +10830,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3027,
@@ -10861,19 +10861,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3042,
@@ -10892,19 +10892,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3030,
@@ -10923,19 +10923,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3044,
@@ -10954,24 +10954,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3045,
@@ -10990,24 +10990,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3046,
@@ -11026,24 +11026,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.1,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3047,
@@ -11062,24 +11062,24 @@ const waccaSongs = [
       {
         difficulty: 8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.5,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3048,
@@ -11098,19 +11098,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3049,
@@ -11129,19 +11129,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3050,
@@ -11160,19 +11160,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.4,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3055,
@@ -11191,19 +11191,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.5,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3056,
@@ -11223,19 +11223,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.1,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3057,
@@ -11254,19 +11254,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3004,
@@ -11285,19 +11285,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3059,
@@ -11316,19 +11316,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3058,
@@ -11347,24 +11347,24 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.4,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3052,
@@ -11383,19 +11383,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.2,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3053,
@@ -11414,19 +11414,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.2,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3060,
@@ -11445,19 +11445,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3061,
@@ -11476,19 +11476,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3062,
@@ -11507,24 +11507,24 @@ const waccaSongs = [
       {
         difficulty: 8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 15.1,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3063,
@@ -11543,19 +11543,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3032,
@@ -11574,19 +11574,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3087,
@@ -11605,19 +11605,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3071,
@@ -11636,19 +11636,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3078,
@@ -11667,24 +11667,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "ROCHE LIMIT",
-      },
-    ],
+        charter: "ROCHE LIMIT"
+      }
+    ]
   },
   {
     id: 3092,
@@ -11703,19 +11703,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3083,
@@ -11734,19 +11734,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3084,
@@ -11765,19 +11765,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3081,
@@ -11796,19 +11796,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3074,
@@ -11827,19 +11827,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3090,
@@ -11858,19 +11858,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3080,
@@ -11889,24 +11889,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 400,
-        charter: "狐憑き",
-      },
-    ],
+        charter: "狐憑き"
+      }
+    ]
   },
   {
     id: 3079,
@@ -11925,19 +11925,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 7.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3085,
@@ -11956,19 +11956,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3077,
@@ -11987,19 +11987,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.1,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3088,
@@ -12018,19 +12018,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.7,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.6,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3086,
@@ -12049,19 +12049,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 11,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3076,
@@ -12080,19 +12080,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.7,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3072,
@@ -12111,19 +12111,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.9,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3075,
@@ -12142,19 +12142,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.8,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3089,
@@ -12173,24 +12173,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 14.1,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3091,
@@ -12209,19 +12209,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 8.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3093,
@@ -12240,19 +12240,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.9,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.5,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3073,
@@ -12271,19 +12271,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 10.2,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.9,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3082,
@@ -12302,19 +12302,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.1,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.4,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3094,
@@ -12333,19 +12333,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12.8,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 3064,
@@ -12365,24 +12365,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 9.6,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 13.3,
         gameVersion: 300,
-        charter: "Marvelous",
+        charter: "Marvelous"
       },
       {
         difficulty: 12,
         gameVersion: 300,
-        charter: "Marvelous",
-      },
-    ],
+        charter: "Marvelous"
+      }
+    ]
   },
   {
     id: 4001,
@@ -12400,19 +12400,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "「ヤス」",
+        charter: "「ヤス」"
       },
       {
         difficulty: 10.7,
         gameVersion: 400,
-        charter: "「ヤス」",
+        charter: "「ヤス」"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "ななひらハリケーン/やくさんす？",
-      },
-    ],
+        charter: "ななひらハリケーン/やくさんす？"
+      }
+    ]
   },
   {
     id: 4002,
@@ -12430,19 +12430,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 9,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 13.2,
         gameVersion: 400,
-        charter: "Snowball",
-      },
-    ],
+        charter: "Snowball"
+      }
+    ]
   },
   {
     id: 4003,
@@ -12460,19 +12460,19 @@ const waccaSongs = [
       {
         difficulty: 7,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 10,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "Snowball",
-      },
-    ],
+        charter: "Snowball"
+      }
+    ]
   },
   {
     id: 4008,
@@ -12490,19 +12490,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Kursain",
+        charter: "Kursain"
       },
       {
         difficulty: 7,
         gameVersion: 400,
-        charter: "Kursain",
+        charter: "Kursain"
       },
       {
         difficulty: 12.2,
         gameVersion: 400,
-        charter: "Kursain",
-      },
-    ],
+        charter: "Kursain"
+      }
+    ]
   },
   {
     id: 4019,
@@ -12520,19 +12520,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "Kursain",
+        charter: "Kursain"
       },
       {
         difficulty: 8,
         gameVersion: 400,
-        charter: "Kursain",
+        charter: "Kursain"
       },
       {
         difficulty: 12.5,
         gameVersion: 400,
-        charter: "Kursain",
-      },
-    ],
+        charter: "Kursain"
+      }
+    ]
   },
   {
     id: 4020,
@@ -12550,19 +12550,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 400,
-        charter: "あど・ざ・さみい！",
+        charter: "あど・ざ・さみい！"
       },
       {
         difficulty: 7,
         gameVersion: 400,
-        charter: "あど・ざ・さみい！",
+        charter: "あど・ざ・さみい！"
       },
       {
         difficulty: 11.5,
         gameVersion: 400,
-        charter: "あど・ざ・さみい！",
-      },
-    ],
+        charter: "あど・ざ・さみい！"
+      }
+    ]
   },
   {
     id: 4021,
@@ -12580,19 +12580,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: "「YASU」",
+        charter: "「YASU」"
       },
       {
         difficulty: 9.3,
         gameVersion: 400,
-        charter: "「YASU」",
+        charter: "「YASU」"
       },
       {
         difficulty: 13.1,
         gameVersion: 400,
-        charter: "「YASU」",
-      },
-    ],
+        charter: "「YASU」"
+      }
+    ]
   },
   {
     id: 4035,
@@ -12610,24 +12610,24 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 9.7,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 12.1,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 14.0,
         gameVersion: 400,
-        charter: "SNOWBÅLL(大未来雪玉)",
-      },
-    ],
+        charter: "SNOWBÅLL(大未来雪玉)"
+      }
+    ]
   },
   {
     id: 4036,
@@ -12645,24 +12645,24 @@ const waccaSongs = [
       {
         difficulty: 7,
         gameVersion: 400,
-        charter: "Tairitsu",
+        charter: "Tairitsu"
       },
       {
         difficulty: 10.6,
         gameVersion: 400,
-        charter: "Tairitsu ft. Irrena",
+        charter: "Tairitsu ft. Irrena"
       },
       {
         difficulty: 13.5,
         gameVersion: 400,
-        charter: "靖",
+        charter: "靖"
       },
       {
         difficulty: 14.5,
         gameVersion: 400,
-        charter: "CODE:Seraphina",
-      },
-    ],
+        charter: "CODE:Seraphina"
+      }
+    ]
   },
   {
     id: 4039,
@@ -12680,24 +12680,24 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 400,
-        charter: "「YASU」",
+        charter: "「YASU」"
       },
       {
         difficulty: 8,
         gameVersion: 400,
-        charter: "「YASU」",
+        charter: "「YASU」"
       },
       {
         difficulty: 11.8,
         gameVersion: 400,
-        charter: "「YASU」",
+        charter: "「YASU」"
       },
       {
         difficulty: 13.2,
         gameVersion: 400,
-        charter: "やくさんす？",
-      },
-    ],
+        charter: "やくさんす？"
+      }
+    ]
   },
   {
     id: 4028,
@@ -12715,19 +12715,19 @@ const waccaSongs = [
       {
         difficulty: 7,
         gameVersion: 400,
-        charter: "Tairitsu",
+        charter: "Tairitsu"
       },
       {
         difficulty: 10.7,
         gameVersion: 400,
-        charter: "Tairitsu",
+        charter: "Tairitsu"
       },
       {
         difficulty: 13.9,
         gameVersion: 400,
-        charter: "Tairitsu",
-      },
-    ],
+        charter: "Tairitsu"
+      }
+    ]
   },
   {
     id: 4041,
@@ -12745,19 +12745,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "「ヤス」",
+        charter: "「ヤス」"
       },
       {
         difficulty: 8.4,
         gameVersion: 400,
-        charter: "「ヤス」",
+        charter: "「ヤス」"
       },
       {
         difficulty: 12.7,
         gameVersion: 400,
-        charter: "タノシストアカスタマ",
-      },
-    ],
+        charter: "タノシストアカスタマ"
+      }
+    ]
   },
   {
     id: 4014,
@@ -12775,19 +12775,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: "「レイエズ」",
+        charter: "「レイエズ」"
       },
       {
         difficulty: 10.7,
         gameVersion: 400,
-        charter: "「ヤス」",
+        charter: "「ヤス」"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "「ヤス VS レイエズ」",
-      },
-    ],
+        charter: "「ヤス VS レイエズ」"
+      }
+    ]
   },
   {
     id: 4046,
@@ -12805,19 +12805,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Gull vs. audi0",
+        charter: "Gull vs. audi0"
       },
       {
         difficulty: 8.7,
         gameVersion: 400,
-        charter: "Gull vs. Vespera H.Q. & audi0",
+        charter: "Gull vs. Vespera H.Q. & audi0"
       },
       {
         difficulty: 11,
         gameVersion: 400,
-        charter: "Gull vs. Vespera H.Q.",
-      },
-    ],
+        charter: "Gull vs. Vespera H.Q."
+      }
+    ]
   },
   {
     id: 4048,
@@ -12835,19 +12835,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "「YASU」",
+        charter: "「YASU」"
       },
       {
         difficulty: 10.7,
         gameVersion: 400,
-        charter: "「YASU」",
+        charter: "「YASU」"
       },
       {
         difficulty: 14,
         gameVersion: 400,
-        charter: "「TERRORIZE THE ARCADE」",
-      },
-    ],
+        charter: "「TERRORIZE THE ARCADE」"
+      }
+    ]
   },
   {
     id: 4049,
@@ -12865,19 +12865,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "♥あどれいぬさみい♥ vs. Lightning Sword",
+        charter: "♥あどれいぬさみい♥ vs. Lightning Sword"
       },
       {
         difficulty: 9.4,
         gameVersion: 400,
-        charter: "♥あどれいぬさみい♥ vs. Lightning Sword",
+        charter: "♥あどれいぬさみい♥ vs. Lightning Sword"
       },
       {
         difficulty: 13.3,
         gameVersion: 400,
-        charter: "♥あどれいぬさみい♥ vs. Lightning Sword",
-      },
-    ],
+        charter: "♥あどれいぬさみい♥ vs. Lightning Sword"
+      }
+    ]
   },
   {
     id: 4052,
@@ -12895,19 +12895,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Tiiger 2023",
+        charter: "Tiiger 2023"
       },
       {
         difficulty: 9.9,
         gameVersion: 400,
-        charter: "Tiiger 2023",
+        charter: "Tiiger 2023"
       },
       {
         difficulty: 12.6,
         gameVersion: 400,
-        charter: "Tiiger vs. nb1rs 2023",
-      },
-    ],
+        charter: "Tiiger vs. nb1rs 2023"
+      }
+    ]
   },
   {
     id: 4055,
@@ -12925,19 +12925,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "ngxbody.",
+        charter: "ngxbody."
       },
       {
         difficulty: 8,
         gameVersion: 400,
-        charter: "DJ NGOBODY.",
+        charter: "DJ NGOBODY."
       },
       {
         difficulty: 12.5,
         gameVersion: 400,
-        charter: "Snowball",
-      },
-    ],
+        charter: "Snowball"
+      }
+    ]
   },
   {
     id: 4056,
@@ -12955,24 +12955,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: "ヤ.ヤ.ス.ス.ヤ.ス.ス.",
+        charter: "ヤ.ヤ.ス.ス.ヤ.ス.ス."
       },
       {
         difficulty: 9,
         gameVersion: 400,
-        charter: "ヤ.ヤ.ス.ス.ヤ.ス.ス.",
+        charter: "ヤ.ヤ.ス.ス.ヤ.ス.ス."
       },
       {
         difficulty: 13.1,
         gameVersion: 400,
-        charter: "ヤ.ヤ.ス.ス.ヤ.ス.ス.",
+        charter: "ヤ.ヤ.ス.ス.ヤ.ス.ス."
       },
       {
         difficulty: 0,
         gameVersion: 400,
-        charter: ".ス.ス.ヤ.ス.ス.ヤ.ヤ [ 戻 ]",
-      },
-    ],
+        charter: ".ス.ス.ヤ.ス.ス.ヤ.ヤ [ 戻 ]"
+      }
+    ]
   },
   {
     id: 4004,
@@ -12990,19 +12990,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "Kursain vs Oakleyman",
+        charter: "Kursain vs Oakleyman"
       },
       {
         difficulty: 9.7,
         gameVersion: 400,
-        charter: "Kursain vs Oakleyman",
+        charter: "Kursain vs Oakleyman"
       },
       {
         difficulty: 12.7,
         gameVersion: 400,
-        charter: "Kursain vs Oakleyman",
-      },
-    ],
+        charter: "Kursain vs Oakleyman"
+      }
+    ]
   },
   {
     id: 4058,
@@ -13020,19 +13020,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
+        charter: "ソーラー・ヘキサ"
       },
       {
         difficulty: 10.7,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
+        charter: "ソーラー・ヘキサ"
       },
       {
         difficulty: 13.6,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
-      },
-    ],
+        charter: "ソーラー・ヘキサ"
+      }
+    ]
   },
   {
     id: 4061,
@@ -13050,19 +13050,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "BEAVER BELIEVER",
+        charter: "BEAVER BELIEVER"
       },
       {
         difficulty: 8,
         gameVersion: 400,
-        charter: "BEAVER BELIEVER",
+        charter: "BEAVER BELIEVER"
       },
       {
         difficulty: 12.3,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
-      },
-    ],
+        charter: "ソーラー・ヘキサ"
+      }
+    ]
   },
   {
     id: 4064,
@@ -13080,19 +13080,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "SiameseDerp",
+        charter: "SiameseDerp"
       },
       {
         difficulty: 9.9,
         gameVersion: 400,
-        charter: "SiameseDerp",
+        charter: "SiameseDerp"
       },
       {
         difficulty: 13.5,
         gameVersion: 400,
-        charter: "shinonome_atsushi vs. Vespera H.Q.",
-      },
-    ],
+        charter: "shinonome_atsushi vs. Vespera H.Q."
+      }
+    ]
   },
   {
     id: 4066,
@@ -13110,24 +13110,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Lightning Sword",
+        charter: "Lightning Sword"
       },
       {
         difficulty: 8,
         gameVersion: 400,
-        charter: "Oakleyman",
+        charter: "Oakleyman"
       },
       {
         difficulty: 12.4,
         gameVersion: 400,
-        charter: "Vespera H.Q.",
+        charter: "Vespera H.Q."
       },
       {
         difficulty: 13.4,
         gameVersion: 400,
-        charter: "深红鬼 vs Lightning 唱",
-      },
-    ],
+        charter: "深红鬼 vs Lightning 唱"
+      }
+    ]
   },
   {
     id: 4067,
@@ -13145,19 +13145,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "saKe",
+        charter: "saKe"
       },
       {
         difficulty: 9,
         gameVersion: 400,
-        charter: "saKe",
+        charter: "saKe"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "saKe v.s. Vespera H.Q.",
-      },
-    ],
+        charter: "saKe v.s. Vespera H.Q."
+      }
+    ]
   },
   {
     id: 4068,
@@ -13175,19 +13175,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "レイエズ ft. Lightning Sword",
+        charter: "レイエズ ft. Lightning Sword"
       },
       {
         difficulty: 9,
         gameVersion: 400,
-        charter: "Lightning Sword",
+        charter: "Lightning Sword"
       },
       {
         difficulty: 13.2,
         gameVersion: 400,
-        charter: "レイエズ x Lightning Sword ft. Vespera H.Q.(R-18 edition)",
-      },
-    ],
+        charter: "レイエズ x Lightning Sword ft. Vespera H.Q.(R-18 edition)"
+      }
+    ]
   },
   {
     id: 4069,
@@ -13205,19 +13205,19 @@ const waccaSongs = [
       {
         difficulty: 7,
         gameVersion: 400,
-        charter: "Lightning Sword",
+        charter: "Lightning Sword"
       },
       {
         difficulty: 10.5,
         gameVersion: 400,
-        charter: "Vespera H.Q.",
+        charter: "Vespera H.Q."
       },
       {
         difficulty: 14,
         gameVersion: 400,
-        charter: "Vespera H.Q. vs Lightning Sword",
-      },
-    ],
+        charter: "Vespera H.Q. vs Lightning Sword"
+      }
+    ]
   },
   {
     id: 4070,
@@ -13235,24 +13235,24 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 400,
-        charter: "「ヤス」",
+        charter: "「ヤス」"
       },
       {
         difficulty: 7,
         gameVersion: 400,
-        charter: "Kursain & audi0c0aster1",
+        charter: "Kursain & audi0c0aster1"
       },
       {
         difficulty: 11.9,
         gameVersion: 400,
-        charter: "Kursain ft. Vespera. H. Q.",
+        charter: "Kursain ft. Vespera. H. Q."
       },
       {
         difficulty: 13.1,
         gameVersion: 400,
-        charter: "「ヤス」",
-      },
-    ],
+        charter: "「ヤス」"
+      }
+    ]
   },
   {
     id: 4071,
@@ -13270,19 +13270,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "Binary",
+        charter: "Binary"
       },
       {
         difficulty: 8.7,
         gameVersion: 400,
-        charter: "Binary",
+        charter: "Binary"
       },
       {
         difficulty: 13.4,
         gameVersion: 400,
-        charter: "Binary v.s. Lightning Sword",
-      },
-    ],
+        charter: "Binary v.s. Lightning Sword"
+      }
+    ]
   },
   {
     id: 4072,
@@ -13300,24 +13300,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 10,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 12.8,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 13.9,
         gameVersion: 400,
-        charter: "III:THE EMPRESS/atomsk",
-      },
-    ],
+        charter: "III:THE EMPRESS/atomsk"
+      }
+    ]
   },
   {
     id: 4073,
@@ -13335,19 +13335,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 10,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "Snowball",
-      },
-    ],
+        charter: "Snowball"
+      }
+    ]
   },
   {
     id: 4074,
@@ -13365,24 +13365,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: "Vespera H.Q.",
+        charter: "Vespera H.Q."
       },
       {
         difficulty: 9.7,
         gameVersion: 400,
-        charter: "Oakleyman",
+        charter: "Oakleyman"
       },
       {
         difficulty: 13.4,
         gameVersion: 400,
-        charter: "lI1176 (ヤス remix)",
+        charter: "lI1176 (ヤス remix)"
       },
       {
         difficulty: 14.2,
         gameVersion: 400,
-        charter: "T Balls 2",
-      },
-    ],
+        charter: "T Balls 2"
+      }
+    ]
   },
   {
     id: 4076,
@@ -13400,24 +13400,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: "RocketW",
+        charter: "RocketW"
       },
       {
         difficulty: 7,
         gameVersion: 400,
-        charter: "RocketW",
+        charter: "RocketW"
       },
       {
         difficulty: 10.7,
         gameVersion: 400,
-        charter: "twis v.s. Vespera H.Q.",
+        charter: "twis v.s. Vespera H.Q."
       },
       {
         difficulty: 12.3,
         gameVersion: 400,
-        charter: "tiiger ft. Vespera H.Q.",
-      },
-    ],
+        charter: "tiiger ft. Vespera H.Q."
+      }
+    ]
   },
   {
     id: 4010,
@@ -13435,24 +13435,24 @@ const waccaSongs = [
       {
         difficulty: 8,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 11,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 13.3,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 14.3,
         gameVersion: 400,
-        charter: "Snowball",
-      },
-    ],
+        charter: "Snowball"
+      }
+    ]
   },
   {
     id: 4030,
@@ -13470,24 +13470,24 @@ const waccaSongs = [
       {
         difficulty: 8,
         gameVersion: 400,
-        charter: "YUKIDAMA",
+        charter: "YUKIDAMA"
       },
       {
         difficulty: 11.6,
         gameVersion: 400,
-        charter: "<ヤス>",
+        charter: "<ヤス>"
       },
       {
         difficulty: 14.3,
         gameVersion: 400,
-        charter: "YUKIDAMA",
+        charter: "YUKIDAMA"
       },
       {
         difficulty: 15,
         gameVersion: 400,
-        charter: "�",
-      },
-    ],
+        charter: "�"
+      }
+    ]
   },
   {
     id: 4087,
@@ -13505,24 +13505,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "dandEGO",
+        charter: "dandEGO"
       },
       {
         difficulty: 9.8,
         gameVersion: 400,
-        charter: "fraudulentEGO",
+        charter: "fraudulentEGO"
       },
       {
         difficulty: 12.7,
         gameVersion: 400,
-        charter: "dandEGO vs. fraudulentEGO",
+        charter: "dandEGO vs. fraudulentEGO"
       },
       {
         difficulty: 14.0,
         gameVersion: 400,
-        charter: "WACCA PLUS FUMEN TEAM「小我」",
-      },
-    ],
+        charter: "WACCA PLUS FUMEN TEAM「小我」"
+      }
+    ]
   },
   {
     id: 4084,
@@ -13540,19 +13540,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
+        charter: "ソーラー・ヘキサ"
       },
       {
         difficulty: 10,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
+        charter: "ソーラー・ヘキサ"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
-      },
-    ],
+        charter: "ソーラー・ヘキサ"
+      }
+    ]
   },
   {
     id: 4083,
@@ -13570,19 +13570,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "Tiiger",
+        charter: "Tiiger"
       },
       {
         difficulty: 9,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 13.5,
         gameVersion: 400,
-        charter: "Snowball",
-      },
-    ],
+        charter: "Snowball"
+      }
+    ]
   },
   {
     id: 4082,
@@ -13600,24 +13600,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 8.8,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 10.6,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 13.1,
         gameVersion: 400,
-        charter: "Panaman ft. Vespera H. Q.",
-      },
-    ],
+        charter: "Panaman ft. Vespera H. Q."
+      }
+    ]
   },
   {
     id: 4040,
@@ -13635,19 +13635,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "RocketW",
+        charter: "RocketW"
       },
       {
         difficulty: 9.8,
         gameVersion: 400,
-        charter: "RocketW",
+        charter: "RocketW"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "Snowball",
-      },
-    ],
+        charter: "Snowball"
+      }
+    ]
   },
   {
     id: 4085,
@@ -13665,24 +13665,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 8.9,
         gameVersion: 400,
-        charter: "RocketW",
+        charter: "RocketW"
       },
       {
         difficulty: 13.5,
         gameVersion: 400,
-        charter: "Rocket-Propelled Snowball",
+        charter: "Rocket-Propelled Snowball"
       },
       {
         difficulty: 14.2,
         gameVersion: 400,
-        charter: "ティンダロスより来たる風雪",
-      },
-    ],
+        charter: "ティンダロスより来たる風雪"
+      }
+    ]
   },
   {
     id: 4089,
@@ -13700,19 +13700,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: "MaximumP",
+        charter: "MaximumP"
       },
       {
         difficulty: 11,
         gameVersion: 400,
-        charter: "MaximumP",
+        charter: "MaximumP"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "MaximumP",
-      },
-    ],
+        charter: "MaximumP"
+      }
+    ]
   },
   {
     id: 4091,
@@ -13730,19 +13730,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: "unoriginaluno",
+        charter: "unoriginaluno"
       },
       {
         difficulty: 6.8,
         gameVersion: 400,
-        charter: "unoriginaluno",
+        charter: "unoriginaluno"
       },
       {
         difficulty: 10,
         gameVersion: 400,
-        charter: "nurtured one",
-      },
-    ],
+        charter: "nurtured one"
+      }
+    ]
   },
   {
     id: 4092,
@@ -13760,19 +13760,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: "Put your twis in the air!",
+        charter: "Put your twis in the air!"
       },
       {
         difficulty: 9,
         gameVersion: 400,
-        charter: "Estenda a mão e dance em todo o mundo!",
+        charter: "Estenda a mão e dance em todo o mundo!"
       },
       {
         difficulty: 12.8,
         gameVersion: 400,
-        charter: "Uni duni tê!",
-      },
-    ],
+        charter: "Uni duni tê!"
+      }
+    ]
   },
   {
     id: 4093,
@@ -13790,19 +13790,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "saKe",
+        charter: "saKe"
       },
       {
         difficulty: 10,
         gameVersion: 400,
-        charter: "saKe",
+        charter: "saKe"
       },
       {
         difficulty: 13.9,
         gameVersion: 400,
-        charter: "saKe",
-      },
-    ],
+        charter: "saKe"
+      }
+    ]
   },
   {
     id: 4094,
@@ -13820,19 +13820,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Garum",
+        charter: "Garum"
       },
       {
         difficulty: 10.1,
         gameVersion: 400,
-        charter: "Garum",
+        charter: "Garum"
       },
       {
         difficulty: 13.1,
         gameVersion: 400,
-        charter: "Garum & Oakleyman",
-      },
-    ],
+        charter: "Garum & Oakleyman"
+      }
+    ]
   },
   {
     id: 4095,
@@ -13850,19 +13850,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Oakleyman",
+        charter: "Oakleyman"
       },
       {
         difficulty: 10.7,
         gameVersion: 400,
-        charter: "Lightning Sword",
+        charter: "Lightning Sword"
       },
       {
         difficulty: 12.7,
         gameVersion: 400,
-        charter: "Lightning Sword",
-      },
-    ],
+        charter: "Lightning Sword"
+      }
+    ]
   },
   {
     id: 4096,
@@ -13880,19 +13880,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 9.7,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 12.3,
         gameVersion: 400,
-        charter: "SNOWBREAKER",
-      },
-    ],
+        charter: "SNOWBREAKER"
+      }
+    ]
   },
   {
     id: 4097,
@@ -13910,19 +13910,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Tiiger",
+        charter: "Tiiger"
       },
       {
         difficulty: 9.8,
         gameVersion: 400,
-        charter: "TiiG3R",
+        charter: "TiiG3R"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "ICEBALL",
-      },
-    ],
+        charter: "ICEBALL"
+      }
+    ]
   },
   {
     id: 4098,
@@ -13940,24 +13940,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: "twis",
+        charter: "twis"
       },
       {
         difficulty: 10,
         gameVersion: 400,
-        charter: "twis",
+        charter: "twis"
       },
       {
         difficulty: 12.0,
         gameVersion: 400,
-        charter: "Twisumi Aoi",
+        charter: "Twisumi Aoi"
       },
       {
         difficulty: 13.5,
         gameVersion: 400,
-        charter: "twis vs. Ice Money Twinks",
+        charter: "twis vs. Ice Money Twinks"
       }
-    ],
+    ]
   },
   {
     id: 4099,
@@ -13975,19 +13975,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 8.7,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 11.6,
         gameVersion: 400,
-        charter: "SNOWLINER",
+        charter: "SNOWLINER"
       }
-    ],
+    ]
   },
   {
     id: 4100,
@@ -14005,24 +14005,24 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 10,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "キラキラ猫！/vs/ ~レイ~ /vs/ ヤクサンス",
+        charter: "キラキラ猫！/vs/ ~レイ~ /vs/ ヤクサンス"
       },
       {
         difficulty: 14.2,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       }
-    ],
+    ]
   },
   {
     id: 4101,
@@ -14040,30 +14040,31 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
+        charter: "ソーラー・ヘキサ"
       },
       {
         difficulty: 11,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
+        charter: "ソーラー・ヘキサ"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ",
+        charter: "ソーラー・ヘキサ"
       },
       {
         difficulty: 14.3,
         gameVersion: 400,
-        charter: "ソーラー・ヘキサ & 「小我」",
+        charter: "ソーラー・ヘキサ & 「小我」"
       }
-    ],
+    ]
   },
   {
     id: 4102,
     title: "Y.Y.Y.計画!!!!",
     titleEnglish: null,
-    artist: "曲: 烏屋茶房 / 歌: R.B.P. [九條 楓(CV:佳村 はるか)、逢坂 茜(CV:大空 直美)、珠洲島 有栖(CV:長縄 まりあ)] 「オンゲキ」より",
+    artist:
+      "曲: 烏屋茶房 / 歌: R.B.P. [九條 楓(CV:佳村 はるか)、逢坂 茜(CV:大空 直美)、珠洲島 有栖(CV:長縄 まりあ)] 「オンゲキ」より",
     dateAdded: 20251021,
     dateRemoved: 0,
     gameVersion: 400,
@@ -14075,19 +14076,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 8.8,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 12.5,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       }
-    ],
+    ]
   },
   {
     id: 4103,
@@ -14105,19 +14106,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: "キラキラ猫！",
+        charter: "キラキラ猫！"
       },
       {
         difficulty: 8,
         gameVersion: 400,
-        charter: "やす",
+        charter: "やす"
       },
       {
         difficulty: 12.6,
         gameVersion: 400,
-        charter: "やす & キラキラ猫！",
+        charter: "やす & キラキラ猫！"
       }
-    ],
+    ]
   },
   {
     id: 4009,
@@ -14135,19 +14136,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 10.5,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 13.6,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       }
-    ],
+    ]
   },
   {
     id: 4007,
@@ -14165,24 +14166,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 10.8,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 12.8,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 14,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       }
-    ],
+    ]
   },
   {
     id: 4034,
@@ -14200,24 +14201,24 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 10.7,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 13.4,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       },
       {
         difficulty: 14.4,
         gameVersion: 400,
-        charter: "Snowball",
+        charter: "Snowball"
       }
-    ],
+    ]
   },
   {
     id: 4042,
@@ -14235,19 +14236,19 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 5.7,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 11.7,
         gameVersion: 400,
-        charter: "Panaman",
-      },
-    ],
+        charter: "Panaman"
+      }
+    ]
   },
   {
     id: 4104,
@@ -14265,19 +14266,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 10.8,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: "Panaman",
-      },
-    ],
+        charter: "Panaman"
+      }
+    ]
   },
   {
     id: 4108,
@@ -14295,19 +14296,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 8.3,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 12.6,
         gameVersion: 400,
-        charter: "Panaman",
-      },
-    ],
+        charter: "Panaman"
+      }
+    ]
   },
   {
     id: 4110,
@@ -14325,19 +14326,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 9.9,
         gameVersion: 400,
-        charter: "Panaman",
+        charter: "Panaman"
       },
       {
         difficulty: 13.5,
         gameVersion: 400,
-        charter: "Panaman",
-      },
-    ],
+        charter: "Panaman"
+      }
+    ]
   },
   {
     id: 4109,
@@ -14355,19 +14356,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: "yitiao16",
+        charter: "yitiao16"
       },
       {
         difficulty: 10.0,
         gameVersion: 400,
-        charter: "yitiao16",
+        charter: "yitiao16"
       },
       {
         difficulty: 13.4,
         gameVersion: 400,
-        charter: "yitiao16",
-      },
-    ],
+        charter: "yitiao16"
+      }
+    ]
   },
   {
     id: 4113,
@@ -14385,19 +14386,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: '"Lost" Ember',
+        charter: '"Lost" Ember'
       },
       {
         difficulty: 8.9,
         gameVersion: 400,
-        charter: '"Lost" Ember',
+        charter: '"Lost" Ember'
       },
       {
         difficulty: 12.9,
         gameVersion: 400,
-        charter: '"Lost" Ember',
-      },
-    ],
+        charter: '"Lost" Ember'
+      }
+    ]
   },
   {
     id: 4105,
@@ -14415,19 +14416,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: 'rw',
+        charter: "rw"
       },
       {
         difficulty: 10.8,
         gameVersion: 400,
-        charter: 'rw',
+        charter: "rw"
       },
       {
         difficulty: 13.6,
         gameVersion: 400,
-        charter: 'rw',
-      },
-    ],
+        charter: "rw"
+      }
+    ]
   },
   {
     id: 4015,
@@ -14445,19 +14446,19 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 9.7,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 12.7,
         gameVersion: 400,
-        charter: 'Tiiger',
-      },
-    ],
+        charter: "Tiiger"
+      }
+    ]
   },
   {
     id: 4112,
@@ -14475,24 +14476,24 @@ const waccaSongs = [
       {
         difficulty: 1,
         gameVersion: 400,
-        charter: '☆ngo☆',
+        charter: "☆ngo☆"
       },
       {
         difficulty: 6.5,
         gameVersion: 400,
-        charter: '☆REi☆',
+        charter: "☆REi☆"
       },
       {
         difficulty: 10.5,
         gameVersion: 400,
-        charter: '☆REi☆ vs. ☆ngo☆',
+        charter: "☆REi☆ vs. ☆ngo☆"
       },
       {
         difficulty: 13.0,
         gameVersion: 400,
-        charter: 'ノノバデ',
-      },
-    ],
+        charter: "ノノバデ"
+      }
+    ]
   },
   {
     id: 4106,
@@ -14510,19 +14511,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 10.4,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 13.3,
         gameVersion: 400,
-        charter: 'Snowball',
-      },
-    ],
+        charter: "Snowball"
+      }
+    ]
   },
   {
     id: 4107,
@@ -14540,19 +14541,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: 'RFRAUD',
+        charter: "RFRAUD"
       },
       {
         difficulty: 10.7,
         gameVersion: 400,
-        charter: 'SNWBLL',
+        charter: "SNWBLL"
       },
       {
         difficulty: 14.0,
         gameVersion: 400,
-        charter: 'HEY B*TCH!!',
-      },
-    ],
+        charter: "HEY B*TCH!!"
+      }
+    ]
   },
   {
     id: 4116,
@@ -14570,19 +14571,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 9.8,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 13.6,
         gameVersion: 400,
-        charter: 'Burning the Rocket Fuel',
-      },
-    ],
+        charter: "Burning the Rocket Fuel"
+      }
+    ]
   },
   {
     id: 4120,
@@ -14600,19 +14601,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'Lightning Sword',
+        charter: "Lightning Sword"
       },
       {
         difficulty: 10.8,
         gameVersion: 400,
-        charter: 'MEGA TiiSKR',
+        charter: "MEGA TiiSKR"
       },
       {
         difficulty: 13.9,
         gameVersion: 400,
-        charter: 'Lightning Sword',
-      },
-    ],
+        charter: "Lightning Sword"
+      }
+    ]
   },
   {
     id: 4124,
@@ -14630,19 +14631,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: 'Fatal eRor!',
+        charter: "Fatal eRor!"
       },
       {
         difficulty: 9.8,
         gameVersion: 400,
-        charter: 'Fatal eRWor!',
+        charter: "Fatal eRWor!"
       },
       {
         difficulty: 13.2,
         gameVersion: 400,
-        charter: 'Fatal eR+RWor!',
-      },
-    ],
+        charter: "Fatal eR+RWor!"
+      }
+    ]
   },
   {
     id: 4127,
@@ -14660,24 +14661,24 @@ const waccaSongs = [
       {
         difficulty: 7,
         gameVersion: 400,
-        charter: 'やす',
+        charter: "やす"
       },
       {
         difficulty: 11.7,
         gameVersion: 400,
-        charter: 'YUKIDAMA',
+        charter: "YUKIDAMA"
       },
       {
         difficulty: 14.3,
         gameVersion: 400,
-        charter: 'LUNAR SEPTA',
+        charter: "LUNAR SEPTA"
       },
       {
         difficulty: 14.8,
         gameVersion: 400,
-        charter: 'XX:JUDGEMENT/Dimensional Blade',
-      },
-    ],
+        charter: "XX:JUDGEMENT/Dimensional Blade"
+      }
+    ]
   },
   {
     id: 4114,
@@ -14695,19 +14696,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'rw',
+        charter: "rw"
       },
       {
         difficulty: 8.9,
         gameVersion: 400,
-        charter: 'rw',
+        charter: "rw"
       },
       {
         difficulty: 12.4,
         gameVersion: 400,
-        charter: 'rw',
-      },
-    ],
+        charter: "rw"
+      }
+    ]
   },
   {
     id: 4115,
@@ -14725,19 +14726,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: 'ThugglesDI',
+        charter: "ThugglesDI"
       },
       {
         difficulty: 11,
         gameVersion: 400,
-        charter: 'ThugglesDI',
+        charter: "ThugglesDI"
       },
       {
         difficulty: 14.2,
         gameVersion: 400,
-        charter: 'TDI PLUS FUMEN TEAM「悪魔」',
-      },
-    ],
+        charter: "TDI PLUS FUMEN TEAM「悪魔」"
+      }
+    ]
   },
   {
     id: 4117,
@@ -14755,19 +14756,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: 'ソーラー・ヘキサ',
+        charter: "ソーラー・ヘキサ"
       },
       {
         difficulty: 10.9,
         gameVersion: 400,
-        charter: 'ソーラー・ヘキサ',
+        charter: "ソーラー・ヘキサ"
       },
       {
         difficulty: 14.1,
         gameVersion: 400,
-        charter: 'ソーラー・ヘキサ',
-      },
-    ],
+        charter: "ソーラー・ヘキサ"
+      }
+    ]
   },
   {
     id: 4119,
@@ -14785,19 +14786,19 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: 'Lightning Sword',
+        charter: "Lightning Sword"
       },
       {
         difficulty: 10.8,
         gameVersion: 400,
-        charter: 'YUKIDAMA',
+        charter: "YUKIDAMA"
       },
       {
         difficulty: 13.3,
         gameVersion: 400,
-        charter: 'Lightning Sword vs ソーラー・ヘキサ',
-      },
-    ],
+        charter: "Lightning Sword vs ソーラー・ヘキサ"
+      }
+    ]
   },
   {
     id: 4126,
@@ -14815,19 +14816,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: '360° Lizard',
+        charter: "360° Lizard"
       },
       {
         difficulty: 8.9,
         gameVersion: 400,
-        charter: '720° Jukain',
+        charter: "720° Jukain"
       },
       {
         difficulty: 13.4,
         gameVersion: 400,
-        charter: '1080° Lightning',
-      },
-    ],
+        charter: "1080° Lightning"
+      }
+    ]
   },
   {
     id: 4125,
@@ -14845,24 +14846,24 @@ const waccaSongs = [
       {
         difficulty: 6,
         gameVersion: 400,
-        charter: '#GilGaveBirth',
+        charter: "#GilGaveBirth"
       },
       {
         difficulty: 11,
         gameVersion: 400,
-        charter: 'Dantdieon',
+        charter: "Dantdieon"
       },
       {
         difficulty: 14,
         gameVersion: 400,
-        charter: '神様 HOLY THUNDEROUS WEAPON',
-      },      
+        charter: "神様 HOLY THUNDEROUS WEAPON"
+      },
       {
         difficulty: 14.6,
         gameVersion: 400,
-        charter: '神様 HOLY THUNDEROUS WEAPON',
-      },
-    ],
+        charter: "神様 HOLY THUNDEROUS WEAPON"
+      }
+    ]
   },
   {
     id: 4135,
@@ -14880,24 +14881,24 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 9.8,
         gameVersion: 400,
-        charter: 'Tiiger and twis and jaio',
+        charter: "Tiiger and twis and jaio"
       },
       {
         difficulty: 13.2,
         gameVersion: 400,
-        charter: 'Jaiouhou',
+        charter: "Jaiouhou"
       },
-        {
+      {
         difficulty: 13.8,
         gameVersion: 400,
-        charter: 'll1176',
-      },
-    ],
+        charter: "ll1176"
+      }
+    ]
   },
   {
     id: 4136,
@@ -14915,19 +14916,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'fish',
+        charter: "fish"
       },
       {
         difficulty: 9.4,
         gameVersion: 400,
-        charter: 'Interdimensional Tiiger',
+        charter: "Interdimensional Tiiger"
       },
       {
         difficulty: 13.3,
         gameVersion: 400,
-        charter: 'Unsinkable Fishy Octiigon',
-      },
-    ],
+        charter: "Unsinkable Fishy Octiigon"
+      }
+    ]
   },
   {
     id: 4137,
@@ -14945,19 +14946,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: 'Thuggles',
+        charter: "Thuggles"
       },
       {
         difficulty: 9.7,
         gameVersion: 400,
-        charter: 'Thuggles',
+        charter: "Thuggles"
       },
       {
         difficulty: 12.4,
         gameVersion: 400,
-        charter: 'Thuggles Destroyed D',
-      },
-    ],
+        charter: "Thuggles Destroyed D"
+      }
+    ]
   },
   {
     id: 4138,
@@ -14975,19 +14976,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'ゴルマス',
+        charter: "ゴルマス"
       },
       {
         difficulty: 9.3,
         gameVersion: 400,
-        charter: 'ゴルマス',
+        charter: "ゴルマス"
       },
       {
         difficulty: 13.3,
         gameVersion: 400,
-        charter: 'ゴルマス 「地獄のノンイデアル弾幕」',
-      },
-    ],
+        charter: "ゴルマス 「地獄のノンイデアル弾幕」"
+      }
+    ]
   },
   {
     id: 4139,
@@ -15005,19 +15006,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'チルノ',
+        charter: "チルノ"
       },
       {
         difficulty: 10.8,
         gameVersion: 400,
-        charter: 'チルノ',
+        charter: "チルノ"
       },
       {
         difficulty: 13.5,
         gameVersion: 400,
-        charter: 'チルノ',
-      },
-    ],
+        charter: "チルノ"
+      }
+    ]
   },
   {
     id: 4142,
@@ -15035,24 +15036,24 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'ゴルマス',
+        charter: "ゴルマス"
       },
       {
         difficulty: 8,
         gameVersion: 400,
-        charter: 'ゴルマス',
+        charter: "ゴルマス"
       },
       {
         difficulty: 11.8,
         gameVersion: 400,
-        charter: 'ゴルマス 「死人タンキー」',
+        charter: "ゴルマス 「死人タンキー」"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: 'ゴルマス 「トンリン芳香」',
-      },
-    ],
+        charter: "ゴルマス 「トンリン芳香」"
+      }
+    ]
   },
   {
     id: 4144,
@@ -15070,19 +15071,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 9.4,
         gameVersion: 400,
-        charter: 'Tiiger the 源屋 Enjoyer',
+        charter: "Tiiger the 源屋 Enjoyer"
       },
       {
         difficulty: 12.9,
         gameVersion: 400,
-        charter: 'Tiiger -ii-',
-      },
-    ],
+        charter: "Tiiger -ii-"
+      }
+    ]
   },
   {
     id: 4149,
@@ -15100,19 +15101,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: 'saKe',
+        charter: "saKe"
       },
       {
         difficulty: 10.9,
         gameVersion: 400,
-        charter: 'saKe',
+        charter: "saKe"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: 'Ultimate sake',
-      },
-    ],
+        charter: "Ultimate sake"
+      }
+    ]
   },
   {
     id: 4150,
@@ -15130,19 +15131,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'twis',
+        charter: "twis"
       },
       {
         difficulty: 8.7,
         gameVersion: 400,
-        charter: 'twis',
+        charter: "twis"
       },
       {
         difficulty: 11.9,
         gameVersion: 400,
-        charter: 'twis [fish edition]',
-      },
-    ],
+        charter: "twis [fish edition]"
+      }
+    ]
   },
   {
     id: 4133,
@@ -15160,24 +15161,24 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: 'g♥rmous × ng★body.',
+        charter: "g♥rmous × ng★body."
       },
       {
         difficulty: 9,
         gameVersion: 400,
-        charter: 'g♥rmous × ng★body.',
+        charter: "g♥rmous × ng★body."
       },
       {
         difficulty: 12.6,
         gameVersion: 400,
-        charter: 'g♥rmous × ng★body.',
+        charter: "g♥rmous × ng★body."
       },
       {
         difficulty: 0,
         gameVersion: 400,
-        charter: 'at♥msk × st★rry bunny [協]',
-      },
-    ],
+        charter: "at♥msk × st★rry bunny [協]"
+      }
+    ]
   },
   {
     id: 4145,
@@ -15195,19 +15196,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: '1rrena',
+        charter: "1rrena"
       },
       {
         difficulty: 9.0,
         gameVersion: 400,
-        charter: '1rrena',
+        charter: "1rrena"
       },
       {
         difficulty: 13.3,
         gameVersion: 400,
-        charter: 'アトムスク',
-      },
-    ],
+        charter: "アトムスク"
+      }
+    ]
   },
   {
     id: 4147,
@@ -15225,24 +15226,24 @@ const waccaSongs = [
       {
         difficulty: 2,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 6.2,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 11.0,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 12.0,
         gameVersion: 400,
-        charter: 'UnoriginalUno',
-      },
-    ],
+        charter: "UnoriginalUno"
+      }
+    ]
   },
 
   {
@@ -15261,19 +15262,19 @@ const waccaSongs = [
       {
         difficulty: 3,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 8.7,
         gameVersion: 400,
-        charter: 'SUPER☆TIIGER',
+        charter: "SUPER☆TIIGER"
       },
       {
         difficulty: 12.8,
         gameVersion: 400,
-        charter: 'MAGICAL♡BEAM',
-      },
-    ],
+        charter: "MAGICAL♡BEAM"
+      }
+    ]
   },
   {
     id: 4134,
@@ -15291,19 +15292,19 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'Guardian of Lucidity',
+        charter: "Guardian of Lucidity"
       },
       {
         difficulty: 9.8,
         gameVersion: 400,
-        charter: 'Guardian of Lucidity',
+        charter: "Guardian of Lucidity"
       },
       {
         difficulty: 12.5,
         gameVersion: 400,
-        charter: 'Guardian of Lucidity',
-      },
-    ],
+        charter: "Guardian of Lucidity"
+      }
+    ]
   },
   {
     id: 4140,
@@ -15321,19 +15322,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: 'オオカミ',
+        charter: "オオカミ"
       },
       {
         difficulty: 10.2,
         gameVersion: 400,
-        charter: 'オオカミ (2026 UnRefined)',
+        charter: "オオカミ (2026 UnRefined)"
       },
       {
         difficulty: 13.9,
         gameVersion: 400,
-        charter: 'yitiao16 (gormous2026 refine)',
-      },
-    ],
+        charter: "yitiao16 (gormous2026 refine)"
+      }
+    ]
   },
   {
     id: 4146,
@@ -15351,19 +15352,19 @@ const waccaSongs = [
       {
         difficulty: 5,
         gameVersion: 400,
-        charter: 'twis',
+        charter: "twis"
       },
       {
         difficulty: 10.6,
         gameVersion: 400,
-        charter: 'twis',
+        charter: "twis"
       },
       {
         difficulty: 13.7,
         gameVersion: 400,
-        charter: '霊夢だよ',
-      },
-    ],
+        charter: "霊夢だよ"
+      }
+    ]
   },
   {
     id: 4148,
@@ -15381,20 +15382,20 @@ const waccaSongs = [
       {
         difficulty: 4,
         gameVersion: 400,
-        charter: 'Tiiger',
+        charter: "Tiiger"
       },
       {
         difficulty: 8.8,
         gameVersion: 400,
-        charter: 'Pettanger',
+        charter: "Pettanger"
       },
       {
         difficulty: 12.7,
         gameVersion: 400,
-        charter: 'らおいや',
-      },
-    ],
-  },
+        charter: "らおいや"
+      }
+    ]
+  }
 ];
 
 export default waccaSongs;

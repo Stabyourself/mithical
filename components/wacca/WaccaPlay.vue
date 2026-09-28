@@ -44,15 +44,17 @@
               {{ difficulties[play.info.music_difficulty] }}
             </div>
 
-            <div class="play-grade">
-              <WaccaGrade :grade="play.info.grade" />
-            </div>
+            <div class="play-result">
+              <div class="play-grade">
+                <WaccaGrade :grade="play.info.grade" />
+              </div>
 
-            <div class="play-score">
-              {{ play.info.score }}
-            </div>
+              <div class="play-score">
+                {{ play.info.score }}
+              </div>
 
-            <WaccaMedal :medal="medal" class="play-medal" />
+              <WaccaMedal :medal="medal" class="play-medal" />
+            </div>
           </div>
         </div>
       </div>
@@ -153,10 +155,14 @@ $cover-size: 100px;
 
   background-color: rgb(var(--v-theme-boxcolor));
   overflow: hidden;
-  transition: background-color 0.2s, box-shadow 0.2s;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
 
   &.is-record {
-    box-shadow: 0px 0px 5px orange, 0px 0px 10px orange;
+    box-shadow:
+      0px 0px 5px orange,
+      0px 0px 10px orange;
   }
 
   &:hover {
@@ -175,7 +181,9 @@ $cover-size: 100px;
   width: $cover-size;
   height: $cover-size;
 
-  transition: width 0.5s, height 0.5s;
+  transition:
+    width 0.5s,
+    height 0.5s;
 
   img {
     width: 100%;
@@ -237,31 +245,42 @@ $cover-size: 100px;
 }
 
 .play-difficulty {
+  // grows to fill the first row once the results wrap below it; on a single
+  // row .play-result's much larger grow factor takes nearly all the space
+  flex-grow: 1;
   font-size: 1.5rem;
   color: white;
-  @include slanted(15px);
+  // only the left side is slanted here: the right slant comes from
+  // .play-result overlapping it, or from .play-stats' edge once wrapped
+  clip-path: polygon(15px 0, 100% 0, 100% 100%, 0 100%);
   padding: 0 25px;
-  margin-right: -10px;
+  // reach into .play-stats' right padding so it spans to the edge when wrapped
+  margin-right: -15px;
 
-  &.difficulty-1 {
-    background-color: #009de6;
-  }
-
-  &.difficulty-2 {
-    background-color: #fed131;
-  }
-
-  &.difficulty-3 {
-    background-color: #fc06a3;
-  }
-
-  &.difficulty-4 {
-    background-color: #4a004f;
+  // The difficulty's theme color, see plugins/vuetify.ts
+  @for $i from 1 through 4 {
+    &.difficulty-#{$i} {
+      background-color: rgb(var(--v-theme-difficulty-#{$i}));
+      color: rgb(var(--v-theme-on-difficulty-#{$i}));
+    }
   }
 
   .play-difficulty-number {
     font-weight: 300;
   }
+}
+
+// grade, score and medal wrap as one unit
+.play-result {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  flex-grow: 10000;
+
+  // cuts the slanted right edge into the difficulty pill it overlaps
+  background: white;
+  clip-path: polygon(15px 0, 100% 0, 100% 100%, 0 100%);
+  padding-left: 5px;
 }
 
 .play-grade {
@@ -402,9 +421,9 @@ $cover-size: 100px;
   }
 }
 
-.v-theme--waccaOled .play,
-.v-theme--waccaOledPlus .play {
-  outline: solid 1px white;
+// Outlined on OLED, see plugins/vuetify.ts
+.play {
+  outline: var(--v-box-border);
 }
 </style>
 
@@ -420,10 +439,12 @@ import { getSongSlug } from "~~/assets/wacca/songSlug.js";
 
 const props = defineProps({
   play: Object,
-  forceExpand: Boolean,
+  forceExpand: Boolean
 });
 
-const song = computed(() => getSongById(version.value, props.play.info.music_id));
+const song = computed(() =>
+  getSongById(version.value, props.play.info.music_id)
+);
 
 const fullUrl = computed(() => {
   return `/wacca/img/covers/${song.value.imageName}`;
@@ -452,7 +473,7 @@ const difficulties = {
   1: "Normal",
   2: "Hard",
   3: "Expert",
-  4: "Inferno",
+  4: "Inferno"
 };
 
 const judgements = ["Marvelous", "Great", "Good", "Miss"];

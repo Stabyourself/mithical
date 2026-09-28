@@ -140,7 +140,7 @@
 .cutoff {
   display: flex;
   align-items: center;
-  color: rgba(var(--v-theme-on-background), 0.5);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-background)) 50%, transparent);
   gap: 10px;
   margin: 20px 0;
   font-size: 1.5em;
@@ -150,7 +150,11 @@
   &:after {
     content: "";
     flex-grow: 1;
-    background: rgba(var(--v-theme-on-background), 0.5);
+    background: color-mix(
+      in srgb,
+      rgb(var(--v-theme-on-background)) 50%,
+      transparent
+    );
     height: 1px;
     font-size: 0px;
     line-height: 0px;
@@ -164,20 +168,11 @@
   align-items: center;
   justify-content: center;
 
-  &.difficulty-0 {
-    color: #009de6;
-  }
-
-  &.difficulty-1 {
-    color: #fed131;
-  }
-
-  &.difficulty-2 {
-    color: #fc06a3;
-  }
-
-  &.difficulty-3 {
-    color: #4a004f;
+  // The difficulty's theme color (these count from 0), see plugins/vuetify.ts
+  @for $i from 0 through 3 {
+    &.difficulty-#{$i} {
+      color: rgb(var(--v-theme-difficulty-#{$i + 1}));
+    }
   }
 }
 </style>
@@ -193,7 +188,7 @@ const profile = useState("profile");
 const version = useState("version");
 
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["auth"]
 });
 
 const ratingBorders = computed(() => {
@@ -220,20 +215,20 @@ const sheetFolders = computed(() => {
   folders.push({
     name: "Previous versions",
     sheets: [],
-    count: 35,
+    count: 35
   });
 
   if (version.value <= 300) {
     folders.push({
       name: "Wacca Reverse",
       sheets: [],
-      count: 15,
+      count: 15
     });
   } else {
     folders.push({
       name: "Wacca Plus",
       sheets: [],
-      count: 15,
+      count: 15
     });
   }
 

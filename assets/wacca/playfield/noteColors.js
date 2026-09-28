@@ -5,80 +5,80 @@ const palettes = [
   {
     base: "#ff4aee",
     light: "#ffc4ff",
-    dark: "#d10ab7",
+    dark: "#d10ab7"
   },
   // Light Yellow
   {
     base: "#ffe452",
     light: "#ffffcc",
-    dark: "#d1a60f",
+    dark: "#d1a60f"
   },
   // Orange
   {
     base: "#ff9a00",
     light: "#ffffa0",
-    dark: "#d14a00",
+    dark: "#d14a00"
   },
   // Lime
   {
     base: "#39d234",
     light: "#b7ffb4",
-    dark: "#028d01",
+    dark: "#028d01"
   },
   // Red
   {
     base: "#d10d0d",
     light: "#ffaeae",
-    dark: "#970707",
+    dark: "#970707"
   },
   // Sky Blue
   {
     base: "#34adff",
     light: "#b4ffff",
-    dark: "#015ed1",
+    dark: "#015ed1"
   },
   // Dark Yellow
   {
     base: "#9c8d00",
     light: "#ffffa0",
-    dark: "#4b3c00",
+    dark: "#4b3c00"
   },
   // Light Red ("Dark Orange" in the English UI)
   {
     base: "#ff5800",
     light: "#ffd2a0",
-    dark: "#d11200",
+    dark: "#d11200"
   },
   // Yellow
   {
     base: "#fff100",
     light: "#ffffa0",
-    dark: "#d1ba00",
+    dark: "#d1ba00"
   },
   // Pure Green
   {
     base: "#4aa170",
     light: "#c4ffec",
-    dark: "#0a5123",
+    dark: "#0a5123"
   },
   // Bright Blue
   {
     base: "#0051ff",
     light: "#a0cbff",
-    dark: "#000ed1",
+    dark: "#000ed1"
   },
   // Light Blue
   {
     base: "#6dcbff",
     light: "#e8ffff",
-    dark: "#2184d1",
+    dark: "#2184d1"
   },
   // Light Gray
   {
     base: "#c7c7ca",
     light: "#ffffff",
-    dark: "#7e7e82",
-  },
+    dark: "#7e7e82"
+  }
 ];
 
 // Hold body colors sampled from SaturnView's hold_gradient(_active).png, start to end
@@ -95,7 +95,7 @@ const holdGradients = [
   ["#68d7a3", "#42c784", "#3eb89b", "#39abab", "#38a5b6", "#37a2ba"],
   ["#6f97ff", "#4974fe", "#435ff2", "#3c47e4", "#393bde", "#3736db"],
   ["#88daff", "#64c9ff", "#61b7ff", "#5ca4ff", "#5a98ff", "#5892ff"],
-  ["#d9d9d9", "#c8c8c8", "#b1b1b1", "#9d9d9d", "#8e8e8e", "#888888"],
+  ["#d9d9d9", "#c8c8c8", "#b1b1b1", "#9d9d9d", "#8e8e8e", "#888888"]
 ];
 
 const holdGradientsActive = [
@@ -111,11 +111,18 @@ const holdGradientsActive = [
   ["#97f4d3", "#66ecb6", "#60e3cd", "#59dbdb", "#57d5e2", "#56d3e5"],
   ["#9fc8ff", "#6fa4ff", "#678cfc", "#5d6cf8", "#595cf6", "#5654f5"],
   ["#baf4ff", "#92ecff", "#8ee1ff", "#88d3ff", "#85c9ff", "#83c3ff"],
-  ["#f4f4f4", "#ededed", "#dfdfdf", "#d0d0d0", "#c3c3c3", "#bebebe"],
+  ["#f4f4f4", "#ededed", "#dfdfdf", "#d0d0d0", "#c3c3c3", "#bebebe"]
 ];
 
 // Missed holds turn grey-ish, start to end
-const missedHoldColors = ["#ececf0", "#dcdce2", "#cbcbd2", "#bdbdc5", "#b0b0b8", "#a4a4ad"];
+const missedHoldColors = [
+  "#ececf0",
+  "#dcdce2",
+  "#cbcbd2",
+  "#bdbdc5",
+  "#b0b0b8",
+  "#a4a4ad"
+];
 
 // Where each gradient sample sits along the hold (0 = start, 1 = end)
 const holdGradientStops = [0.006, 0.082, 0.25, 0.5, 0.75, 0.996];
@@ -134,7 +141,7 @@ const optionValueToIndex = {
   1003: 9,
   1004: 10,
   1005: 11,
-  1006: 12,
+  1006: 12
 };
 
 function paletteIndex(optionValue, fallback) {
@@ -144,14 +151,14 @@ function paletteIndex(optionValue, fallback) {
 const capColors = {
   light: "#79e5ff",
   base: "#4eacf7",
-  dark: "#0093e7",
+  dark: "#0093e7"
 };
 
 const syncColors = {
   outline: "#3cffff",
   light: "#efffff",
   base: "#18efff",
-  dark: "#003260",
+  dark: "#003260"
 };
 
 // Console LEDs don't dim like screen pixels, dark scheme colors still show their color
@@ -174,21 +181,24 @@ function mixHex(from, to, amount) {
   const channel = (hex, i) => parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16);
   let out = "#";
   for (let i = 0; i < 3; i++) {
-    const value = Math.round(channel(from, i) + (channel(to, i) - channel(from, i)) * amount);
+    const value = Math.round(
+      channel(from, i) + (channel(to, i) - channel(from, i)) * amount
+    );
     out += value.toString(16).padStart(2, "0");
   }
   return out;
 }
 
 function holdColorsAt(index, active) {
-  if (active <= 0) return holdGradients[index];
+  // Not given (or not a number) is the plain colors
+  if (!(active > 0)) return holdGradients[index];
   if (active >= 1) return holdGradientsActive[index];
   const step = Math.round(active * HOLD_MIX_STEPS);
   const key = index * (HOLD_MIX_STEPS + 1) + step;
   let colors = holdMixes.get(key);
   if (!colors) {
     colors = holdGradients[index].map((from, i) =>
-      mixHex(from, holdGradientsActive[index][i], step / HOLD_MIX_STEPS),
+      mixHex(from, holdGradientsActive[index][i], step / HOLD_MIX_STEPS)
     );
     holdMixes.set(key, colors);
   }
@@ -205,5 +215,5 @@ export {
   missedHoldColors,
   paletteIndex,
   capColors,
-  syncColors,
+  syncColors
 };

@@ -3,7 +3,7 @@ const waccaCategories = [
     ja: "アニメ／ＰＯＰ",
     en: "Anime/Pop",
     img: "animepop.webp",
-    color: "#237ccf",
+    color: "#237ccf"
   },
   { ja: "ボカロ", en: "Vocaloid", img: "vocaloid.webp", color: "#77c9b9" },
   { ja: "東方アレンジ", en: "Touhou", img: "touhou.webp", color: "#e9183a" },
@@ -16,12 +16,41 @@ const waccaCategories = [
     en: "TANO*C (Original)",
     img: "tanoc.webp",
     color: "#232530",
-    hidden: true,
+    hidden: true
   },
-  { ja: "WACCA", en: "WACCA", img: "wacca.webp", color: "#ff465f", hideText: true, version: true },
-  { ja: "WACCA Lily", en: "WACCA Lily", img: "lily.webp", color: "#7bf716", hideText: true, version: true },
-  { ja: "WACCA Reverse", en: "WACCA Reverse", img: "reverse.webp", color: "#1fe4fa", hideText: true, version: true },
-  { ja: "WACCA Plus", en: "WACCA Plus", img: "plus.webp", color: "#f7e121", hideText: true, hidden: false, version: true },
+  {
+    ja: "WACCA",
+    en: "WACCA",
+    img: "wacca.webp",
+    color: "#ff465f",
+    hideText: true,
+    version: true
+  },
+  {
+    ja: "WACCA Lily",
+    en: "WACCA Lily",
+    img: "lily.webp",
+    color: "#7bf716",
+    hideText: true,
+    version: true
+  },
+  {
+    ja: "WACCA Reverse",
+    en: "WACCA Reverse",
+    img: "reverse.webp",
+    color: "#1fe4fa",
+    hideText: true,
+    version: true
+  },
+  {
+    ja: "WACCA Plus",
+    en: "WACCA Plus",
+    img: "plus.webp",
+    color: "#f7e121",
+    hideText: true,
+    hidden: false,
+    version: true
+  }
 ];
 
 export default waccaCategories;

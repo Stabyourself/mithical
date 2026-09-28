@@ -1,6 +1,7 @@
-export default function (to, from) {
-  const cards = localStorage.getItem("cards");
-  if (!cards || JSON.parse(cards).length == 0) {
+// Pages that need a card send you to add one first
+export default defineNuxtRouteMiddleware(() => {
+  const cards = useState("cards");
+  if (!cards.value?.length) {
     return navigateTo("/cards");
   }
-}
+});

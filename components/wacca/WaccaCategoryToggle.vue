@@ -4,7 +4,7 @@
       class="song-category-image"
       :style="{
         backgroundImage: `url(/wacca/img/categories/${category.img})`,
-        backgroundColor: category.color,
+        backgroundColor: category.color
       }"
     ></div>
     <div class="song-category-info">
@@ -74,7 +74,7 @@
 const props = defineProps({
   category: Object,
   activeCategories: Array,
-  language: String,
+  language: String
 });
 
 const active = computed(() => {

@@ -4,7 +4,7 @@
       <div
         class="waifu"
         :style="{
-          backgroundImage: `url(/wacca/img/navigators/${navigator.path}.webp)`,
+          backgroundImage: `url(/wacca/img/navigators/${navigator.path}.webp)`
         }"
       ></div>
     </v-container>
@@ -166,12 +166,13 @@ import waccaNavigators from "~/assets/wacca/waccaNavigators.js";
 import waccaNews from "~/assets/wacca/waccaNews.js";
 
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["auth"]
 });
 
 const profile = useState("profile");
 
-const newsColors = ["#009de6", "#fed131", "#fc06a3"];
+// News accents cycle through the first three difficulty colors, see plugins/vuetify.ts
+const newsColors = [1, 2, 3].map((i) => `rgb(var(--v-theme-difficulty-${i}))`);
 
 const sortedNews = computed(() => {
   return [...waccaNews].sort((a, b) => new Date(b.date) - new Date(a.date));

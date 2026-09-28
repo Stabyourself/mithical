@@ -185,7 +185,7 @@ async function getCardInfo(addluid, convert) {
 
         data = {
           luid: addluid,
-          user_name: data.user_name,
+          user_name: data.user_name
         };
         resolve(data);
       })
@@ -215,7 +215,7 @@ function updateCardName(card, newName) {
     if (c.luid === card.luid) {
       return {
         ...c,
-        user_name: newName,
+        user_name: newName
       };
     }
 

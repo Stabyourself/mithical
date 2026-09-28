@@ -66,7 +66,9 @@
             <div v-for="j in judgements" :key="j.key" class="pd-stat">
               <span class="pd-dot" :style="{ background: j.color }"></span>
               <span class="pd-label">{{ j.label }}</span>
-              <span class="pd-value">{{ j.value.toLocaleString("en-US") }}</span>
+              <span class="pd-value">{{
+                j.value.toLocaleString("en-US")
+              }}</span>
             </div>
           </div>
         </div>
@@ -74,7 +76,9 @@
         <div class="pd-extras">
           <div v-for="x in extras" :key="x.label" class="pd-extra">
             <div class="pd-extra-label">{{ x.label }}</div>
-            <div class="pd-extra-value">{{ x.value.toLocaleString("en-US") }}</div>
+            <div class="pd-extra-value">
+              {{ x.value.toLocaleString("en-US") }}
+            </div>
           </div>
         </div>
       </div>
@@ -90,8 +94,13 @@
 .play-detail-panel {
   padding: 10px 12px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.1);
-  background: rgba(var(--v-theme-on-surface), 0.03);
+  border: 1px solid
+    color-mix(in srgb, rgb(var(--v-theme-on-surface)) 10%, transparent);
+  background: color-mix(
+    in srgb,
+    rgb(var(--v-theme-on-surface)) 3%,
+    transparent
+  );
 }
 
 .pd-head {
@@ -117,7 +126,7 @@
 }
 
 .pd-muted {
-  color: rgba(var(--v-theme-on-surface), 0.6);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 60%, transparent);
 }
 
 .pd-actions {
@@ -169,7 +178,7 @@
   letter-spacing: 0.04em;
   padding: 1px 6px;
   border-radius: 4px;
-  background: rgba(var(--v-theme-primary), 0.15);
+  background: color-mix(in srgb, rgb(var(--v-theme-primary)) 15%, transparent);
   color: rgb(var(--v-theme-primary));
 }
 
@@ -182,7 +191,8 @@
   display: flex;
   gap: 20px;
   padding-left: 20px;
-  border-left: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+  border-left: 1px solid
+    color-mix(in srgb, rgb(var(--v-theme-on-surface)) 12%, transparent);
 
   @media (max-width: 600px) {
     padding-left: 0;
@@ -195,7 +205,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: rgba(var(--v-theme-on-surface), 0.55);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 55%, transparent);
 }
 
 .pd-extra-value {
@@ -240,7 +250,7 @@
 }
 
 .pd-label {
-  color: rgba(var(--v-theme-on-surface), 0.7);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 70%, transparent);
 }
 
 .pd-value {
@@ -259,7 +269,7 @@ const props = defineProps({
   grade: Number,
   isBest: Boolean,
   hasPrev: Boolean,
-  hasNext: Boolean,
+  hasNext: Boolean
 });
 
 const emit = defineEmits(["prev", "next", "close"]);
@@ -273,8 +283,8 @@ const dateLabel = computed(() =>
     ? "Date unknown"
     : new Date(info.value.user_play_date).toLocaleString(undefined, {
         dateStyle: "medium",
-        timeStyle: "short",
-      }),
+        timeStyle: "short"
+      })
 );
 
 const medal = computed(() => {
@@ -286,20 +296,22 @@ const medal = computed(() => {
   return "failed";
 });
 
-const judgements = computed(() => [
-  { key: "marvelous", label: "Marvelous", color: "#ff3d7f" },
-  { key: "great", label: "Great", color: "#a8d95b" },
-  { key: "good", label: "Good", color: "#5b9cf0" },
-  { key: "miss", label: "Miss", color: "#9a9a9a" },
-].map((j) => ({ ...j, value: info.value.judge[j.key] ?? 0 })));
+const judgements = computed(() =>
+  [
+    { key: "marvelous", label: "Marvelous", color: "#ff3d7f" },
+    { key: "great", label: "Great", color: "#a8d95b" },
+    { key: "good", label: "Good", color: "#5b9cf0" },
+    { key: "miss", label: "Miss", color: "#9a9a9a" }
+  ].map((j) => ({ ...j, value: info.value.judge[j.key] ?? 0 }))
+);
 
 const extras = computed(() => [
   { label: "Fast", value: info.value.fast ?? 0 },
   { label: "Late", value: info.value.late ?? 0 },
-  { label: "Max combo", value: info.value.combo ?? 0 },
+  { label: "Max combo", value: info.value.combo ?? 0 }
 ]);
 
 const barLabel = computed(() =>
-  judgements.value.map((j) => `${j.label} ${j.value}`).join(", "),
+  judgements.value.map((j) => `${j.label} ${j.value}`).join(", ")
 );
 </script>

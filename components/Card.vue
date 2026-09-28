@@ -102,8 +102,8 @@ const nameSaveError = ref("");
 const props = defineProps({
   card: {
     type: Object,
-    required: true,
-  },
+    required: true
+  }
 });
 
 const trimmedEditedName = computed(() => editedName.value.trim());
@@ -172,9 +172,9 @@ async function saveName() {
       {
         method: "POST",
         body: {
-          name: trimmedEditedName.value,
-        },
-      },
+          name: trimmedEditedName.value
+        }
+      }
     );
 
     emit("update-name", data.user_name ?? "");
@@ -205,7 +205,7 @@ function deleteCard() {
 }
 
 .name-change-note {
-  color: rgba(var(--v-theme-on-surface), 0.75);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 75%, transparent);
   line-height: 1.2;
   margin-top: -6px;
   margin-bottom: 6px;

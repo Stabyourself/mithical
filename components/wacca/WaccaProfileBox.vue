@@ -29,14 +29,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(var(--v-theme-boxcolor), 0.65);
+  background: rgb(var(--v-theme-box-glass));
   backdrop-filter: blur(8px);
   transform: skew(-20deg);
   z-index: -1;
 }
 
-.v-theme--waccaOled .profile-box:after,
-.v-theme--waccaOledPlus .profile-box:after {
-  border: 1px solid white;
+// Outlined on OLED, see plugins/vuetify.ts
+.profile-box:after {
+  border: var(--v-box-border);
 }
 </style>

@@ -35,7 +35,7 @@
         hide-details
         @update:menu="(open) => !open && preview(null)"
       >
-        <template v-slot:selection="{ item }">
+        <template v-slot:selection="{ internalItem: item }">
           <WaccaConsoleSwatch
             v-if="item.raw?.consoleColors"
             class="field-swatch"
@@ -44,13 +44,13 @@
           <img
             v-else-if="item.raw?.palette !== undefined"
             class="note-preview"
-            :src="notePreview(option.noteType, item.raw.palette)"
+            :src="notePreview(option.noteType, item.raw.palette, slideInvert)"
             alt=""
           />
           {{ item.title }}
         </template>
 
-        <template v-slot:item="{ props: itemProps, item }">
+        <template v-slot:item="{ props: itemProps, internalItem: item }">
           <v-list-item
             v-bind="itemProps"
             @mouseenter="preview(item.value)"
@@ -58,12 +58,20 @@
             @mouseleave="preview(null)"
           >
             <template v-if="item.raw?.consoleColors" v-slot:prepend>
-              <WaccaConsoleSwatch class="list-swatch" :colors="item.raw.consoleColors" />
+              <WaccaConsoleSwatch
+                class="list-swatch"
+                :colors="item.raw.consoleColors"
+              />
             </template>
-            <template v-else-if="item.raw?.palette !== undefined" v-slot:prepend>
+            <template
+              v-else-if="item.raw?.palette !== undefined"
+              v-slot:prepend
+            >
               <img
                 class="note-preview list-preview"
-                :src="notePreview(option.noteType, item.raw.palette)"
+                :src="
+                  notePreview(option.noteType, item.raw.palette, slideInvert)
+                "
                 alt=""
               />
             </template>
@@ -139,8 +147,11 @@ const props = defineProps({
   option: { type: Object, required: true },
   // Profile options by id
   options: { type: Object, required: true },
-  language: { type: String, required: true },
+  language: { type: String, required: true }
 });
+
+// Slide previews follow the "Invert Slide Colors" option (136)
+const slideInvert = computed(() => props.options[136] === 1);
 
 // { id, value } while a dropdown entry is hovered, so the preview can show it
 const emit = defineEmits(["preview"]);
@@ -168,7 +179,7 @@ const items = computed(() =>
     value: choice.value,
     consoleColors: choice.consoleColors,
     // Note color options draw the note type they're for, like in game
-    palette: props.option.noteType ? paletteIndex(choice.value, 0) : undefined,
-  })),
+    palette: props.option.noteType ? paletteIndex(choice.value, 0) : undefined
+  }))
 );
 </script>

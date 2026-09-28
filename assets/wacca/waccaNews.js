@@ -154,7 +154,7 @@ Tune into the stream on September 12th, 2026 @ 4PM PST/7PM EST. You won't want t
 
 [Arcade Legacy on Twitch](https://twitch.tv/arcadelegacy)
 ![TDI2](/wacca/img/news/tdi.webp)
-`,
+`
   },
   {
     title: "Touhou Update Wave 2",
@@ -201,7 +201,7 @@ Please look forward to it! Hopefully there won't be any strange incidents involv
 
 ###### **Some content may have to be unlocked first*
 `
-  },
+  }
 ];
 
 export default waccaNews;

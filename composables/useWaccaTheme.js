@@ -3,5 +3,7 @@
 export function useWaccaTheme() {
   const theme = useState("theme");
   const version = useState("version");
-  return computed(() => `wacca${theme.value}${version.value == 400 ? "Plus" : ""}`);
+  return computed(
+    () => `wacca${theme.value}${version.value == 400 ? "Plus" : ""}`
+  );
 }

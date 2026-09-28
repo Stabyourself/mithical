@@ -35,7 +35,7 @@ async function isUpToDate(srcPath, destPath) {
   try {
     const [srcStat, destStat] = await Promise.all([
       stat(srcPath),
-      stat(destPath),
+      stat(destPath)
     ]);
     return destStat.mtimeMs >= srcStat.mtimeMs;
   } catch {

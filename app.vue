@@ -1,78 +1,51 @@
 <template>
-  <v-app :style="{ background }">
-    <div id="modals"></div>
+  <v-app>
     <MainNav />
-    <NuxtLayout name="wacca"></NuxtLayout>
+    <div class="wacca wacca-page">
+      <div id="site-logo">
+        <NuxtLink to="/">
+          <img src="/wacca/img/logo.svg" />
+        </NuxtLink>
+      </div>
+
+      <WaccaNav />
+      <NuxtPage :keepalive="keepalive" style="padding-bottom: 200px" />
+    </div>
     <SettingsModal />
   </v-app>
 </template>
 
 <style>
-.layout-enter-active,
-.layout-leave-active {
-  transition: all 0.2s;
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s;
 }
-.layout-enter-from,
-.layout-leave-to {
+.page-enter-from,
+.page-leave-to {
   opacity: 0;
-  filter: blur(0.5rem);
+  transform: translateY(30px);
 }
 </style>
 
 <script setup>
-import { useTheme } from "vuetify";
-
-// Theme (Light, Dark or Oled) and WACCA version, remembered in localStorage.
-// Light and Plus unless picked otherwise in the settings
-const theme = useState("theme", () => localStorage.getItem("theme") || "Light");
-const version = useState("version", () => {
-  const stored = parseInt(localStorage.getItem("version"));
-  return stored === 300 || stored === 400 ? stored : 400;
-});
-watch(theme, (value) => localStorage.setItem("theme", value));
-watch(version, (value) => localStorage.setItem("version", value));
-
-useHead({
-  title: "Mithical",
-});
+// Theme, version and cards are set up in plugins/preferences.js, the profile in plugins/profile.js
 
 useSeoMeta({
-  title: "Mithical",
+  title: "Mithical | Wacca",
   description: "Web UI for Wacca",
   ogSiteName: "Mithical",
   ogTitle: "Mithical",
   ogDescription: "Web UI for Wacca",
   ogImage: () => `${useRequestURL().origin}/logo.png`,
   ogUrl: () => useRequestURL().href,
-  twitterCard: "summary_large_image",
+  twitterCard: "summary_large_image"
 });
 
-const vuetifyTheme = useTheme();
-const themeName = useWaccaTheme();
-watchEffect(() => {
-  vuetifyTheme.global.name.value = themeName.value;
-});
-
-// load cards from localStorage
-
-const cards = useState("cards", () => []);
-const storageCards = localStorage.getItem("cards");
-
-if (storageCards) {
-  cards.value = JSON.parse(storageCards);
-}
-
-// set default card from localStorage
-const activeCard = useState("activeCard");
-const storageActiveCard = localStorage.getItem("activeCard");
-
-if (storageActiveCard) {
-  activeCard.value = storageActiveCard;
-} else {
-  activeCard.value = cards.value[0]?.luid;
-}
-
-const background = computed(() => {
-  return vuetifyTheme.current.value.colors.background;
-});
+// The song list stays alive while going into a song and back, so its filters and scroll
+// position are still there. Going anywhere else lets it go
+const route = useRoute();
+const keepalive = computed(() => ({
+  include:
+    route.name === "songs" || route.name === "songs-slug" ? ["SongsPage"] : []
+}));
 </script>

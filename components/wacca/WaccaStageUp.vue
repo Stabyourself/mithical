@@ -61,7 +61,7 @@
 <script setup>
 const props = defineProps({
   rank: Number,
-  danRank: Number,
+  danRank: Number
 });
 
 const medalDesigns = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5];

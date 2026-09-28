@@ -10,7 +10,7 @@
           class="single-song-details"
           :style="{
             'background-image':
-              'url(/wacca/img/games/' + song.gameVersion + '.webp)',
+              'url(/wacca/img/games/' + song.gameVersion + '.webp)'
           }"
         >
           <div class="single-song-header">
@@ -161,6 +161,7 @@
               :key="i"
               :value="i"
               :color="difficulty.color"
+              :base-color="difficulty.color"
               variant="flat"
               size="small"
               class="chartview-difficulty"
@@ -378,7 +379,7 @@ import { chartPath } from "~/assets/wacca/playfield/merChart.js";
 
 const profile = useState("profile");
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["auth"]
 });
 
 const runtimeConfig = useRuntimeConfig();
@@ -419,15 +420,15 @@ const fullUrl = computed(() => {
 
 const filteredSheets = computed(() => {
   return song.value.sheets.filter(
-    (sheet) => sheet.gameVersion <= version.value,
+    (sheet) => sheet.gameVersion <= version.value
   );
 });
 
 // The API has histograms for every difficulty anyone played, only show the ones in this version
 const shownHistograms = computed(() =>
   histograms.value.filter(
-    (histogram) => filteredSheets.value[histogram.music_difficulty - 1],
-  ),
+    (histogram) => filteredSheets.value[histogram.music_difficulty - 1]
+  )
 );
 
 // Where the chart view and leaderboard start: the difficulty you've played the most
@@ -454,7 +455,7 @@ const histogramView = ref("distribution");
 const chartView = ref(startDifficulty.value);
 watch(
   () => song.value.id,
-  () => (chartView.value = startDifficulty.value),
+  () => (chartView.value = startDifficulty.value)
 );
 const chartType = ref("circle");
 
@@ -463,7 +464,7 @@ const playerHistory = shallowRef([]);
 function loadHistograms() {
   histogramsLoading.value = true;
   $fetch(
-    `${runtimeConfig.public.apiUrl}/wacca/music/${song.value.id}/histogram`,
+    `${runtimeConfig.public.apiUrl}/wacca/music/${song.value.id}/histogram`
   )
     .then((data) => {
       histogramsLoading.value = false;
@@ -492,7 +493,7 @@ function loadPlayerHistory() {
   playerHistoryLoading.value = true;
 
   $fetch(
-    `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/music/${song.value.id}`,
+    `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/music/${song.value.id}`
   ).then((data) => {
     playerHistoryLoading.value = false;
     playerHistory.value = data;
@@ -564,7 +565,7 @@ const chartedBy = computed(() => {
 
 const category = computed(() => {
   return waccaCategories.find(
-    (category) => category.ja === song.value.category,
+    (category) => category.ja === song.value.category
   );
 });
 
@@ -579,7 +580,7 @@ const ogDescription = computed(() => {
   return [
     `by ${song.value.artist}`,
     categoryName.value,
-    `Charted by ${chartedBy.value}`,
+    `Charted by ${chartedBy.value}`
   ]
     .filter(Boolean)
     .join(" · ");
@@ -588,9 +589,9 @@ const ogDescription = computed(() => {
 const chartDifficulties = computed(() =>
   filteredSheets.value.map((sheet, i) => ({
     name: waccaDifficulties[i].name.toUpperCase(),
-    color: waccaDifficulties[i].color,
-    level: String(formatDifficulty(sheet.difficulty, false)),
-  })),
+    color: `difficulty-${i + 1}`,
+    level: String(formatDifficulty(sheet.difficulty, false))
+  }))
 );
 
 const chartData = computed(() => {
@@ -601,8 +602,8 @@ const chartData = computed(() => {
     info: {
       title: song.value.title,
       difficulty: chartView.value + 1,
-      level: difficulty.level,
-    },
+      level: difficulty.level
+    }
   };
 });
 
@@ -614,6 +615,6 @@ useSeoMeta({
   ogDescription,
   ogImage: () => `${useRequestURL().origin}${fullUrl.value}`,
   ogUrl: () => useRequestURL().href,
-  twitterCard: "summary_large_image",
+  twitterCard: "summary_large_image"
 });
 </script>

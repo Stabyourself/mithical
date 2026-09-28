@@ -1,79 +1,78 @@
-// plugins/vuetify.js
 import { createVuetify } from "vuetify";
 import type { ThemeDefinition } from "vuetify";
+import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 
-const waccaLightTheme: ThemeDefinition = {
-  dark: false,
-  colors: {
-    primary: "#e50065",
-    navbar: "#e50065",
-    boxcolor: "#333",
+// The site's themes: a Light, Dark and Oled base, each in Reverse (pink) and Plus (blue),
+// named like "waccaDarkPlus" (see useWaccaTheme)
+const BASES: Record<string, ThemeDefinition> = {
+  Light: {
+    dark: false,
+    colors: { boxcolor: "#333333" }
   },
-};
-
-const waccaDarkTheme: ThemeDefinition = {
-  dark: true,
-  colors: {
-    primary: "#e50065",
-    navbar: "#e50065",
-    surface: "#333",
-    boxcolor: "#333",
+  Dark: {
+    dark: true,
+    colors: { surface: "#333333", boxcolor: "#333333" }
   },
-};
-
-const waccaOledTheme: ThemeDefinition = {
-  dark: true,
-  colors: {
-    primary: "#e50065",
-    navbar: "#000",
-    surface: "#000",
-    boxcolor: "#000",
-    "surface-variant": "#777777",
-  },
-};
-const waccaLightPlusTheme: ThemeDefinition = {
-  dark: false,
-  colors: {
-    primary: "#00a9fd",
-    navbar: "#00a9fd",
-    boxcolor: "#333",
-  },
-};
-
-const waccaDarkPlusTheme: ThemeDefinition = {
-  dark: true,
-  colors: {
-    primary: "#00a9fd",
-    navbar: "#00a9fd",
-    surface: "#333",
-    boxcolor: "#333",
-  },
-};
-
-const waccaOledPlusTheme: ThemeDefinition = {
-  dark: true,
-  colors: {
-    primary: "#00a9fd",
-    navbar: "#000",
-    surface: "#000",
-    boxcolor: "#000",
-    "surface-variant": "#777777",
-  },
-};
-
-export default defineNuxtPlugin((nuxtApp) => {
-  const vuetify = createVuetify({
-    theme: {
-      themes: {
-        waccaLight: waccaLightTheme,
-        waccaDark: waccaDarkTheme,
-        waccaOled: waccaOledTheme,
-        waccaLightPlus: waccaLightPlusTheme,
-        waccaDarkPlus: waccaDarkPlusTheme,
-        waccaOledPlus: waccaOledPlusTheme,
-      },
+  Oled: {
+    dark: true,
+    colors: {
+      navbar: "#000000",
+      surface: "#000000",
+      boxcolor: "#000000",
+      "surface-variant": "#777777"
     },
-  });
+    // Boxes get a white outline on the black
+    variables: { "box-border": "1px solid white" }
+  }
+};
+const ACCENTS: Record<string, string> = { "": "#e50065", Plus: "#00a9fd" };
 
-  nuxtApp.vueApp.use(vuetify);
+// The difficulty colors, as difficulty-1 (normal) to difficulty-4 (inferno), with the text
+// color that goes on them
+const DIFFICULTY_COLORS = Object.fromEntries(
+  waccaDifficulties.flatMap((difficulty) => [
+    [`difficulty-${difficulty.id}`, difficulty.color],
+    [`on-difficulty-${difficulty.id}`, difficulty.onColor]
+  ])
+);
+
+function buildTheme(base: ThemeDefinition, accent: string): ThemeDefinition {
+  const colors: Record<string, string> = {
+    primary: accent,
+    navbar: accent,
+    ...DIFFICULTY_COLORS,
+    ...base.colors
+  };
+  // See-through boxes over the page background, 65% opaque
+  colors["box-glass"] = `${colors.boxcolor}a6`;
+
+  return {
+    dark: base.dark,
+    colors,
+    variables: { "box-border": "none", ...base.variables }
+  };
+}
+
+const themes = Object.fromEntries(
+  Object.entries(BASES).flatMap(([baseName, base]) =>
+    Object.entries(ACCENTS).map(([version, accent]) => [
+      `wacca${baseName}${version}`,
+      buildTheme(base, accent)
+    ])
+  )
+);
+
+export default defineNuxtPlugin({
+  name: "vuetify",
+  dependsOn: ["preferences"],
+  setup(nuxtApp) {
+    // Starts in the picked theme and follows it, see useWaccaTheme
+    const themeName = useWaccaTheme();
+    const vuetify = createVuetify({
+      theme: { defaultTheme: themeName.value, themes }
+    });
+    watch(themeName, (name) => vuetify.theme.change(name));
+
+    nuxtApp.vueApp.use(vuetify);
+  }
 });

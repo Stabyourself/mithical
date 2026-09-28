@@ -12,10 +12,10 @@
       </div>
 
       <div v-else>
-          <div class="your-rank">
-            <span class="label">Your Rank</span>
-            <span class="value">{{ getRankDescription(profile.user_name) }}</span>
-          </div>
+        <div class="your-rank">
+          <span class="label">Your Rank</span>
+          <span class="value">{{ getRankDescription(profile.user_name) }}</span>
+        </div>
         <v-alert v-if="leaderboardsLoadingError" type="error" class="mt-4">{{
           leaderboardsLoadingError
         }}</v-alert>
@@ -30,11 +30,11 @@
           </thead>
 
           <tbody>
-            <tr 
-              v-for="(player, i) in leaderboardData" 
+            <tr
+              v-for="(player, i) in leaderboardData"
               :key="i"
               :class="{ highlight: player.user_name == profile.user_name }"
-              >
+            >
               <td class="text-right">
                 <span
                   v-if="
@@ -74,8 +74,9 @@
   margin: 0 0 16px;
   padding: 6px 14px;
   border-radius: 8px;
-  background: rgba(var(--v-theme-primary), 0.08);
-  border: 1px solid rgba(var(--v-theme-primary), 0.25);
+  background: color-mix(in srgb, rgb(var(--v-theme-primary)) 8%, transparent);
+  border: 1px solid
+    color-mix(in srgb, rgb(var(--v-theme-primary)) 25%, transparent);
 
   .label {
     font-size: 0.7rem;
@@ -103,17 +104,25 @@
 }
 
 tr.highlight {
-  background-color: rgba(var(--v-theme-primary), 0.1);
+  background-color: color-mix(
+    in srgb,
+    rgb(var(--v-theme-primary)) 10%,
+    transparent
+  );
 }
 
 :deep(.rating-white) {
-  color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+  color: color-mix(
+    in srgb,
+    rgb(var(--v-theme-on-surface)) calc(var(--v-high-emphasis-opacity) * 100%),
+    transparent
+  );
 }
 </style>
 
 <script setup>
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["auth"]
 });
 
 const leaderboardsLoading = ref(false);
@@ -123,7 +132,6 @@ const runtimeConfig = useRuntimeConfig();
 const leaderboardData = ref([]);
 const version = useState("version");
 const profile = useState("profile");
-
 
 function getRankDescription(username) {
   if (!highscores.value) {
@@ -146,7 +154,9 @@ function getRankDescription(username) {
   }
 
   const scoreCount =
-    leaderboardData.value.length === 100 ? "100+" : leaderboardData.value.length;
+    leaderboardData.value.length === 100
+      ? "100+"
+      : leaderboardData.value.length;
 
   return !playerRank ? "Unranked" : `${playerRank} / ${scoreCount}`;
 }

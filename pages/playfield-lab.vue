@@ -15,10 +15,29 @@
         :loading="loading"
         class="lab-song"
       ></v-autocomplete>
-      <v-btn-toggle v-if="!song" v-model="demo" mandatory density="compact" variant="outlined" divided>
-        <v-btn v-for="(entry, index) in DEMOS" :key="entry.url" :value="index">{{ entry.label }}</v-btn>
+      <v-btn-toggle
+        v-if="!song"
+        v-model="demo"
+        mandatory
+        density="compact"
+        variant="outlined"
+        divided
+      >
+        <v-btn
+          v-for="(entry, index) in DEMOS"
+          :key="entry.url"
+          :value="index"
+          >{{ entry.label }}</v-btn
+        >
       </v-btn-toggle>
-      <v-btn-toggle v-else v-model="difficulty" mandatory density="compact" variant="outlined" divided>
+      <v-btn-toggle
+        v-else
+        v-model="difficulty"
+        mandatory
+        density="compact"
+        variant="outlined"
+        divided
+      >
         <v-btn
           v-for="(label, index) in DIFFICULTIES"
           :key="label"
@@ -42,9 +61,17 @@
         thumb-label
         class="lab-speed"
       >
-        <template #thumb-label="{ modelValue }">{{ formatSpeed(modelValue) }}</template>
+        <template #thumb-label="{ modelValue }">{{
+          formatSpeed(modelValue)
+        }}</template>
       </v-slider>
-      <v-switch v-model="mirror" label="Mirror" density="compact" hide-details color="primary"></v-switch>
+      <v-switch
+        v-model="mirror"
+        label="Mirror"
+        density="compact"
+        hide-details
+        color="primary"
+      ></v-switch>
       <v-switch
         v-model="linear"
         label="Plain time on the strip"
@@ -106,7 +133,9 @@
               :title="expanded ? 'Exit fullscreen' : 'Fullscreen'"
               @click="expanded = !expanded"
             >
-              <v-icon>{{ expanded ? "mdi-fullscreen-exit" : "mdi-fullscreen" }}</v-icon>
+              <v-icon>{{
+                expanded ? "mdi-fullscreen-exit" : "mdi-fullscreen"
+              }}</v-icon>
             </v-btn>
           </WaccaPlayfieldControls>
         </div>
@@ -192,12 +221,15 @@ const DIFFICULTIES = ["Normal", "Hard", "Expert", "Inferno"];
 // Charts for when no song is picked. The second is the same with only the right half unmasked
 const DEMOS = [
   { label: "Demo", url: "/wacca/demo.mer" },
-  { label: "Half masked", url: "/wacca/demo-half-mask.mer" },
+  { label: "Half masked", url: "/wacca/demo-half-mask.mer" }
 ];
 // Bot skills are named after the worst grade the bot gets. No bot leaves the playing to you
 const BOT_SKILLS = [
   { title: "No bot", value: "none" },
-  ...["all-marvelous", "great-up", "good-up", "miss-up"].map((value) => ({ title: value, value })),
+  ...["all-marvelous", "great-up", "good-up", "miss-up"].map((value) => ({
+    title: value,
+    value
+  }))
 ];
 
 const version = useState("version");
@@ -212,19 +244,31 @@ const songId = computed({
   set: (id) => {
     const next = getSongById(songVersion.value, id);
     // Keep the difficulty if the new song has it, else its hardest
-    const keep = next?.sheets[difficulty.value - 1] ? difficulty.value : next?.sheets.length;
-    router.replace({ query: { ...route.query, song: id ?? undefined, difficulty: id ? keep : undefined } });
-  },
+    const keep = next?.sheets[difficulty.value - 1]
+      ? difficulty.value
+      : next?.sheets.length;
+    router.replace({
+      query: {
+        ...route.query,
+        song: id ?? undefined,
+        difficulty: id ? keep : undefined
+      }
+    });
+  }
 });
-const song = computed(() => (songId.value ? getSongById(songVersion.value, songId.value) : null));
+const song = computed(() =>
+  songId.value ? getSongById(songVersion.value, songId.value) : null
+);
 const difficulty = computed({
   get: () => Number(route.query.difficulty) || song.value?.sheets.length || 3,
-  set: (value) => router.replace({ query: { ...route.query, difficulty: value } }),
+  set: (value) =>
+    router.replace({ query: { ...route.query, difficulty: value } })
 });
 
 const demo = computed({
   get: () => (DEMOS[Number(route.query.demo)] ? Number(route.query.demo) : 0),
-  set: (value) => router.replace({ query: { ...route.query, demo: value || undefined } }),
+  set: (value) =>
+    router.replace({ query: { ...route.query, demo: value || undefined } })
 });
 
 const chart = computed(() => {
@@ -235,8 +279,8 @@ const chart = computed(() => {
     info: {
       title: song.value.title,
       difficulty: difficulty.value,
-      level: String(formatDifficulty(sheet.difficulty, false)),
-    },
+      level: String(formatDifficulty(sheet.difficulty, false))
+    }
   };
 });
 
@@ -250,25 +294,48 @@ const linear = ref(false);
 const botSkill = ref("good-up");
 
 // Profile options by id: note speed and mirror, the rest at their defaults
-const options = computed(() => ({ 1: noteSpeed.value, 101: mirror.value ? 1 : 0 }));
+const options = computed(() => ({
+  1: noteSpeed.value,
+  101: mirror.value ? 1 : 0
+}));
 // Features of the preview, see WaccaPlayfieldPreview. Judging is the song's, the rest the views'
 const TOGGLES = [
-  { key: "judging", label: "Judging", title: "Ratings, misses and dropped holds. Off, unhit notes just pass by" },
-  { key: "ring", label: "Console ring", title: "The LEDs around the round view and under the strip. Off, the lanes fill the space" },
-  { key: "songCount", label: "Song count", title: "\"1/3 Song\" on the ring" },
+  {
+    key: "judging",
+    label: "Judging",
+    title: "Ratings, misses and dropped holds. Off, unhit notes just pass by"
+  },
+  {
+    key: "ring",
+    label: "Console ring",
+    title:
+      "The LEDs around the round view and under the strip. Off, the lanes fill the space"
+  },
+  { key: "songCount", label: "Song count", title: '"1/3 Song" on the ring' },
   { key: "score", label: "Score", title: "The score on the ring" },
-  { key: "progressBar", label: "Clear gauge", title: "The bar in the round view" },
+  {
+    key: "progressBar",
+    label: "Clear gauge",
+    title: "The bar in the round view"
+  }
 ];
-const toggles = reactive(Object.fromEntries(TOGGLES.map(({ key }) => [key, true])));
-const stripFeatures = computed(() => ({ linear: linear.value, ring: toggles.ring }));
+const toggles = reactive(
+  Object.fromEntries(TOGGLES.map(({ key }) => [key, true]))
+);
+const stripFeatures = computed(() => ({
+  linear: linear.value,
+  ring: toggles.ring
+}));
 
 const controller = usePlayfieldSession({
   chartUrl: () => chart.value?.url ?? DEMOS[demo.value].url,
   options: () => options.value,
   features: () => ({
     judging: toggles.judging,
-    ...(botSkill.value === "none" ? { autoplay: false } : { autoplay: true, botSkill: botSkill.value }),
-  }),
+    ...(botSkill.value === "none"
+      ? { autoplay: false }
+      : { autoplay: true, botSkill: botSkill.value })
+  })
 });
 const { loading } = controller;
 const expanded = useLightbox();

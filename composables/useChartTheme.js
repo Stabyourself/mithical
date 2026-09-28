@@ -1,45 +1,36 @@
 import { useTheme } from "vuetify";
-import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 
-// colors for chart.js since it can't read the vuetify css vars
+// Theme colors for chart.js, which can't read the CSS variables
 export function useChartTheme() {
   const theme = useTheme();
-
-  // theme.current is empty for some reason, computedThemes works
-  const themeDef = computed(
-    () =>
-      theme.computedThemes?.value?.[theme.global.name.value] ??
-      theme.current.value,
-  );
   const themeName = computed(() => theme.global.name.value);
-  const isDark = computed(() => !!themeDef.value.dark);
+  const colors = computed(() => theme.current.value.colors);
+  const isDark = computed(() => theme.current.value.dark);
 
   function surfaceColor() {
-    return (
-      themeDef.value.colors?.surface ?? (isDark.value ? "#333333" : "#ffffff")
-    );
+    return colors.value.surface;
   }
 
   function inkColor(alpha) {
-    const hex = (
-      themeDef.value.colors?.["on-surface"] ??
-      (isDark.value ? "#ffffff" : "#000000")
-    ).replace("#", "");
-    const n = parseInt(hex.length === 3 ? hex.replace(/./g, "$&$&") : hex, 16);
-    return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
+    return withAlpha(colors.value["on-surface"], alpha);
   }
 
-  // tweaked so hard/inferno stay visible on light/dark
+  // The difficulty's theme color (see plugins/vuetify.ts), with hard and inferno tweaked
+  // so their lines stay visible on light and dark backgrounds
   function difficultyColor(id) {
     if (id === 2 && !isDark.value) return "#f0bf00";
     if (id === 4 && isDark.value) return "#b43cc2";
-    return waccaDifficulties[id - 1].color;
+    return colors.value[`difficulty-${id}`];
   }
 
   return { themeName, isDark, surfaceColor, inkColor, difficultyColor };
 }
 
 export function withAlpha(hex, alpha) {
-  const n = parseInt(hex.replace("#", ""), 16);
+  const digits = hex.replace("#", "");
+  const n = parseInt(
+    digits.length === 3 ? digits.replace(/./g, "$&$&") : digits,
+    16
+  );
   return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
 }

@@ -27,8 +27,15 @@
 </template>
 
 <style scoped lang="scss">
+// Medals sit over the top of their pill instead of taking a row of their own, so the rows
+// only need room for them to poke out
+.song-sheets {
+  row-gap: 18px;
+  padding-top: 20px;
+}
+
 .song-difficulty {
-  margin-bottom: 5px;
+  position: relative;
 }
 
 .song-difficulty-bottom {
@@ -43,9 +50,13 @@
 }
 
 .song-medal {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
   transform: rotate(-10deg);
-  height: 40px;
-  margin-bottom: -20px;
   text-align: center;
 }
 
@@ -64,7 +75,7 @@
 <script setup>
 const props = defineProps({
   song: Object,
-  playerData: Object,
+  playerData: Object
 });
 
 const version = useState("version");
@@ -82,7 +93,7 @@ const grades = [
   "grade_ss_plus_count",
   "grade_sss_count",
   "grade_sss_plus_count",
-  "grade_master_count",
+  "grade_master_count"
 ];
 function getHighestGrade(music) {
   for (let i = grades.length - 1; i >= 0; i--) {

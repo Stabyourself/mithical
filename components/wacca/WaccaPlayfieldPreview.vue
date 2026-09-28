@@ -72,65 +72,65 @@ const props = defineProps({
   // Profile options by id
   options: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
   },
   // MER chart to play, fetched from public/
   chartUrl: {
     type: String,
-    default: null,
+    default: null
   },
   // { title, difficulty (1-4), level } for the ring, null for the demo
   chartInfo: {
     type: Object,
-    default: null,
+    default: null
   },
   // Console LEDs around the screen. Off, the screen grows to fill the space
   ring: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // Wait for play instead of starting right away
   startPaused: {
     type: Boolean,
-    default: false,
+    default: false
   },
   // Bot plays when nobody else is
   autoplay: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // Ratings, misses and dropped holds. Off, unhit notes just pass by
   judging: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // "1/3 Song" on the ring
   songCount: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // Ring score and its "SCORE" label
   score: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // Clear gauge
   progressBar: {
     type: Boolean,
-    default: true,
+    default: true
   },
   // How well the bot plays, named after the worst grade it gets
   botSkill: {
     type: String,
     default: "all-marvelous",
     validator: (value) =>
-      ["miss-up", "good-up", "great-up", "all-marvelous"].includes(value),
+      ["miss-up", "good-up", "great-up", "all-marvelous"].includes(value)
   },
   view: {
     type: String,
     default: "circle",
-    validator: (value) => ["circle", "unrolled"].includes(value),
-  },
+    validator: (value) => ["circle", "unrolled"].includes(value)
+  }
 });
 const features = computed(() => ({
   ring: props.ring,
@@ -139,14 +139,14 @@ const features = computed(() => ({
   songCount: props.songCount,
   score: props.score,
   progressBar: props.progressBar,
-  botSkill: props.botSkill,
+  botSkill: props.botSkill
 }));
 
 const controller = usePlayfieldSession({
   chartUrl: () => props.chartUrl,
   options: () => props.options,
   features: () => features.value,
-  startPaused: props.startPaused,
+  startPaused: props.startPaused
 });
 
 const expanded = useLightbox();

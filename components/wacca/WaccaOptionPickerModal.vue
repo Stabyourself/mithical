@@ -21,7 +21,7 @@
               class="box-item"
               :class="{
                 selected: item.id === currentValue,
-                saving: savingId === item.id,
+                saving: savingId === item.id
               }"
               @click="selectItem(item)"
             >
@@ -116,7 +116,7 @@ const props = defineProps({
   title: { type: String, required: true },
   itemKind: { type: Number, required: true },
   optionId: { type: Number, required: true },
-  items: { type: Array, required: true },
+  items: { type: Array, required: true }
 });
 
 const emit = defineEmits(["closeModal"]);
@@ -128,7 +128,7 @@ const currentValue = computed(() => profile.value.options[props.optionId]);
 
 const ownedItems = computed(() => {
   return props.items.filter((item) =>
-    profile.value.items.some((owned) => owned.item_id === item.id),
+    profile.value.items.some((owned) => owned.item_id === item.id)
   );
 });
 

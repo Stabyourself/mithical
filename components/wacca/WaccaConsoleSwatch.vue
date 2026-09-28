@@ -10,7 +10,10 @@
         cy="16"
         :r="OUTER"
       >
-        <stop :offset="INNER / OUTER" :stop-color="rgb(colors[section.index + 3])" />
+        <stop
+          :offset="INNER / OUTER"
+          :stop-color="rgb(colors[section.index + 3])"
+        />
         <stop offset="1" :stop-color="rgb(colors[section.index])" />
       </radialGradient>
     </defs>
@@ -50,8 +53,8 @@ const props = defineProps({
   // Three colors plus their dark versions, as [r, g, b]
   colors: {
     type: Array,
-    required: true,
-  },
+    required: true
+  }
 });
 
 const INNER = 8;
@@ -64,7 +67,7 @@ const id = `console-swatch-${Math.random().toString(36).slice(2, 9)}`;
 const sections = [
   { name: "masked", index: 0, from: 180, to: 360 },
   { name: "open", index: 1, from: 0, to: 180 },
-  { name: "touched", index: 2, from: 65, to: 115 },
+  { name: "touched", index: 2, from: 65, to: 115 }
 ];
 
 // Like the LEDs show it, see ledColor
@@ -82,12 +85,12 @@ function sector(from, to) {
     `A ${OUTER} ${OUTER} 0 ${large} 1 ${point(OUTER, to)}`,
     `L ${point(INNER, to)}`,
     `A ${INNER} ${INNER} 0 ${large} 0 ${point(INNER, from)}`,
-    "Z",
+    "Z"
   ].join(" ");
 }
 
 const seams = Array.from(
   { length: 12 },
-  (_, i) => `M ${point(INNER, i * 30)} L ${point(OUTER, i * 30)}`,
+  (_, i) => `M ${point(INNER, i * 30)} L ${point(OUTER, i * 30)}`
 ).join(" ");
 </script>

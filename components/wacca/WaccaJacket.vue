@@ -14,7 +14,7 @@
 
 <script setup>
 const props = defineProps({
-  url: String,
+  url: String
 });
 
 const fullUrl = computed(() => {

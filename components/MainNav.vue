@@ -1,5 +1,5 @@
 <template>
-  <div id="nav">
+  <div id="nav" class="bg-navbar">
     <NuxtLink to="/">
       <MithicalLogo color="white" />
     </NuxtLink>
@@ -31,12 +31,6 @@
 <script setup>
 const cards = useState("cards");
 const activeCard = useState("activeCard");
-
-watch(activeCard, (newVal) => {
-  if (newVal) {
-    localStorage.setItem("activeCard", newVal);
-  }
-});
 
 const settingsVisible = useState("settingsVisible");
 

@@ -234,7 +234,8 @@
 }
 
 .sort-order-button {
-  border-left: 2px solid rgba(var(--v-theme-background), 0.7) !important;
+  border-left: 2px solid
+    color-mix(in srgb, rgb(var(--v-theme-background)) 70%, transparent) !important;
 }
 
 .song-filters {
@@ -381,20 +382,21 @@ const songsForVersion = computed(() => getSongs(version.value));
 const totalSongs = computed(
   () =>
     songsForVersion.value.filter((song) => song.gameVersion <= version.value)
-      .length,
+      .length
 );
 
 definePageMeta({
-  middleware: ["auth"],
-  keepalive: true,
+  middleware: ["auth"]
 });
+// app.vue keeps this page alive by name
+defineOptions({ name: "SongsPage" });
 
 const sortOptions = [
   {
     text: "Default",
     sortFunction: () => {
       return sortOrder.value == "asc" ? 1 : -1;
-    },
+    }
   },
   {
     text: "Title",
@@ -412,7 +414,7 @@ const sortOptions = [
       } else {
         return bTitle.localeCompare(aTitle);
       }
-    },
+    }
   },
   {
     text: "Artist",
@@ -422,7 +424,7 @@ const sortOptions = [
       } else {
         return b.artist.localeCompare(a.artist);
       }
-    },
+    }
   },
   {
     text: "Play Count",
@@ -439,7 +441,7 @@ const sortOptions = [
           (profile.value.songs[a.id]?.playCount ?? 0)
         );
       }
-    },
+    }
   },
   {
     text: "Rating",
@@ -456,7 +458,7 @@ const sortOptions = [
           (profile.value.songs[a.id]?.rating ?? 0)
         );
       }
-    },
+    }
   },
   {
     text: "Difficulty",
@@ -470,7 +472,7 @@ const sortOptions = [
           } else {
             return b.sheets[0].difficulty - a.sheets[0].difficulty;
           }
-        },
+        }
       },
       {
         text: "Hard Difficulty",
@@ -481,7 +483,7 @@ const sortOptions = [
           } else {
             return b.sheets[1].difficulty - a.sheets[1].difficulty;
           }
-        },
+        }
       },
       {
         text: "Expert Difficulty",
@@ -492,7 +494,7 @@ const sortOptions = [
           } else {
             return b.sheets[2].difficulty - a.sheets[2].difficulty;
           }
-        },
+        }
       },
       {
         text: "Inferno Difficulty",
@@ -501,13 +503,13 @@ const sortOptions = [
           const aInf = a.sheets[3] && a.sheets[3].gameVersion <= version.value;
           const bInf = b.sheets[3] && b.sheets[3].gameVersion <= version.value;
 
-          if(!aInf && !bInf) {
+          if (!aInf && !bInf) {
             return 0;
           }
-          if(!aInf) {
+          if (!aInf) {
             return 1;
           }
-          if(!bInf) {
+          if (!bInf) {
             return -1;
           }
 
@@ -519,9 +521,9 @@ const sortOptions = [
           } else {
             return bDiff - aDiff;
           }
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     text: "Score",
@@ -541,7 +543,7 @@ const sortOptions = [
               (profile.value.songs[a.id]?.scores[0]?.score ?? 0)
             );
           }
-        },
+        }
       },
       {
         text: "Hard Score",
@@ -558,7 +560,7 @@ const sortOptions = [
               (profile.value.songs[a.id]?.scores[1]?.score ?? 0)
             );
           }
-        },
+        }
       },
       {
         text: "Expert Score",
@@ -575,7 +577,7 @@ const sortOptions = [
               (profile.value.songs[a.id]?.scores[2]?.score ?? 0)
             );
           }
-        },
+        }
       },
       {
         text: "Inferno Score",
@@ -592,16 +594,16 @@ const sortOptions = [
               (profile.value.songs[a.id]?.scores[3]?.score ?? 0)
             );
           }
-        },
-      },
-    ],
-  },
+        }
+      }
+    ]
+  }
 ];
 
 const filters = ref([
   {
     type: "help",
-    help: ["All", "No", "Yes"],
+    help: ["All", "No", "Yes"]
   },
   {
     type: "buttons",
@@ -614,7 +616,7 @@ const filters = ref([
         filterFunction() {
           return true;
         },
-        active: true,
+        active: true
       },
       {
         text: "Not Played",
@@ -622,7 +624,7 @@ const filters = ref([
         iconActive: "mdi-close-circle",
         filterFunction(song) {
           return profile.value.songs[song.id]?.playCount == 0;
-        },
+        }
       },
       {
         text: "Played",
@@ -630,9 +632,9 @@ const filters = ref([
         iconActive: "mdi-check-circle",
         filterFunction(song) {
           return profile.value.songs[song.id]?.playCount > 0;
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     type: "buttons",
@@ -645,7 +647,7 @@ const filters = ref([
         filterFunction() {
           return true;
         },
-        active: true,
+        active: true
       },
       {
         text: "Not a favorite",
@@ -653,7 +655,7 @@ const filters = ref([
         iconActive: "mdi-close-circle",
         filterFunction(song) {
           return !profile.value.songs[song.id]?.favorite;
-        },
+        }
       },
       {
         text: "Is a favorite",
@@ -661,9 +663,9 @@ const filters = ref([
         iconActive: "mdi-check-circle",
         filterFunction(song) {
           return profile.value.songs[song.id]?.favorite;
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     type: "buttons",
@@ -676,7 +678,7 @@ const filters = ref([
         filterFunction() {
           return true;
         },
-        active: true,
+        active: true
       },
       {
         text: "No",
@@ -687,7 +689,7 @@ const filters = ref([
             song.sheets.filter((sheet) => sheet.gameVersion <= version.value)
               .length <= 3
           );
-        },
+        }
       },
       {
         text: "Yes",
@@ -698,9 +700,9 @@ const filters = ref([
             song.sheets.filter((sheet) => sheet.gameVersion <= version.value)
               .length > 3
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   // {
   //   type: "buttons",
@@ -735,7 +737,7 @@ const filters = ref([
   // },
   {
     type: "heading",
-    text: "Clear Status",
+    text: "Clear Status"
   },
   {
     type: "help",
@@ -745,9 +747,9 @@ const filters = ref([
       "Clear",
       "Missless",
       "Full Combo",
-      "All Marvelous",
-    ],
-  },
+      "All Marvelous"
+    ]
+  }
 ]);
 
 for (let i = 0; i < waccaDifficulties.length; i++) {
@@ -762,7 +764,7 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
         filterFunction() {
           return true;
         },
-        active: true,
+        active: true
       },
       {
         text: "Uncleared",
@@ -773,7 +775,7 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
             !profile.value.songs[song.id].scores[i] ||
             profile.value.songs[song.id].scores[i].clear_count == 0
           );
-        },
+        }
       },
       {
         text: "Clear",
@@ -781,7 +783,7 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
         iconActive: "mdi-alpha-c-circle",
         filterFunction(song) {
           return profile.value.songs[song.id]?.scores[i]?.clear_count > 0;
-        },
+        }
       },
       {
         text: "Missless",
@@ -789,7 +791,7 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
         iconActive: "mdi-alpha-m-circle",
         filterFunction(song) {
           return profile.value.songs[song.id]?.scores[i]?.missless_count > 0;
-        },
+        }
       },
       {
         text: "Full Combo",
@@ -797,7 +799,7 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
         iconActive: "mdi-alpha-f-circle",
         filterFunction(song) {
           return profile.value.songs[song.id]?.scores[i]?.full_combo_count > 0;
-        },
+        }
       },
       {
         text: "All Marvelous",
@@ -807,9 +809,9 @@ for (let i = 0; i < waccaDifficulties.length; i++) {
           return (
             profile.value.songs[song.id]?.scores[i]?.all_marvelous_count > 0
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   });
 }
 
@@ -820,12 +822,12 @@ let levelModel = ref([0, 15.1]); // Do not make things harder than Mobius
 
 filters.value.push({
   type: "heading",
-  text: "Level",
+  text: "Level"
 });
 
 filters.value.push({
   type: "help",
-  help: ["All", "Normal", "Hard", "Expert", "Inferno"],
+  help: ["All", "Normal", "Hard", "Expert", "Inferno"]
 });
 
 filters.value.push({
@@ -839,7 +841,7 @@ filters.value.push({
       filterFunction() {
         return true;
       },
-      active: true,
+      active: true
     },
     {
       text: "Normal",
@@ -849,7 +851,7 @@ filters.value.push({
         levelName = "Normal";
         return true;
       },
-      active: true,
+      active: true
     },
     {
       text: "Hard",
@@ -859,7 +861,7 @@ filters.value.push({
         levelName = "Hard";
         return true;
       },
-      active: true,
+      active: true
     },
     {
       text: "Expert",
@@ -869,7 +871,7 @@ filters.value.push({
         levelName = "Expert";
         return true;
       },
-      active: true,
+      active: true
     },
     {
       text: "Inferno",
@@ -879,9 +881,9 @@ filters.value.push({
         levelName = "Inferno";
         return true;
       },
-      active: true,
-    },
-  ],
+      active: true
+    }
+  ]
 });
 
 filters.value.push({
@@ -898,7 +900,7 @@ filters.value.push({
         song.sheets.filter(
           (sheet) =>
             sheet.difficulty >= levelModel.value[0] &&
-            sheet.difficulty <= levelModel.value[1],
+            sheet.difficulty <= levelModel.value[1]
         ).length > 0
       );
     } else {
@@ -941,7 +943,7 @@ filters.value.push({
         );
       }
     }
-  },
+  }
 });
 
 // Condense score filter to one range bar
@@ -952,12 +954,12 @@ let scoreModel = ref([0, 1000000]);
 
 filters.value.push({
   type: "heading",
-  text: "Score",
+  text: "Score"
 });
 
 filters.value.push({
   type: "help",
-  help: ["All", "Normal", "Hard", "Expert", "Inferno"],
+  help: ["All", "Normal", "Hard", "Expert", "Inferno"]
 });
 
 filters.value.push({
@@ -971,7 +973,7 @@ filters.value.push({
       filterFunction() {
         return true;
       },
-      active: true,
+      active: true
     },
     {
       text: "Normal",
@@ -981,7 +983,7 @@ filters.value.push({
         scoreName = "Normal";
         return true;
       },
-      active: true,
+      active: true
     },
     {
       text: "Hard",
@@ -991,7 +993,7 @@ filters.value.push({
         scoreName = "Hard";
         return true;
       },
-      active: true,
+      active: true
     },
     {
       text: "Expert",
@@ -1001,7 +1003,7 @@ filters.value.push({
         scoreName = "Expert";
         return true;
       },
-      active: true,
+      active: true
     },
     {
       text: "Inferno",
@@ -1011,9 +1013,9 @@ filters.value.push({
         scoreName = "Inferno";
         return true;
       },
-      active: true,
-    },
-  ],
+      active: true
+    }
+  ]
 });
 
 filters.value.push({
@@ -1070,7 +1072,7 @@ filters.value.push({
         return score >= scoreModel.value[0] && score <= scoreModel.value[1];
       }
     }
-  },
+  }
 });
 
 // leaving this here in case it turns out I need to debounce it
@@ -1180,7 +1182,7 @@ const activeCategories = ref([]);
 function toggleCategory(category) {
   if (activeCategories.value.includes(category.ja)) {
     activeCategories.value = activeCategories.value.filter(
-      (c) => c != category.ja,
+      (c) => c != category.ja
     );
   } else {
     activeCategories.value.push(category.ja);
@@ -1221,7 +1223,7 @@ const songsFiltered = computed(() => {
     "2.5次元",
     "バラエティ",
     "オリジナル",
-    "TANO*C",
+    "TANO*C"
   ];
 
   // If not on WACCA Plus, deselect the plus category if it was selected before hiding the button
@@ -1275,7 +1277,7 @@ const songsFiltered = computed(() => {
         compareCategories.length == 1 ||
         (compareCategories.length > 1 &&
           !compareCategories.some((i) =>
-            ["WACCA", "WACCA Lily", "WACCA Reverse"].includes(i),
+            ["WACCA", "WACCA Lily", "WACCA Reverse"].includes(i)
           ))
       ) {
         // Get plus songs with infs
@@ -1297,7 +1299,7 @@ const songsFiltered = computed(() => {
     baseResults,
     lilyResults,
     reverseResults,
-    plusResults,
+    plusResults
   );
 
   // check if we have a version type selected
@@ -1311,7 +1313,7 @@ const songsFiltered = computed(() => {
       results = allResults.filter((song) => {
         return compareCategories.includes(song.category);
       });
-    }  
+    }
   }
   // Default check categories for set of all songs
   else {
@@ -1338,7 +1340,7 @@ const songsFiltered = computed(() => {
     // perform search
     results = fuzzysort
       .go(search.value, results, {
-        keys: ["title", "artist", "titleEnglish"],
+        keys: ["title", "artist", "titleEnglish"]
       })
       .map((result) => result.obj);
   }
@@ -1377,7 +1379,7 @@ function toggleSortDirection() {
 function clickFilter(coFilter, coFilterSub) {
   let filter = filters.value.find((filter) => filter.text == coFilter.text);
   let filterSub = filter.subItems.find(
-    (filterSub) => filterSub.text == coFilterSub.text,
+    (filterSub) => filterSub.text == coFilterSub.text
   );
 
   // Multi select support for level and score
@@ -1416,7 +1418,7 @@ function clickFilter(coFilter, coFilterSub) {
   if (
     filter.subItems.every(
       (value) =>
-        value.active == true || !value.text == "All" || value.text == "All",
+        value.active == true || !value.text == "All" || value.text == "All"
     )
   ) {
     if (filter.text == "Difficulty ") {
@@ -1436,7 +1438,7 @@ function clickFilter(coFilter, coFilterSub) {
 const songsPaginated = computed(() => {
   return songsFiltered.value.slice(
     (page.value - 1) * perPage,
-    page.value * perPage,
+    page.value * perPage
   );
 });
 

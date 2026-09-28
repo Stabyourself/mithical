@@ -6,7 +6,7 @@
 import waccaIcons from "~/assets/wacca/waccaIcons.js";
 
 const props = defineProps({
-  icon: Number,
+  icon: Number
 });
 
 const url = computed(() => {

@@ -20,7 +20,7 @@ const NOTE_TYPES = {
   8: "slideCCW",
   24: "slideCCW",
   16: "chain",
-  26: "chain",
+  26: "chain"
 };
 const BONUS_IDS = new Set([2, 6, 8]);
 const R_NOTE_IDS = new Set([20, 21, 22, 23, 24, 25, 26]);
@@ -45,7 +45,14 @@ const REVERSE_END = 8;
 function parseMer(text) {
   const lines = text.split(/\r?\n/);
   const body = lines.findIndex((line) => line.trim() === "#BODY");
-  const chart = { gimmicks: [], speedEvents: [], reverses: [], notes: [], masks: [], endTick: null };
+  const chart = {
+    gimmicks: [],
+    speedEvents: [],
+    reverses: [],
+    notes: [],
+    masks: [],
+    endTick: null
+  };
   let reverse = null;
   const objects = new Map();
 
@@ -57,22 +64,33 @@ function parseMer(text) {
     const objectId = Number(fields[2]);
 
     if (objectId !== 1) {
-      if (objectId === BPM_CHANGE) chart.gimmicks.push({ tick, bpm: Number(fields[3]) });
-      if (objectId === SPEED_CHANGE) chart.speedEvents.push({ tick, speed: Number(fields[3]) });
+      if (objectId === BPM_CHANGE)
+        chart.gimmicks.push({ tick, bpm: Number(fields[3]) });
+      if (objectId === SPEED_CHANGE)
+        chart.speedEvents.push({ tick, speed: Number(fields[3]) });
       if (objectId === STOP_START) chart.speedEvents.push({ tick, stop: true });
       if (objectId === STOP_END) chart.speedEvents.push({ tick, stop: false });
 
       // Reverse comes in three parts, broken ones get skipped like SaturnData does
       if (objectId === REVERSE_START) reverse = { start: tick };
-      if (objectId === REVERSE_MIDDLE && reverse && reverse.start <= tick) reverse.middle = tick;
-      if (objectId === REVERSE_END && reverse?.middle !== undefined && reverse.middle <= tick) {
+      if (objectId === REVERSE_MIDDLE && reverse && reverse.start <= tick)
+        reverse.middle = tick;
+      if (
+        objectId === REVERSE_END &&
+        reverse?.middle !== undefined &&
+        reverse.middle <= tick
+      ) {
         reverse.end = tick;
         chart.reverses.push(reverse);
         reverse = null;
       }
       if (objectId === TIME_SIG_CHANGE) {
         // Some old charts only have the numerator
-        chart.gimmicks.push({ tick, upper: Number(fields[3]), lower: Number(fields[4] ?? 4) });
+        chart.gimmicks.push({
+          tick,
+          upper: Number(fields[3]),
+          lower: Number(fields[4] ?? 4)
+        });
       }
       continue;
     }
@@ -86,7 +104,7 @@ function parseMer(text) {
         show: id === MASK_ADD_ID,
         pos,
         size,
-        direction: MASK_DIRECTIONS[Number(fields[8])] ?? "center",
+        direction: MASK_DIRECTIONS[Number(fields[8])] ?? "center"
       });
     } else {
       objects.set(index, {
@@ -94,9 +112,12 @@ function parseMer(text) {
         id,
         pos,
         size,
-        next: HOLD_START_IDS.has(id) || id === HOLD_POINT_ID ? Number(fields[8]) : null,
+        next:
+          HOLD_START_IDS.has(id) || id === HOLD_POINT_ID
+            ? Number(fields[8])
+            : null,
         // Hold points with render flag 0 are hidden
-        hidden: fields[7] === "0",
+        hidden: fields[7] === "0"
       });
     }
   }
@@ -105,7 +126,10 @@ function parseMer(text) {
     if (HOLD_START_IDS.has(object.id)) {
       // Follow the links through the hold points to its end
       const points = [object];
-      for (let point = object; point.next !== null && objects.has(point.next); ) {
+      for (
+        let point = object;
+        point.next !== null && objects.has(point.next);
+      ) {
         point = objects.get(point.next);
         points.push(point);
       }
@@ -115,7 +139,9 @@ function parseMer(text) {
       // renderers follow the circle between points). But some charts use them for other
       // shapes, e.g. MEGA TSKR's ending snaps its holds back to their first shape between
       // visible points, which only looks right without them
-      const shown = points.filter((point, i) => !point.hidden || i === 0 || i === points.length - 1);
+      const shown = points.filter(
+        (point, i) => !point.hidden || i === 0 || i === points.length - 1
+      );
 
       chart.notes.push({
         type: "hold",
@@ -124,7 +150,7 @@ function parseMer(text) {
         size: object.size,
         rNote: R_NOTE_IDS.has(object.id),
         bonus: false,
-        points: shown.map(({ tick, pos, size }) => ({ tick, pos, size })),
+        points: shown.map(({ tick, pos, size }) => ({ tick, pos, size }))
       });
     } else if (NOTE_TYPES[object.id]) {
       chart.notes.push({
@@ -133,7 +159,7 @@ function parseMer(text) {
         pos: object.pos,
         size: object.size,
         rNote: R_NOTE_IDS.has(object.id),
-        bonus: BONUS_IDS.has(object.id),
+        bonus: BONUS_IDS.has(object.id)
       });
     }
   }
@@ -142,12 +168,20 @@ function parseMer(text) {
   chart.masks.sort((a, b) => a.tick - b.tick);
   chart.gimmicks.sort((a, b) => a.tick - b.tick);
   // No end marker: a measure after the last thing, hold ends included
-  const lastTick = Math.max(0, ...chart.notes.map((note) => note.points?.at(-1).tick ?? note.tick));
-  chart.endTick ??= Math.ceil(lastTick / TICKS_PER_MEASURE + 1) * TICKS_PER_MEASURE;
+  const lastTick = Math.max(
+    0,
+    ...chart.notes.map((note) => note.points?.at(-1).tick ?? note.tick)
+  );
+  chart.endTick ??=
+    Math.ceil(lastTick / TICKS_PER_MEASURE + 1) * TICKS_PER_MEASURE;
   chart.bpm = chart.gimmicks.find((gimmick) => gimmick.bpm)?.bpm ?? 120;
   chart.msAt = timing(chart.gimmicks);
   chart.lengthMs = chart.msAt(chart.endTick);
-  chart.scaledAt = reversing(chart.reverses, chart.msAt, scrolling(chart.speedEvents, chart.msAt));
+  chart.scaledAt = reversing(
+    chart.reverses,
+    chart.msAt,
+    scrolling(chart.speedEvents, chart.msAt)
+  );
   chart.scaledLength = chart.scaledAt(chart.lengthMs);
   return chart;
 }
@@ -193,14 +227,16 @@ function reversing(reverses, msAt, scaledAt) {
     start: msAt(reverse.start),
     middle: msAt(reverse.middle),
     middleScaled: scaledAt(msAt(reverse.middle)),
-    endScaled: scaledAt(msAt(reverse.end)),
+    endScaled: scaledAt(msAt(reverse.end))
   }));
   if (sections.length === 0) return scaledAt;
 
   return (time) => {
     for (const section of sections) {
       if (time <= section.start || time > section.middle) continue;
-      const t = reverseEase((time - section.start) / (section.middle - section.start));
+      const t = reverseEase(
+        (time - section.start) / (section.middle - section.start)
+      );
       return section.endScaled + t * (section.middleScaled - section.endScaled);
     }
     return scaledAt(time);
@@ -231,7 +267,7 @@ function timing(gimmicks) {
   let ms = 0;
   let tick = 0;
 
-  const msPerTick = () => (60000 / bpm) * measureQuarters / TICKS_PER_MEASURE;
+  const msPerTick = () => ((60000 / bpm) * measureQuarters) / TICKS_PER_MEASURE;
   for (const gimmick of gimmicks) {
     ms += (gimmick.tick - tick) * msPerTick();
     tick = gimmick.tick;
@@ -239,7 +275,8 @@ function timing(gimmicks) {
     if (gimmick.upper) measureQuarters = (gimmick.upper * 4) / gimmick.lower;
     segments.push({ tick, ms, msPerTick: msPerTick() });
   }
-  if (segments.length === 0) segments.push({ tick: 0, ms: 0, msPerTick: msPerTick() });
+  if (segments.length === 0)
+    segments.push({ tick: 0, ms: 0, msPerTick: msPerTick() });
 
   return (target) => {
     const segment = segmentAt(segments, "tick", target);
@@ -257,7 +294,7 @@ function mirrorPosition(pos, size) {
 
 const MIRRORED_TYPES = {
   slideCW: "slideCCW",
-  slideCCW: "slideCW",
+  slideCCW: "slideCW"
 };
 
 // What the preview draws, times in ms. Mirror flips left/right and swaps slide directions
@@ -273,13 +310,15 @@ function buildChart(chart, mirror) {
     start: chart.msAt(reverse.start),
     middle: chart.msAt(reverse.middle),
     middleTick: reverse.middle,
-    endTick: reverse.end,
+    endTick: reverse.end
   }));
   const reverseOf = (tick, lastTick = tick, edges = false) =>
     reverses.findIndex((reverse) =>
       edges
         ? tick >= reverse.middleTick && tick <= reverse.endTick
-        : tick > reverse.middleTick && tick < reverse.endTick && lastTick < reverse.endTick,
+        : tick > reverse.middleTick &&
+          tick < reverse.endTick &&
+          lastTick < reverse.endTick
     );
 
   const notes = chart.notes.map((source) => {
@@ -292,7 +331,7 @@ function buildChart(chart, mirror) {
       rNote: source.rNote,
       bonus: source.bonus,
       sync: false,
-      reverse: reverseOf(source.tick, source.points?.at(-1).tick),
+      reverse: reverseOf(source.tick, source.points?.at(-1).tick)
     });
 
     if (source.points) {
@@ -301,8 +340,8 @@ function buildChart(chart, mirror) {
           time: chart.msAt(point.tick),
           scaled: chart.scaledAt(chart.msAt(point.tick)),
           pos: point.pos,
-          size: point.size,
-        }),
+          size: point.size
+        })
       );
       note.endTime = note.points.at(-1).time;
     }
@@ -328,7 +367,8 @@ function buildChart(chart, mirror) {
     for (let i = 1; i < group.length; i++) {
       const current = group[i];
       const previous = group[i - 1];
-      if (current.pos === previous.pos && current.size === previous.size) continue;
+      if (current.pos === previous.pos && current.size === previous.size)
+        continue;
       current.sync = true;
       previous.sync = true;
 
@@ -345,7 +385,7 @@ function buildChart(chart, mirror) {
         time,
         reverse: current.reverse === previous.reverse ? current.reverse : -1,
         pos: size0 > size1 ? position1 : position0,
-        size,
+        size
       });
     }
   }
@@ -356,7 +396,7 @@ function buildChart(chart, mirror) {
       show: mask.show,
       pos: mask.pos,
       size: mask.size,
-      direction: mask.direction,
+      direction: mask.direction
     });
     if (mirror && toggle.direction !== "center") {
       toggle.direction = toggle.direction === "cw" ? "ccw" : "cw";
@@ -364,7 +404,8 @@ function buildChart(chart, mirror) {
 
     // Sweep speed from SaturnData: half a frame per lane, a quarter from/to the center.
     // The session skips it for ones right at the start, unless played from there
-    toggle.duration = (toggle.size * (toggle.direction === "center" ? 1 : 2) * 1000) / 240;
+    toggle.duration =
+      (toggle.size * (toggle.direction === "center" ? 1 : 2) * 1000) / 240;
     return toggle;
   });
 
@@ -373,7 +414,7 @@ function buildChart(chart, mirror) {
     measureLines.push({
       time: chart.msAt(tick),
       scaled: chart.scaledAt(chart.msAt(tick)),
-      reverse: reverseOf(tick, tick, true),
+      reverse: reverseOf(tick, tick, true)
     });
   }
 

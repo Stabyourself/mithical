@@ -47,7 +47,7 @@
 // const runtimeConfig = useRuntimeConfig();
 
 const props = defineProps({
-  songId: Number,
+  songId: Number
 });
 
 // const activeCard = useState("activeCard");
@@ -56,7 +56,7 @@ const profile = useState("profile");
 const profileSong = computed(() => {
   if (!profile.value) {
     return {
-      favorite: false,
+      favorite: false
     };
   }
   return profile.value.songs[props.songId];

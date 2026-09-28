@@ -13,10 +13,15 @@ import {
   holdGradientStops,
   missedHoldColors,
   capColors,
-  syncColors,
+  syncColors
 } from "./noteColors.js";
 import { RING_ROWS, clamp, mod60, ringLayout } from "./PlayfieldSession.js";
-import { resolveSettings, DIFFICULTY_LABELS, FONT, TITLE_COLOR } from "./PlayfieldRenderer.js";
+import {
+  resolveSettings,
+  DIFFICULTY_LABELS,
+  FONT,
+  TITLE_COLOR
+} from "./PlayfieldRenderer.js";
 
 // Lane in the first column: lane 15 starts at 12 o'clock, lanes count counterclockwise from there
 const CUT = 15;
@@ -64,7 +69,9 @@ export default class UnrolledRenderer {
     this.infoLayer = document.createElement("canvas");
     this.ringLit = new Uint8Array(60);
     this.resize(canvas.width || 1, canvas.height || 1);
-    this.unsubscribe = session.subscribe((type, detail) => this.onSessionEvent(type, detail));
+    this.unsubscribe = session.subscribe((type, detail) =>
+      this.onSessionEvent(type, detail)
+    );
   }
 
   destroy() {
@@ -78,10 +85,15 @@ export default class UnrolledRenderer {
       this.hitFlashes.length = 0;
     } else if (type === "touch") {
       if (detail.laneChanged) {
-        for (let d = -1; d <= 1; d++) this.lineFlash[mod60(detail.lane + d)] = now;
+        for (let d = -1; d <= 1; d++)
+          this.lineFlash[mod60(detail.lane + d)] = now;
       }
     } else if (type === "hit") {
-      this.hitFlashes.push({ start: now, pos: detail.note.pos, size: detail.note.size });
+      this.hitFlashes.push({
+        start: now,
+        pos: detail.note.pos,
+        size: detail.note.size
+      });
     } else if (type === "holdEnd") {
       const last = detail.note.points.at(-1);
       this.hitFlashes.push({ start: now, pos: last.pos, size: last.size });
@@ -95,7 +107,7 @@ export default class UnrolledRenderer {
   setFeatures(features) {
     this.features = {
       linear: features.linear ?? false,
-      ring: features.ring ?? true,
+      ring: features.ring ?? true
     };
     if (this.width) this.layout();
   }
@@ -138,12 +150,19 @@ export default class UnrolledRenderer {
 
     // Gradients that only depend on the layout
     const { ctx } = this;
-    this.keyBeamGradient = ctx.createLinearGradient(0, this.lineY * 0.45, 0, this.lineY);
+    this.keyBeamGradient = ctx.createLinearGradient(
+      0,
+      this.lineY * 0.45,
+      0,
+      this.lineY
+    );
     this.keyBeamGradient.addColorStop(0, "rgba(255, 255, 255, 0)");
     this.keyBeamGradient.addColorStop(1, "rgba(255, 255, 255, 0.35)");
     this.lineGradient = ctx.createLinearGradient(0, 0, w, 0);
     const [a, b] = JUDGEMENT_LINE_COLORS;
-    [a, b, a, b, a].forEach((color, i) => this.lineGradient.addColorStop(i / 4, color));
+    [a, b, a, b, a].forEach((color, i) =>
+      this.lineGradient.addColorStop(i / 4, color)
+    );
   }
 
   // Geometry
@@ -181,8 +200,15 @@ export default class UnrolledRenderer {
     const rowHeight = (this.ringBottom - this.ringTop) / RING_ROWS;
     let radius;
     if (y <= this.lineY) radius = (y / this.lineY) * Rj;
-    else if (y <= this.ringTop) radius = Rj + ((y - this.lineY) / (this.ringTop - this.lineY)) * (ringInner - Rj);
-    else radius = ringInner + ((y - this.ringTop) / (this.ringBottom - this.ringTop)) * (ringOuter - ringInner);
+    else if (y <= this.ringTop)
+      radius =
+        Rj +
+        ((y - this.lineY) / (this.ringTop - this.lineY)) * (ringInner - Rj);
+    else
+      radius =
+        ringInner +
+        ((y - this.ringTop) / (this.ringBottom - this.ringTop)) *
+          (ringOuter - ringInner);
     // Above the ring (or anywhere without it) the whole area splits evenly into the rows,
     // top is the innermost. On the ring it's the row you're on
     const top = this.features.ring ? this.ringTop : this.height;
@@ -224,7 +250,10 @@ export default class UnrolledRenderer {
     ctx.drawImage(this.infoLayer, 0, 0);
     if (settings.keyBeam) this.drawKeyBeams();
 
-    this.visible = session.visibleObjects(settings.viewDistance, { barlines: settings.barlines, linear: features.linear });
+    this.visible = session.visibleObjects(settings.viewDistance, {
+      barlines: settings.barlines,
+      linear: features.linear
+    });
 
     // Nothing's cut off at the judgement line: everything goes on under it to the bottom of the
     // screen, where the line covers it
@@ -268,7 +297,7 @@ export default class UnrolledRenderer {
       mask: settings.mask,
       ringColors: settings.ringColors,
       ring: features.ring,
-      laneMask: session.laneMaskVersion,
+      laneMask: session.laneMaskVersion
     };
 
     const layer = this.staticLayer;
@@ -301,7 +330,10 @@ export default class UnrolledRenderer {
 
     ctx.beginPath();
     for (let lane = 0; lane < 60; lane++) {
-      if (!laneHidden[lane]) this.eachSpan(lane, 1, (x, w) => ctx.rect(x, top, w + 0.5, bottom - top));
+      if (!laneHidden[lane])
+        this.eachSpan(lane, 1, (x, w) =>
+          ctx.rect(x, top, w + 0.5, bottom - top)
+        );
     }
     ctx.fillStyle = this.lineGradient;
     ctx.fill();
@@ -333,7 +365,13 @@ export default class UnrolledRenderer {
   updateInfoLayer() {
     const { width, height, unit, lineY, chartInfo } = this;
     const key = this.infoKey;
-    if (key && key.width === width && key.height === height && key.lineY === lineY) return;
+    if (
+      key &&
+      key.width === width &&
+      key.height === height &&
+      key.lineY === lineY
+    )
+      return;
     this.infoKey = { width, height, lineY };
 
     const layer = this.infoLayer;
@@ -343,7 +381,8 @@ export default class UnrolledRenderer {
     ctx.clearRect(0, 0, width, height);
     if (!chartInfo) return;
 
-    const label = DIFFICULTY_LABELS[chartInfo.difficulty] ?? DIFFICULTY_LABELS[3];
+    const label =
+      DIFFICULTY_LABELS[chartInfo.difficulty] ?? DIFFICULTY_LABELS[3];
     const margin = INFO_MARGIN * unit;
     const size = INFO_SIZE * unit;
     // Long titles get squeezed to fit
@@ -388,7 +427,8 @@ export default class UnrolledRenderer {
     if (laneHidden.includes(1)) {
       ctx.fillStyle = "rgba(0, 0, 0, 0.65)";
       for (let lane = 0; lane < 60; lane++) {
-        if (laneHidden[lane]) this.eachSpan(lane, 1, (x, w) => ctx.fillRect(x, 0, w, screenBottom));
+        if (laneHidden[lane])
+          this.eachSpan(lane, 1, (x, w) => ctx.fillRect(x, 0, w, screenBottom));
       }
     }
   }
@@ -400,7 +440,7 @@ export default class UnrolledRenderer {
     for (const [every, alpha] of [
       [1, 0.05],
       [5, 0.14],
-      [15, 0.35],
+      [15, 0.35]
     ]) {
       ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
       ctx.beginPath();
@@ -422,7 +462,12 @@ export default class UnrolledRenderer {
     const rowHeight = (ringBottom - ringTop) / RING_ROWS;
     const gap = Math.max(1, unit);
     const x = mod60(lane - CUT) * laneWidth;
-    return [x + gap / 2, ringTop + row * rowHeight + gap / 2, laneWidth - gap, rowHeight - gap];
+    return [
+      x + gap / 2,
+      ringTop + row * rowHeight + gap / 2,
+      laneWidth - gap,
+      rowHeight - gap
+    ];
   }
 
   // Idle ring: open lanes in the second color, masked ones in the first (dark versions)
@@ -430,13 +475,14 @@ export default class UnrolledRenderer {
     const { settings, session } = this;
     for (const [masked, index] of [
       [0, 4],
-      [1, 3],
+      [1, 3]
     ]) {
       ctx.fillStyle = `rgb(${settings.ringColors[index].join(", ")})`;
       ctx.beginPath();
       for (let lane = 0; lane < 60; lane++) {
         if (session.laneHidden[lane] !== masked) continue;
-        for (let row = 0; row < RING_ROWS; row++) ctx.rect(...this.ringCell(lane, row));
+        for (let row = 0; row < RING_ROWS; row++)
+          ctx.rect(...this.ringCell(lane, row));
       }
       ctx.fill();
     }
@@ -447,7 +493,9 @@ export default class UnrolledRenderer {
     const { ctx, lineY } = this;
     ctx.fillStyle = this.keyBeamGradient;
     for (const { lane, spread } of this.session.fingers.values()) {
-      this.eachSpan(lane - 1, spread.lanes + 2, (x, w) => ctx.fillRect(x, 0, w, lineY));
+      this.eachSpan(lane - 1, spread.lanes + 2, (x, w) =>
+        ctx.fillRect(x, 0, w, lineY)
+      );
     }
   }
 
@@ -499,8 +547,10 @@ export default class UnrolledRenderer {
         highest = Math.max(highest, from + 60);
         continue;
       }
-      let column = previous === null ? mod60(this.columnOf(pos)) : this.columnOf(pos);
-      if (previous !== null) column += Math.round((previous - column) / 60) * 60;
+      let column =
+        previous === null ? mod60(this.columnOf(pos)) : this.columnOf(pos);
+      if (previous !== null)
+        column += Math.round((previous - column) / 60) * 60;
       previous = column;
       left.push([(column + NOTE_INSET) * laneWidth, y]);
       right.push([(column + size - NOTE_INSET) * laneWidth, y]);
@@ -515,7 +565,9 @@ export default class UnrolledRenderer {
     path.closePath();
 
     // Color runs along the hold, start to end
-    const colors = missed ? missedHoldColors : holdColorsAt(settings.colors.hold, active);
+    const colors = missed
+      ? missedHoldColors
+      : holdColorsAt(settings.colors.hold, active);
     const top = yAt(Math.min(endTime, to));
     const bottom = yAt(startTime);
     if (bottom - top > 1) {
@@ -523,7 +575,10 @@ export default class UnrolledRenderer {
       const span = endTime - startTime;
       for (let i = 0; i < holdGradientStops.length; i++) {
         const y = yAt(startTime + holdGradientStops[i] * span);
-        gradient.addColorStop(clamp((bottom - y) / (bottom - top), 0, 1), colors[i]);
+        gradient.addColorStop(
+          clamp((bottom - y) / (bottom - top), 0, 1),
+          colors[i]
+        );
       }
       ctx.fillStyle = gradient;
     } else {
@@ -562,7 +617,12 @@ export default class UnrolledRenderer {
     ctx.fillStyle = syncColors.base;
     ctx.globalAlpha = 0.8;
     // The connector spans the gap between the notes, their ends overlap it by a lane
-    this.eachSpan(connector.pos, connector.size, (x, w) => ctx.fillRect(x, y - h / 2, w, h), 0.5);
+    this.eachSpan(
+      connector.pos,
+      connector.size,
+      (x, w) => ctx.fillRect(x, y - h / 2, w, h),
+      0.5
+    );
     ctx.globalAlpha = 1;
   }
 
@@ -572,37 +632,50 @@ export default class UnrolledRenderer {
     const top = y - h / 2;
     const inset = note.size >= 60 ? 0 : NOTE_INSET;
 
-    this.eachSpan(note.pos, note.size, (x, w) => {
-      if (note.rNote) this.drawRGlow(x, w, y);
+    this.eachSpan(
+      note.pos,
+      note.size,
+      (x, w) => {
+        if (note.rNote) this.drawRGlow(x, w, y);
 
-      // Body: light top edge, dark bottom edge
-      ctx.fillStyle = colors.base;
-      ctx.fillRect(x, top, w, h);
-      ctx.fillStyle = colors.light;
-      ctx.fillRect(x, top, w, h * 0.25);
-      ctx.fillStyle = colors.dark;
-      ctx.fillRect(x, top + h * 0.75, w, h * 0.25);
+        // Body: light top edge, dark bottom edge
+        ctx.fillStyle = colors.base;
+        ctx.fillRect(x, top, w, h);
+        ctx.fillStyle = colors.light;
+        ctx.fillRect(x, top, w, h * 0.25);
+        ctx.fillStyle = colors.dark;
+        ctx.fillRect(x, top + h * 0.75, w, h * 0.25);
 
-      if (note.type === "chain") this.drawChainStripes(x, w, top);
+        if (note.type === "chain") this.drawChainStripes(x, w, top);
 
-      // Caps like the blue ends in game
-      if (note.size < 60) {
-        const cap = Math.min(laneWidth * 0.3, w / 4);
-        ctx.fillStyle = capColors.base;
-        ctx.fillRect(x, top, cap, h);
-        ctx.fillRect(x + w - cap, top, cap, h);
-      }
+        // Caps like the blue ends in game
+        if (note.size < 60) {
+          const cap = Math.min(laneWidth * 0.3, w / 4);
+          ctx.fillStyle = capColors.base;
+          ctx.fillRect(x, top, cap, h);
+          ctx.fillRect(x + w - cap, top, cap, h);
+        }
 
-      if (note.sync) {
-        ctx.strokeStyle = syncColors.outline;
-        ctx.lineWidth = Math.max(1, 1.5 * unit);
-        ctx.strokeRect(x - ctx.lineWidth, top - ctx.lineWidth, w + 2 * ctx.lineWidth, h + 2 * ctx.lineWidth);
-      }
-      if (note.bonus) this.drawBonusTriangles(note, x - inset * laneWidth, top, colors);
+        if (note.sync) {
+          ctx.strokeStyle = syncColors.outline;
+          ctx.lineWidth = Math.max(1, 1.5 * unit);
+          ctx.strokeRect(
+            x - ctx.lineWidth,
+            top - ctx.lineWidth,
+            w + 2 * ctx.lineWidth,
+            h + 2 * ctx.lineWidth
+          );
+        }
+        if (note.bonus)
+          this.drawBonusTriangles(note, x - inset * laneWidth, top, colors);
 
-      if (note.type === "snapIn" || note.type === "snapOut") this.drawSnapArrows(note, x, w, top, colors);
-      if (note.type === "slideCW" || note.type === "slideCCW") this.drawSlideArrows(note, x, w, top, colors);
-    }, inset);
+        if (note.type === "snapIn" || note.type === "snapOut")
+          this.drawSnapArrows(note, x, w, top, colors);
+        if (note.type === "slideCW" || note.type === "slideCCW")
+          this.drawSlideArrows(note, x, w, top, colors);
+      },
+      inset
+    );
   }
 
   // Soft pale yellow glow behind R notes, like the round view: brightest on the note, fading
@@ -632,7 +705,12 @@ export default class UnrolledRenderer {
     const count = full ? 60 : note.size - 2;
     const start = full ? x : x + laneWidth;
 
-    const gradient = ctx.createLinearGradient(0, top - h * 0.1, 0, top + h * 1.1);
+    const gradient = ctx.createLinearGradient(
+      0,
+      top - h * 0.1,
+      0,
+      top + h * 1.1
+    );
     gradient.addColorStop(0, colors.light);
     gradient.addColorStop(0.4, colors.base);
     gradient.addColorStop(0.6, colors.base);
@@ -664,7 +742,11 @@ export default class UnrolledRenderer {
     ctx.fillStyle = "rgba(0, 0, 0, 0.35)";
     ctx.beginPath();
     // Start a lean early so the first stripe's bottom still reaches into the note
-    for (let stripe = x - lean + laneWidth * 0.3; stripe < x + w; stripe += laneWidth * 0.7) {
+    for (
+      let stripe = x - lean + laneWidth * 0.3;
+      stripe < x + w;
+      stripe += laneWidth * 0.7
+    ) {
       ctx.moveTo(stripe + lean, top);
       ctx.lineTo(stripe + lean + width, top);
       ctx.lineTo(stripe + width, top + h);
@@ -707,7 +789,11 @@ export default class UnrolledRenderer {
     const size = Math.min(laneWidth * 0.9, h * 1.2);
     const y = top - h * 0.3 - size / 2;
     ctx.fillStyle = colors.light;
-    for (let cx = x + laneWidth; cx < x + w - laneWidth * 0.5; cx += laneWidth * 2) {
+    for (
+      let cx = x + laneWidth;
+      cx < x + w - laneWidth * 0.5;
+      cx += laneWidth * 2
+    ) {
       ctx.beginPath();
       if (left) {
         ctx.moveTo(cx + size / 3, y - size / 2);
@@ -755,7 +841,12 @@ export default class UnrolledRenderer {
       }
       const grow = 1 + progress * 1.5;
       ctx.globalAlpha = 0.8 * (1 - progress);
-      this.eachSpan(flash.pos, flash.size, (x, w) => ctx.fillRect(x, lineY - h * grow, w, h * grow * 2), NOTE_INSET);
+      this.eachSpan(
+        flash.pos,
+        flash.size,
+        (x, w) => ctx.fillRect(x, lineY - h * grow, w, h * grow * 2),
+        NOTE_INSET
+      );
     }
     ctx.globalAlpha = 1;
 
@@ -763,7 +854,12 @@ export default class UnrolledRenderer {
     for (const { note, base, held } of session.activeHolds) {
       if (!held) continue;
       const shape = session.holdShapeAt(note, session.time - base);
-      this.eachSpan(Math.round(shape.pos), Math.round(shape.size), (x, w) => ctx.fillRect(x, lineY - h * 2, w, h * 4), NOTE_INSET);
+      this.eachSpan(
+        Math.round(shape.pos),
+        Math.round(shape.size),
+        (x, w) => ctx.fillRect(x, lineY - h * 2, w, h * 4),
+        NOTE_INSET
+      );
     }
     ctx.globalCompositeOperation = "source-over";
   }
@@ -777,7 +873,8 @@ export default class UnrolledRenderer {
     for (const { note, base, held } of session.activeHolds) {
       if (!held) continue;
       const shape = session.holdShapeAt(note, session.time - base);
-      for (let i = 0; i < Math.round(shape.size); i++) lit[mod60(Math.round(shape.pos) + i)] = 1;
+      for (let i = 0; i < Math.round(shape.size); i++)
+        lit[mod60(Math.round(shape.pos) + i)] = 1;
       anyLit = true;
     }
     if (anyLit) {
@@ -785,7 +882,8 @@ export default class UnrolledRenderer {
       ctx.beginPath();
       for (let lane = 0; lane < 60; lane++) {
         if (!lit[lane]) continue;
-        for (let row = 0; row < RING_ROWS; row++) ctx.rect(...this.ringCell(lane, row));
+        for (let row = 0; row < RING_ROWS; row++)
+          ctx.rect(...this.ringCell(lane, row));
       }
       ctx.fill();
     }
@@ -794,7 +892,9 @@ export default class UnrolledRenderer {
     ctx.fillStyle = "#ffffff";
     ctx.beginPath();
     for (const finger of session.fingers.values()) {
-      session.eachFingerCell(finger, (lane, row) => ctx.rect(...this.ringCell(lane, row)));
+      session.eachFingerCell(finger, (lane, row) =>
+        ctx.rect(...this.ringCell(lane, row))
+      );
     }
     ctx.fill();
   }

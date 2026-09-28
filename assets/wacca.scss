@@ -37,19 +37,20 @@
   src: url("~/assets/font/RateFont.woff2") format("woff2");
 }
 
-.v-theme--waccaLight.wacca.v-theme-provider,
-.v-theme--waccaLightPlus.wacca.v-theme-provider {
+// Page background pattern per theme, see app.vue
+.v-theme--waccaLight .wacca-page,
+.v-theme--waccaLightPlus .wacca-page {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAA9AgMAAAC4tyNYAAAADFBMVEX4+Pj////9/f37+/uz03onAAAA10lEQVQoz1XQvQ3CMBCG4QNEQZEybMAISJSRWIAil6RIkREYgSW8D0tkH/z9JBJu/FaPfRff2E7n+xSL6xAv1yUm1zlG1y0GVxtppkR2QjJyEVJLTFNrElJrFFJLzFpLTEF1RFALENaMn7AmIKwRCIpMiyJTVB0Q1gKENUfDAnNngbmxwKwsMLnVk/V/Hntd9yp75cdxzLfroI1wiNl1z97V5qDA+65MMETSTINRjKQYDtEbSTOFAwgBIwSMEDBCwAgBIwSMEDJYohggYoCYObtmIGKAiPkBm4hj3UXWVGQAAAAASUVORK5CYII=);
 }
 
-.v-theme--waccaDark.wacca.v-theme-provider,
-.v-theme--waccaDarkPlus.wacca.v-theme-provider {
+.v-theme--waccaDark .wacca-page,
+.v-theme--waccaDarkPlus .wacca-page {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAA9CAYAAADF2cvLAAAABHNCSVQICAgIfAhkiAAAAdlJREFUaEPNmFuuwzAIRJuo68j+d5nKlVy5zgADOI7vV2secxi4P92O4zi3bXut8ref57kKy6uw7IVmFailgKopX4dWcAkCPbW6Vvfn0JOXLQKVwGyXer2LQ33Cnc4hAy5AMw8cDf8YEIIpZkCgGS6FgKSi7F1pfUWHsqJSPTrkNlcFsool0cy7CjT6lpgBTaCRUNrtVFdpIKaZtiq2ngLShNjYcCBm/xIcC1Pqpzh0G1DEJQ9MyCGPQGSA0MpYKDavvb0wkCVmxaV/gBCQ1Ky+R1ZVa8NAGVFtoDCQ1DQLmgJC4tHbSa+svRf0WXLQen/ve8qkv/7lV5TsLylDaNDqLCek+FsKeN7bu3ncoRYme9DFhPTKeoj+u8fpNBASz95TyiEE5HWkzw8DaTAZl0JAjKAG3LvSfg8DaU1rLALlBvKIeHLrELcCFREvlAvI27wCeepoIOaQmbuycmggq5EW9wxDAXkaSmDs2mggScjzzkCZQEwTFopxeioQA64CjXSnwlguiUBWITNtJEcEijRja7RhIZBWwIpaedI5iEBWwxFxBHUBQkkjxFEPtIk/IJSAGt35dnHoTjHUuzfhB9QHUPGMtz+gGYJIozXjCzTzkBFQy7AMUIX6AIeWj2leZ1NrAAAAAElFTkSuQmCC);
 }
 
 // special oled rules
-.v-theme--waccaOled.wacca.v-theme-provider,
-.v-theme--waccaOledPlus.wacca.v-theme-provider {
+.v-theme--waccaOled .wacca-page,
+.v-theme--waccaOledPlus .wacca-page {
   background: black;
 }
 
@@ -59,9 +60,10 @@
 .v-theme--waccaOledPlus,
 .v-theme--waccaLightPlus,
 .v-theme--waccaDarkPlus {
-  .wacca {
+  .wacca-page {
     flex-grow: 1;
     background-attachment: fixed;
+    background-repeat: repeat;
   }
 
   .v-container {
@@ -96,7 +98,7 @@
     a {
       line-height: 1;
       position: relative;
-      color: rgba(var(--v-theme-on-background));
+      color: rgb(var(--v-theme-on-background));
       font-weight: bold;
       font-size: 1.4rem;
 

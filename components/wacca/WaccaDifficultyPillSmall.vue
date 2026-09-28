@@ -9,20 +9,12 @@
   font-weight: bold;
   color: white;
 
-  &.song-difficulty-1 {
-    background-color: #009de6;
-  }
-
-  &.song-difficulty-2 {
-    background-color: #fed131;
-  }
-
-  &.song-difficulty-3 {
-    background-color: #fc06a3;
-  }
-
-  &.song-difficulty-4 {
-    background-color: #4a004f;
+  // The difficulty's theme color, see plugins/vuetify.ts
+  @for $i from 1 through 4 {
+    &.song-difficulty-#{$i} {
+      background-color: rgb(var(--v-theme-difficulty-#{$i}));
+      color: rgb(var(--v-theme-on-difficulty-#{$i}));
+    }
   }
 
   font-size: 1rem;
@@ -38,7 +30,7 @@ import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 
 const props = defineProps({
   i: Number,
-  difficulty: Number,
+  difficulty: Number
 });
 
 const text = computed(() => {

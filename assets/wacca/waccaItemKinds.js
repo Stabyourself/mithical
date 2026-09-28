@@ -14,7 +14,7 @@ const waccaItemKinds = {
   14: "GatePoint",
   15: "Navigator",
   16: "Plate",
-  17: "TouchEffect",
+  17: "TouchEffect"
 };
 
 export default waccaItemKinds;

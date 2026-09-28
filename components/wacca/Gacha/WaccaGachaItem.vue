@@ -80,7 +80,7 @@
   transition: box-shadow 0.1s;
 
   &.highlight {
-    // box-shadow: 0px 0px 10px 2px rgba(var(--v-theme-primary), 0.5);
+    // box-shadow: 0px 0px 10px 2px color-mix(in srgb, rgb(var(--v-theme-primary)) 50%, transparent);
     transform: scale(1.1);
   }
 }
@@ -170,26 +170,34 @@
   }
 }
 
+// Rarities borrow the difficulty colors, see plugins/vuetify.ts
+@mixin difficulty-color($i) {
+  background-color: rgb(var(--v-theme-difficulty-#{$i}));
+  color: rgb(var(--v-theme-on-difficulty-#{$i}));
+}
+
 .owned {
-  &.rarity-0 {
-    background-color: #009de6;
-  }
-
+  &.rarity-0,
   &.rarity-1 {
-    background-color: #009de6;
+    @include difficulty-color(1);
   }
 
+  // Dark text on the yellow, the heading too
   &.rarity-2 {
-    background-color: #fed131;
+    @include difficulty-color(2);
     color: #000;
+
+    .gacha-item-preview-kind {
+      color: rgba(0, 0, 0, 0.7);
+    }
   }
 
   &.rarity-3 {
-    background-color: #fc06a3;
+    @include difficulty-color(3);
   }
 
   &.rarity-4 {
-    background-color: #4a004f;
+    @include difficulty-color(4);
   }
 
   &.rarity-5 {
@@ -248,7 +256,7 @@ const props = defineProps({
   kind: Number,
   id: Number,
   greyunowned: Boolean,
-  hideowned: Boolean,
+  hideowned: Boolean
 });
 
 const itemLists = {
@@ -257,7 +265,7 @@ const itemLists = {
   10: waccaSymbolColors,
   11: waccaSoundEffects,
   15: waccaNavigators,
-  16: waccaUserPlates,
+  16: waccaUserPlates
 };
 const itemMaps = {};
 

@@ -27,40 +27,40 @@ const DEFAULT_IMAGE_PATH = "/logo.png";
 const ROUTE_META: Record<string, { title: string; description: string }> = {
   "/": {
     title: "Mithical",
-    description: "Web UI for Wacca",
+    description: "Web UI for Wacca"
   },
   "/cards": {
     title: `${SITE_NAME} | Manage Your Cards`,
-    description: "Add or manage the Wacca cards linked to your profile.",
+    description: "Add or manage the Wacca cards linked to your profile."
   },
   "/inventory": {
     title: `${SITE_NAME} | Inventory`,
-    description: "Browse your Wacca item inventory.",
+    description: "Browse your Wacca item inventory."
   },
   "/recent": {
     title: `${SITE_NAME} | Recent Plays`,
-    description: "See your most recent Wacca plays.",
+    description: "See your most recent Wacca plays."
   },
   "/rating": {
     title: `${SITE_NAME} | Rating`,
-    description: "View your Wacca rating breakdown.",
+    description: "View your Wacca rating breakdown."
   },
   "/leaderboards": {
     title: `${SITE_NAME} | Leaderboards`,
-    description: "Check the Wacca leaderboards.",
+    description: "Check the Wacca leaderboards."
   },
   "/gacha": {
     title: `${SITE_NAME} | Gacha`,
-    description: "Check out the Wacca gacha.",
+    description: "Check out the Wacca gacha."
   },
   "/settings": {
     title: `${SITE_NAME} | Wacca Settings`,
-    description: "Configure your Wacca settings.",
+    description: "Configure your Wacca settings."
   },
   "/songs": {
     title: `${SITE_NAME} | All Songs`,
-    description: "Browse every song available in Wacca.",
-  },
+    description: "Browse every song available in Wacca."
+  }
 };
 
 function escapeHtml(value: string): string {
@@ -170,12 +170,14 @@ export default defineNitroPlugin((nitroApp) => {
     // proxy headers.
     const requestUrl = getRequestURL(event, {
       xForwardedProto: true,
-      xForwardedHost: true,
+      xForwardedHost: true
     });
     const isLocalHost = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(
       requestUrl.hostname
     );
-    const origin = isLocalHost ? requestUrl.origin : `https://${requestUrl.host}`;
+    const origin = isLocalHost
+      ? requestUrl.origin
+      : `https://${requestUrl.host}`;
     const url = `${origin}${path}`;
 
     let title = DEFAULT_TITLE;
@@ -196,7 +198,7 @@ export default defineNitroPlugin((nitroApp) => {
           `by ${song.artist}`,
           categoryName(song.category),
           `Difficulty ${difficultyRange(song.sheets)}`,
-          chartedBy(song.sheets) && `Charted by ${chartedBy(song.sheets)}`,
+          chartedBy(song.sheets) && `Charted by ${chartedBy(song.sheets)}`
         ]
           .filter(Boolean)
           .join(" · ");
@@ -211,8 +213,6 @@ export default defineNitroPlugin((nitroApp) => {
     }
 
     html.head = html.head.map(stripExistingTags);
-    html.head.push(
-      buildTags({ title, description, image, url: canonicalUrl })
-    );
+    html.head.push(buildTags({ title, description, image, url: canonicalUrl }));
   });
 });

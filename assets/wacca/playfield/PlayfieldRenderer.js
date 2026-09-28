@@ -17,9 +17,16 @@ import {
   paletteIndex,
   ledColor,
   capColors,
-  syncColors,
+  syncColors
 } from "./noteColors.js";
-import PlayfieldSession, { RING_ROWS, PAST_LINE, clamp, mod60, option, ringLayout } from "./PlayfieldSession.js";
+import PlayfieldSession, {
+  RING_ROWS,
+  PAST_LINE,
+  clamp,
+  mod60,
+  option,
+  ringLayout
+} from "./PlayfieldSession.js";
 import waccaSymbolColors from "../waccaSymbolColors.js";
 
 const DEG = Math.PI / 180;
@@ -33,7 +40,7 @@ const BODY_GRADIENT_POSITIONS = [
   [0.25, 0.333, 0.458, 0.58, 0.791],
   [0.194, 0.333, 0.444, 0.638, 0.861],
   [0.145, 0.25, 0.604, 0.708, 0.875],
-  [0.1, 0.183, 0.666, 0.783, 0.916],
+  [0.1, 0.183, 0.666, 0.783, 0.916]
 ];
 
 // Sync outline radii per thickness setting
@@ -42,7 +49,7 @@ const SYNC_OUTLINE_RADII = [
   [0.963, 0.975, 1.025, 1.037, 0.969, 1.031],
   [0.946, 0.958, 1.043, 1.055, 0.952, 1.049],
   [0.926, 0.938, 1.063, 1.075, 0.932, 1.069],
-  [0.91, 0.922, 1.08, 1.092, 0.915, 1.086],
+  [0.91, 0.922, 1.08, 1.092, 0.915, 1.086]
 ];
 
 // Background dim per mask setting
@@ -57,21 +64,21 @@ const GUIDELINE_RULES = [
   (i) => (i + 1) % 4 === 0,
   (i) => i % 5 === 0,
   (i) => (i + 5) % 10 === 0,
-  (i) => i % 15 === 0,
+  (i) => i % 15 === 0
 ];
 
 const JUDGEMENT_LINE_COLORS = ["#f11a9b", "#bd01fa"];
 // Lane stripe colors
 const LANE_COLORS = [
   [22, 24, 44],
-  [27, 28, 47],
+  [27, 28, 47]
 ];
 
 // Background behind the lanes, shows through their center
 const BACKGROUND_STOPS = [
   [0, [53, 32, 122]],
   [0.35, [29, 20, 80]],
-  [1, [10, 8, 24]],
+  [1, [10, 8, 24]]
 ];
 
 // Center display = max possible score minus this
@@ -82,7 +89,7 @@ const CENTER_LABELS = {
   4: "S BORDER",
   5: "SS BORDER",
   6: "SSS BORDER",
-  7: "PERSONAL BEST",
+  7: "PERSONAL BEST"
 };
 
 // Fonts the game uses, see wacca.scss
@@ -96,7 +103,7 @@ const JUDGEMENT_STYLES = {
   good: { text: "Good", top: "#98edff", bottom: "#72a6f1" },
   miss: { text: "Miss", top: "#8b8b8b", bottom: "#dadada" },
   FAST: { text: "Fast", top: "#fd6d1e", bottom: "#ad093f" },
-  LATE: { text: "Late", top: "#8872fe", bottom: "#1e1eff" },
+  LATE: { text: "Late", top: "#8872fe", bottom: "#1e1eff" }
 };
 
 const JUDGEMENT_OFFSETS = [0.185, 0.47, -0.45];
@@ -119,19 +126,19 @@ const KEY_BEAM_STOPS = [
   [0.9, 0.6],
   [0.95, 0.76],
   [0.965, 0.83],
-  [1.035, 1],
+  [1.035, 1]
 ];
 const R_EFFECT_MS = 550;
 // Sparkle colors over their lifetime: white -> yellow -> dim pink
 const SPARKLE_WHITE = [
   [255, 255, 255],
   [255, 250, 200],
-  [255, 130, 180],
+  [255, 130, 180]
 ];
 const SPARKLE_YELLOW = [
   [255, 255, 235],
   [235, 255, 110],
-  [255, 100, 110],
+  [255, 100, 110]
 ];
 // Sparkle color over its life (first to middle color by 30%, middle to last by 70%) in steps,
 // made once so there's no new color string to parse per particle per frame
@@ -139,11 +146,16 @@ const SPARKLE_STEPS = 32;
 function sparkleRamp([first, middle, last]) {
   return Array.from({ length: SPARKLE_STEPS }, (_, step) => {
     const t = step / (SPARKLE_STEPS - 1);
-    const [from, to, k] = t < 0.3 ? [first, middle, t / 0.3] : [middle, last, Math.min(1, (t - 0.3) / 0.4)];
+    const [from, to, k] =
+      t < 0.3
+        ? [first, middle, t / 0.3]
+        : [middle, last, Math.min(1, (t - 0.3) / 0.4)];
     return `rgb(${from.map((value, i) => Math.round(value + (to[i] - value) * k)).join(", ")})`;
   });
 }
-const SPARKLE_RAMPS = new Map([SPARKLE_WHITE, SPARKLE_YELLOW].map((colors) => [colors, sparkleRamp(colors)]));
+const SPARKLE_RAMPS = new Map(
+  [SPARKLE_WHITE, SPARKLE_YELLOW].map((colors) => [colors, sparkleRamp(colors)])
+);
 const SHOT_MS = 170;
 const GRIND_PER_LANE_MS = 0.012;
 const MAX_PARTICLES = 256;
@@ -202,9 +214,15 @@ const RING_TEXT = {
     namePitch: 0.0338,
     levelPitch: 0.0299,
     dotPitch: 0.0234,
-    digitSize: 0.0543,
+    digitSize: 0.0543
   },
-  title: { angle: -49.6, end: -5, size: 0.042, pitch: 0.041, color: TITLE_COLOR },
+  title: {
+    angle: -49.6,
+    end: -5,
+    size: 0.042,
+    pitch: 0.041,
+    color: TITLE_COLOR
+  }
 };
 
 // Ring colors per difficulty (1-4). Normal is measured off a screenshot, the rest are guesses
@@ -212,7 +230,7 @@ export const DIFFICULTY_LABELS = {
   1: { name: "NORMAL", color: "#2775f6" },
   2: { name: "HARD", color: "#f2b51c" },
   3: { name: "EXPERT", color: "#e01864" },
-  4: { name: "INFERNO", color: "#a13cd8" },
+  4: { name: "INFERNO", color: "#a13cd8" }
 };
 
 // Where the clear line sits on the gauge per difficulty (1-4), from the game's
@@ -228,11 +246,12 @@ const SONG_TITLES = [
   "Ground Pound",
   "Pop on Rocks",
   "Chug Jug With You",
-  "Mogu Mogu Yummy",
+  "Mogu Mogu Yummy"
 ];
 
 // See wacca.scss
-export const FONT = '"ring_font", "Roboto", "Helvetica Neue", Arial, sans-serif';
+export const FONT =
+  '"ring_font", "Roboto", "Helvetica Neue", Arial, sans-serif';
 
 function perspective(x) {
   x = Math.min(1.316, x);
@@ -243,7 +262,8 @@ function perspective(x) {
 function laneAlphaAt(position) {
   if (position <= 0.1) return 0;
   if (position <= 0.25) return ((position - 0.1) / 0.15) * (0x60 / 255);
-  if (position <= 0.75) return 0x60 / 255 + ((position - 0.25) / 0.5) * ((0xee - 0x60) / 255);
+  if (position <= 0.75)
+    return 0x60 / 255 + ((position - 0.25) / 0.5) * ((0xee - 0x60) / 255);
   return 0xee / 255;
 }
 
@@ -269,8 +289,9 @@ export function resolveSettings(options) {
     touchEffectPop: option(options, 1006, POP_DEFAULT),
     // Three colors plus their dark versions
     ringColors: (
-      waccaSymbolColors.find((scheme) => scheme.id === option(options, 4, 103001)) ??
-      waccaSymbolColors[0]
+      waccaSymbolColors.find(
+        (scheme) => scheme.id === option(options, 4, 103001)
+      ) ?? waccaSymbolColors[0]
     ).colors,
     colors: {
       slideCW: paletteIndex(option(options, 201, 4), 4),
@@ -279,8 +300,8 @@ export function resolveSettings(options) {
       snapOut: paletteIndex(option(options, 204, 2), 2),
       touch: paletteIndex(option(options, 205, 5), 5),
       chain: paletteIndex(option(options, 206, 6), 6),
-      hold: paletteIndex(option(options, 207, 7), 7),
-    },
+      hold: paletteIndex(option(options, 207, 7), 7)
+    }
   };
 }
 
@@ -315,9 +336,9 @@ export default class PlayfieldRenderer {
       document.fonts?.load(`40px ${JUDGEMENT_FONT}`),
       document.fonts?.load(`40px ${FONT}`),
       document.fonts?.load(`40px ${SCORE_FONT}`, "0123456789"),
-      document.fonts?.load(`40px ${LABEL_FONT}`, "SCORE"),
+      document.fonts?.load(`40px ${LABEL_FONT}`, "SCORE")
     ])
-      .catch(() => { })
+      .catch(() => {})
       .then(() => {
         this.dirtyText = true;
       });
@@ -347,7 +368,9 @@ export default class PlayfieldRenderer {
     this.clearEffects();
     // Song time of the last frame drawn, for effects that go by how much time passed
     this.drawnTime = session.time;
-    this.unsubscribe = session.subscribe((type, detail) => this.onSessionEvent(type, detail));
+    this.unsubscribe = session.subscribe((type, detail) =>
+      this.onSessionEvent(type, detail)
+    );
 
     // What's on screen this frame, see PlayfieldSession.visibleObjects
     this.visible = null;
@@ -369,7 +392,7 @@ export default class PlayfieldRenderer {
       textWidths: new Map(),
       scoreText: null,
       textDirty: true,
-      drawnKey: null,
+      drawnKey: null
     });
     return view;
   }
@@ -395,7 +418,12 @@ export default class PlayfieldRenderer {
     let phase = "none";
     if (judgement) {
       const elapsed = now - judgement.start;
-      phase = elapsed > 450 ? "gone" : elapsed < 80 || elapsed > 350 ? Math.round(elapsed) : "shown";
+      phase =
+        elapsed > 450
+          ? "gone"
+          : elapsed < 80 || elapsed > 350
+            ? Math.round(elapsed)
+            : "shown";
     }
     const { plus, minus } = session.score();
     return [
@@ -410,7 +438,7 @@ export default class PlayfieldRenderer {
       settings.scoreMinus,
       settings.infoOpacity,
       settings.judgementPosition,
-      settings.judgementDetail,
+      settings.judgementDetail
     ].join("|");
   }
 
@@ -468,7 +496,7 @@ export default class PlayfieldRenderer {
           start: session.time,
           duration: bpm >= 200 ? 480000 / bpm : 240000 / bpm,
           lane: note.pos + Math.floor(note.size / 2),
-          counterclockwise: note.type === "slideCCW",
+          counterclockwise: note.type === "slideCCW"
         });
       }
     } else if (type === "holdEnd") {
@@ -488,13 +516,14 @@ export default class PlayfieldRenderer {
       ring: features.ring ?? true,
       songCount: features.songCount ?? true,
       score: features.score ?? true,
-      progressBar: features.progressBar ?? true,
+      progressBar: features.progressBar ?? true
     };
     const previous = this.features;
     this.features = next;
     if (!previous) return;
     if (next.ring !== previous.ring) this.dirty = true;
-    if (next.songCount !== previous.songCount || next.score !== previous.score) this.dirtyText = true;
+    if (next.songCount !== previous.songCount || next.score !== previous.score)
+      this.dirtyText = true;
   }
 
   // Only rebuilds what changed so settings don't hitch
@@ -528,7 +557,7 @@ export default class PlayfieldRenderer {
       this.beamLayer,
       this.ringIdleLayer,
       this.judgementLineLayer,
-      this.judgementLineMaskedLayer,
+      this.judgementLineMaskedLayer
     ]) {
       layer.width = size;
       layer.height = size;
@@ -569,11 +598,17 @@ export default class PlayfieldRenderer {
   rowAt(radius) {
     const distance = radius * this.R;
     if (distance < this.ringInner) {
-      const outward = (Math.exp((SCREEN_ROW_CURVE * distance) / this.ringInner) - 1) / (Math.exp(SCREEN_ROW_CURVE) - 1);
+      const outward =
+        (Math.exp((SCREEN_ROW_CURVE * distance) / this.ringInner) - 1) /
+        (Math.exp(SCREEN_ROW_CURVE) - 1);
       return clamp(Math.floor(outward * RING_ROWS), 0, RING_ROWS - 1);
     }
     const rowHeight = (this.ringOuter - this.ringInner) / RING_ROWS;
-    return clamp(Math.floor((distance - this.ringInner) / rowHeight), 0, RING_ROWS - 1);
+    return clamp(
+      Math.floor((distance - this.ringInner) / rowHeight),
+      0,
+      RING_ROWS - 1
+    );
   }
 
   touchAt(x, y) {
@@ -692,7 +727,10 @@ export default class PlayfieldRenderer {
     }
 
     // Pattern for masked lanes, has to be made after drawing
-    this.backgroundPattern = this.ctx.createPattern(this.backgroundLayer, "no-repeat");
+    this.backgroundPattern = this.ctx.createPattern(
+      this.backgroundLayer,
+      "no-repeat"
+    );
   }
 
   // Static stuff under the notes: background, lanes, guidelines, judgement line.
@@ -707,7 +745,10 @@ export default class PlayfieldRenderer {
     const laneColor = LANE_COLORS[0].join(", ");
     const lanes = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
     for (const position of [0, 0.1, 0.25, 0.75, 1]) {
-      lanes.addColorStop(position, `rgba(${laneColor}, ${laneAlphaAt(position)})`);
+      lanes.addColorStop(
+        position,
+        `rgba(${laneColor}, ${laneAlphaAt(position)})`
+      );
     }
     ctx.fillStyle = lanes;
     ctx.fillRect(0, 0, this.size, this.size);
@@ -848,7 +889,8 @@ export default class PlayfieldRenderer {
   // Guidelines, part of the base layer
   drawGuidelines(ctx) {
     const { Rj, cx, cy, s3, settings } = this;
-    if (settings.guidelineIntensity <= 0 || settings.guidelineType === 0) return;
+    if (settings.guidelineIntensity <= 0 || settings.guidelineType === 0)
+      return;
 
     const rule = GUIDELINE_RULES[settings.guidelineType];
     const alpha = settings.guidelineIntensity;
@@ -863,7 +905,10 @@ export default class PlayfieldRenderer {
     for (let i = 0; i < 60; i++) {
       if (!rule(i)) continue;
       ctx.moveTo(cx, cy);
-      ctx.lineTo(cx + Rj * Math.cos(-i * 6 * DEG), cy + Rj * Math.sin(-i * 6 * DEG));
+      ctx.lineTo(
+        cx + Rj * Math.cos(-i * 6 * DEG),
+        cy + Rj * Math.sin(-i * 6 * DEG)
+      );
     }
     ctx.stroke();
   }
@@ -872,7 +917,14 @@ export default class PlayfieldRenderer {
   buildRingTextLayer() {
     const ctx = this.ringTextLayer.getContext("2d");
     const { Rj } = this;
-    const { baseline, count, countWord, label: scoreLabel, difficulty: diff, title } = RING_TEXT;
+    const {
+      baseline,
+      count,
+      countWord,
+      label: scoreLabel,
+      difficulty: diff,
+      title
+    } = RING_TEXT;
     const label = DIFFICULTY_LABELS[this.difficulty] ?? DIFFICULTY_LABELS[3];
     const at = (value) => Rj * value;
     ctx.clearRect(0, 0, this.size, this.size);
@@ -881,43 +933,132 @@ export default class PlayfieldRenderer {
     if (this.features.songCount) {
       bounds.push(
         // "1/₃ Song", the total is small and sits low
-        this.drawArcRuns(ctx, [
-          { text: "1", size: at(0.0472), family: FONT, color: count.color, pitch: at(count.pitch) },
-          { text: "/", size: at(0.038), family: FONT, color: count.color },
-          { text: "3", size: at(0.0228), family: FONT, color: count.color, pitch: at(0.0226), rise: at(-0.0085) },
-        ], at(baseline), count.angle),
-        this.drawArcRuns(ctx, [
-          { text: "Song", size: at(countWord.size), family: FONT, color: count.color, pitch: at(countWord.pitch) },
-        ], at(baseline), countWord.angle),
+        this.drawArcRuns(
+          ctx,
+          [
+            {
+              text: "1",
+              size: at(0.0472),
+              family: FONT,
+              color: count.color,
+              pitch: at(count.pitch)
+            },
+            { text: "/", size: at(0.038), family: FONT, color: count.color },
+            {
+              text: "3",
+              size: at(0.0228),
+              family: FONT,
+              color: count.color,
+              pitch: at(0.0226),
+              rise: at(-0.0085)
+            }
+          ],
+          at(baseline),
+          count.angle
+        ),
+        this.drawArcRuns(
+          ctx,
+          [
+            {
+              text: "Song",
+              size: at(countWord.size),
+              family: FONT,
+              color: count.color,
+              pitch: at(countWord.pitch)
+            }
+          ],
+          at(baseline),
+          countWord.angle
+        )
       );
     }
     if (this.features.score) {
       bounds.push(
-        this.drawArcRuns(ctx, [
-          { text: "SCORE", size: at(scoreLabel.size), family: LABEL_FONT, color: scoreLabel.color },
-        ], at(baseline), scoreLabel.angle, { align: "center" }),
+        this.drawArcRuns(
+          ctx,
+          [
+            {
+              text: "SCORE",
+              size: at(scoreLabel.size),
+              family: LABEL_FONT,
+              color: scoreLabel.color
+            }
+          ],
+          at(baseline),
+          scoreLabel.angle,
+          { align: "center" }
+        )
       );
     }
     bounds.push(
       // Name, then a tighter "/Lv", then a bigger level number
-      this.drawArcRuns(ctx, [
-        { text: label.name, size: at(diff.size), family: FONT, color: label.color, pitch: at(diff.namePitch) },
-        { text: "/Lv", size: at(diff.size), family: FONT, color: label.color, pitch: at(diff.levelPitch) },
-        { text: ".", size: at(diff.size), family: FONT, color: label.color, pitch: at(diff.dotPitch) },
-        { text: this.level, size: at(diff.digitSize), family: FONT, color: label.color },
-      ], at(baseline), diff.angle),
+      this.drawArcRuns(
+        ctx,
+        [
+          {
+            text: label.name,
+            size: at(diff.size),
+            family: FONT,
+            color: label.color,
+            pitch: at(diff.namePitch)
+          },
+          {
+            text: "/Lv",
+            size: at(diff.size),
+            family: FONT,
+            color: label.color,
+            pitch: at(diff.levelPitch)
+          },
+          {
+            text: ".",
+            size: at(diff.size),
+            family: FONT,
+            color: label.color,
+            pitch: at(diff.dotPitch)
+          },
+          {
+            text: this.level,
+            size: at(diff.digitSize),
+            family: FONT,
+            color: label.color
+          }
+        ],
+        at(baseline),
+        diff.angle
+      ),
       // Titles are spread wide, long ones get squeezed to fit
-      this.drawArcRuns(ctx, [
-        { text: this.songTitle, size: at(title.size), family: FONT, color: title.color, pitch: at(title.pitch) },
-      ], at(baseline), title.angle, { maxAngle: title.end - title.angle }),
+      this.drawArcRuns(
+        ctx,
+        [
+          {
+            text: this.songTitle,
+            size: at(title.size),
+            family: FONT,
+            color: title.color,
+            pitch: at(title.pitch)
+          }
+        ],
+        at(baseline),
+        title.angle,
+        { maxAngle: title.end - title.angle }
+      )
     );
 
     // Only this part gets copied each frame
     const size = this.canvas.width;
-    const left = Math.max(0, Math.floor(Math.min(...bounds.map((b) => b.left))));
+    const left = Math.max(
+      0,
+      Math.floor(Math.min(...bounds.map((b) => b.left)))
+    );
     const top = Math.max(0, Math.floor(Math.min(...bounds.map((b) => b.top))));
-    const right = Math.min(size, Math.ceil(Math.max(...bounds.map((b) => b.right))));
-    const bottom = Math.min(size, Math.ceil(Math.max(...bounds.map((b) => b.bottom))));
+    const right = Math.min(
+      size,
+      Math.ceil(Math.max(...bounds.map((b) => b.right)))
+    );
+    const bottom = Math.min(
+      size,
+      Math.ceil(Math.max(...bounds.map((b) => b.bottom)))
+    );
     this.ringTextRects = [[left, top, right - left, bottom - top]];
   }
 
@@ -926,9 +1067,14 @@ export default class PlayfieldRenderer {
   setChartInfo(info) {
     const { title, difficulty, level } = info ?? {
       ...DEMO_LABEL,
-      title: SONG_TITLES[Math.floor(Math.random() * SONG_TITLES.length)],
+      title: SONG_TITLES[Math.floor(Math.random() * SONG_TITLES.length)]
     };
-    if (title === this.songTitle && difficulty === this.difficulty && level === this.level) return;
+    if (
+      title === this.songTitle &&
+      difficulty === this.difficulty &&
+      level === this.level
+    )
+      return;
     this.songTitle = title;
     this.difficulty = difficulty;
     this.level = level;
@@ -938,7 +1084,8 @@ export default class PlayfieldRenderer {
   // Effects
 
   flashLine(lane) {
-    for (let d = -1; d <= 1; d++) this.lineFlash[mod60(lane + d)] = this.session.time;
+    for (let d = -1; d <= 1; d++)
+      this.lineFlash[mod60(lane + d)] = this.session.time;
   }
 
   lightLanes(pos, size) {
@@ -967,7 +1114,11 @@ export default class PlayfieldRenderer {
       for (let i = 0; i < count; i++) {
         const roll = Math.random();
         const kind = roll < 0.35 ? "triangle" : roll < 0.8 ? "dot" : "streak";
-        this.spawnParticle(kind, pos + Math.random() * size, 0.35 + Math.random() * 0.65);
+        this.spawnParticle(
+          kind,
+          pos + Math.random() * size,
+          0.35 + Math.random() * 0.65
+        );
       }
     } else if (settings.touchEffectPop === POP_BUBBLE) {
       // One bubble per hit lane
@@ -990,11 +1141,16 @@ export default class PlayfieldRenderer {
     for (const { note, base, held } of session.activeHolds) {
       if (held === false) continue;
       const shape = session.holdShapeAt(note, session.time - base);
-      this.grindCarry = (this.grindCarry ?? 0) + dt * shape.size * GRIND_PER_LANE_MS;
+      this.grindCarry =
+        (this.grindCarry ?? 0) + dt * shape.size * GRIND_PER_LANE_MS;
 
       while (this.grindCarry >= 1) {
         this.grindCarry--;
-        this.spawnParticle("grind", shape.pos + Math.random() * shape.size, 0.86 + Math.random() * 0.1);
+        this.spawnParticle(
+          "grind",
+          shape.pos + Math.random() * shape.size,
+          0.86 + Math.random() * 0.1
+        );
       }
     }
   }
@@ -1028,7 +1184,9 @@ export default class PlayfieldRenderer {
       particle.speed = 0.5 + Math.random() * 0.9;
       particle.size = 0.6 + Math.random() * 0.8;
       particle.colors =
-        kind === "triangle" || Math.random() < 0.3 ? SPARKLE_WHITE : SPARKLE_YELLOW;
+        kind === "triangle" || Math.random() < 0.3
+          ? SPARKLE_WHITE
+          : SPARKLE_YELLOW;
     }
   }
 
@@ -1059,10 +1217,13 @@ export default class PlayfieldRenderer {
     this.drawLaneMasks();
     if (settings.keyBeam) this.drawKeyBeams(now);
 
-    this.visible = this.session.visibleObjects(settings.viewDistance, { barlines: settings.barlines });
+    this.visible = this.session.visibleObjects(settings.viewDistance, {
+      barlines: settings.barlines
+    });
     // Nothing's cut off at the judgement line: everything goes on under it out to the edge,
     // where its opaque outer glow covers it
-    for (const hold of this.visible.holds) this.drawHoldSurface(hold.note, hold.base, now, hold.missed, hold.active);
+    for (const hold of this.visible.holds)
+      this.drawHoldSurface(hold.note, hold.base, now, hold.missed, hold.active);
     this.drawObjects();
 
     // Hold glow under the judgement line, the line stays pink while holding
@@ -1092,7 +1253,13 @@ export default class PlayfieldRenderer {
     for (let lane = 0; lane < 60; lane++) {
       if (!laneHidden[lane]) continue;
       ctx.moveTo(cx, cy);
-      ctx.arc(cx, cy, R, (-(lane + 1) * 6 - 0.1) * DEG, (-lane * 6 + 0.1) * DEG);
+      ctx.arc(
+        cx,
+        cy,
+        R,
+        (-(lane + 1) * 6 - 0.1) * DEG,
+        (-lane * 6 + 0.1) * DEG
+      );
       ctx.closePath();
     }
     ctx.fillStyle = this.backgroundPattern;
@@ -1110,7 +1277,9 @@ export default class PlayfieldRenderer {
 
     // Faint wash of a much lighter color instead of "lighter" (way slower in Firefox).
     // Opacity as low as possible so the guidelines barely get touched
-    const headroom = Math.max(...a.map((value, i) => (b[i] - value) / (255 - value)));
+    const headroom = Math.max(
+      ...a.map((value, i) => (b[i] - value) / (255 - value))
+    );
 
     // Even stripes get the second color
     for (let i = 0; i < stripes; i += 2) {
@@ -1122,7 +1291,7 @@ export default class PlayfieldRenderer {
       const steps = Math.ceil(alpha * headroom * 255);
       const opacity = steps / 255;
       const [red, green, blue] = a.map((value, j) =>
-        Math.round(value + (alpha * (b[j] - value)) / opacity),
+        Math.round(value + (alpha * (b[j] - value)) / opacity)
       );
       ctx.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${opacity})`;
       ctx.lineWidth = (outer - inner) * R;
@@ -1165,10 +1334,18 @@ export default class PlayfieldRenderer {
     const bright = settings.ringColors[index];
     const dark = settings.ringColors[index + 3];
     // What the LED shows for the mix, see ledColor
-    const mix = (a, b, t) => `rgb(${ledColor(a.map((value, i) => value + (b[i] - value) * t))})`;
+    const mix = (a, b, t) =>
+      `rgb(${ledColor(a.map((value, i) => value + (b[i] - value) * t))})`;
     const white = [255, 255, 255];
 
-    const gradient = ctx.createRadialGradient(cx, cy, ringInner, cx, cy, ringOuter);
+    const gradient = ctx.createRadialGradient(
+      cx,
+      cy,
+      ringInner,
+      cx,
+      cy,
+      ringOuter
+    );
     gradient.addColorStop(0, mix(dark, bright, 0.35));
     gradient.addColorStop(0.45, mix(dark, bright, 0.85));
     gradient.addColorStop(1, mix(bright, white, 0.12));
@@ -1181,7 +1358,9 @@ export default class PlayfieldRenderer {
     this.ringAllCells = this.ringCellsPath(all);
     this.ringLanePaths = all.map((lane) => this.ringCellsPath([lane]));
     this.ringCellPaths = all.map((lane) =>
-      Array.from({ length: RING_ROWS }, (_, row) => this.ringCellsPath([lane], [row])),
+      Array.from({ length: RING_ROWS }, (_, row) =>
+        this.ringCellsPath([lane], [row])
+      )
     );
 
     this.ringSprites = this.buildCellSprites();
@@ -1200,10 +1379,18 @@ export default class PlayfieldRenderer {
     let slotHeight = 0;
     for (let lane = 0; lane < 60; lane++) {
       for (let row = 0; row < RING_ROWS; row++) {
-        let [left, top, right, bottom] = [Infinity, Infinity, -Infinity, -Infinity];
+        let [left, top, right, bottom] = [
+          Infinity,
+          Infinity,
+          -Infinity,
+          -Infinity
+        ];
         for (let step = 0; step <= 6; step++) {
           const angle = -(lane + step / 6) * 6 * DEG;
-          for (const radius of [ringInner + row * rowHeight, ringInner + (row + 1) * rowHeight]) {
+          for (const radius of [
+            ringInner + row * rowHeight,
+            ringInner + (row + 1) * rowHeight
+          ]) {
             const x = cx + radius * Math.cos(angle);
             const y = cy + radius * Math.sin(angle);
             left = Math.min(left, x);
@@ -1230,9 +1417,18 @@ export default class PlayfieldRenderer {
       const ctx = canvas.getContext("2d");
       const style = fill(ctx);
       boxes.forEach(([x, y], cell) => {
-        ctx.setTransform(1, 0, 0, 1, (cell % columns) * slotWidth - x, Math.floor(cell / columns) * slotHeight - y);
+        ctx.setTransform(
+          1,
+          0,
+          0,
+          1,
+          (cell % columns) * slotWidth - x,
+          Math.floor(cell / columns) * slotHeight - y
+        );
         ctx.fillStyle = style;
-        ctx.fill(this.ringCellPaths[Math.floor(cell / RING_ROWS)][cell % RING_ROWS]);
+        ctx.fill(
+          this.ringCellPaths[Math.floor(cell / RING_ROWS)][cell % RING_ROWS]
+        );
       });
       return canvas;
     };
@@ -1243,7 +1439,7 @@ export default class PlayfieldRenderer {
       slotHeight,
       columns,
       lit: sheet((ctx) => this.ringGradient(ctx, 2)),
-      white: sheet(() => "#ffffff"),
+      white: sheet(() => "#ffffff")
     };
   }
 
@@ -1252,13 +1448,24 @@ export default class PlayfieldRenderer {
     const { boxes, slotWidth, slotHeight, columns } = this.ringSprites;
     const [x, y, width, height] = boxes[cell];
     this.ctx.globalAlpha = alpha;
-    this.ctx.drawImage(sheet, (cell % columns) * slotWidth, Math.floor(cell / columns) * slotHeight, width, height, x, y, width, height);
+    this.ctx.drawImage(
+      sheet,
+      (cell % columns) * slotWidth,
+      Math.floor(cell / columns) * slotHeight,
+      width,
+      height,
+      x,
+      y,
+      width,
+      height
+    );
   }
 
   // Cells at their brightness (0-1)
   drawRingCells(values, sheet) {
     for (let cell = 0; cell < values.length; cell++) {
-      if (values[cell] > 0.01) this.drawRingCell(cell, sheet, Math.min(1, values[cell]));
+      if (values[cell] > 0.01)
+        this.drawRingCell(cell, sheet, Math.min(1, values[cell]));
     }
     this.ctx.globalAlpha = 1;
   }
@@ -1282,14 +1489,17 @@ export default class PlayfieldRenderer {
 
     const open = [];
     const masked = [];
-    for (let lane = 0; lane < 60; lane++) (laneHidden[lane] ? masked : open).push(lane);
+    for (let lane = 0; lane < 60; lane++)
+      (laneHidden[lane] ? masked : open).push(lane);
     for (const [lanes, index] of [
       [open, 1],
-      [masked, 0],
+      [masked, 0]
     ]) {
       if (lanes.length === 0) continue;
       ctx.fillStyle = this.ringGradient(ctx, index);
-      ctx.fill(lanes.length === 60 ? this.ringAllCells : this.ringCellsPath(lanes));
+      ctx.fill(
+        lanes.length === 60 ? this.ringAllCells : this.ringCellsPath(lanes)
+      );
     }
   }
 
@@ -1317,7 +1527,8 @@ export default class PlayfieldRenderer {
     // Held holds light their whole width in the third color (the only thing that uses it,
     // touches are just white)
     const touchLane = (lane) => {
-      for (let row = 0; row < RING_ROWS; row++) this.cellTouched[mod60(lane) * RING_ROWS + row] = now;
+      for (let row = 0; row < RING_ROWS; row++)
+        this.cellTouched[mod60(lane) * RING_ROWS + row] = now;
     };
     for (const { note, base, held } of this.session.activeHolds) {
       if (!held) continue;
@@ -1325,16 +1536,24 @@ export default class PlayfieldRenderer {
       const start = Math.round(shape.pos);
       for (let i = 0; i < Math.round(shape.size); i++) touchLane(start + i);
     }
-    const touched = this.ringCellLight ?? (this.ringCellLight = new Float32Array(60 * RING_ROWS));
+    const touched =
+      this.ringCellLight ??
+      (this.ringCellLight = new Float32Array(60 * RING_ROWS));
     for (let cell = 0; cell < touched.length; cell++) {
-      touched[cell] = clamp(1 - (now - this.cellTouched[cell]) / RING_TOUCH_FADE_MS, 0, 1);
+      touched[cell] = clamp(
+        1 - (now - this.cellTouched[cell]) / RING_TOUCH_FADE_MS,
+        0,
+        1
+      );
     }
     this.drawRingCells(touched, this.ringSprites.lit);
 
     this.drawRingREffect(now);
 
     // Splashes: white on the touched cell, a glow right around it, and a fainter ring spreading out
-    const white = this.ringCellWhite ?? (this.ringCellWhite = new Float32Array(60 * RING_ROWS));
+    const white =
+      this.ringCellWhite ??
+      (this.ringCellWhite = new Float32Array(60 * RING_ROWS));
     white.fill(0);
     const rowHeight = (ringOuter - ringInner) / RING_ROWS;
     const laneWidth = ((ringInner + ringOuter) / 2) * 6 * DEG;
@@ -1352,19 +1571,36 @@ export default class PlayfieldRenderer {
       // Far enough for the wave and for the glow on both sides of the patch
       const glow = Math.ceil(1 + SPLASH_HALO_FALLOFF);
       const reach = Math.ceil(front + 1.5);
-      for (let d = -Math.max(reach, glow); d <= Math.max(reach, lanes - 1 + glow); d++) {
+      for (
+        let d = -Math.max(reach, glow);
+        d <= Math.max(reach, lanes - 1 + glow);
+        d++
+      ) {
         for (let row = 0; row < RING_ROWS; row++) {
           // Distance in lane widths
-          const distance = Math.hypot(d, ((row - splash.row) * rowHeight) / laneWidth);
-          const inPatch = d >= 0 && d < lanes && row >= first && row < first + rows;
+          const distance = Math.hypot(
+            d,
+            ((row - splash.row) * rowHeight) / laneWidth
+          );
+          const inPatch =
+            d >= 0 && d < lanes && row >= first && row < first + rows;
           // Solid white only on the pressed panels, rows are too short to go by distance
           const core = inPatch ? SPLASH_CORE_OPACITY * fade * fade : 0;
           // Halo: bright right next to the patch, by distance from its edge
           const laneGap = d < 0 ? -d : Math.max(0, d - lanes + 1);
-          const rowGap = row < first ? first - row : Math.max(0, row - (first + rows - 1));
+          const rowGap =
+            row < first ? first - row : Math.max(0, row - (first + rows - 1));
           const edge = Math.hypot(laneGap, (rowGap * rowHeight) / laneWidth);
-          const halo = inPatch ? 0 : SPLASH_HALO_OPACITY * fade * fade * clamp(1 - (edge - 1) / SPLASH_HALO_FALLOFF, 0, 1);
-          const wave = SPLASH_WAVE_OPACITY * fade * Math.max(0, 1 - Math.abs(distance - front) / 1.2);
+          const halo = inPatch
+            ? 0
+            : SPLASH_HALO_OPACITY *
+              fade *
+              fade *
+              clamp(1 - (edge - 1) / SPLASH_HALO_FALLOFF, 0, 1);
+          const wave =
+            SPLASH_WAVE_OPACITY *
+            fade *
+            Math.max(0, 1 - Math.abs(distance - front) / 1.2);
           const cell = mod60(splash.lane + d) * RING_ROWS + row;
           white[cell] = Math.max(white[cell], core, halo, wave);
         }
@@ -1379,7 +1615,10 @@ export default class PlayfieldRenderer {
     for (let cell = 0; cell < white.length; cell++) {
       const since = now - this.cellPressed[cell];
       if (since < RELEASE_FADE_MS) {
-        white[cell] = Math.max(white[cell], SPLASH_CORE_OPACITY * (1 - since / RELEASE_FADE_MS));
+        white[cell] = Math.max(
+          white[cell],
+          SPLASH_CORE_OPACITY * (1 - since / RELEASE_FADE_MS)
+        );
       }
     }
     this.drawRingCells(white, this.ringSprites.white);
@@ -1388,7 +1627,8 @@ export default class PlayfieldRenderer {
   // Rainbow around the whole ring after an R note
   drawRingREffect(now) {
     const elapsed = now - this.rEffectStart;
-    if (elapsed < 0 || elapsed > RING_R_MS || !this.ctx.createConicGradient) return;
+    if (elapsed < 0 || elapsed > RING_R_MS || !this.ctx.createConicGradient)
+      return;
 
     const { ctx, cx, cy } = this;
 
@@ -1396,7 +1636,8 @@ export default class PlayfieldRenderer {
     const turn = 1 - Math.pow(1 - Math.min(1, elapsed / 300), 3);
     const start = (-this.rEffectLane * 6 + 135 + turn * 45) * DEG;
     const gradient = ctx.createConicGradient(start, cx, cy);
-    for (let i = 0; i <= 6; i++) gradient.addColorStop(i / 6, `hsl(${i * 60}, 100%, 58%)`);
+    for (let i = 0; i <= 6; i++)
+      gradient.addColorStop(i / 6, `hsl(${i * 60}, 100%, 58%)`);
 
     // Spreads from the note with a soft edge, fades out at the end
     const spread = 1 - Math.pow(1 - Math.min(1, elapsed / RING_R_SPREAD_MS), 2);
@@ -1439,9 +1680,17 @@ export default class PlayfieldRenderer {
         const reach = Math.ceil(RING_R_SWEEP_WIDTH + 1);
         for (let d = -reach; d <= reach; d++) {
           const lane = Math.round(center) + d;
-          const strength = clamp(RING_R_SWEEP_WIDTH + 0.5 - Math.abs(lane - center), 0, 1);
+          const strength = clamp(
+            RING_R_SWEEP_WIDTH + 0.5 - Math.abs(lane - center),
+            0,
+            1
+          );
           if (strength <= 0) continue;
-          this.drawRingCell(mod60(lane) * RING_ROWS + row, this.ringSprites.white, strength * fade);
+          this.drawRingCell(
+            mod60(lane) * RING_ROWS + row,
+            this.ringSprites.white,
+            strength * fade
+          );
         }
       }
     }
@@ -1457,7 +1706,10 @@ export default class PlayfieldRenderer {
     const inner = Rj * KEY_BEAM_STOPS[0][0];
     const gradient = ctx.createRadialGradient(cx, cy, inner, cx, cy, R);
     for (const [radius, alpha] of KEY_BEAM_STOPS) {
-      gradient.addColorStop((Rj * radius - inner) / (R - inner), `rgba(255, 255, 255, ${alpha})`);
+      gradient.addColorStop(
+        (Rj * radius - inner) / (R - inner),
+        `rgba(255, 255, 255, ${alpha})`
+      );
     }
     gradient.addColorStop(1, "rgba(255, 255, 255, 1)");
     ctx.fillStyle = gradient;
@@ -1474,13 +1726,20 @@ export default class PlayfieldRenderer {
   drawKeyBeams(now, inner = 0) {
     const { ctx, cx, cy, R } = this;
     const levels = 12;
-    const groups = this.beamGroups ?? (this.beamGroups = Array.from({ length: levels }, () => []));
+    const groups =
+      this.beamGroups ??
+      (this.beamGroups = Array.from({ length: levels }, () => []));
     for (const group of groups) group.length = 0;
 
     for (let lane = 0; lane < 60; lane++) {
       if (this.session.laneHidden[lane]) continue;
       const until = this.beamUntil[lane];
-      const intensity = now <= until ? 1 : KEY_BEAM_FADE_MS > 0 ? 1 - (now - until) / KEY_BEAM_FADE_MS : 0;
+      const intensity =
+        now <= until
+          ? 1
+          : KEY_BEAM_FADE_MS > 0
+            ? 1 - (now - until) / KEY_BEAM_FADE_MS
+            : 0;
       if (intensity <= 0) continue;
       groups[Math.min(levels - 1, Math.floor(intensity * levels))].push(lane);
     }
@@ -1531,10 +1790,11 @@ export default class PlayfieldRenderer {
 
   // One note at the bottom of the ring, like the icons in game.
   // Holds get a short body going in. Returns a cropped image as a data url
-  drawNotePreview(type, colorIndex) {
+  drawNotePreview(type, colorIndex, slideInvert = false) {
     this.resize(480);
     this.applyPendingRebuilds();
     this.settings.colors = { ...this.settings.colors, [type]: colorIndex };
+    this.settings.slideInvert = slideInvert;
     const { ctx, cx, cy, Rj, noteWidth } = this;
 
     const left = cx - Rj * 0.46;
@@ -1549,13 +1809,21 @@ export default class PlayfieldRenderer {
     // Centered at the bottom (lane 45 is straight down)
     const size = 8;
     const pos = 45 - size / 2;
-    const note = { type, pos, size, time: 0, rNote: false, bonus: false, sync: false };
+    const note = {
+      type,
+      pos,
+      size,
+      time: 0,
+      rNote: false,
+      bonus: false,
+      sync: false
+    };
     if (type === "hold") {
       const end = this.settings.viewDistance * 0.1;
       note.endTime = end;
       note.points = [
         { time: 0, pos, size },
-        { time: end, pos, size },
+        { time: end, pos, size }
       ];
       this.drawHoldSurface(note, 0, 0, false);
     }
@@ -1566,23 +1834,52 @@ export default class PlayfieldRenderer {
     const crop = document.createElement("canvas");
     crop.width = Math.round(width);
     crop.height = Math.round(height);
-    crop.getContext("2d").drawImage(this.canvas, left, top, width, height, 0, 0, crop.width, crop.height);
+    crop
+      .getContext("2d")
+      .drawImage(
+        this.canvas,
+        left,
+        top,
+        width,
+        height,
+        0,
+        0,
+        crop.width,
+        crop.height
+      );
     return crop.toDataURL();
   }
 
   // Scale judgement line sized drawing down to the perspective scale
   setScale(scale) {
-    this.ctx.setTransform(scale, 0, 0, scale, this.cx * (1 - scale), this.cy * (1 - scale));
+    this.ctx.setTransform(
+      scale,
+      0,
+      0,
+      scale,
+      this.cx * (1 - scale),
+      this.cy * (1 - scale)
+    );
   }
 
   pointAt(radius, angle) {
-    return [this.cx + radius * Math.cos(angle * DEG), this.cy + radius * Math.sin(angle * DEG)];
+    return [
+      this.cx + radius * Math.cos(angle * DEG),
+      this.cy + radius * Math.sin(angle * DEG)
+    ];
   }
 
   // Arc in degrees, negative sweep goes counterclockwise
   arc(path, radius, start, sweep, newSubpath = false) {
     if (newSubpath) path.moveTo(...this.pointAt(radius, start));
-    path.arc(this.cx, this.cy, radius, start * DEG, (start + sweep) * DEG, sweep < 0);
+    path.arc(
+      this.cx,
+      this.cy,
+      radius,
+      start * DEG,
+      (start + sweep) * DEG,
+      sweep < 0
+    );
   }
 
   // Gradient across the note body, inner to outer edge
@@ -1601,7 +1898,8 @@ export default class PlayfieldRenderer {
   bodyGradient(colorIndex) {
     return this.cached(`body${colorIndex}`, () => {
       const colors = palettes[colorIndex];
-      const [p1, p2, p3, p4, p5] = BODY_GRADIENT_POSITIONS[this.settings.thickness];
+      const [p1, p2, p3, p4, p5] =
+        BODY_GRADIENT_POSITIONS[this.settings.thickness];
       return this.bandGradient(
         [
           [-0.1, colors.light],
@@ -1610,10 +1908,10 @@ export default class PlayfieldRenderer {
           [p3, colors.dark],
           [p4, colors.base],
           [p5, colors.base],
-          [1.1, colors.light],
+          [1.1, colors.light]
         ],
         this.noteWidth,
-        0.1,
+        0.1
       );
     });
   }
@@ -1635,17 +1933,18 @@ export default class PlayfieldRenderer {
             [0.3, "rgba(255, 255, 192, 0.5)"],
             [0.5, "rgba(255, 255, 192, 0.95)"],
             [0.7, "rgba(255, 255, 192, 0.5)"],
-            [1, "rgba(255, 255, 192, 0)"],
+            [1, "rgba(255, 255, 192, 0)"]
           ],
-          70 * s3,
-        ),
+          70 * s3
+        )
       );
       ctx.globalCompositeOperation = "lighter";
       ctx.strokeStyle = glow;
       ctx.lineWidth = 70 * s3;
       ctx.beginPath();
       if (full) ctx.arc(this.cx, this.cy, Rj, 0, Math.PI * 2);
-      else this.arc(ctx, Rj, (pos + 1) * -6 + 3, Math.min(0, (size - 2) * -6) - 6);
+      else
+        this.arc(ctx, Rj, (pos + 1) * -6 + 3, Math.min(0, (size - 2) * -6) - 6);
       ctx.stroke();
       ctx.globalCompositeOperation = "source-over";
     }
@@ -1666,8 +1965,8 @@ export default class PlayfieldRenderer {
           [0.25, capColors.base],
           [0.5, capColors.dark],
           [0.75, capColors.base],
-          [0.95, capColors.light],
-        ]),
+          [0.95, capColors.light]
+        ])
       );
       // Separate paths per cap, otherwise Firefox draws a miter spike across the note
       ctx.beginPath();
@@ -1707,10 +2006,16 @@ export default class PlayfieldRenderer {
       const reach = (35 + 30) * s3;
       const start = -6 + 3;
       const sweep = Math.min(0, (note.size - 2) * -6) - 6;
-      let [left, top, right, bottom] = [Infinity, Infinity, -Infinity, -Infinity];
+      let [left, top, right, bottom] = [
+        Infinity,
+        Infinity,
+        -Infinity,
+        -Infinity
+      ];
       const steps = full ? 64 : Math.max(2, Math.ceil(-sweep / 3));
       for (let step = 0; step <= steps; step++) {
-        const angle = (full ? (step / steps) * 360 : start + (sweep * step) / steps) * DEG;
+        const angle =
+          (full ? (step / steps) * 360 : start + (sweep * step) / steps) * DEG;
         for (const radius of [Rj - reach, Rj + reach]) {
           left = Math.min(left, cx + radius * Math.cos(angle));
           right = Math.max(right, cx + radius * Math.cos(angle));
@@ -1772,15 +2077,27 @@ export default class PlayfieldRenderer {
       const p = new Path2D();
 
       this.arc(p, r0, start - 2.5, sweep + 5, true);
-      p.quadraticCurveTo(...this.pointAt(Rj, end + 0.25), ...this.pointAt(r3, end + 2.5));
+      p.quadraticCurveTo(
+        ...this.pointAt(Rj, end + 0.25),
+        ...this.pointAt(r3, end + 2.5)
+      );
       this.arc(p, r3, end + 2.5, -sweep - 5);
-      p.quadraticCurveTo(...this.pointAt(Rj, start - 0.25), ...this.pointAt(r0, start - 2.5));
+      p.quadraticCurveTo(
+        ...this.pointAt(Rj, start - 0.25),
+        ...this.pointAt(r0, start - 2.5)
+      );
       p.closePath();
 
       this.arc(p, r1, end + 2.55, -sweep - 5.1, true);
-      p.quadraticCurveTo(...this.pointAt(Rj, start - 1.1), ...this.pointAt(r2, start - 2.55));
+      p.quadraticCurveTo(
+        ...this.pointAt(Rj, start - 1.1),
+        ...this.pointAt(r2, start - 2.55)
+      );
       this.arc(p, r2, start - 2.55, sweep + 5.1);
-      p.quadraticCurveTo(...this.pointAt(Rj, end + 1.1), ...this.pointAt(r1, end + 2.55));
+      p.quadraticCurveTo(
+        ...this.pointAt(Rj, end + 1.1),
+        ...this.pointAt(r1, end + 2.55)
+      );
       p.closePath();
       return p;
     });
@@ -1798,10 +2115,10 @@ export default class PlayfieldRenderer {
           [0.45, syncColors.dark],
           [0.55, syncColors.dark],
           [0.85, syncColors.base],
-          [0.95, syncColors.light],
+          [0.95, syncColors.light]
         ],
-        10 * s3,
-      ),
+        10 * s3
+      )
     );
     ctx.lineWidth = 10 * s3;
     ctx.beginPath();
@@ -1893,10 +2210,10 @@ export default class PlayfieldRenderer {
           [-0.1, colors.light],
           [0.4, colors.base],
           [0.6, colors.base],
-          [1.1, colors.light],
+          [1.1, colors.light]
         ],
         this.noteWidth,
-        0.1,
+        0.1
       );
     });
     ctx.fill(path);
@@ -1948,7 +2265,14 @@ export default class PlayfieldRenderer {
 
     ctx.fillStyle = this.cached(`snapFill${colorIndex}|${outward}`, () => {
       const colors = palettes[colorIndex];
-      const gradient = ctx.createRadialGradient(cx, cy, Rj * 0.73, cx, cy, Rj * 0.9);
+      const gradient = ctx.createRadialGradient(
+        cx,
+        cy,
+        Rj * 0.73,
+        cx,
+        cy,
+        Rj * 0.9
+      );
       const middle = ((outward ? 0.86 : 0.77) - 0.73) / (0.9 - 0.73);
       gradient.addColorStop(0, outward ? colors.base : "#ffffff");
       gradient.addColorStop(middle, colors.light);
@@ -1975,26 +2299,39 @@ export default class PlayfieldRenderer {
     const r1 = Rj * 0.864;
     const r2 = Rj * 0.938;
 
-    const mask = this.cached(`slideMask${pos}|${size}|${counterclockwise}`, () => {
-      const arrowMask = (x) =>
-        x < 0.88 ? (0.653 * x + 0.175) / 0.75 : (-6.25 * x + 6.25) / 0.75;
-      const along = (i) => (counterclockwise ? i / size : 1 - i / size);
+    const mask = this.cached(
+      `slideMask${pos}|${size}|${counterclockwise}`,
+      () => {
+        const arrowMask = (x) =>
+          x < 0.88 ? (0.653 * x + 0.175) / 0.75 : (-6.25 * x + 6.25) / 0.75;
+        const along = (i) => (counterclockwise ? i / size : 1 - i / size);
 
-      const p = new Path2D();
-      for (let i = 0; i <= size; i++) {
-        const point = this.pointAt(r1 + (r2 - r1) * arrowMask(along(i)), startAngle - i * 6);
-        if (i === 0) p.moveTo(...point);
-        else p.lineTo(...point);
+        const p = new Path2D();
+        for (let i = 0; i <= size; i++) {
+          const point = this.pointAt(
+            r1 + (r2 - r1) * arrowMask(along(i)),
+            startAngle - i * 6
+          );
+          if (i === 0) p.moveTo(...point);
+          else p.lineTo(...point);
+        }
+        p.lineTo(...this.pointAt(r1, startAngle - size * 6));
+        for (let i = size; i >= 0; i--) {
+          p.lineTo(
+            ...this.pointAt(
+              r1 + (r0 - r1) * arrowMask(along(i)),
+              startAngle - i * 6
+            )
+          );
+        }
+        p.closePath();
+        return p;
       }
-      p.lineTo(...this.pointAt(r1, startAngle - size * 6));
-      for (let i = size; i >= 0; i--) {
-        p.lineTo(...this.pointAt(r1 + (r0 - r1) * arrowMask(along(i)), startAngle - i * 6));
-      }
-      p.closePath();
-      return p;
-    });
+    );
 
-    const scroll = counterclockwise ? 1 - ((progress * 6) % 1) : (progress * 6) % 1;
+    const scroll = counterclockwise
+      ? 1 - ((progress * 6) % 1)
+      : (progress * 6) % 1;
     const offset = counterclockwise ? -6 : 6;
     const arrowCount = size * 0.5 + 1;
 
@@ -2015,20 +2352,23 @@ export default class PlayfieldRenderer {
 
     ctx.save();
     ctx.clip(mask);
-    ctx.fillStyle = this.cached(`slideFill${colorIndex}|${pos}|${size}|${flipColors}`, () => {
-      if (!ctx.createConicGradient) return colors.base;
+    ctx.fillStyle = this.cached(
+      `slideFill${colorIndex}|${pos}|${size}|${flipColors}`,
+      () => {
+        if (!ctx.createConicGradient) return colors.base;
 
-      const gradient = ctx.createConicGradient(rotation * DEG, cx, cy);
-      const span = (size * 6) / 360;
-      if (flipColors) {
-        gradient.addColorStop(0, colors.light);
-        gradient.addColorStop(0.4 * span, colors.base);
-      } else {
-        gradient.addColorStop(0.6 * span, colors.base);
-        gradient.addColorStop(span, colors.light);
+        const gradient = ctx.createConicGradient(rotation * DEG, cx, cy);
+        const span = (size * 6) / 360;
+        if (flipColors) {
+          gradient.addColorStop(0, colors.light);
+          gradient.addColorStop(0.4 * span, colors.base);
+        } else {
+          gradient.addColorStop(0.6 * span, colors.base);
+          gradient.addColorStop(span, colors.light);
+        }
+        return gradient;
       }
-      return gradient;
-    });
+    );
     ctx.fill();
     ctx.strokeStyle = colors.dark;
     ctx.lineWidth = 5 * s3;
@@ -2036,7 +2376,7 @@ export default class PlayfieldRenderer {
     ctx.restore();
   }
 
-  drawHoldSurface(note, base, now, missed, active) {
+  drawHoldSurface(note, base, now, missed, active = 0) {
     const { ctx, cx, cy, Rj, R, settings } = this;
     const view = settings.viewDistance;
     const startTime = base + note.time;
@@ -2060,7 +2400,10 @@ export default class PlayfieldRenderer {
     if (from >= to) return;
 
     const radiusAt = (t) =>
-      Rj * perspective(clamp(1 - (this.session.scaledAt(t) - nowScaled) / view, 0, PAST_LINE));
+      Rj *
+      perspective(
+        clamp(1 - (this.session.scaledAt(t) - nowScaled) / view, 0, PAST_LINE)
+      );
     // Vertices at the hold's own points, plus every 20ms between them (4 steps on straight
     // parts), and at least once per lane an edge moves, see PlayfieldSession.holdSamples.
     // Straight lines between far apart vertices would cut across the circle
@@ -2083,14 +2426,21 @@ export default class PlayfieldRenderer {
     ctx.beginPath();
     ctx.moveTo(...this.pointAt(...edgeA[0]));
     for (let i = 1; i <= last; i++) ctx.lineTo(...this.pointAt(...edgeA[i]));
-    this.arc(ctx, edgeA[last][0], edgeA[last][1], edgeB[last][1] - edgeA[last][1]);
+    this.arc(
+      ctx,
+      edgeA[last][0],
+      edgeA[last][1],
+      edgeB[last][1] - edgeA[last][1]
+    );
     for (let i = last; i >= 0; i--) ctx.lineTo(...this.pointAt(...edgeB[i]));
     this.arc(ctx, edgeA[0][0], edgeB[0][1], edgeA[0][1] - edgeB[0][1]);
     ctx.closePath();
 
     // Color runs along the hold, radial gradient maps it onto the screen.
     // Active colors while it's held, see PlayfieldSession.visibleObjects
-    const colors = missed ? missedHoldColors : holdColorsAt(settings.colors.hold, active);
+    const colors = missed
+      ? missedHoldColors
+      : holdColorsAt(settings.colors.hold, active);
     const duration = endTime - startTime;
     const inner = radiusAt(endTime);
     const outer = Math.min(radiusAt(startTime), R * 1.2);
@@ -2099,7 +2449,10 @@ export default class PlayfieldRenderer {
       const gradient = ctx.createRadialGradient(cx, cy, inner, cx, cy, outer);
       for (let i = holdGradientStops.length - 1; i >= 0; i--) {
         const radius = radiusAt(startTime + holdGradientStops[i] * duration);
-        gradient.addColorStop(clamp((radius - inner) / (outer - inner), 0, 1), colors[i]);
+        gradient.addColorStop(
+          clamp((radius - inner) / (outer - inner), 0, 1),
+          colors[i]
+        );
       }
       ctx.fillStyle = gradient;
     } else {
@@ -2158,13 +2511,15 @@ export default class PlayfieldRenderer {
         const distance = Math.sqrt(tx * tx + ty * ty);
         if (distance < inner || distance > outer) continue;
 
-        const scale = Math.sin((Math.PI * (distance - inner)) / (outer - inner)) * strength;
+        const scale =
+          Math.sin((Math.PI * (distance - inner)) / (outer - inner)) * strength;
         const width = cell * scale;
         if (width < 0.5) continue;
 
         const left = cx - R + x * cell + (cell - width) / 2;
         const top = cy - R + y * cell + (cell - width) / 2;
-        if (ctx.roundRect) ctx.roundRect(left, top, width, width, corner * scale);
+        if (ctx.roundRect)
+          ctx.roundRect(left, top, width, width, corner * scale);
         else ctx.rect(left, top, width, width);
       }
     }
@@ -2262,7 +2617,7 @@ export default class PlayfieldRenderer {
         spriteCtx.beginPath();
         spriteCtx.arc(0, 0, 0.5, 0, Math.PI * 2);
         spriteCtx.fill();
-      },
+      }
     };
     const sprite = (...names) =>
       this.cached(`bubble:${names}`, () => {
@@ -2361,7 +2716,8 @@ export default class PlayfieldRenderer {
         continue;
       }
 
-      const distance = Rj * (particle.radius - (particle.speed * elapsed) / 1000);
+      const distance =
+        Rj * (particle.radius - (particle.speed * elapsed) / 1000);
       if (distance <= 0) {
         particle.alive = false;
         continue;
@@ -2373,13 +2729,18 @@ export default class PlayfieldRenderer {
       const x = cx + distance * cos;
       const y = cy + distance * sin;
 
-      const color = SPARKLE_RAMPS.get(particle.colors)[Math.max(0, Math.floor(t * SPARKLE_STEPS))];
-      ctx.globalAlpha = (t < 0.5 ? 1 : 1 - (t - 0.5) / 0.5) * Math.min(1, elapsed / 30);
+      const color = SPARKLE_RAMPS.get(particle.colors)[
+        Math.max(0, Math.floor(t * SPARKLE_STEPS))
+      ];
+      ctx.globalAlpha =
+        (t < 0.5 ? 1 : 1 - (t - 0.5) / 0.5) * Math.min(1, elapsed / 30);
 
       if (particle.kind === "streak" || particle.kind === "grind") {
-        const length = Rj * (particle.kind === "streak" ? 0.08 : 0.035) * particle.size;
+        const length =
+          Rj * (particle.kind === "streak" ? 0.08 : 0.035) * particle.size;
         ctx.strokeStyle = color;
-        ctx.lineWidth = R * (particle.kind === "streak" ? 0.0025 : 0.005) * particle.size;
+        ctx.lineWidth =
+          R * (particle.kind === "streak" ? 0.0025 : 0.005) * particle.size;
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(x + length * cos, y + length * sin);
@@ -2433,7 +2794,9 @@ export default class PlayfieldRenderer {
       // Rushes in, then keeps creeping to the center
       const creep = clamp(t / SHOT_MS, 0, 1);
       const front =
-        Rj * (0.12 * (1 - creep * creep * (3 - 2 * creep)) + 0.88 * Math.exp(-t / 8));
+        Rj *
+        (0.12 * (1 - creep * creep * (3 - 2 * creep)) +
+          0.88 * Math.exp(-t / 8));
       // The tail leaves the rim too and chases the head, so a segment shoots inward
       const chase = clamp(t / (SHOT_MS * 0.85), 0, 1);
       const outer = Rj - (Rj - front) * (1 - (1 - chase) * (1 - chase));
@@ -2446,15 +2809,20 @@ export default class PlayfieldRenderer {
       const dim = u * u * (3 - 2 * u);
 
       const fade = 0.8 * (1 - t / 240);
-      const alpha = fade * 0.85 * (t < 80 ? 1 : Math.max(0, 1 - (t - 80) / (SHOT_MS - 80)));
+      const alpha =
+        fade * 0.85 * (t < 80 ? 1 : Math.max(0, 1 - (t - 80) / (SHOT_MS - 80)));
       const purple = clamp((t - 30) / 120, 0, 1);
       const mix = (a, b) => Math.round(a + (b - a) * purple);
-      const rgba = (r, g, b, a) => `rgba(${mix(r, 150)}, ${mix(g, 70)}, ${mix(b, 190)}, ${a})`;
+      const rgba = (r, g, b, a) =>
+        `rgba(${mix(r, 150)}, ${mix(g, 70)}, ${mix(b, 190)}, ${a})`;
 
       const gradient = ctx.createRadialGradient(cx, cy, front, cx, cy, outer);
       gradient.addColorStop(0, rgba(255, 90, 210, alpha));
       gradient.addColorStop(0.05, rgba(250, 120, 225, alpha));
-      gradient.addColorStop(0.2, rgba(245, 150, 230, alpha * (0.95 - 0.25 * dim)));
+      gradient.addColorStop(
+        0.2,
+        rgba(245, 150, 230, alpha * (0.95 - 0.25 * dim))
+      );
       gradient.addColorStop(1, rgba(245, 175, 238, alpha * (0.9 - 0.55 * dim)));
 
       const start = -shot.pos * 6 * DEG;
@@ -2474,7 +2842,14 @@ export default class PlayfieldRenderer {
 
     const { ctx, cx, cy, Rj } = this;
     ctx.fillStyle = this.cached("grindGlow", () => {
-      const gradient = ctx.createRadialGradient(cx, cy, Rj * 0.84, cx, cy, Rj * 1.02);
+      const gradient = ctx.createRadialGradient(
+        cx,
+        cy,
+        Rj * 0.84,
+        cx,
+        cy,
+        Rj * 1.02
+      );
       gradient.addColorStop(0, "rgba(255, 220, 160, 0)");
       gradient.addColorStop(0.8, "rgba(255, 235, 200, 0.55)");
       gradient.addColorStop(1, "rgba(255, 235, 200, 0)");
@@ -2524,18 +2899,31 @@ export default class PlayfieldRenderer {
         const { score: scoreText } = RING_TEXT;
         const layer = this.scoreLayer.getContext("2d");
         layer.clearRect(0, 0, this.size, this.size);
-        const bounds = this.drawArcRuns(layer, [
-          {
-            text: score,
-            size: this.Rj * scoreText.size,
-            family: SCORE_FONT,
-            color: scoreText.color,
-            pitch: this.Rj * scoreText.pitch,
-          },
-        ], this.Rj * scoreText.baseline, -90, { align: "center" });
+        const bounds = this.drawArcRuns(
+          layer,
+          [
+            {
+              text: score,
+              size: this.Rj * scoreText.size,
+              family: SCORE_FONT,
+              color: scoreText.color,
+              pitch: this.Rj * scoreText.pitch
+            }
+          ],
+          this.Rj * scoreText.baseline,
+          -90,
+          { align: "center" }
+        );
         const left = Math.max(0, Math.floor(bounds.left));
         const top = Math.max(0, Math.floor(bounds.top));
-        this.scoreRects = [[left, top, Math.min(this.size, Math.ceil(bounds.right)) - left, Math.min(this.size, Math.ceil(bounds.bottom)) - top]];
+        this.scoreRects = [
+          [
+            left,
+            top,
+            Math.min(this.size, Math.ceil(bounds.right)) - left,
+            Math.min(this.size, Math.ceil(bounds.bottom)) - top
+          ]
+        ];
       }
       this.drawLayerRects(this.scoreLayer, this.scoreRects);
     }
@@ -2546,7 +2934,8 @@ export default class PlayfieldRenderer {
     if (mode === 1 && this.session.combo > 0) value = this.session.combo;
     else if (mode === 2) value = plus;
     else if (mode === 3) value = minus;
-    else if (CENTER_BORDERS[mode]) value = Math.max(0, minus - CENTER_BORDERS[mode]);
+    else if (CENTER_BORDERS[mode])
+      value = Math.max(0, minus - CENTER_BORDERS[mode]);
 
     if (value !== null) {
       ctx.textAlign = "center";
@@ -2599,7 +2988,12 @@ export default class PlayfieldRenderer {
     const borderEnd = borderStart + width * 0.06;
     bar(borderStart, borderEnd);
     ctx.fillStyle = this.cached(`gaugeBorder${clearRate}`, () => {
-      const gradient = ctx.createLinearGradient(borderStart, 0, borderEnd + slant, 0);
+      const gradient = ctx.createLinearGradient(
+        borderStart,
+        0,
+        borderEnd + slant,
+        0
+      );
       gradient.addColorStop(0, "rgba(255, 42, 127, 1)");
       gradient.addColorStop(1, "rgba(255, 42, 127, 0)");
       return gradient;
@@ -2650,11 +3044,17 @@ export default class PlayfieldRenderer {
     // Too long, squeeze everything to fit
     const limit = maxAngle * DEG * radius;
     const squeeze = total > limit ? limit / total : 1;
-    let current = angle * DEG - (align === "center" ? (total * squeeze) / radius / 2 : 0);
+    let current =
+      angle * DEG - (align === "center" ? (total * squeeze) / radius / 2 : 0);
 
     ctx.textAlign = "center";
     ctx.textBaseline = "alphabetic";
-    const bounds = { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity };
+    const bounds = {
+      left: Infinity,
+      top: Infinity,
+      right: -Infinity,
+      bottom: -Infinity
+    };
     for (const { char, run, font, cell } of chars) {
       const middle = current + (cell * squeeze) / 2 / radius;
       const r = radius + (run.rise ?? 0);
@@ -2693,7 +3093,12 @@ export default class PlayfieldRenderer {
     ctx.strokeText(style.text, 0, y);
 
     ctx.fillStyle = this.cached(`judgement${style.text}${size}`, () => {
-      const gradient = ctx.createLinearGradient(0, y - size / 2, 0, y + size / 2);
+      const gradient = ctx.createLinearGradient(
+        0,
+        y - size / 2,
+        0,
+        y + size / 2
+      );
       gradient.addColorStop(0, style.top);
       gradient.addColorStop(1, style.bottom);
       return gradient;
@@ -2711,7 +3116,8 @@ export default class PlayfieldRenderer {
     const elapsed = now - judgement.start;
     if (elapsed > 450) return;
 
-    const alpha = (elapsed < 350 ? 1 : 1 - (elapsed - 350) / 100) * settings.infoOpacity;
+    const alpha =
+      (elapsed < 350 ? 1 : 1 - (elapsed - 350) / 100) * settings.infoOpacity;
     if (alpha <= 0) return;
     const pop = 1 + 0.18 * (1 - Math.min(1, elapsed / 80));
     const style = JUDGEMENT_STYLES[judgement.kind];
@@ -2724,7 +3130,11 @@ export default class PlayfieldRenderer {
     this.drawJudgementText(style, size, 0);
 
     if (settings.judgementDetail && judgement.detail) {
-      this.drawJudgementText(JUDGEMENT_STYLES[judgement.detail], size * 0.55, size * 0.9);
+      this.drawJudgementText(
+        JUDGEMENT_STYLES[judgement.detail],
+        size * 0.55,
+        size * 0.9
+      );
     }
 
     ctx.lineJoin = "miter";
@@ -2737,11 +3147,16 @@ export default class PlayfieldRenderer {
 let previewRenderer = null;
 const previews = new Map();
 
-export function notePreview(type, colorIndex) {
-  const key = `${type}:${colorIndex}`;
+// Slides follow the invert slide colors option, the other notes don't have one
+export function notePreview(type, colorIndex, slideInvert = false) {
+  const invert = type.startsWith("slide") && slideInvert;
+  const key = `${type}:${colorIndex}:${invert}`;
   if (!previews.has(key)) {
     previewRenderer ??= new PlayfieldRenderer(document.createElement("canvas"));
-    previews.set(key, previewRenderer.drawNotePreview(type, colorIndex));
+    previews.set(
+      key,
+      previewRenderer.drawNotePreview(type, colorIndex, invert)
+    );
   }
   return previews.get(key);
 }

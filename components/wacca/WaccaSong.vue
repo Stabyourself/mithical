@@ -3,37 +3,48 @@
     <div class="song-cover">
       <WaccaJacket :url="song.imageName" />
     </div>
-    <div class="song-info">
-      <div class="song-header">
-        <div class="song-header-left">
-          <div class="song-title">
-            {{ getTitle }}
-          </div>
-
-          <div class="song-artist">
-            {{ song.artist }}
-          </div>
-          <!-- <div class="player-stats">
-            <div>Plays: {{ playerData.playCount }}</div>
-            <div>Rating: {{ playerData.rating }}</div>
-          </div> -->
+    <div class="song-header">
+      <div class="song-header-left">
+        <div class="song-title">
+          {{ getTitle }}
         </div>
 
-        <div class="song-header-right">
-          <WaccaFavorite :song-id="song.id" />
+        <div class="song-artist">
+          {{ song.artist }}
         </div>
+        <!-- <div class="player-stats">
+          <div>Plays: {{ playerData.playCount }}</div>
+          <div>Rating: {{ playerData.rating }}</div>
+        </div> -->
       </div>
 
-      <WaccaSongSheets :song="song" :player-data="playerData" />
+      <div class="song-header-right">
+        <WaccaFavorite :song-id="song.id" />
+      </div>
     </div>
+
+    <WaccaSongSheets
+      class="song-card-sheets"
+      :song="song"
+      :player-data="playerData"
+    />
   </div>
 </template>
 
 <style scoped lang="scss">
 $song-paddings: 10px;
 
+// Cover on the left, title and pills next to it. On phones the cover shrinks down next to the
+// title and the pills get the whole width under them
 .song {
-  display: flex;
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "cover header"
+    "cover sheets";
+  color: white;
+  font-weight: bold;
 
   margin-bottom: 1rem;
 
@@ -41,7 +52,9 @@ $song-paddings: 10px;
   overflow: hidden;
 
   background-color: rgb(var(--v-theme-boxcolor));
-  transition: background-color 0.2s, box-shadow 0.2s;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
 
   &:hover {
     background-color: #444;
@@ -50,7 +63,7 @@ $song-paddings: 10px;
 }
 
 .song-cover {
-  flex-shrink: 0;
+  grid-area: cover;
   width: 160px;
   height: 160px;
 
@@ -65,14 +78,9 @@ $song-paddings: 10px;
   }
 }
 
-.song-info {
-  flex-grow: 1;
-  color: white;
-  font-weight: bold;
-  min-width: 0;
-}
-
 .song-header {
+  grid-area: header;
+  min-width: 0;
   padding-left: $song-paddings;
   display: flex;
   justify-content: space-between;
@@ -97,21 +105,59 @@ $song-paddings: 10px;
   flex-shrink: 0;
 }
 
+.song-card-sheets {
+  grid-area: sheets;
+  padding-bottom: $song-paddings;
+}
+
+@media (max-width: 600px) {
+  .song {
+    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-areas:
+      "cover header"
+      "sheets sheets";
+  }
+
+  .song-cover {
+    width: 72px;
+    height: 72px;
+  }
+
+  .song-header-left .song-title {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
+
+  // Two pills a row, smaller to fit
+  .song-card-sheets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    :deep(.song-difficulty-pill) {
+      font-size: 1.05rem;
+      padding-left: 10px;
+    }
+
+    :deep(.song-difficulty-level) {
+      width: 42px;
+    }
+  }
+}
+
 .player-stats {
   display: flex;
   gap: 20px;
 }
 
-.v-theme--waccaOled .song,
-.v-theme--waccaOledPlus .song {
-  outline: solid 1px white;
+// Outlined on OLED, see plugins/vuetify.ts
+.song {
+  outline: var(--v-box-border);
 }
 </style>
 
 <script setup>
 const props = defineProps({
   song: Object,
-  playerData: Object,
+  playerData: Object
 });
 
 const language = useState("language");

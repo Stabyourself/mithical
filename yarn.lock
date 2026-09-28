@@ -1603,6 +1603,11 @@
   dependencies:
     upath "^2.0.1"
 
+"@vuetify/v0@^1.2.1":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@vuetify/v0/-/v0-1.2.3.tgz#4502d0a668db380a326def5aa644cbfa0b67b3a4"
+  integrity sha512-8qpYa88KxKrvi4jQcz+Zg4WH04un48Lt7Tj0Qq+LqvbUvHi+H177vWqBn9tQWgpxBVs1RXrTz5zw0Cy6txJHlw==
+
 abbrev@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-3.0.1.tgz#8ac8b3b5024d31464fe2a5feeea9f4536bf44025"
@@ -4141,6 +4146,11 @@ powershell-utils@^0.2.0:
   resolved "https://registry.yarnpkg.com/powershell-utils/-/powershell-utils-0.2.0.tgz#bb075dcadc1564f3bd80fddda4f0a481ccbdcf36"
   integrity sha512-ZlsFlG7MtSFCoc5xreOvBAozCJ6Pf06opgJjh9ONEv418xpZSAzNjstD36C6+JwOnfSqOW/9uDkqKjezTdxZhw==
 
+prettier@^3.9.9:
+  version "3.9.9"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.9.9.tgz#09b826918c91cd4cbc80e0cbd1d2a922ff04f233"
+  integrity sha512-Z/CJHIkdujO/OtN7nXUii0Rf3VT5SRuhjBA82Xvu2XhBUgX3nhP67T0LHceBdQLex7OOFGTox+Q5Yg8Jk2Qivg==
+
 pretty-bytes@^7.1.0:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-7.1.1.tgz#f1dd1a294396b78d6d1698a034bf447eed060b3c"
@@ -5346,10 +5356,12 @@ vue@^3.5.40:
     "@vue/server-renderer" "3.5.41"
     "@vue/shared" "3.5.41"
 
-vuetify@^3.7.2:
-  version "3.13.2"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.13.2.tgz#980d01c253a853b5d91a97e587481a7064bf76f8"
-  integrity sha512-CuBtJ2/lKo4s6vDmDr/oJ+77oRUb7X8goUhTKZG/qSqBkL5J2EzeBEhaZ57ZSLcYnnViWHObuVjHjRFmVzx55Q==
+vuetify@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-4.2.2.tgz#b434ef4c4e940963c9756829eb407e5116d01fea"
+  integrity sha512-6PYw9V5bA1ug+r1gWOs+ztMnz4qJDue3WLiz5VJN/y1blW9e/oeh0D8eCw7jqc8ufjm8XSN7hf6x2odJXtzw0Q==
+  dependencies:
+    "@vuetify/v0" "^1.2.1"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

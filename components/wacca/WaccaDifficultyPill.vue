@@ -17,22 +17,14 @@
   background-color: #888;
   transition: background-color 0.2s;
 
+  // The difficulty's theme color (see plugins/vuetify.ts) when picked or hovered
   &.active,
   &:hover {
-    &.song-difficulty-1 {
-      background-color: #009de6;
-    }
-
-    &.song-difficulty-2 {
-      background-color: #fed131;
-    }
-
-    &.song-difficulty-3 {
-      background-color: #fc06a3;
-    }
-
-    &.song-difficulty-4 {
-      background-color: #4a004f;
+    @for $i from 1 through 4 {
+      &.song-difficulty-#{$i} {
+        background-color: rgb(var(--v-theme-difficulty-#{$i}));
+        color: rgb(var(--v-theme-on-difficulty-#{$i}));
+      }
     }
   }
 
@@ -64,6 +56,6 @@ import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 
 const props = defineProps({
   i: Number,
-  difficulty: Number,
+  difficulty: Number
 });
 </script>

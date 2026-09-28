@@ -63,7 +63,7 @@
 
 .histogram-subtitle {
   font-size: 0.78rem;
-  color: rgba(var(--v-theme-on-surface), 0.65);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 65%, transparent);
   font-variant-numeric: tabular-nums;
 }
 
@@ -82,7 +82,8 @@
   border-radius: 8px;
   background: rgb(var(--v-theme-surface));
   color: rgb(var(--v-theme-on-surface));
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+  border: 1px solid
+    color-mix(in srgb, rgb(var(--v-theme-on-surface)) 12%, transparent);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
   pointer-events: none;
   opacity: 0;
@@ -131,7 +132,7 @@ const props = defineProps({
   difficulty: Number,
   label: String,
   // "distribution" or "cumulative"
-  view: { type: String, default: "distribution" },
+  view: { type: String, default: "distribution" }
 });
 
 const { themeName, inkColor, surfaceColor, difficultyColor } = useChartTheme();
@@ -151,7 +152,7 @@ const GRADES = [
   { min: 800000, name: "AA" },
   { min: 700000, name: "A" },
   { min: 600000, name: "B" },
-  { min: 1, name: "C" },
+  { min: 1, name: "C" }
 ];
 
 const histogramChart = ref(null);
@@ -174,7 +175,7 @@ const entries = computed(() =>
   (props.scores ?? [])
     .map((e) => ({ score: Number(e.score), count: parseInt(e.count) || 0 }))
     .filter((e) => e.count > 0)
-    .sort((a, b) => a.score - b.score),
+    .sort((a, b) => a.score - b.score)
 );
 
 const stats = computed(() => {
@@ -194,14 +195,17 @@ const stats = computed(() => {
 });
 
 function countAtLeast(value) {
-  return entries.value.reduce((n, e) => (e.score >= value ? n + e.count : n), 0);
+  return entries.value.reduce(
+    (n, e) => (e.score >= value ? n + e.count : n),
+    0
+  );
 }
 
 const you = computed(() => {
   if (!props.score || !stats.value.total) return null;
   const atLeast = countAtLeast(props.score);
   return {
-    top: Math.max(0.1, Math.round((atLeast / stats.value.total) * 1000) / 10),
+    top: Math.max(0.1, Math.round((atLeast / stats.value.total) * 1000) / 10)
   };
 });
 
@@ -209,7 +213,7 @@ const you = computed(() => {
 const buckets = computed(() => {
   const start = Math.min(
     900000,
-    Math.max(500000, Math.floor(stats.value.p10 / 50000) * 50000),
+    Math.max(500000, Math.floor(stats.value.p10 / 50000) * 50000)
   );
 
   const list = [{ kind: "below", lo: 0, hi: start - 1 }, { kind: "gap" }];
@@ -223,7 +227,7 @@ const buckets = computed(() => {
     if (b.kind === "gap") continue;
     b.count = entries.value.reduce(
       (n, e) => (e.score >= b.lo && e.score <= b.hi ? n + e.count : n),
-      0,
+      0
     );
     b.pct = (b.count / total) * 100;
     b.pctAtLeast = (countAtLeast(b.lo) / total) * 100;
@@ -235,7 +239,7 @@ const buckets = computed(() => {
 
 function bucketIndexFor(score) {
   return buckets.value.list.findIndex(
-    (b) => b.kind !== "gap" && score >= b.lo && score <= b.hi,
+    (b) => b.kind !== "gap" && score >= b.lo && score <= b.hi
   );
 }
 
@@ -248,7 +252,7 @@ function positionFor(score) {
 }
 
 const yourIndex = computed(() =>
-  props.score ? bucketIndexFor(props.score) : -1,
+  props.score ? bucketIndexFor(props.score) : -1
 );
 
 function bucketLabel(b) {
@@ -268,14 +272,14 @@ function buildDatasets() {
       type: "bar",
       data: list.map((b) => (b.kind === "gap" ? null : b.pct)),
       backgroundColor: list.map((b, i) =>
-        !played || i === yourIndex.value ? base : withAlpha(base, 0.55),
+        !played || i === yourIndex.value ? base : withAlpha(base, 0.55)
       ),
       hoverBackgroundColor: base,
       borderRadius: 3,
       borderSkipped: "bottom",
       categoryPercentage: 0.88,
       barPercentage: 1,
-      hidden: props.view !== "distribution",
+      hidden: props.view !== "distribution"
     },
     {
       type: "line",
@@ -291,8 +295,8 @@ function buildDatasets() {
       pointHoverBackgroundColor: base,
       pointHoverBorderColor: surfaceColor(),
       pointHoverBorderWidth: 2,
-      hidden: props.view !== "cumulative",
-    },
+      hidden: props.view !== "cumulative"
+    }
   ];
 }
 
@@ -331,8 +335,8 @@ function chartOptions() {
             return b.lo % step === 0 && b.lo !== buckets.value.start
               ? bucketLabel(b)
               : "";
-          },
-        },
+          }
+        }
       },
       y: {
         min: 0,
@@ -345,9 +349,9 @@ function chartOptions() {
           padding: 6,
           maxTicksLimit: 5,
           stepSize: distribution ? undefined : 25,
-          callback: (v) => (v > 100 ? "" : `${v}%`),
-        },
-      },
+          callback: (v) => (v > 100 ? "" : `${v}%`)
+        }
+      }
     },
     plugins: {
       legend: { display: false },
@@ -355,9 +359,9 @@ function chartOptions() {
       tooltip: {
         enabled: false,
         external: externalTooltip,
-        filter: (item) => item.datasetIndex === (distribution ? 0 : 1),
-      },
-    },
+        filter: (item) => item.datasetIndex === (distribution ? 0 : 1)
+      }
+    }
   };
 }
 
@@ -395,7 +399,7 @@ const gradeMarkers = {
     }
 
     ctx.restore();
-  },
+  }
 };
 
 const yourMarker = {
@@ -422,7 +426,7 @@ const yourMarker = {
     const h = 18;
     const left = Math.min(
       Math.max(x - w / 2, chartArea.left),
-      chartArea.right - w,
+      chartArea.right - w
     );
     const top = chartArea.top + 4;
 
@@ -436,7 +440,7 @@ const yourMarker = {
     ctx.textBaseline = "middle";
     ctx.fillText(text, left + w / 2, top + h / 2 + 0.5);
     ctx.restore();
-  },
+  }
 };
 
 let tooltipKey = null;
@@ -461,7 +465,7 @@ function externalTooltip({ chart, tooltip }) {
     left = Math.max(0, left);
     const top = Math.max(
       0,
-      Math.min(tooltip.caretY - height / 2, chart.height - height),
+      Math.min(tooltip.caretY - height / 2, chart.height - height)
     );
 
     el.style.opacity = 1;
@@ -492,14 +496,14 @@ function externalTooltip({ chart, tooltip }) {
           grade: b.kind === "below" ? "" : gradeName(b.lo),
           main: `${fmt(b.count)} score${b.count == 1 ? "" : "s"} · ${pct(b.pct)}`,
           sub: b.kind === "master" ? "" : `${pct(b.pctAbove)} scored higher`,
-          isYours: point.dataIndex === yourIndex.value,
+          isYours: point.dataIndex === yourIndex.value
         }
       : {
           range: b.kind === "below" ? "Any score" : `${fmt(b.lo)} or more`,
           grade: b.kind === "below" ? "" : gradeName(b.lo),
           main: `${pct(b.kind === "below" ? 100 : b.pctAtLeast)} of scores`,
           sub: "",
-          isYours: point.dataIndex === yourIndex.value,
+          isYours: point.dataIndex === yourIndex.value
         };
 
   // only measure when the content changed
@@ -527,7 +531,7 @@ function render() {
       Object.assign(chart.data.datasets[i], dataset, {
         data: dataset.hidden
           ? dataset.data
-          : dataset.data.map((v) => (v === null ? null : 0)),
+          : dataset.data.map((v) => (v === null ? null : 0))
       });
     });
     chart.update("none");
@@ -543,10 +547,10 @@ onMounted(() => {
   chart = new Chart(histogramChart.value, {
     data: {
       labels: buckets.value.list.map((_, i) => i),
-      datasets: buildDatasets(),
+      datasets: buildDatasets()
     },
     options: chartOptions(),
-    plugins: [gradeMarkers, yourMarker],
+    plugins: [gradeMarkers, yourMarker]
   });
 });
 
@@ -556,8 +560,13 @@ onBeforeUnmount(() => {
 });
 
 watch(
-  [() => props.scores, () => props.score, () => props.view, () => props.difficulty],
-  render,
+  [
+    () => props.scores,
+    () => props.score,
+    () => props.view,
+    () => props.difficulty
+  ],
+  render
 );
 watch(themeName, () => nextTick(render));
 </script>

@@ -380,5 +380,5 @@ export enum UserOptionType {
   // Value:
   //     312000 = OFF
   //     312001 = デフォルト
-  TouchEffectPop = 1006,
+  TouchEffectPop = 1006
 }

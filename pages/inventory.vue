@@ -142,37 +142,37 @@ const categories = [
   {
     name: "Navigators",
     items: waccaNavigators,
-    id: 15,
+    id: 15
   },
   {
     name: "Colors",
     items: waccaSymbolColors,
-    id: 10,
+    id: 10
   },
   {
     name: "Icons",
     items: waccaIcons,
-    id: 6,
+    id: 6
   },
   {
     name: "Sounds",
     items: waccaSoundEffects,
-    id: 11,
+    id: 11
   },
   {
     name: "Plates",
     items: waccaUserPlates,
-    id: 16,
+    id: 16
   },
   {
     name: "Titles",
     items: waccaTitles,
-    id: 5,
-  },
+    id: 5
+  }
 ];
 
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["auth"]
 });
 
 const profile = useState("profile");
@@ -235,7 +235,7 @@ watch(boxItems, (el) => {
       const item = filteredItems.value[instance.reference.dataset.index];
       if (!item) return false;
       instance.setContent(getTooltip(categories[activeCategory.value], item));
-    },
+    }
   });
 });
 

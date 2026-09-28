@@ -88,7 +88,8 @@
 
 .rating-gold {
   background-color: #fddb2f;
-  background-image: url("/wacca/img/RatePattern2.webp"), url("/wacca/img/gold1.webp");
+  background-image:
+    url("/wacca/img/RatePattern2.webp"), url("/wacca/img/gold1.webp");
   @include animated;
 }
 
@@ -130,14 +131,14 @@ const ratingColors = [
   { from: 1000, color: "red" },
   { from: 600, color: "yellow" },
   { from: 300, color: "darkblue" },
-  { from: 0, color: "white" },
+  { from: 0, color: "white" }
 ];
 
 const props = defineProps({
   rating: Number,
   divide: Number,
   simple: Boolean,
-  decimals: Number,
+  decimals: Number
 });
 
 const realRate = computed(() => {
@@ -150,7 +151,7 @@ const realRateFormatted = computed(() => {
 
 const ratingColor = computed(() => {
   return ratingColors.find(
-    (color) => realRate.value >= color.from / (props.divide ?? 1),
+    (color) => realRate.value >= color.from / (props.divide ?? 1)
   ).color;
 });
 </script>

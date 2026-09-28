@@ -98,8 +98,8 @@ const props = defineProps({
   // What usePlayfieldSession returned
   controller: {
     type: Object,
-    required: true,
-  },
+    required: true
+  }
 });
 
 const { paused, position, songLength, speed } = props.controller;

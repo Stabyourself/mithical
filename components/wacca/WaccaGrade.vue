@@ -4,7 +4,7 @@
 
 <script setup>
 const props = defineProps({
-  grade: Number,
+  grade: Number
 });
 
 const url = computed(() => `/wacca/img/grades/${props.grade}.webp`);

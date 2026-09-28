@@ -7,7 +7,9 @@
           :key="d.id"
           type="button"
           class="legend-item"
-          :class="{ dimmed: props.difficultyFilter && props.difficultyFilter !== d.id }"
+          :class="{
+            dimmed: props.difficultyFilter && props.difficultyFilter !== d.id
+          }"
           @click="emit('select-difficulty', d.id)"
         >
           <span class="legend-swatch" :style="{ background: d.color }"></span>
@@ -94,7 +96,12 @@
     <div v-if="hasPoints" class="player-chart-footer">
       <span class="key">
         <svg width="18" height="8" aria-hidden="true">
-          <path d="M1 7 H8 V1 H17" fill="none" stroke="currentColor" stroke-width="2" />
+          <path
+            d="M1 7 H8 V1 H17"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
         </svg>
         Personal best
       </span>
@@ -137,7 +144,6 @@
       />
     </Collapse>
   </div>
-
 </template>
 
 <style scoped lang="scss">
@@ -164,11 +170,17 @@
   border-radius: 50px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: rgba(var(--v-theme-on-surface), 0.85);
-  transition: opacity 0.2s, background-color 0.2s;
+  color: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 85%, transparent);
+  transition:
+    opacity 0.2s,
+    background-color 0.2s;
 
   &:hover {
-    background: rgba(var(--v-theme-on-surface), 0.06);
+    background: color-mix(
+      in srgb,
+      rgb(var(--v-theme-on-surface)) 6%,
+      transparent
+    );
   }
 
   &.dimmed {
@@ -220,7 +232,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(var(--v-theme-surface), 0.6);
+  background: color-mix(in srgb, rgb(var(--v-theme-surface)) 60%, transparent);
   backdrop-filter: blur(2px);
   pointer-events: none;
 
@@ -230,13 +242,21 @@
   }
 
   &.hint {
-    background: rgba(var(--v-theme-surface), 0.35);
+    background: color-mix(
+      in srgb,
+      rgb(var(--v-theme-surface)) 35%,
+      transparent
+    );
     backdrop-filter: none;
 
     div {
       padding: 6px 14px;
       border-radius: 8px;
-      background: rgba(var(--v-theme-on-surface), 0.8);
+      background: color-mix(
+        in srgb,
+        rgb(var(--v-theme-on-surface)) 80%,
+        transparent
+      );
       color: rgb(var(--v-theme-surface));
       font-size: 0.95rem;
     }
@@ -253,7 +273,8 @@
   border-radius: 8px;
   background: rgb(var(--v-theme-surface));
   color: rgb(var(--v-theme-on-surface));
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+  border: 1px solid
+    color-mix(in srgb, rgb(var(--v-theme-on-surface)) 12%, transparent);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
   pointer-events: none;
   opacity: 0;
@@ -300,14 +321,22 @@
     letter-spacing: 0.04em;
     padding: 1px 6px;
     border-radius: 4px;
-    background: rgba(var(--v-theme-on-surface), 0.08);
+    background: color-mix(
+      in srgb,
+      rgb(var(--v-theme-on-surface)) 8%,
+      transparent
+    );
 
     &.failed {
       opacity: 0.6;
     }
 
     &.pb {
-      background: rgba(var(--v-theme-primary), 0.15);
+      background: color-mix(
+        in srgb,
+        rgb(var(--v-theme-primary)) 15%,
+        transparent
+      );
       color: rgb(var(--v-theme-primary));
     }
   }
@@ -326,7 +355,7 @@
   gap: 4px 14px;
   padding: 6px 10px 10px;
   font-size: 0.75rem;
-  color: rgba(var(--v-theme-on-surface), 0.6);
+  color: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 60%, transparent);
 
   .key {
     display: inline-flex;
@@ -366,7 +395,7 @@ const props = defineProps({
   playerHistory: Array,
   song: Object,
   loading: Boolean,
-  difficultyFilter: Number,
+  difficultyFilter: Number
 });
 
 const emit = defineEmits(["select-difficulty"]);
@@ -395,7 +424,7 @@ const GRADE_LINES = [
   { min: 300000, name: "C" },
   { min: 200000, name: "C" },
   { min: 100000, name: "C" },
-  { min: 0, name: "" },
+  { min: 0, name: "" }
 ];
 
 const GRADE_NUMBERS = [
@@ -410,7 +439,7 @@ const GRADE_NUMBERS = [
   [800000, 5],
   [700000, 4],
   [600000, 3],
-  [1, 2],
+  [1, 2]
 ];
 
 const playerChart = ref(null);
@@ -440,7 +469,7 @@ watch(xMode, (mode) => {
 const sheetCount = computed(
   () =>
     props.song.sheets.filter((sheet) => sheet.gameVersion <= version.value)
-      .length,
+      .length
 );
 
 function gradeFromScore(score) {
@@ -474,7 +503,7 @@ const plays = computed(() => {
       grade: info.grade || gradeFromScore(info.score),
       clear: clearStatus(info.clear_status),
       undated,
-      time: undated ? -Infinity : new Date(info.user_play_date).getTime(),
+      time: undated ? -Infinity : new Date(info.user_play_date).getTime()
     });
   });
 
@@ -514,8 +543,8 @@ const undatedCount = computed(
     plays.value.filter(
       (p) =>
         p.undated &&
-        (!props.difficultyFilter || p.difficulty === props.difficultyFilter),
-    ).length,
+        (!props.difficultyFilter || p.difficulty === props.difficultyFilter)
+    ).length
 );
 
 // ignore low outliers so one bad play doesn't squish the chart
@@ -530,7 +559,8 @@ const yRange = computed(() => {
   const high = scores[scores.length - 1];
 
   let lo = GRADE_LINES.find((g) => g.min <= low)?.min ?? 0;
-  let hi = [...GRADE_LINES].reverse().find((g) => g.min >= high)?.min ?? 1000000;
+  let hi =
+    [...GRADE_LINES].reverse().find((g) => g.min >= high)?.min ?? 1000000;
   if (hi === lo) {
     hi = [...GRADE_LINES].reverse().find((g) => g.min > hi)?.min ?? 1000000;
   }
@@ -543,7 +573,7 @@ const yRange = computed(() => {
 });
 
 const clippedCount = computed(
-  () => visiblePlays.value.filter((p) => p.score < yRange.value.floor).length,
+  () => visiblePlays.value.filter((p) => p.score < yRange.value.floor).length
 );
 
 function buildDatasets() {
@@ -571,7 +601,7 @@ function buildDatasets() {
           y: hiddenOnTimeline ? null : p.score < floor ? clippedY : p.score,
           play: p,
           playNumber: i + 1,
-          clipped: p.score < floor,
+          clipped: p.score < floor
         });
       });
 
@@ -588,7 +618,11 @@ function buildDatasets() {
       pointStyle: (ctx) => (ctx.raw?.clipped ? "triangle" : "circle"),
       pointRotation: (ctx) => (ctx.raw?.clipped ? 180 : 0),
       pointRadius: (ctx) =>
-        isSelected(ctx) ? 8 : ctx.raw?.clipped || ctx.raw?.play.isBest ? 6 : 4.5,
+        isSelected(ctx)
+          ? 8
+          : ctx.raw?.clipped || ctx.raw?.play.isBest
+            ? 6
+            : 4.5,
       pointHoverRadius: (ctx) =>
         isSelected(ctx) ? 9 : ctx.raw?.play.isBest ? 8 : 7,
       pointBorderColor: (ctx) =>
@@ -596,7 +630,7 @@ function buildDatasets() {
       pointBorderWidth: (ctx) => (isSelected(ctx) ? 3 : 2),
       pointHoverBorderColor: (ctx) =>
         isSelected(ctx) ? inkColor(0.9) : surfaceColor(),
-      pointHoverBorderWidth: (ctx) => (isSelected(ctx) ? 3 : 2),
+      pointHoverBorderWidth: (ctx) => (isSelected(ctx) ? 3 : 2)
     };
   });
 }
@@ -616,8 +650,8 @@ function xScaleOptions() {
       color: inkColor(0.6),
       maxRotation: 0,
       autoSkipPadding: 24,
-      font: { size: 11 },
-    },
+      font: { size: 11 }
+    }
   };
 
   if (xMode.value === "play") {
@@ -629,8 +663,8 @@ function xScaleOptions() {
       ticks: {
         ...base.ticks,
         precision: 0,
-        callback: (v) => (Number.isInteger(v) && v > 0 ? `#${v}` : ""),
-      },
+        callback: (v) => (Number.isInteger(v) && v > 0 ? `#${v}` : "")
+      }
     };
   }
 
@@ -653,10 +687,10 @@ function xScaleOptions() {
         week: "MMM D",
         month: "MMM 'YY",
         quarter: "MMM 'YY",
-        year: "YYYY",
-      },
+        year: "YYYY"
+      }
     },
-    ticks: { ...base.ticks, maxTicksLimit: 8 },
+    ticks: { ...base.ticks, maxTicksLimit: 8 }
   };
 }
 
@@ -671,16 +705,16 @@ function yScaleOptions() {
         (g, i, all) =>
           g.min >= scale.min &&
           g.min <= scale.max &&
-          all.findIndex((o) => o.min === g.min) === i,
+          all.findIndex((o) => o.min === g.min) === i
       ).map((g) => ({ value: g.min }));
     },
     grid: {
       color: (ctx) =>
         ctx.tick?.value === 1000000 ? inkColor(0.22) : inkColor(0.09),
-      drawTicks: false,
+      drawTicks: false
     },
     border: { display: false },
-    ticks: { display: false },
+    ticks: { display: false }
   };
 }
 
@@ -702,7 +736,7 @@ const gradeLabels = {
         g.name &&
         g.min >= y.min &&
         g.min <= y.max &&
-        all.findIndex((o) => o.min === g.min) === i,
+        all.findIndex((o) => o.min === g.min) === i
     );
 
     for (const g of lines) {
@@ -715,7 +749,7 @@ const gradeLabels = {
       ctx.fillText(
         g.min >= 1000000 ? "1M" : `${g.min / 1000}k`,
         chartArea.left - 8,
-        py,
+        py
       );
 
       ctx.fillStyle = inkColor(0.75);
@@ -726,7 +760,7 @@ const gradeLabels = {
     }
 
     ctx.restore();
-  },
+  }
 };
 
 // PB line, drawn from the points so it animates with them
@@ -744,7 +778,7 @@ const personalBest = {
       if (!chart.isDatasetVisible(i) || !meta.data.length) return;
 
       const bests = meta.data.filter(
-        (el, j) => dataset.data[j]?.play.isBest && dataset.data[j].y !== null,
+        (el, j) => dataset.data[j]?.play.isBest && dataset.data[j].y !== null
       );
       if (!bests.length) return;
 
@@ -764,7 +798,7 @@ const personalBest = {
     });
 
     ctx.restore();
-  },
+  }
 };
 
 const crosshair = {
@@ -784,7 +818,7 @@ const crosshair = {
     ctx.lineTo(x, chartArea.bottom);
     ctx.stroke();
     ctx.restore();
-  },
+  }
 };
 
 // like nearest, but only if you're actually close to a point
@@ -793,12 +827,12 @@ Interaction.modes.nearestPlay = function (chart, e, options, useFinalPosition) {
     chart,
     e,
     { intersect: false, axis: "xy" },
-    useFinalPosition,
+    useFinalPosition
   );
   const pos = getRelativePosition(e, chart);
   return items
     .filter(
-      ({ element }) => Math.hypot(element.x - pos.x, element.y - pos.y) < 28,
+      ({ element }) => Math.hypot(element.x - pos.x, element.y - pos.y) < 28
     )
     .slice(0, 1);
 };
@@ -829,8 +863,8 @@ function externalTooltip({ chart, tooltip }) {
         ? "Date unknown"
         : new Date(play.time).toLocaleString(undefined, {
             dateStyle: "medium",
-            timeStyle: "short",
-          }),
+            timeStyle: "short"
+          })
     };
   }
 
@@ -864,29 +898,29 @@ function chartOptions() {
       tooltip: {
         enabled: false,
         external: externalTooltip,
-        animation: { duration: 120 },
+        animation: { duration: 120 }
       },
       zoom: {
         limits: {
           x: {
             min: "original",
             max: "original",
-            minRange: xMode.value === "time" ? 3 * 24 * 3600 * 1000 : 3,
-          },
+            minRange: xMode.value === "time" ? 3 * 24 * 3600 * 1000 : 3
+          }
         },
         pan: {
           enabled: true,
           mode: "x",
           threshold: 8,
-          onPanComplete: () => (isZoomed.value = chart.isZoomedOrPanned()),
+          onPanComplete: () => (isZoomed.value = chart.isZoomedOrPanned())
         },
         zoom: {
           wheel: { enabled: true, modifierKey: "ctrl", speed: 0.15 },
           pinch: { enabled: true },
           mode: "x",
-          onZoomComplete: () => (isZoomed.value = chart.isZoomedOrPanned()),
-        },
-      },
+          onZoomComplete: () => (isZoomed.value = chart.isZoomedOrPanned())
+        }
+      }
     },
 
     onHover: (event, elements) => {
@@ -910,7 +944,7 @@ function chartOptions() {
         chart.data.datasets[datasetIndex].data[index].play.historyIndex;
       // click the same play again to close
       selectPlay(selectedIndex.value === historyIndex ? null : historyIndex);
-    },
+    }
   };
 }
 
@@ -935,7 +969,7 @@ onMounted(() => {
     type: "line",
     data: { datasets: buildDatasets() },
     options: chartOptions(),
-    plugins: [gradeLabels, personalBest, crosshair],
+    plugins: [gradeLabels, personalBest, crosshair]
   });
 });
 
@@ -945,14 +979,8 @@ onBeforeUnmount(() => {
   clearTimeout(wheelHintTimer);
 });
 
-watch(
-  [() => props.playerHistory, () => props.difficultyFilter, xMode],
-  render,
-);
-watch(
-  themeName,
-  () => nextTick(render),
-);
+watch([() => props.playerHistory, () => props.difficultyFilter, xMode], render);
+watch(themeName, () => nextTick(render));
 
 let wheelHintTimer;
 function onWheel(event) {
@@ -989,7 +1017,7 @@ const selectedDetail = computed(() => {
     color: difficultyColor(play.difficulty),
     playNumber: i + 1,
     prev: same[i - 1]?.historyIndex ?? null,
-    next: same[i + 1]?.historyIndex ?? null,
+    next: same[i + 1]?.historyIndex ?? null
   };
 });
 
@@ -1006,7 +1034,7 @@ function selectPlay(historyIndex) {
 
 watch(
   () => props.playerHistory,
-  () => (selectedIndex.value = null),
+  () => (selectedIndex.value = null)
 );
 
 function onKeydown(event) {

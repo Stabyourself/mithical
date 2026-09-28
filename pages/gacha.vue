@@ -23,7 +23,7 @@
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
-  background: rgba(var(--v-theme-primary));
+  background: rgb(var(--v-theme-primary));
   color: white;
   padding: 10px;
   border-radius: 10px;
@@ -41,7 +41,7 @@
 import waccaBoxes from "~/assets/wacca/waccaBoxes.js";
 
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["auth"]
 });
 
 const profile = useState("profile");
