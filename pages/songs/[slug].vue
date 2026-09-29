@@ -144,32 +144,6 @@
 
       <Collapse :when="!!chartOptionsOpen">
         <div class="chartview-options">
-          <div class="chartview-options-row">
-            <span class="chartview-options-label">Judgements</span>
-            <v-btn-toggle
-              v-model="chartFeatures.judging"
-              mandatory
-              density="compact"
-              divided
-              class="chartview-toggle"
-            >
-              <v-btn
-                v-for="skill in JUDGEMENT_TYPES"
-                :key="skill.value"
-                :value="skill.value"
-                :title="skill.description"
-                color="primary"
-                base-color="primary"
-                variant="flat"
-                size="small"
-                class="toggle-option"
-                >{{ skill.title }}</v-btn
-              >
-            </v-btn-toggle>
-          </div>
-        </div>
-        
-        <div class="chartview-options">
           <div
             v-for="group in CHART_TOGGLE_GROUPS"
             :key="group.label"
@@ -276,7 +250,7 @@
           :song-count="chartFeatures.songCount"
           :score="chartFeatures.score"
           :progress-bar="chartFeatures.progressBar"
-          :judging="judging"
+          :judging="chartFeatures.judging"
           :autoplay="chartFeatures.bot != 'none'"
           :bot-skill="
             chartFeatures.bot == 'none' ? undefined : chartFeatures.bot
@@ -730,15 +704,18 @@ watch(
   () => (chartView.value = startDifficulty.value)
 );
 
-const judging = computed(() => {
-  return chartFeatures.value.judging === "on";
-});
 // Chart view options: what the preview shows and whether a bot plays
 const chartOptionsOpen = ref();
 const CHART_TOGGLE_GROUPS = [
   {
-    label: "Cosmetics",
+    label: "Options",
     toggles: [
+      {
+        key: "judging",
+        label: "Judging",
+        title:
+          "Ratings, misses and dropped holds. Off, unhit notes just pass by"
+      },
       {
         key: "ring",
         label: "Ring",
@@ -801,18 +778,6 @@ const CHART_TYPES = [
   }
 ];
 
-const JUDGEMENT_TYPES = [
-  {
-    title: "Off",
-    value: "off",
-    description: "Playback will have judgements disabled"
-  },
-  {
-    title: "On",
-    value: "on",
-    description: "Playback will show judgements"
-  }
-];
 // Remembered for every song, see plugins/preferences.js
 const chartFeatures = useState("chartViewFeatures");
 // A group's toggles as the list of what's on, for its button group
