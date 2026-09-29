@@ -10,8 +10,8 @@ const waccaNews = [
 - *Improved mobile experience*
 - *Fixed an issue with Inferno sorting*
 - *Improved accuracy of Rating animations for all rating tiers*
-- *Improved layout of Recent Plays page*
 - *Consolidated filters dropdown in the *All Songs* tab*
+- *Added more detailed Date and Play stat breakdowns to the *Songs* page*
 - *Added more detailed Histograms to the *Songs* page*
 - *Added Chart Preview to the *Songs* page*
 ---
