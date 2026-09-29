@@ -231,6 +231,7 @@
               :label="`${formatSpeed(noteSpeed)}`"
               density="compact"
               hide-details
+              color="primary"
               thumb-label
               class="lab-speed"
             >
@@ -560,8 +561,7 @@
   align-items: center;
   gap: 8px;
 
-  // labels above the groups on phones, the Autoplay group needs the whole
-  // width, so every group fills it like the difficulties
+  // labels above the groups on phones
   @media (max-width: 600px) {
     flex-direction: column;
     align-items: stretch;
@@ -969,9 +969,7 @@ const chartData = computed(() => {
   };
 });
 
-// The slider's speed: what the user dragged it to (remembered, see
-// plugins/preferences.js), else your profile's speed or the difficulty's default.
-// Flipping the display toggle drops the dragged value
+// A dragged speed sticks until the display toggle flips
 const noteSpeed = computed({
   get: () =>
     chartFeatures.value.noteSpeed ??

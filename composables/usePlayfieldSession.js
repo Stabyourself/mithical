@@ -9,7 +9,7 @@
 import PlayfieldSession from "~/assets/wacca/playfield/PlayfieldSession.js";
 
 // Playback speed, for looking at things in slow motion
-const SPEEDS = [0.1, 0.5, 1, 2];
+const SPEEDS = [0.1, 0.5, 1, 1.5, 2];
 // Scrubbing glides after the bar: this long (ms) to cover about two thirds of the way,
 // the same at any frame rate
 const SCRUB_GLIDE_MS = 90;
@@ -159,18 +159,24 @@ export function usePlayfieldSession({
   // Charts load on request, only the latest one counts if it changes quickly
   let chartRequest = 0;
 
-  function showChart(text) {
-    session.loadChart(text);
+  function showChart(text, keepTime = null) {
+    session.loadChart(text, keepTime);
     songLength.value = session.songLength;
-    position.value = 0;
+    updatePosition();
     updateLoop();
   }
+
+  // Difficulties of a song share a folder, and keep the position
+  let loadedUrl = null;
+  const sameSong = (a, b) =>
+    !!a && !!b && a.slice(0, a.lastIndexOf("/")) === b.slice(0, b.lastIndexOf("/"));
 
   async function loadChart(url) {
     const request = ++chartRequest;
     loadError.value = null;
     if (!url) {
       loading.value = false;
+      loadedUrl = null;
       showChart("");
       return;
     }
@@ -180,7 +186,8 @@ export function usePlayfieldSession({
       if (request !== chartRequest) return;
       // Missing files come back as the app's html, not a 404
       if (!/^#BODY\s*$/m.test(text)) throw new Error("not a .mer file");
-      showChart(text);
+      showChart(text, sameSong(loadedUrl, url) ? session.songTime : null);
+      loadedUrl = url;
     } catch (error) {
       console.error(`Couldn't load chart ${url}`, error);
       if (request === chartRequest)

@@ -12,6 +12,7 @@
       @pointermove="onPointerMove"
       @pointerup="onPointerUp"
       @pointercancel="onPointerUp"
+      @contextmenu="onContextMenu"
     ></canvas>
     <!-- Text over the round view, always at full resolution -->
     <canvas
@@ -64,6 +65,7 @@ canvas {
   height: 100%;
   cursor: pointer;
   user-select: none;
+  -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -323,7 +325,16 @@ function canvasPoint(event) {
 }
 
 // Easter egg: clicking a view lets you play it yourself
+let lastPointerType = "mouse";
+
+// Long presses on phones open the context menu, right clicks are left alone
+function onContextMenu(event) {
+  if (lastPointerType === "touch" || lastPointerType === "pen")
+    event.preventDefault();
+}
+
 function onPointerDown(event) {
+  lastPointerType = event.pointerType;
   if (!renderer) return;
   // Clicking a paused view only starts it, so the bot keeps playing. Clicking
   // again once it runs is what takes over

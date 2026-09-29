@@ -194,7 +194,7 @@ export default class PlayfieldSession {
       // The bot's score isn't anyone's
       if (!this.playing) this.resetStats();
     }
-    // Picked a bot: it plays now, not after the idle wait (unless a finger is down)
+    // Picking a bot hands control back to it right away
     if (
       next.autoplay &&
       (!previous.autoplay || next.botSkill !== previous.botSkill) &&
@@ -230,12 +230,15 @@ export default class PlayfieldSession {
 
   // Load a MER chart (its text) and start over from the top. The chart loops,
   // every loop is a fresh play
-  loadChart(text) {
+  // keepTime: stay at this point of the song
+  loadChart(text, keepTime = null) {
     this.source = parseMer(text);
     this.loopMs = this.source.lengthMs;
     this.bpm = this.source.bpm;
     this.setChart(buildChart(this.source, this.mirror));
     this.reset();
+    if (keepTime !== null)
+      this.time = clamp(keepTime, 0, Math.max(0, this.loopMs - 1));
   }
 
   // How far the notes have scrolled at a demo time (speed changes and stops), over loops
@@ -442,7 +445,7 @@ export default class PlayfieldSession {
       spread
     });
     this.emit("touch", { lane, row, spread, laneChanged: true });
-    this.hitNote(this.closestNote(["touch", "hold"], lane, time, target));
+    this.hitNotes(this.closestNotes(["touch", "hold"], lane, time, target));
   }
 
   fingerMove(id, lane, radius, row, time) {
@@ -469,17 +472,17 @@ export default class PlayfieldSession {
       if (moved < -30) moved += 60;
       const type = moved > 0 ? "slideCCW" : "slideCW";
       const { target } = finger;
-      this.hitNote(
-        this.closestNote([type], from, time, target) ??
-          this.closestNote([type], lane, time, target)
+      const slides = this.closestNotes([type], from, time, target);
+      this.hitNotes(
+        slides.length ? slides : this.closestNotes([type], lane, time, target)
       );
 
       // Touch notes, hold starts and slides you move into from outside
       for (const found of [
-        this.closestNote(["touch", "hold"], lane, time, target),
-        this.closestNote(["slideCW", "slideCCW"], lane, time, target)
+        ...this.closestNotes(["touch", "hold"], lane, time, target),
+        ...this.closestNotes(["slideCW", "slideCCW"], lane, time, target)
       ]) {
-        if (found && !this.covers(found.note.pos, found.note.size, from))
+        if (!this.covers(found.note.pos, found.note.size, from))
           this.hitNote(found);
       }
     }
@@ -491,8 +494,8 @@ export default class PlayfieldSession {
     }
     const swiped = radius - finger.swipeFrom;
     if (Math.abs(swiped) >= SNAP_SWIPE) {
-      this.hitNote(
-        this.closestNote(
+      this.hitNotes(
+        this.closestNotes(
           [swiped < 0 ? "snapIn" : "snapOut"],
           finger.lane,
           time,
@@ -639,18 +642,25 @@ export default class PlayfieldSession {
     return null;
   }
 
-  // Closest note of the given types under the finger that's in its window
-  closestNote(types, lane, time, target = null) {
+  // Closest note of the given types under the finger that's in its window, and any
+  // others with it at the same time (overlapping holds start together)
+  closestNotes(types, lane, time, target = null) {
     let best = null;
+    const all = [];
     for (const candidate of this.playableNotes(time)) {
       if (target !== null && candidate.key !== target) continue;
       if (!types.includes(candidate.note.type)) continue;
       if (!this.covers(candidate.note.pos, candidate.note.size, lane)) continue;
       if (!this.gradeFor(candidate.note, candidate.delta)) continue;
+      all.push(candidate);
       if (!best || Math.abs(candidate.delta) < Math.abs(best.delta))
         best = candidate;
     }
-    return best;
+    return best ? all.filter(({ t }) => t === best.t) : [];
+  }
+
+  hitNotes(found) {
+    for (const candidate of found) this.hitNote(candidate);
   }
 
   // Panels a finger presses, lanes x rows starting at its cell. The bot has big
