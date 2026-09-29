@@ -7,7 +7,7 @@
   >
     <canvas
       ref="canvas"
-      :class="{ paused }"
+      :class="{ paused, 'click-to-play': waitingToStart && !loading }"
       @pointerdown="onPointerDown"
       @pointermove="onPointerMove"
       @pointerup="onPointerUp"
@@ -63,7 +63,6 @@ canvas {
   display: block;
   width: 100%;
   height: 100%;
-  cursor: pointer;
   user-select: none;
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
@@ -89,6 +88,11 @@ canvas {
 
 canvas.paused {
   touch-action: pan-y;
+}
+
+/* Only while "Click to play" is showing */
+canvas.click-to-play {
+  cursor: pointer;
 }
 
 /* Click to play: Expert pink in the game's judgement font, with a shine of slashes sweeping across now and then */
@@ -130,8 +134,19 @@ canvas.paused {
   background-clip: text;
   color: transparent;
   /* Just enough to read it on bright notes */
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.7));
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.7))
+    drop-shadow(0 0 0 rgb(var(--v-theme-difficulty-3) / 0));
   animation: hint-shine 7s ease-in-out infinite;
+  transition: filter 0.3s ease;
+}
+
+/* Hover (the overlay ignores the pointer, so the view is what's hovered): the text glows pink and the shine starts sweeping every second instead of every seven */
+@media (hover: hover) {
+  .playfield-canvas:hover .playfield-hint span {
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.7))
+      drop-shadow(0 0 14px rgb(var(--v-theme-difficulty-3)));
+    animation: hint-shine-hover 1.6s ease-in-out infinite;
+  }
 }
 
 /* Tap on touch screens */
@@ -160,8 +175,19 @@ canvas.paused {
   }
 }
 
+@keyframes hint-shine-hover {
+  0% {
+    background-position: 0% 0;
+  }
+  60%,
+  100% {
+    background-position: 100% 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .playfield-hint span {
+  .playfield-hint span,
+  .playfield-canvas:hover .playfield-hint span {
     animation: none;
   }
 }

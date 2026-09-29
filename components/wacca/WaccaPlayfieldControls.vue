@@ -56,7 +56,7 @@
           aria-label="Playback speed"
           title="Speed"
         >
-          {{ speed }}x
+          {{ speed.toFixed(2) }}x
         </v-btn>
       </template>
       <v-card class="speed-panel" rounded="lg">
