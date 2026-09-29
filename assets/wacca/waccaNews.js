@@ -1,5 +1,27 @@
 const waccaNews = [
   {
+    title: "**[Notice]** WebUI Updates and Improvements",
+    date: "2026-09-30",
+    body: `Hey everyone! Just keeping you up to date on changes that have been going on in the background. Here's a quick rundown of the latest WebUI updates...
+
+
+##### *Changelog (2026-09-26)*
+---
+- *Improved mobile experience*
+- *Consolidated filters dropdown in the *All Songs* tab*
+- *Fixed an issue with Inferno sorting*
+- *Improved accuracy of Rating animations for all rating tiers*
+- *Added more detailed Histograms to the *Songs* page*
+- *Added Chart Preview to the *Songs* page*
+---
+
+That's all for today. Please stay tuned for future updates!
+
+
+![Luin](/wacca/img/news/luin.webp)
+`
+  },
+  {
     title: "「 The Devil Incarnate 2 」Tournament Recap",
     date: "2026-09-15",
     body: `## Crazy weekend huh?
