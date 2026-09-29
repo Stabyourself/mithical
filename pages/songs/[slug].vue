@@ -101,22 +101,23 @@
           </v-btn-toggle>
 
           <v-btn-toggle
-            v-model="chartType"
+            v-model="chartFeatures.type"
             mandatory
             density="compact"
             divided
             class="chartview-toggle"
           >
             <v-btn
-              v-for="type in ['circle', 'unrolled']"
-              :key="type"
-              :value="type"
+              v-for="skill in CHART_TYPES"
+              :key="skill.value"
+              :value="skill.value"
+              :title="skill.description"
               color="primary"
               base-color="primary"
               variant="flat"
               size="small"
               class="toggle-option"
-              >{{ type == "circle" ? "3D" : "2D" }}</v-btn
+              >{{ skill.title }}</v-btn
             >
           </v-btn-toggle>
 
@@ -143,6 +144,30 @@
 
       <Collapse :when="!!chartOptionsOpen">
         <div class="chartview-options">
+          <div class="chartview-options-row">
+            <span class="chartview-options-label">Display</span>
+            <v-btn-toggle
+              v-model="chartFeatures.display"
+              mandatory
+              density="compact"
+              divided
+              class="chartview-toggle"
+            >
+              <v-btn
+                v-for="skill in DISPLAY_TYPES"
+                :key="skill.value"
+                :value="skill.value"
+                :title="skill.description"
+                color="primary"
+                base-color="primary"
+                variant="flat"
+                size="small"
+                class="toggle-option"
+                >{{ skill.title }}</v-btn
+              >
+            </v-btn-toggle>
+          </div>
+
           <div
             v-for="group in CHART_TOGGLE_GROUPS"
             :key="group.label"
@@ -173,7 +198,7 @@
           </div>
 
           <div class="chartview-options-row">
-            <span class="chartview-options-label">Bot</span>
+            <span class="chartview-options-label">Autoplay</span>
             <v-btn-toggle
               v-model="chartFeatures.bot"
               mandatory
@@ -195,13 +220,30 @@
               >
             </v-btn-toggle>
           </div>
+
+          <div class="chartview-scroll-options-row">
+            <span class="chartview-options-label">Modifier</span>
+            <v-slider
+              v-model="noteSpeed"
+              :min="0"
+              :max="50"
+              :step="1"
+              :label="`${formatSpeed(noteSpeed)}`"
+              density="compact"
+              hide-details
+              thumb-label
+              class="lab-speed"
+              >
+                <template #thumb-label="{ modelValue }">{{ formatSpeed(modelValue) }}</template>
+            </v-slider>
+          </div>
         </div>
       </Collapse>
 
       <div class="chart-preview">
         <WaccaPlayfieldPreview
-          :view="chartType"
-          :options="previewOptions"
+          :view="chartFeatures.type"
+          :options="options"
           :chart-url="chartData?.url ?? null"
           :chart-info="chartData?.info ?? null"
           :ring="chartFeatures.ring"
@@ -441,6 +483,9 @@
 @media (max-width: 600px) {
   .chartview-difficulties {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
   }
 
   .chartview-difficulty {
@@ -456,12 +501,21 @@
   .chartview-level-prefix {
     display: none;
   }
+
+  .chartview-controls {
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
+  }
 }
 
 .chartview-heading {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-left: auto;
   gap: 6px;
 }
 
@@ -476,7 +530,9 @@
 
   // the heading's controls wrap to the left on phones, so follow them
   @media (max-width: 600px) {
-    align-items: flex-start;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-left: auto;
   }
 }
 
@@ -486,9 +542,10 @@
   gap: 8px;
 
   // labels above the groups on phones, the Bot group needs the whole width
+  // Moving this to right side of mobile
   @media (max-width: 600px) {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 2px;
   }
 }
@@ -504,6 +561,39 @@
   @media (max-width: 600px) {
     min-width: 0;
   }
+}
+
+.chartview-scroll-options-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: min(100%, 400px);
+}
+
+// Mobile scroll bar
+@media (max-width: 600px) {
+  .chartview-scroll-options-row {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    width: min(100%, 400px);
+  }
+
+  .chartview-scroll-options-row .chartview-options-label {
+    align-self: flex-end;
+  }
+}
+
+// Font and margins for scroll speed bar
+.lab-speed {
+  width: 100%;
+}
+
+.lab-speed :deep(.v-label) {
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.7;
+  margin: 0 0 2px
 }
 
 .chart-preview {
@@ -613,31 +703,19 @@ watch(
   () => song.value.id,
   () => (chartView.value = startDifficulty.value)
 );
-const chartType = ref("circle");
 
 // Chart view options: what the preview shows and whether a bot plays
 const chartOptionsOpen = ref();
 const CHART_TOGGLE_GROUPS = [
   {
-    label: "Play",
+    label: "Options",
     toggles: [
       {
         key: "judging",
-        label: "Judging",
+        label: "Judgement",
         title:
           "Ratings, misses and dropped holds. Off, unhit notes just pass by"
       },
-      {
-        key: "userOptions",
-        label: "Use my display settings",
-        title:
-          "Your note speed, mirror, colors and so on. Off, the defaults with a note speed that fits the difficulty"
-      }
-    ]
-  },
-  {
-    label: "Show",
-    toggles: [
       {
         key: "ring",
         label: "Ring",
@@ -654,6 +732,9 @@ const CHART_TOGGLE_GROUPS = [
     ]
   }
 ];
+// Note speed (option 1, 0-50 for x1.0 to x6.0) when not using your options:
+// x2.0 for Normal up to x3.5 for Inferno. Everything else at its default
+const DEFAULT_NOTE_SPEEDS = [10, 15, 20, 25];
 // Named after the worst judgement the bot gets. Off leaves the playing to you
 const BOT_SKILLS = [
   {
@@ -661,15 +742,42 @@ const BOT_SKILLS = [
     value: "none",
     description: "No bot"
   },
+  { title: "Miss+", value: "miss-up", description: "Misses now and then" },
+  { title: "Good+", value: "good-up", description: "Goods at worst" },
+  { title: "Great+", value: "great-up", description: "Greats at worst" },
   {
     title: "All Marvelous",
     value: "all-marvelous",
     description: "Hits everything perfectly"
   },
-  { title: "Great+", value: "great-up", description: "Greats at worst" },
-  { title: "Good+", value: "good-up", description: "Goods at worst" },
-  { title: "Miss+", value: "miss-up", description: "Misses now and then" }
 ];
+
+const DISPLAY_TYPES = [
+  {
+    title: "Use default display settings",
+    value: "defaultColor",
+    description: "Use the default WACCA customization settings"
+  },
+  {
+    title: "Use my display settings",
+    value: "userColor",
+    description: "Use your current WACCA customization settings"
+  }
+];
+
+const CHART_TYPES = [
+  {
+    title: "3D",
+    value: "circle",
+    description: "Render playback in full 360 degrees"
+  },
+  {
+    title: "2D",
+    value: "unrolled",
+    description: "Render playback unrolled and flat. You like chuni right?"
+  }
+];
+
 // Remembered for every song, see plugins/preferences.js
 const chartFeatures = useState("chartViewFeatures");
 // A group's toggles as the list of what's on, for its button group
@@ -684,15 +792,6 @@ function setEnabledToggles(group, keys) {
     chartFeatures.value[key] = keys.includes(key);
   });
 }
-
-// Note speed (option 1, 0-50 for x1.0 to x6.0) when not using your options:
-// x2.0 for Normal up to x3.5 for Inferno. Everything else at its default
-const DEFAULT_NOTE_SPEEDS = [10, 15, 20, 25];
-const previewOptions = computed(() =>
-  chartFeatures.value.userOptions
-    ? profile.value.options
-    : { 1: DEFAULT_NOTE_SPEEDS[chartView.value] }
-);
 
 const playerHistory = shallowRef([]);
 
@@ -841,6 +940,40 @@ const chartData = computed(() => {
     }
   };
 });
+
+const noteSpeed = ref(profile.value?.options?.[1]);
+
+// Checks which option is picked and updates the note speed bar accodringly based on diff
+// tldr will either pick speed based off current diff if default display
+// or will use the users current scroll speed setting
+watch(
+  [() => chartFeatures.value.display, chartView, () => profile.value?.options?.[1]],
+  ([display, diff, speed]) => {
+    noteSpeed.value = display === "defaultColor" ? DEFAULT_NOTE_SPEEDS[diff] : speed;
+  },
+  { immediate: true },
+);
+
+// Sets the cosmetic display options, respects scroll speed changes after first set
+const options = computed(() => {
+  if (chartFeatures.value.display === "defaultColor"){
+    return { 
+      ...{}, 
+      1: noteSpeed.value,
+    };
+  }
+  if (chartFeatures.value.display === "userColor"){
+    return { 
+      ...profile.value?.options, 
+      1: noteSpeed.value,
+    };
+  }
+});
+
+// Like in game (and on the settings page): option 0-50 shows as ×1.0 to ×6.0
+function formatSpeed(value) {
+  return `×${(value / 10 + 1).toFixed(1)}`;
+}
 
 useSeoMeta({
   title: `Mithical | ${getTitle.value}`,

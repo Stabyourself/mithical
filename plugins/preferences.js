@@ -30,7 +30,7 @@ export default defineNuxtPlugin({
         // Broken value, start over
       }
       return {
-        judging: false,
+        judging: "off",
         // Your profile's options instead of the defaults
         userOptions: true,
         ring: false,
@@ -38,6 +38,8 @@ export default defineNuxtPlugin({
         score: false,
         progressBar: false,
         bot: "none",
+        display: "defaultColor",
+        type: "circle",
         ...stored
       };
     });
