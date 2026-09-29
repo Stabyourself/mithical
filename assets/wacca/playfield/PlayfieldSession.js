@@ -194,6 +194,15 @@ export default class PlayfieldSession {
       // The bot's score isn't anyone's
       if (!this.playing) this.resetStats();
     }
+    // Picked a bot: it plays now, not after the idle wait (unless a finger is down)
+    if (
+      next.autoplay &&
+      (!previous.autoplay || next.botSkill !== previous.botSkill) &&
+      this.playing &&
+      this.fingers.size === 0
+    ) {
+      this.handBack();
+    }
     // Turned on: judge from here, notes that just went by aren't misses
     if (next.judging && !previous.judging) this.judgeFrom = this.time;
     if (!this.isJudging()) this.judgement = null;

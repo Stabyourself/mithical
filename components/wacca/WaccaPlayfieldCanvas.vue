@@ -7,7 +7,7 @@
   >
     <canvas
       ref="canvas"
-      :class="{ playing }"
+      :class="{ paused }"
       @pointerdown="onPointerDown"
       @pointermove="onPointerMove"
       @pointerup="onPointerUp"
@@ -21,7 +21,11 @@
     ></canvas>
 
     <!-- Started paused: say what a click does. Clicks go through to the canvas, which starts it -->
-    <div v-if="waitingToStart && !loading" class="playfield-hint" aria-hidden="true">
+    <div
+      v-if="waitingToStart && !loading"
+      class="playfield-hint"
+      aria-hidden="true"
+    >
       <span class="hint-click">Click to play</span>
       <span class="hint-tap">Tap to play</span>
     </div>
@@ -77,9 +81,12 @@ canvas {
   border-radius: 8px;
 }
 
-/* Swipes shouldn't scroll the page while playing */
-canvas.playing {
+canvas {
   touch-action: none;
+}
+
+canvas.paused {
+  touch-action: pan-y;
 }
 
 /* Click to play: Expert pink in the game's judgement font, with a shine of slashes sweeping across now and then */
@@ -232,7 +239,8 @@ const props = defineProps({
   }
 });
 
-const { session, playing, loading, loadError, waitingToStart } = props.controller;
+const { session, paused, loading, loadError, waitingToStart } =
+  props.controller;
 const container = ref(null);
 const canvas = ref(null);
 const textCanvas = ref(null);
