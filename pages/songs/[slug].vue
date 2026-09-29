@@ -147,7 +147,7 @@
           <div class="chartview-options-row">
             <span class="chartview-options-label">Display</span>
             <v-btn-toggle
-              v-model="chartFeatures.display"
+              v-model="chartFeatures.userOptions"
               mandatory
               density="compact"
               divided
@@ -755,12 +755,12 @@ const BOT_SKILLS = [
 const DISPLAY_TYPES = [
   {
     title: "Use default display settings",
-    value: "defaultColor",
+    value: false,
     description: "Use the default WACCA customization settings"
   },
   {
     title: "Use my display settings",
-    value: "userColor",
+    value: true,
     description: "Use your current WACCA customization settings"
   }
 ];
@@ -947,28 +947,18 @@ const noteSpeed = ref(profile.value?.options?.[1]);
 // tldr will either pick speed based off current diff if default display
 // or will use the users current scroll speed setting
 watch(
-  [() => chartFeatures.value.display, chartView, () => profile.value?.options?.[1]],
-  ([display, diff, speed]) => {
-    noteSpeed.value = display === "defaultColor" ? DEFAULT_NOTE_SPEEDS[diff] : speed;
+  [() => chartFeatures.value.userOptions, chartView, () => profile.value?.options?.[1]],
+  ([userOptions, diff, speed]) => {
+    noteSpeed.value = userOptions ? speed : DEFAULT_NOTE_SPEEDS[diff];
   },
   { immediate: true },
 );
 
 // Sets the cosmetic display options, respects scroll speed changes after first set
-const options = computed(() => {
-  if (chartFeatures.value.display === "defaultColor"){
-    return { 
-      ...{}, 
-      1: noteSpeed.value,
-    };
-  }
-  if (chartFeatures.value.display === "userColor"){
-    return { 
-      ...profile.value?.options, 
-      1: noteSpeed.value,
-    };
-  }
-});
+const options = computed(() => ({
+  ...(chartFeatures.value.userOptions ? profile.value?.options : {}),
+  1: noteSpeed.value
+}));
 
 // Like in game (and on the settings page): option 0-50 shows as ×1.0 to ×6.0
 function formatSpeed(value) {
