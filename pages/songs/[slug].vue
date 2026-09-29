@@ -200,16 +200,16 @@
           </div>
 
           <div class="chartview-options-row">
-            <span class="chartview-options-label">Bot</span>
+            <span class="chartview-options-label">Display</span>
             <v-btn-toggle
-              v-model="chartFeatures.bot"
+              v-model="chartFeatures.display"
               mandatory
               density="compact"
               divided
               class="chartview-toggle"
             >
               <v-btn
-                v-for="skill in BOT_SKILLS"
+                v-for="skill in DISPLAY_TYPES"
                 :key="skill.value"
                 :value="skill.value"
                 :title="skill.description"
@@ -224,16 +224,16 @@
           </div>
 
           <div class="chartview-options-row">
-            <span class="chartview-options-label">Display</span>
+            <span class="chartview-options-label">Bot</span>
             <v-btn-toggle
-              v-model="chartFeatures.display"
+              v-model="chartFeatures.bot"
               mandatory
               density="compact"
               divided
               class="chartview-toggle"
             >
               <v-btn
-                v-for="skill in DISPLAY_TYPES"
+                v-for="skill in BOT_SKILLS"
                 :key="skill.value"
                 :value="skill.value"
                 :title="skill.description"
