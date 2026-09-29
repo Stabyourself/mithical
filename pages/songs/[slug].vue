@@ -144,6 +144,30 @@
 
       <Collapse :when="!!chartOptionsOpen">
         <div class="chartview-options">
+          <div class="chartview-options-row">
+            <span class="chartview-options-label">Display</span>
+            <v-btn-toggle
+              v-model="chartFeatures.display"
+              mandatory
+              density="compact"
+              divided
+              class="chartview-toggle"
+            >
+              <v-btn
+                v-for="skill in DISPLAY_TYPES"
+                :key="skill.value"
+                :value="skill.value"
+                :title="skill.description"
+                color="primary"
+                base-color="primary"
+                variant="flat"
+                size="small"
+                class="toggle-option"
+                >{{ skill.title }}</v-btn
+              >
+            </v-btn-toggle>
+          </div>
+
           <div
             v-for="group in CHART_TOGGLE_GROUPS"
             :key="group.label"
@@ -174,30 +198,6 @@
           </div>
 
           <div class="chartview-options-row">
-            <span class="chartview-options-label">Display</span>
-            <v-btn-toggle
-              v-model="chartFeatures.display"
-              mandatory
-              density="compact"
-              divided
-              class="chartview-toggle"
-            >
-              <v-btn
-                v-for="skill in DISPLAY_TYPES"
-                :key="skill.value"
-                :value="skill.value"
-                :title="skill.description"
-                color="primary"
-                base-color="primary"
-                variant="flat"
-                size="small"
-                class="toggle-option"
-                >{{ skill.title }}</v-btn
-              >
-            </v-btn-toggle>
-          </div>
-
-          <div class="chartview-options-row">
             <span class="chartview-options-label">Bot</span>
             <v-btn-toggle
               v-model="chartFeatures.bot"
@@ -222,7 +222,7 @@
           </div>
 
           <div class="chartview-scroll-options-row">
-            <span class="chartview-options-label">Scroll</span>
+            <span class="chartview-options-label">Modifier</span>
             <v-slider
               v-model="noteSpeed"
               :min="0"
@@ -712,7 +712,7 @@ const CHART_TOGGLE_GROUPS = [
     toggles: [
       {
         key: "judging",
-        label: "Judging",
+        label: "Judgement",
         title:
           "Ratings, misses and dropped holds. Off, unhit notes just pass by"
       },
