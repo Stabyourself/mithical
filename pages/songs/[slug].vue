@@ -146,22 +146,23 @@
           <div class="chartview-options-row">
             <span class="chartview-options-label">Judgements</span>
             <v-btn-toggle
-              v-model="chartJudgements"
+              v-model="chartFeatures.judging"
               mandatory
               density="compact"
               divided
               class="chartview-toggle"
             >
               <v-btn
-                v-for="type in [ 'off', 'on' ]"
-                :key="type"
-                :value="type"
+                v-for="skill in JUDGEMENT_TYPES"
+                :key="skill.value"
+                :value="skill.value"
+                :title="skill.description"
                 color="primary"
                 base-color="primary"
                 variant="flat"
                 size="small"
                 class="toggle-option"
-                >{{ type == "on" ? "On" : "Off" }}</v-btn
+                >{{ skill.title }}</v-btn
               >
             </v-btn-toggle>
           </div>
@@ -193,22 +194,23 @@
           <div class="chartview-options-row">
             <span class="chartview-options-label">Display</span>
             <v-btn-toggle
-              v-model="chartDisplaySettings"
+              v-model="chartFeatures.display"
               mandatory
               density="compact"
               divided
               class="chartview-toggle"
             >
               <v-btn
-                v-for="type in ['userColor', 'defaultColor']"
-                :key="type"
-                :value="type"
+                v-for="skill in DISPLAY_TYPES"
+                :key="skill.value"
+                :value="skill.value"
+                :title="skill.description"
                 color="primary"
                 base-color="primary"
                 variant="flat"
                 size="small"
                 class="toggle-option"
-                >{{ type == "defaultColor" ? "Use default display settings" : "Use my display settings" }}</v-btn
+                >{{ skill.title }}</v-btn
               >
             </v-btn-toggle>
           </div>
@@ -696,52 +698,50 @@ watch(
   () => (chartView.value = startDifficulty.value)
 );
 const chartType = ref("circle");
-const chartDisplaySettings = ref("userColor");
-const chartJudgements = ref("off");
 
 const judging = computed(() => {
-  return chartJudgements.value === "on";
+  return chartFeatures.value.judging === "on";
 });
 // Chart view options: what the preview shows and whether a bot plays
 const chartOptionsOpen = ref();
 // Leaving this here in case you want it back
-const CHART_TOGGLE_GROUPS = [
-  {
-    label: "Play",
-    toggles: [
-      {
-        key: "judging",
-        label: "Judging",
-        title:
-          "Ratings, misses and dropped holds. Off, unhit notes just pass by"
-      },
-      {
-        key: "userOptions",
-        label: "Use my display settings",
-        title:
-          "Your note speed, mirror, colors and so on. Off, the defaults with a note speed that fits the difficulty"
-      }
-    ]
-  },
-  {
-    label: "Show",
-    toggles: [
-      {
-        key: "ring",
-        label: "Ring",
-        title:
-          "The console's LED ring around the view. Off, the lanes fill the space"
-      },
-      { key: "songCount", label: "Song no.", title: '"1/3 Song" on the ring' },
-      { key: "score", label: "Score", title: "The score on the ring" },
-      {
-        key: "progressBar",
-        label: "Gauge",
-        title: "The clear gauge in the round view"
-      }
-    ]
-  }
-];
+// const CHART_TOGGLE_GROUPS = [
+//   {
+//     label: "Play",
+//     toggles: [
+//       {
+//         key: "judging",
+//         label: "Judging",
+//         title:
+//           "Ratings, misses and dropped holds. Off, unhit notes just pass by"
+//       },
+//       {
+//         key: "userOptions",
+//         label: "Use my display settings",
+//         title:
+//           "Your note speed, mirror, colors and so on. Off, the defaults with a note speed that fits the difficulty"
+//       }
+//     ]
+//   },
+//   {
+//     label: "Show",
+//     toggles: [
+//       {
+//         key: "ring",
+//         label: "Ring",
+//         title:
+//           "The console's LED ring around the view. Off, the lanes fill the space"
+//       },
+//       { key: "songCount", label: "Song no.", title: '"1/3 Song" on the ring' },
+//       { key: "score", label: "Score", title: "The score on the ring" },
+//       {
+//         key: "progressBar",
+//         label: "Gauge",
+//         title: "The clear gauge in the round view"
+//       }
+//     ]
+//   }
+// ];
 // Note speed (option 1, 0-50 for x1.0 to x6.0) when not using your options:
 // x2.0 for Normal up to x3.5 for Inferno. Everything else at its default
 const DEFAULT_NOTE_SPEEDS = [10, 15, 20, 25];
@@ -752,14 +752,53 @@ const BOT_SKILLS = [
     value: "none",
     description: "No bot"
   },
+  { title: "Miss+", value: "miss-up", description: "Misses now and then" },
+  { title: "Good+", value: "good-up", description: "Goods at worst" },
+  { title: "Great+", value: "great-up", description: "Greats at worst" },
   {
     title: "All Marvelous",
     value: "all-marvelous",
     description: "Hits everything perfectly"
   },
-  { title: "Great+", value: "great-up", description: "Greats at worst" },
-  { title: "Good+", value: "good-up", description: "Goods at worst" },
-  { title: "Miss+", value: "miss-up", description: "Misses now and then" }
+];
+
+const DISPLAY_TYPES = [
+  {
+    title: "Use default display settings",
+    value: "defaultColor",
+    description: "Use the default WACCA customization settings"
+  },
+  {
+    title: "Use my display settings",
+    value: "userColor",
+    description: "Use your current WACCA customization settings"
+  }
+];
+
+const CHART_TYPES = [
+  {
+    title: "Off",
+    value: "off",
+    description: "Playback will have judgements disabled"
+  },
+  {
+    title: "On",
+    value: "on",
+    description: "Playback will show judgements"
+  }
+];
+
+const JUDGEMENT_TYPES = [
+  {
+    title: "Off",
+    value: "off",
+    description: "Playback will have judgements disabled"
+  },
+  {
+    title: "On",
+    value: "on",
+    description: "Playback will show judgements"
+  }
 ];
 // Remembered for every song, see plugins/preferences.js
 const chartFeatures = useState("chartViewFeatures");
@@ -930,7 +969,7 @@ const noteSpeed = ref(profile.value?.options?.[1]);
 // tldr will either pick speed based off current diff if default display
 // or will use the users current scroll speed setting
 watch(
-  [chartDisplaySettings, chartView, () => profile.value?.options?.[1]],
+  [() => chartFeatures.value.display, chartView, () => profile.value?.options?.[1]],
   ([display, diff, speed]) => {
     noteSpeed.value = display === "defaultColor" ? DEFAULT_NOTE_SPEEDS[diff] : speed;
   },
@@ -939,13 +978,13 @@ watch(
 
 // Sets the cosmetic display options, respects scroll speed changes after first set
 const options = computed(() => {
-  if (chartDisplaySettings.value === "defaultColor"){
+  if (chartFeatures.value.display === "defaultColor"){
     return { 
       ...{}, 
       1: noteSpeed.value,
     };
   }
-  if (chartDisplaySettings.value === "userColor"){
+  if (chartFeatures.value.display === "userColor"){
     return { 
       ...profile.value?.options, 
       1: noteSpeed.value,
