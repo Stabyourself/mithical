@@ -14,7 +14,7 @@ const waccaNews = [
 - *Consolidated filters dropdown in the *All Songs* tab*
 - *Added more detailed Date and Play stat breakdowns to the *Songs* page*
 - *Added more detailed Histograms to the *Songs* page*
-- *Added Chart Preview to the *Songs* page*
+- *Added Chart View to the *Songs* page*
 ---
 
 That's all for today. Please stay tuned for future updates!
