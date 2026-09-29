@@ -191,7 +191,7 @@
           </div>
 
           <div class="chartview-options-row">
-            <span class="chartview-options-label">Display Settings</span>
+            <span class="chartview-options-label">Display</span>
             <v-btn-toggle
               v-model="chartDisplaySettings"
               mandatory
@@ -475,6 +475,9 @@
 @media (max-width: 600px) {
   .chartview-difficulties {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
   }
 
   .chartview-difficulty {
@@ -493,8 +496,10 @@
 
   .chartview-controls {
     width: 100%;
-    margin-left: 0;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
   }
 }
 
@@ -502,6 +507,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-left: auto;
   gap: 6px;
 }
 
@@ -516,7 +522,9 @@
 
   // the heading's controls wrap to the left on phones, so follow them
   @media (max-width: 600px) {
-    align-items: flex-start;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-left: auto;
   }
 }
 
@@ -526,10 +534,24 @@
   gap: 8px;
 
   // labels above the groups on phones, the Bot group needs the whole width
+  // Moving this to right side of mobile
   @media (max-width: 600px) {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 2px;
+  }
+}
+
+// same width for both, so the groups line up
+.chartview-options-label {
+  min-width: 2.5em;
+  text-align: right;
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.7;
+  
+  @media (max-width: 600px) {
+    min-width: 0;
   }
 }
 
@@ -540,39 +562,30 @@
   width: min(100%, 400px);
 }
 
-.lab-speed {
-  width: 100%;
-}
-
+// Mobile scroll bar
 @media (max-width: 600px) {
   .chartview-scroll-options-row {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 2px;
     width: min(100%, 400px);
   }
 
   .chartview-scroll-options-row .chartview-options-label {
-    align-self: flex-start;
+    align-self: flex-end;
   }
-
-  .lab-speed {
-    width: 100%;
-  }
-
 }
 
-// same width for both, so the groups line up
-.chartview-options-label {
-  min-width: 2.5em;
-  text-align: right;
+// Font and margins for scroll speed bar
+.lab-speed {
+  width: 100%;
+}
+
+.lab-speed :deep(.v-label) {
   font-size: 0.875rem;
   font-weight: 500;
   opacity: 0.7;
-
-  @media (max-width: 600px) {
-    min-width: 0;
-  }
+  margin: 0 0 2px
 }
 
 .chart-preview {
