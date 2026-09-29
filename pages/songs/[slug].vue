@@ -105,7 +105,7 @@
             mandatory
             density="compact"
             divided
-            class="chartview-toggle"
+            class="chartview-toggle chartview-type"
           >
             <v-btn
               v-for="skill in CHART_TYPES"
@@ -124,7 +124,7 @@
           <v-btn-toggle
             v-model="chartOptionsOpen"
             density="compact"
-            class="chartview-toggle"
+            class="chartview-toggle chartview-cog"
           >
             <v-btn
               :value="true"
@@ -233,8 +233,10 @@
               hide-details
               thumb-label
               class="lab-speed"
-              >
-                <template #thumb-label="{ modelValue }">{{ formatSpeed(modelValue) }}</template>
+            >
+              <template #thumb-label="{ modelValue }">{{
+                formatSpeed(modelValue)
+              }}</template>
             </v-slider>
           </div>
         </div>
@@ -463,10 +465,7 @@
 }
 
 .chartview-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-left: auto;
+  display: contents;
 }
 
 .chartview-toggle {
@@ -501,22 +500,44 @@
   .chartview-level-prefix {
     display: none;
   }
-
-  .chartview-controls {
-    width: 100%;
-    justify-content: flex-end;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: auto;
-  }
 }
 
 .chartview-heading {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-left: auto;
   gap: 6px;
+  container-type: inline-size;
+
+  .chartview-difficulties {
+    order: 1;
+    margin-left: auto;
+  }
+
+  .chartview-type {
+    order: 2;
+  }
+
+  .chartview-cog {
+    order: 3;
+  }
+
+  @container (max-width: 640px) {
+    .chartview-type {
+      order: 1;
+      margin-left: auto;
+    }
+
+    .chartview-cog {
+      order: 2;
+    }
+
+    .chartview-difficulties {
+      order: 3;
+      flex: 0 0 100%;
+      margin-left: 0;
+    }
+  }
 }
 
 // Chart view options: one row per group under the heading's controls, lined
@@ -530,9 +551,7 @@
 
   // the heading's controls wrap to the left on phones, so follow them
   @media (max-width: 600px) {
-    align-items: flex-end;
-    flex-wrap: wrap;
-    margin-left: auto;
+    align-items: stretch;
   }
 }
 
@@ -541,12 +560,21 @@
   align-items: center;
   gap: 8px;
 
-  // labels above the groups on phones, the Bot group needs the whole width
-  // Moving this to right side of mobile
+  // labels above the groups on phones, the Autoplay group needs the whole
+  // width, so every group fills it like the difficulties
   @media (max-width: 600px) {
     flex-direction: column;
-    align-items: flex-end;
+    align-items: stretch;
+    width: 100%;
     gap: 2px;
+
+    .chartview-toggle {
+      width: 100%;
+    }
+
+    .toggle-option {
+      flex: 1 1 auto;
+    }
   }
 }
 
@@ -562,6 +590,8 @@
 
   @media (max-width: 600px) {
     min-width: 0;
+    text-align: center;
+    align-self: center;
   }
 }
 
@@ -576,13 +606,9 @@
 @media (max-width: 600px) {
   .chartview-scroll-options-row {
     flex-direction: column;
-    align-items: flex-end;
+    align-items: stretch;
     gap: 2px;
-    width: min(100%, 400px);
-  }
-
-  .chartview-scroll-options-row .chartview-options-label {
-    align-self: flex-end;
+    width: 100%;
   }
 }
 
@@ -595,7 +621,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   opacity: 0.7;
-  margin: 0 0 2px
+  margin: 0 0 2px;
 }
 
 .chart-preview {
@@ -751,7 +777,7 @@ const BOT_SKILLS = [
     title: "All Marvelous",
     value: "all-marvelous",
     description: "Hits everything perfectly"
-  },
+  }
 ];
 
 const DISPLAY_TYPES = [
