@@ -30,7 +30,7 @@ export default defineNuxtPlugin({
         // Broken value, start over
       }
       return {
-        judging: "off",
+        judging: false,
         // Your profile's options instead of the defaults
         userOptions: true,
         ring: false,
