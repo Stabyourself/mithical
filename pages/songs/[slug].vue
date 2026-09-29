@@ -704,7 +704,25 @@ const judging = computed(() => {
 });
 // Chart view options: what the preview shows and whether a bot plays
 const chartOptionsOpen = ref();
+// Leaving this here in case you want it back
 const CHART_TOGGLE_GROUPS = [
+  {
+    label: "Play",
+    toggles: [
+      {
+        key: "judging",
+        label: "Judging",
+        title:
+          "Ratings, misses and dropped holds. Off, unhit notes just pass by"
+      },
+      {
+        key: "userOptions",
+        label: "Use my display settings",
+        title:
+          "Your note speed, mirror, colors and so on. Off, the defaults with a note speed that fits the difficulty"
+      }
+    ]
+  },
   {
     label: "Show",
     toggles: [
@@ -724,6 +742,9 @@ const CHART_TOGGLE_GROUPS = [
     ]
   }
 ];
+// Note speed (option 1, 0-50 for x1.0 to x6.0) when not using your options:
+// x2.0 for Normal up to x3.5 for Inferno. Everything else at its default
+const DEFAULT_NOTE_SPEEDS = [10, 15, 20, 25];
 // Named after the worst judgement the bot gets. Off leaves the playing to you
 const BOT_SKILLS = [
   {
@@ -905,11 +926,11 @@ const chartData = computed(() => {
 
 const noteSpeed = ref(profile.value?.options?.[1]);
 
-// Checks which option is picked and updates the note speed bar accodringly
+// Checks which option is picked and updates the note speed bar accodringly based on diff
 watch(
-  [chartDisplaySettings, () => profile.value?.options?.[1]],
-  ([option, speed]) => {
-    noteSpeed.value = option === "defaultColor" ? 5 : speed;
+  [chartDisplaySettings, chartView, () => profile.value?.options?.[1]],
+  ([option, diff, speed]) => {
+    noteSpeed.value = option === "defaultColor" ? DEFAULT_NOTE_SPEEDS[diff] : speed;
   },
   { immediate: true },
 );
