@@ -5,7 +5,7 @@ const waccaNews = [
     body: `Hey everyone! Just keeping you up to date on changes that have been going on in the background. Here's a quick rundown of the latest WebUI updates...
 
 
-##### *Changelog (2026-09-26)*
+##### *Changelog (2026-09-29)*
 ---
 - *Improved mobile experience*
 - *Fixed an issue with Inferno sorting*
