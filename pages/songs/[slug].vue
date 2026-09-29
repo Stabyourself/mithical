@@ -222,7 +222,7 @@
           </div>
 
           <div class="chartview-scroll-options-row">
-            <span class="chartview-options-label">Modifier</span>
+            <span class="chartview-options-label">Note Speed</span>
             <v-slider
               v-model="noteSpeed"
               :min="0"
@@ -553,6 +553,8 @@
 // same width for both, so the groups line up
 .chartview-options-label {
   min-width: 2.5em;
+  flex-shrink: 0;
+  white-space: nowrap;
   text-align: right;
   font-size: 0.875rem;
   font-weight: 500;
@@ -941,20 +943,23 @@ const chartData = computed(() => {
   };
 });
 
-const noteSpeed = ref(profile.value?.options?.[1]);
-
-// Checks which option is picked and updates the note speed bar accodringly based on diff
-// tldr will either pick speed based off current diff if default display
-// or will use the users current scroll speed setting
+// The slider's speed: what the user dragged it to (remembered, see
+// plugins/preferences.js), else your profile's speed or the difficulty's default.
+// Flipping the display toggle drops the dragged value
+const noteSpeed = computed({
+  get: () =>
+    chartFeatures.value.noteSpeed ??
+    (chartFeatures.value.userOptions
+      ? profile.value?.options?.[1]
+      : undefined) ??
+    DEFAULT_NOTE_SPEEDS[chartView.value],
+  set: (value) => (chartFeatures.value.noteSpeed = value)
+});
 watch(
-  [() => chartFeatures.value.userOptions, chartView, () => profile.value?.options?.[1]],
-  ([userOptions, diff, speed]) => {
-    noteSpeed.value = userOptions ? speed : DEFAULT_NOTE_SPEEDS[diff];
-  },
-  { immediate: true },
+  () => chartFeatures.value.userOptions,
+  () => (chartFeatures.value.noteSpeed = null)
 );
 
-// Sets the cosmetic display options, respects scroll speed changes after first set
 const options = computed(() => ({
   ...(chartFeatures.value.userOptions ? profile.value?.options : {}),
   1: noteSpeed.value

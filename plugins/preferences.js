@@ -32,6 +32,7 @@ export default defineNuxtPlugin({
       return {
         judging: false,
         userOptions: true,
+        noteSpeed: null,
         ring: false,
         songCount: false,
         score: false,
