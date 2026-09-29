@@ -248,7 +248,7 @@ import waccaUserPlates from "~/assets/wacca/waccaUserPlates.js";
 import waccaNavigators from "~/assets/wacca/waccaNavigators";
 import waccaItemKinds from "~/assets/wacca/waccaItemKinds.js";
 
-const language = useState("language");
+const localized = useLocalized();
 const profile = useState("profile");
 
 const props = defineProps({
@@ -276,12 +276,7 @@ function findItem(kind, id) {
 }
 
 function itemName(kind, id) {
-  if (language.value === "ja") {
-    return findItem(kind, id).name;
-  } else {
-    let item = findItem(kind, id);
-    return item.nameEnglish ?? item.name;
-  }
+  return localized(findItem(kind, id));
 }
 
 const item = computed(() => {

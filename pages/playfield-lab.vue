@@ -271,13 +271,15 @@ const demo = computed({
     router.replace({ query: { ...route.query, demo: value || undefined } })
 });
 
+const songTitle = useSongTitle();
+
 const chart = computed(() => {
   const sheet = song.value?.sheets[difficulty.value - 1];
   if (!sheet) return null;
   return {
     url: chartPath(song.value.id, difficulty.value - 1),
     info: {
-      title: song.value.title,
+      title: songTitle(song.value),
       difficulty: difficulty.value,
       level: String(formatDifficulty(sheet.difficulty, false))
     }

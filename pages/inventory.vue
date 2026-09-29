@@ -177,13 +177,12 @@ definePageMeta({
 
 const profile = useState("profile");
 const activeCategory = ref(0);
-const lang = useState("language");
+const localized = useLocalized();
 const toggleOwneds = ref([0, 1]);
 
 function getTooltip(category, item) {
-  const name = (lang.value === "en" && item.nameEnglish) || item.name;
-  const acquisition =
-    (lang.value === "en" && item.acquisitionEnglish) || item.acquisition || "";
+  const name = localized(item);
+  const acquisition = localized(item, "acquisition") || "";
 
   let out = `<h2>${name}</h2>`;
 

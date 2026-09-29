@@ -154,7 +154,6 @@
               :category="category"
               :active-categories="activeCategories"
               @click="toggleCategory(category)"
-              :language="language"
             />
           </div>
 
@@ -166,7 +165,6 @@
               :category="category"
               :active-categories="activeCategories"
               @click="toggleCategory(category)"
-              :language="language"
             />
           </div>
         </div>
@@ -420,7 +418,7 @@ import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import waccaCategories from "~/assets/wacca/waccaCategories";
 import { getSongSlug } from "~/assets/wacca/songSlug.js";
 
-const language = useState("language");
+const songTitle = useSongTitle();
 const profile = useState("profile");
 const version = useState("version");
 
@@ -445,13 +443,8 @@ const sortOptions = [
   {
     text: "Title",
     sortFunction: (a, b) => {
-      let aTitle = a.titleEnglish || a.title;
-      let bTitle = b.titleEnglish || b.title;
-
-      if (language.value == "ja") {
-        aTitle = a.title;
-        bTitle = b.title;
-      }
+      const aTitle = songTitle(a);
+      const bTitle = songTitle(b);
 
       if (sortOrder.value == "asc") {
         return aTitle.localeCompare(bTitle);

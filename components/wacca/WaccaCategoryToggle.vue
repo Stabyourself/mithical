@@ -9,9 +9,7 @@
     ></div>
     <div class="song-category-info">
       <div class="song-category-title">
-        {{
-          category.hideText ? "" : language == "ja" ? category.ja : category.en
-        }}
+        {{ category.hideText ? "" : categoryName(category) }}
       </div>
       <!-- <div class="song-category-count">
         {{ category.count }}
@@ -73,9 +71,10 @@
 <script setup>
 const props = defineProps({
   category: Object,
-  activeCategories: Array,
-  language: String
+  activeCategories: Array
 });
+
+const categoryName = useCategoryName();
 
 const active = computed(() => {
   return props.activeCategories.includes(props.category.ja);

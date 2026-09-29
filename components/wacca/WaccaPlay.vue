@@ -492,15 +492,8 @@ const medal = computed(() => {
   }
 });
 
-const language = useState("language");
-
-const getTitle = computed(() => {
-  if (language.value === "ja") {
-    return song.value.title;
-  } else {
-    return song.value.titleEnglish || song.value.title;
-  }
-});
+const songTitle = useSongTitle();
+const getTitle = computed(() => songTitle(song.value));
 
 const totalNotesHit = computed(() => {
   return (

@@ -183,7 +183,6 @@ import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import getRatingBorders from "~/assets/wacca/waccaRateMulBorders";
 import { getSongSlug } from "~/assets/wacca/songSlug.js";
 
-const language = useState("language");
 const profile = useState("profile");
 const version = useState("version");
 
@@ -322,13 +321,7 @@ const sheetFolders = computed(() => {
   return folders;
 });
 
-function getTitle(song) {
-  if (language.value === "ja") {
-    return song.title;
-  }
-
-  return song.titleEnglish || song.title;
-}
+const getTitle = useSongTitle();
 
 function getSlug(song) {
   return getSongSlug(song, getSongs(version.value));

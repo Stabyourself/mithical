@@ -323,7 +323,7 @@ h1 {
 import { Howl } from "howler";
 
 const runtimeConfig = useRuntimeConfig();
-const language = useState("language");
+const localized = useLocalized();
 const profile = useState("profile");
 const activeCard = useState("activeCard");
 
@@ -467,13 +467,7 @@ function animateSpin(currentTime) {
 
 defineExpose({ spin });
 
-function boxName(box) {
-  if (language.value === "ja") {
-    return box.name;
-  } else {
-    return box.nameEnglish ?? box.name;
-  }
-}
+const boxName = localized;
 
 function finishSpin() {
   rouletteGetSound.play();

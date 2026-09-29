@@ -160,13 +160,6 @@ const props = defineProps({
   playerData: Object
 });
 
-const language = useState("language");
-
-const getTitle = computed(() => {
-  if (language.value === "ja") {
-    return props.song.title;
-  }
-
-  return props.song.titleEnglish || props.song.title;
-});
+const songTitle = useSongTitle();
+const getTitle = computed(() => songTitle(props.song));
 </script>

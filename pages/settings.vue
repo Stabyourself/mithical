@@ -1635,6 +1635,7 @@ const activeCategory = ref(0);
 // Demo chart, or a song's chart with ?song=2082&difficulty=3 (1-4, normal to inferno).
 // Unknown songs or difficulties fall back to the demo
 const route = useRoute();
+const songTitle = useSongTitle();
 const previewChart = computed(() => {
   const id = Number(route.query.song);
   const difficulty = Number(route.query.difficulty);
@@ -1644,7 +1645,7 @@ const previewChart = computed(() => {
   return {
     url: chartPath(song.id, difficulty - 1),
     info: {
-      title: song.title,
+      title: songTitle(song),
       difficulty,
       level: String(formatDifficulty(sheet.difficulty, false))
     }

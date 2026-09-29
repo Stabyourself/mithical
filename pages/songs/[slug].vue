@@ -912,15 +912,8 @@ loadPlayerHistory();
 //     });
 // }
 
-const language = useState("language");
-
-const getTitle = computed(() => {
-  if (language.value === "ja") {
-    return song.value.title;
-  }
-
-  return song.value.titleEnglish || song.value.title;
-});
+const songTitle = useSongTitle();
+const getTitle = computed(() => songTitle(song.value));
 
 function formatDate(date) {
   if (date == 0) {
@@ -952,12 +945,8 @@ const category = computed(() => {
   );
 });
 
-const categoryName = computed(() => {
-  if (language.value === "ja") {
-    return category.value.ja;
-  }
-  return category.value.en;
-});
+const getCategoryName = useCategoryName();
+const categoryName = computed(() => getCategoryName(category.value));
 
 const ogDescription = computed(() => {
   return [
@@ -983,7 +972,7 @@ const chartData = computed(() => {
   return {
     url: chartPath(song.value.id, chartView.value),
     info: {
-      title: song.value.title,
+      title: getTitle.value,
       difficulty: chartView.value + 1,
       level: difficulty.level
     }
