@@ -927,10 +927,12 @@ const chartData = computed(() => {
 const noteSpeed = ref(profile.value?.options?.[1]);
 
 // Checks which option is picked and updates the note speed bar accodringly based on diff
+// tldr will either pick speed based off current diff if default display
+// or will use the users current scroll speed setting
 watch(
   [chartDisplaySettings, chartView, () => profile.value?.options?.[1]],
-  ([option, diff, speed]) => {
-    noteSpeed.value = option === "defaultColor" ? DEFAULT_NOTE_SPEEDS[diff] : speed;
+  ([display, diff, speed]) => {
+    noteSpeed.value = display === "defaultColor" ? DEFAULT_NOTE_SPEEDS[diff] : speed;
   },
   { immediate: true },
 );
