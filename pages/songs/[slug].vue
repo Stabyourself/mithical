@@ -549,7 +549,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   opacity: 0.7;
-  
+
   @media (max-width: 600px) {
     min-width: 0;
   }
