@@ -198,7 +198,7 @@
           </div>
 
           <div class="chartview-options-row">
-            <span class="chartview-options-label">Bot</span>
+            <span class="chartview-options-label">Autoplay</span>
             <v-btn-toggle
               v-model="chartFeatures.bot"
               mandatory
