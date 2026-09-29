@@ -142,7 +142,12 @@
         </div>
       </h2>
 
-      <Collapse :when="!!chartOptionsOpen">
+      <div
+        class="chartview-collapse"
+        :class="{ open: chartOptionsOpen }"
+        :inert="!chartOptionsOpen"
+      >
+        <div class="chartview-collapse-inner">
         <div class="chartview-options">
           <div class="chartview-options-row">
             <span class="chartview-options-label">Display</span>
@@ -241,7 +246,8 @@
             </v-slider>
           </div>
         </div>
-      </Collapse>
+        </div>
+      </div>
 
       <div class="chart-preview">
         <WaccaPlayfieldPreview
@@ -541,6 +547,22 @@
   }
 }
 
+// Animates the height in both directions, so toggling again mid-way turns around
+.chartview-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+
+  &.open {
+    grid-template-rows: 1fr;
+  }
+}
+
+.chartview-collapse-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
 // Chart view options: one row per group under the heading's controls, lined
 // up on the right like them
 .chartview-options {
@@ -649,7 +671,6 @@ import waccaCategories from "~/assets/wacca/waccaCategories";
 import { getSongSlug, findSongBySlug } from "~/assets/wacca/songSlug.js";
 import { formatDifficulty } from "~/assets/js/util";
 import { chartPath } from "~/assets/wacca/playfield/merChart.js";
-import { Collapse } from "vue-collapsed";
 
 const profile = useState("profile");
 definePageMeta({
