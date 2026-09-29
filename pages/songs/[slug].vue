@@ -167,6 +167,37 @@
               >
             </v-btn-toggle>
           </div>
+        </div>
+        
+        <div class="chartview-options">
+          <div
+            v-for="group in CHART_TOGGLE_GROUPS"
+            :key="group.label"
+            class="chartview-options-row"
+          >
+            <span class="chartview-options-label">{{ group.label }}</span>
+            <v-btn-toggle
+              :model-value="enabledToggles(group)"
+              multiple
+              density="compact"
+              divided
+              class="chartview-toggle"
+              @update:model-value="(keys) => setEnabledToggles(group, keys)"
+            >
+              <v-btn
+                v-for="toggle in group.toggles"
+                :key="toggle.key"
+                :value="toggle.key"
+                :title="toggle.title"
+                color="primary"
+                base-color="primary"
+                variant="flat"
+                size="small"
+                class="toggle-option"
+                >{{ toggle.label }}</v-btn
+              >
+            </v-btn-toggle>
+          </div>
 
           <div class="chartview-options-row">
             <span class="chartview-options-label">Bot</span>
@@ -704,6 +735,26 @@ const judging = computed(() => {
 });
 // Chart view options: what the preview shows and whether a bot plays
 const chartOptionsOpen = ref();
+const CHART_TOGGLE_GROUPS = [
+  {
+    label: "Cosmetics",
+    toggles: [
+      {
+        key: "ring",
+        label: "Ring",
+        title:
+          "The console's LED ring around the view. Off, the lanes fill the space"
+      },
+      { key: "songCount", label: "Song no.", title: '"1/3 Song" on the ring' },
+      { key: "score", label: "Score", title: "The score on the ring" },
+      {
+        key: "progressBar",
+        label: "Gauge",
+        title: "The clear gauge in the round view"
+      }
+    ]
+  }
+];
 // Note speed (option 1, 0-50 for x1.0 to x6.0) when not using your options:
 // x2.0 for Normal up to x3.5 for Inferno. Everything else at its default
 const DEFAULT_NOTE_SPEEDS = [10, 15, 20, 25];
