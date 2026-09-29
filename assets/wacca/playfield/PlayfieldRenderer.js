@@ -253,6 +253,24 @@ const SONG_TITLES = [
 export const FONT =
   '"ring_font", "Roboto", "Helvetica Neue", Arial, sans-serif';
 
+// Something drawn once and then copied a lot. Copies from an ImageBitmap cost less than from a
+// canvas (same pixels), so where the browser can make one right away that's what this returns
+function sprite(width, height, draw) {
+  if (typeof OffscreenCanvas !== "undefined") {
+    const canvas = new OffscreenCanvas(width, height);
+    const ctx = canvas.getContext("2d");
+    if (ctx && canvas.transferToImageBitmap) {
+      draw(ctx);
+      return canvas.transferToImageBitmap();
+    }
+  }
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  draw(canvas.getContext("2d"));
+  return canvas;
+}
+
 function perspective(x) {
   x = Math.min(1.316, x);
   return (3.325 * x) / (13.825 - 10.5 * x);
@@ -327,6 +345,8 @@ export default class PlayfieldRenderer {
     // For composing the judgement line, and the line with masked lanes cut out
     this.judgementLineLayer = document.createElement("canvas");
     this.judgementLineMaskedLayer = document.createElement("canvas");
+    // Masked lanes once they've settled, see drawLaneMasks
+    this.maskLayer = document.createElement("canvas");
     this.setChartInfo(null);
 
     this.settings = resolveSettings({});
@@ -557,7 +577,8 @@ export default class PlayfieldRenderer {
       this.beamLayer,
       this.ringIdleLayer,
       this.judgementLineLayer,
-      this.judgementLineMaskedLayer
+      this.judgementLineMaskedLayer,
+      this.maskLayer
     ]) {
       layer.width = size;
       layer.height = size;
@@ -726,11 +747,14 @@ export default class PlayfieldRenderer {
       ctx.fillRect(0, 0, this.size, this.size);
     }
 
-    // Pattern for masked lanes, has to be made after drawing
-    this.backgroundPattern = this.ctx.createPattern(
-      this.backgroundLayer,
-      "no-repeat"
-    );
+    // The same background for masked lanes, with the dim mixed in so it's a single gradient.
+    // Filling with that is way faster than with the layer as a pattern, and within 2/255 of it
+    this.maskGradient = this.ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    for (const [position, color] of BACKGROUND_STOPS) {
+      const [r, g, b] = color.map((value) => value * (1 - dim));
+      this.maskGradient.addColorStop(position, `rgb(${r}, ${g}, ${b})`);
+    }
+    this.maskLayerVersion = null;
   }
 
   // Static stuff under the notes: background, lanes, guidelines, judgement line.
@@ -823,6 +847,8 @@ export default class PlayfieldRenderer {
 
     // Drawn again on top of the notes each frame (see drawJudgementLine)
     this.judgementLineBand = [inner, outer];
+    // The only parts of the line's layers with anything on them
+    this.lineRects = this.annulusRects(inner - 2, outer + 2);
     // Where the solid part of the line ends and only its glow is left
     this.judgementLineEdge = r(0.5);
     this.judgementLineWidth = width;
@@ -841,17 +867,28 @@ export default class PlayfieldRenderer {
       if (!laneHidden.includes(1)) {
         this.lineImage = this.judgementLineLayer;
       } else {
+        // Only where the line is, the rest of both layers is empty
         const layer = this.judgementLineMaskedLayer.getContext("2d");
-        const [, outer] = this.judgementLineBand;
+        const [inner, outer] = this.judgementLineBand;
         layer.globalCompositeOperation = "source-over";
-        layer.clearRect(0, 0, this.size, this.size);
-        layer.drawImage(this.judgementLineLayer, 0, 0);
+        for (const [x, y, width, height] of this.lineRects) {
+          layer.clearRect(x, y, width, height);
+        }
+        this.drawLayerRects(this.judgementLineLayer, this.lineRects, layer);
+        // Cut out just the line's ring of each masked lane, erasing whole wedges from the center
+        // is way slower. Anti-aliasing along the lane edges comes out a bit different
         layer.globalCompositeOperation = "destination-out";
         layer.beginPath();
         for (let lane = 0; lane < 60; lane++) {
           if (!laneHidden[lane]) continue;
-          layer.moveTo(cx, cy);
-          layer.arc(cx, cy, outer + 1, -(lane + 1) * 6 * DEG, -lane * 6 * DEG);
+          const start = -(lane + 1) * 6 * DEG;
+          const end = -lane * 6 * DEG;
+          layer.moveTo(
+            cx + (outer + 1) * Math.cos(start),
+            cy + (outer + 1) * Math.sin(start)
+          );
+          layer.arc(cx, cy, outer + 1, start, end);
+          layer.arc(cx, cy, inner - 2, end, start, true);
           layer.closePath();
         }
         layer.fill();
@@ -862,7 +899,7 @@ export default class PlayfieldRenderer {
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = 1;
-    ctx.drawImage(this.lineImage, 0, 0);
+    this.drawLayerRects(this.lineImage, this.lineRects);
 
     ctx.strokeStyle = "#ffffff";
     ctx.lineWidth = this.judgementLineWidth;
@@ -878,12 +915,48 @@ export default class PlayfieldRenderer {
   }
 
   // Copy some rects from a same-size layer
-  drawLayerRects(layer, rects) {
+  drawLayerRects(layer, rects, ctx = this.ctx) {
     for (const [x, y, width, height] of rects) {
       if (width > 0 && height > 0) {
-        this.ctx.drawImage(layer, x, y, width, height, x, y, width, height);
+        ctx.drawImage(layer, x, y, width, height, x, y, width, height);
       }
     }
+  }
+
+  // Whole pixel rects covering the ring between two radii (clipped to the canvas), so layers
+  // that only have something on a ring get copied without all the empty space around it.
+  // Horizontal bands, split in two where the hole in the middle reaches all the way across
+  annulusRects(inner, outer) {
+    const { cx, cy, size } = this;
+    const bands = 32;
+    const rects = [];
+    for (let band = 0; band < bands; band++) {
+      const top = Math.floor((band * size) / bands);
+      const bottom = Math.floor(((band + 1) * size) / bands);
+      if (bottom <= top) continue;
+      // Closest to and farthest from the center anything in the band gets, vertically
+      const near =
+        top <= cy && bottom >= cy
+          ? 0
+          : Math.min(Math.abs(top - cy), Math.abs(bottom - cy));
+      const far = Math.max(Math.abs(top - cy), Math.abs(bottom - cy));
+      if (near >= outer) continue;
+
+      const reach = Math.sqrt(outer * outer - near * near);
+      const left = clamp(Math.floor(cx - reach), 0, size);
+      const right = clamp(Math.ceil(cx + reach), 0, size);
+      const hole = far < inner ? Math.sqrt(inner * inner - far * far) : 0;
+      const holeLeft = clamp(Math.ceil(cx - hole), left, right);
+      const holeRight = clamp(Math.floor(cx + hole), left, right);
+      const height = bottom - top;
+      if (holeRight <= holeLeft) {
+        rects.push([left, top, right - left, height]);
+      } else {
+        rects.push([left, top, holeLeft - left, height]);
+        rects.push([holeRight, top, right - holeRight, height]);
+      }
+    }
+    return rects;
   }
 
   // Guidelines, part of the base layer
@@ -1244,11 +1317,82 @@ export default class PlayfieldRenderer {
     if (this.text) this.drawText(now);
   }
 
-  // Masked lanes show the plain background. Pattern fill cause clipping is slow in Firefox
+  // Masked lanes show the plain background. Filling big wedges is slow, so once the masks settle
+  // they're filled once into a layer, and copying that is way cheaper. While they're changing
+  // (sweeping) that would just be extra work, so they get filled directly
   drawLaneMasks() {
-    const { ctx, cx, cy, R } = this;
-    const { laneHidden } = this.session;
+    const { laneHidden, laneMaskVersion } = this.session;
     if (!laneHidden.includes(1)) return;
+
+    if (laneMaskVersion !== this.maskSeen) {
+      this.maskSeen = laneMaskVersion;
+      this.fillLaneMasks(this.ctx);
+      return;
+    }
+    if (laneMaskVersion !== this.maskLayerVersion) {
+      this.maskLayerVersion = laneMaskVersion;
+      const layer = this.maskLayer.getContext("2d");
+      layer.clearRect(0, 0, this.size, this.size);
+      this.fillLaneMasks(layer);
+      this.maskRects = this.laneMaskRects();
+    }
+    this.drawLayerRects(this.maskLayer, this.maskRects);
+  }
+
+  // Bounding boxes of the runs of masked lanes, where the mask layer has something on it
+  laneMaskRects() {
+    const { cx, cy, R, size } = this;
+    const { laneHidden } = this.session;
+    const rects = [];
+    const box = (from, to) => {
+      // From lane `from` counterclockwise through lane `to`, like fillLaneMasks' wedges
+      const start = -(to + 1) * 6 - 0.1;
+      const end = -from * 6 + 0.1;
+      let [left, top, right, bottom] = [cx, cy, cx, cy];
+      const add = (degrees) => {
+        const x = cx + R * Math.cos(degrees * DEG);
+        const y = cy + R * Math.sin(degrees * DEG);
+        left = Math.min(left, x);
+        top = Math.min(top, y);
+        right = Math.max(right, x);
+        bottom = Math.max(bottom, y);
+      };
+      add(start);
+      add(end);
+      // Where the arc passes the circle's left, right, top and bottom
+      for (let d = Math.ceil(start / 90) * 90; d < end; d += 90) add(d);
+      const x = clamp(Math.floor(left) - 2, 0, size);
+      const y = clamp(Math.floor(top) - 2, 0, size);
+      rects.push([
+        x,
+        y,
+        clamp(Math.ceil(right) + 2, 0, size) - x,
+        clamp(Math.ceil(bottom) + 2, 0, size) - y
+      ]);
+    };
+
+    if (!laneHidden.includes(0)) {
+      box(0, 59);
+      return rects;
+    }
+    // Start right after an open lane so runs don't wrap around the start
+    const first = laneHidden.indexOf(0);
+    let runStart = null;
+    for (let i = 1; i <= 60; i++) {
+      const lane = first + i;
+      const hidden = laneHidden[mod60(lane)] === 1;
+      if (hidden && runStart === null) runStart = lane;
+      if (!hidden && runStart !== null) {
+        box(runStart, lane - 1);
+        runStart = null;
+      }
+    }
+    return rects;
+  }
+
+  fillLaneMasks(ctx) {
+    const { cx, cy, R } = this;
+    const { laneHidden } = this.session;
 
     ctx.beginPath();
     for (let lane = 0; lane < 60; lane++) {
@@ -1263,7 +1407,7 @@ export default class PlayfieldRenderer {
       );
       ctx.closePath();
     }
-    ctx.fillStyle = this.backgroundPattern;
+    ctx.fillStyle = this.maskGradient;
     ctx.fill();
   }
 
@@ -1411,28 +1555,30 @@ export default class PlayfieldRenderer {
 
     // One sheet per look, cells in a grid of slots
     const columns = 16;
-    const sheet = (fill) => {
-      const canvas = document.createElement("canvas");
-      canvas.width = columns * slotWidth;
-      canvas.height = Math.ceil(boxes.length / columns) * slotHeight;
-      const ctx = canvas.getContext("2d");
-      const style = fill(ctx);
-      boxes.forEach(([x, y], cell) => {
-        ctx.setTransform(
-          1,
-          0,
-          0,
-          1,
-          (cell % columns) * slotWidth - x,
-          Math.floor(cell / columns) * slotHeight - y
-        );
-        ctx.fillStyle = style;
-        ctx.fill(
-          this.ringCellPaths[Math.floor(cell / RING_ROWS)][cell % RING_ROWS]
-        );
-      });
-      return canvas;
-    };
+    const sheet = (fill) =>
+      sprite(
+        columns * slotWidth,
+        Math.ceil(boxes.length / columns) * slotHeight,
+        (ctx) => {
+          const style = fill(ctx);
+          boxes.forEach(([x, y], cell) => {
+            ctx.setTransform(
+              1,
+              0,
+              0,
+              1,
+              (cell % columns) * slotWidth - x,
+              Math.floor(cell / columns) * slotHeight - y
+            );
+            ctx.fillStyle = style;
+            ctx.fill(
+              this.ringCellPaths[Math.floor(cell / RING_ROWS)][
+                cell % RING_ROWS
+              ]
+            );
+          });
+        }
+      );
 
     return {
       boxes,
@@ -2620,16 +2766,14 @@ export default class PlayfieldRenderer {
         spriteCtx.fill();
       }
     };
-    const sprite = (...names) =>
-      this.cached(`bubble:${names}`, () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = canvas.height = center * 2;
-        const spriteCtx = canvas.getContext("2d");
-        spriteCtx.setTransform(unit, 0, 0, unit, center, center);
-        spriteCtx.globalCompositeOperation = "lighter";
-        for (const name of names) parts[name](spriteCtx);
-        return canvas;
-      });
+    const bubbleSprite = (...names) =>
+      this.cached(`bubble:${names}`, () =>
+        sprite(center * 2, center * 2, (spriteCtx) => {
+          spriteCtx.setTransform(unit, 0, 0, unit, center, center);
+          spriteCtx.globalCompositeOperation = "lighter";
+          for (const name of names) parts[name](spriteCtx);
+        })
+      );
     const drawSprite = (image, alpha, x, y, radius) => {
       if (alpha <= 0) return;
       const half = (radius / unit) * center;
@@ -2662,13 +2806,13 @@ export default class PlayfieldRenderer {
       const rimAlpha = fadeOut(t, 380, BUBBLE_LIFE_MS);
 
       if (coreAlpha === 1) {
-        drawSprite(sprite("body", "rim", "core"), 1, x, y, radius);
+        drawSprite(bubbleSprite("body", "rim", "core"), 1, x, y, radius);
       } else if (bodyAlpha === 1 && rimAlpha === 1) {
-        drawSprite(sprite("body", "rim"), 1, x, y, radius);
-        drawSprite(sprite("core"), coreAlpha, x, y, radius);
+        drawSprite(bubbleSprite("body", "rim"), 1, x, y, radius);
+        drawSprite(bubbleSprite("core"), coreAlpha, x, y, radius);
       } else {
-        drawSprite(sprite("body"), bodyAlpha, x, y, radius);
-        drawSprite(sprite("rim"), rimAlpha, x, y, radius);
+        drawSprite(bubbleSprite("body"), bodyAlpha, x, y, radius);
+        drawSprite(bubbleSprite("rim"), rimAlpha, x, y, radius);
       }
     }
 
