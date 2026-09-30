@@ -126,6 +126,11 @@ const props = defineProps({
     validator: (value) =>
       ["miss-up", "good-up", "great-up", "all-marvelous"].includes(value)
   },
+  // Unrolled view only: place notes by plain time instead of respecting time gimmicks
+  linear: {
+    type: Boolean,
+    default: false
+  },
   view: {
     type: String,
     default: "circle",
@@ -133,6 +138,7 @@ const props = defineProps({
   }
 });
 const features = computed(() => ({
+  linear: props.linear,
   ring: props.ring,
   autoplay: props.autoplay,
   judging: props.judging,

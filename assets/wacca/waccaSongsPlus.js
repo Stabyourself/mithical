@@ -1,3 +1,8 @@
+// Optional sheet properties that keep that difficulty's chart preview on the
+// song page hidden (it shows a placeholder instead):
+//   hideUntilAnyPlayed: true - until the profile has played the song on any difficulty
+//   hideUntilUnlocked: true  - until the profile owns the difficulty unlock (item kind 4)
+
 const waccaSongs = [
   {
     id: 3,
@@ -15236,12 +15241,14 @@ const waccaSongs = [
       {
         difficulty: 11.0,
         gameVersion: 400,
-        charter: "Tiiger"
+        charter: "Tiiger",
+        hideUntilAnyPlayed: true
       },
       {
         difficulty: 12.0,
         gameVersion: 400,
-        charter: "UnoriginalUno"
+        charter: "UnoriginalUno",
+        hideUntilUnlocked: true
       }
     ]
   },

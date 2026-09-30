@@ -149,6 +149,33 @@
       >
         <div class="chartview-collapse-inner">
         <div class="chartview-options">
+          <div
+            v-if="chartFeatures.type == 'unrolled'"
+            class="chartview-options-row"
+          >
+            <span class="chartview-options-label">2D Time Scale</span>
+            <v-btn-toggle
+              v-model="chartFeatures.linear"
+              mandatory
+              density="compact"
+              divided
+              class="chartview-toggle"
+            >
+              <v-btn
+                v-for="scale in TIME_SCALES"
+                :key="scale.value"
+                :value="scale.value"
+                :title="scale.description"
+                color="primary"
+                base-color="primary"
+                variant="flat"
+                size="small"
+                class="toggle-option"
+                >{{ scale.title }}</v-btn
+              >
+            </v-btn-toggle>
+          </div>
+
           <div class="chartview-options-row">
             <span class="chartview-options-label">Display</span>
             <v-btn-toggle
@@ -249,9 +276,13 @@
         </div>
       </div>
 
-      <div class="chart-preview">
+      <div v-if="chartHiddenReason" class="chart-preview chart-hidden">
+        {{ chartHiddenReason }}
+      </div>
+      <div v-else class="chart-preview">
         <WaccaPlayfieldPreview
           :view="chartFeatures.type"
+          :linear="chartFeatures.linear"
           :options="options"
           :chart-url="chartData?.url ?? null"
           :chart-info="chartData?.info ?? null"
@@ -646,6 +677,13 @@
   margin: 0 0 2px;
 }
 
+.chart-hidden {
+  align-items: center;
+  min-height: 12rem;
+  text-align: center;
+  opacity: 0.7;
+}
+
 .chart-preview {
   display: flex;
   justify-content: center;
@@ -827,6 +865,19 @@ const CHART_TYPES = [
   }
 ];
 
+const TIME_SCALES = [
+  {
+    title: "Real time",
+    value: false,
+    description: "The way it's designed"
+  },
+  {
+    title: "Linear time",
+    value: true,
+    description: "Screw time gimmicks"
+  }
+];
+
 // Remembered for every song, see plugins/preferences.js
 const chartFeatures = useState("chartViewFeatures");
 // A group's toggles as the list of what's on, for its button group
@@ -965,6 +1016,31 @@ const chartDifficulties = computed(() =>
     level: String(formatDifficulty(sheet.difficulty, false))
   }))
 );
+
+// Sheets flagged hideUntilAnyPlayed / hideUntilUnlocked keep their preview
+// hidden until the player has played the song on any difficulty / owns the difficulty unlock (item kind 4)
+const chartHiddenReason = computed(() => {
+  const sheet = filteredSheets.value[chartView.value];
+  if (!sheet) return null;
+
+  if (sheet.hideUntilAnyPlayed) {
+    const scores = profile.value?.songs[song.value.id]?.scores ?? [];
+    if (!scores.some((score) => (score?.play_count ?? 0) > 0)) {
+      return "This chart's preview unlocks once you've played this song.";
+    }
+  }
+
+  if (sheet.hideUntilUnlocked) {
+    const unlocked = profile.value?.items?.some(
+      (item) => item.item_kind === 4 && item.item_id === song.value.id
+    );
+    if (!unlocked) {
+      return "This chart's preview unlocks once you've unlocked Inferno.";
+    }
+  }
+
+  return null;
+});
 
 const chartData = computed(() => {
   const difficulty = chartDifficulties.value[chartView.value];
