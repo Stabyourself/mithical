@@ -1,3 +1,4 @@
+// Add `hidden=true` to the top level of a song, or its inferno to hide chart view until a player unlocks it
 const waccaSongs = [
   {
     id: 3,
