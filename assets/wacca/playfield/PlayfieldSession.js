@@ -477,11 +477,15 @@ export default class PlayfieldSession {
         slides.length ? slides : this.closestNotes([type], lane, time, target)
       );
 
-      // Touch notes, hold starts and slides you move into from outside
-      for (const found of [
-        ...this.closestNotes(["touch", "hold"], lane, time, target),
-        ...this.closestNotes(["slideCW", "slideCCW"], lane, time, target)
-      ]) {
+      // Touch notes and hold starts count when you move onto or around inside them, slides
+      // only when you move into them from outside
+      this.hitNotes(this.closestNotes(["touch", "hold"], lane, time, target));
+      for (const found of this.closestNotes(
+        ["slideCW", "slideCCW"],
+        lane,
+        time,
+        target
+      )) {
         if (!this.covers(found.note.pos, found.note.size, from))
           this.hitNote(found);
       }
