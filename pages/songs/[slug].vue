@@ -734,7 +734,6 @@ const shownHistograms = computed(() =>
 // Checks if waccaSongsPlus has a hidden attribute set in sheets[3]. If so, sets hideInf flag to true
 // Used to hide chartviews from players who have not yet unlocked a hidden Inferno
 const hideInf = computed(() => {
-  console.log(profile?.songs?.[song.id]);
   if (song.value.sheets[3] && song.value.sheets[3]?.hidden){
     return true;
   }
