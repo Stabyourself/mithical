@@ -85,7 +85,7 @@
             divided
             class="chartview-toggle chartview-difficulties"
           >
-            <!-- If a song's INFERNOS is marked as hidden in its top level of waccaSongsPlus, (song.sheets[3]) check if the player has played it
+            <!-- If a songs INFERNOS is marked as hidden in its top level of waccaSongsPlus, (song.sheets[3]) check if the player has played it
             If not, do not let them see the chartview for the INF until they do. Does not apply to songs without INFs -->
             <v-btn
               v-for="(difficulty, i) in chartDifficulties"
