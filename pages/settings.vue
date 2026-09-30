@@ -42,7 +42,7 @@
           <img :src="stageupNumberUrl" class="stageup-number" />
         </div>
 
-        <div class="profile-plate-rate">
+        <div class="profile-plate-rate" @click.stop="openRatingDialog">
           <WaccaRating
             class="rate-value"
             :rating="selectedVersionData.rating"
@@ -93,6 +93,53 @@
               :disabled="!canSaveName || isSavingName"
               :loading="isSavingName"
               @click="saveName"
+              >Save</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="isEditRatingDialogOpen" max-width="420">
+        <v-card>
+          <v-card-title>
+            <div class="d-flex justify-space-between align-center">
+              Change rating
+              <v-btn
+                icon
+                variant="plain"
+                aria-label="Close"
+                @click="isEditRatingDialogOpen = false"
+              >
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="editedRating"
+              label="Rating"
+              type="number"
+              step="0.1"
+              min="0"
+              :disabled="isRatingTaunted"
+              @keydown.enter="saveRating"
+            ></v-text-field>
+            <div
+              v-if="ratingSaveError"
+              :class="[
+                'name-save-error',
+                { 'font-weight-bold': isRatingTaunted }
+              ]"
+            >
+              {{ ratingSaveError }}
+            </div>
+          </v-card-text>
+          <v-card-actions v-if="!isRatingTaunted">
+            <v-btn
+              color="primary"
+              :disabled="isSavingRating"
+              :loading="isSavingRating"
+              @click="saveRating"
               >Save</v-btn
             >
           </v-card-actions>
@@ -212,7 +259,8 @@
       :has(
         .profile-plate-icon:hover,
         .profile-plate-title:hover,
-        .profile-plate-name:hover
+        .profile-plate-name:hover,
+        .profile-plate-rate:hover
       )
     ) {
     filter: brightness(1.05);
@@ -345,6 +393,11 @@
   text-align: center;
   color: white;
   text-shadow: 0 0.15cqw 0.4cqw rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.15);
+  }
 
   .rate-value {
     display: block;
@@ -462,6 +515,52 @@ async function saveName() {
   } finally {
     isSavingName.value = false;
   }
+}
+
+// Rating looks editable but never saves
+const isEditRatingDialogOpen = ref(false);
+const editedRating = ref("");
+const isSavingRating = ref(false);
+const ratingSaveError = ref("");
+// Second try at a rating above the real one gets a taunt and no more saving
+const inflatedRatingAttempts = ref(0);
+const isRatingTaunted = ref(false);
+
+watch(editedRating, () => {
+  if (!isRatingTaunted.value) ratingSaveError.value = "";
+});
+
+function openRatingDialog() {
+  editedRating.value = ((selectedVersionData.value.rating ?? 0) / 10).toFixed(
+    1
+  );
+  if (!isRatingTaunted.value) ratingSaveError.value = "";
+  isEditRatingDialogOpen.value = true;
+}
+
+async function saveRating() {
+  if (isSavingRating.value || isRatingTaunted.value) {
+    return;
+  }
+
+  isSavingRating.value = true;
+  ratingSaveError.value = "";
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const realRating = (selectedVersionData.value.rating ?? 0) / 10;
+  if (Number(editedRating.value) > realRating) {
+    inflatedRatingAttempts.value++;
+  }
+
+  if (inflatedRatingAttempts.value >= 2) {
+    isRatingTaunted.value = true;
+    editedRating.value = realRating.toFixed(1);
+    ratingSaveError.value = "ズルしようってワケ？レートはちゃんと稼いでね。";
+  } else {
+    ratingSaveError.value = "Error saving new rating. Try again.";
+  }
+  isSavingRating.value = false;
 }
 
 const level = computed(() => Math.floor(profile.value.exp / 100) + 1);
