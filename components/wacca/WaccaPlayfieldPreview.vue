@@ -44,6 +44,10 @@
   width: 100%;
 }
 
+.playfield-stage :deep(canvas) {
+  touch-action: none;
+}
+
 /* Same size as the preview plus the toolbar */
 .playfield-placeholder {
   aspect-ratio: 1 / 1;
@@ -59,6 +63,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.85);
+  touch-action: none;
 }
 
 .playfield-lightbox .playfield-stage {
