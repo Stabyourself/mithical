@@ -107,7 +107,8 @@ export default class UnrolledRenderer {
   setFeatures(features) {
     this.features = {
       linear: features.linear ?? false,
-      ring: features.ring ?? true
+      ring: features.ring ?? true,
+      drawHiddenHolds: features.drawHiddenHolds ?? false
     };
     if (this.width) this.layout();
   }
@@ -262,6 +263,12 @@ export default class UnrolledRenderer {
     ctx.rect(0, 0, this.width, this.screenBottom);
     ctx.clip();
     for (const hold of this.visible.holds) this.drawHold(hold, now);
+    if (features.drawHiddenHolds) {
+      for (const hold of this.visible.holds) {
+        const note = session.hiddenHoldView(hold.note);
+        if (note) this.drawHold({ ...hold, note }, now, true);
+      }
+    }
     this.drawObjects();
     ctx.restore();
 
@@ -499,7 +506,8 @@ export default class UnrolledRenderer {
     }
   }
 
-  drawHold({ note, base, missed, active }, now) {
+  // red: the hold as it's judged, flat red (drawHiddenHolds)
+  drawHold({ note, base, missed, active }, now, red = false) {
     const { ctx, session, settings, features, laneWidth, width } = this;
     const view = settings.viewDistance;
     const linear = features.linear;
@@ -570,7 +578,9 @@ export default class UnrolledRenderer {
       : holdColorsAt(settings.colors.hold, active);
     const top = yAt(Math.min(endTime, to));
     const bottom = yAt(startTime);
-    if (bottom - top > 1) {
+    if (red) {
+      ctx.fillStyle = "#ff0000";
+    } else if (bottom - top > 1) {
       const gradient = ctx.createLinearGradient(0, bottom, 0, top);
       const span = endTime - startTime;
       for (let i = 0; i < holdGradientStops.length; i++) {

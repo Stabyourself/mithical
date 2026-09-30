@@ -131,6 +131,11 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  // Draw holds as they're judged (hidden points included) in red over the drawn ones, where they differ
+  drawHiddenHolds: {
+    type: Boolean,
+    default: false
+  },
   view: {
     type: String,
     default: "circle",
@@ -139,6 +144,7 @@ const props = defineProps({
 });
 const features = computed(() => ({
   linear: props.linear,
+  drawHiddenHolds: props.drawHiddenHolds,
   ring: props.ring,
   autoplay: props.autoplay,
   judging: props.judging,

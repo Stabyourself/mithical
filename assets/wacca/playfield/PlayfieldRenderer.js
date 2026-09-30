@@ -530,13 +530,16 @@ export default class PlayfieldRenderer {
   //   songCount: "1/3 Song" on the ring
   //   score: the ring score and its "SCORE" label
   //   progressBar: the clear gauge
+  //   drawHiddenHolds: holds as they're judged (hidden points included) in red over the drawn
+  //     ones, where they differ
   // Other keys are for the session and get ignored
   setFeatures(features) {
     const next = {
       ring: features.ring ?? true,
       songCount: features.songCount ?? true,
       score: features.score ?? true,
-      progressBar: features.progressBar ?? true
+      progressBar: features.progressBar ?? true,
+      drawHiddenHolds: features.drawHiddenHolds ?? false
     };
     const previous = this.features;
     this.features = next;
@@ -1297,6 +1300,12 @@ export default class PlayfieldRenderer {
     // where its opaque outer glow covers it
     for (const hold of this.visible.holds)
       this.drawHoldSurface(hold.note, hold.base, now, hold.missed, hold.active);
+    if (this.features.drawHiddenHolds) {
+      for (const hold of this.visible.holds) {
+        const hidden = this.session.hiddenHoldView(hold.note);
+        if (hidden) this.drawHoldSurface(hidden, hold.base, now, false, 0, true);
+      }
+    }
     this.drawObjects();
 
     // Hold glow under the judgement line, the line stays pink while holding
@@ -2523,7 +2532,8 @@ export default class PlayfieldRenderer {
     ctx.restore();
   }
 
-  drawHoldSurface(note, base, now, missed, active = 0) {
+  // red: the hold as it's judged, flat red (drawHiddenHolds)
+  drawHoldSurface(note, base, now, missed, active = 0, red = false) {
     const { ctx, cx, cy, Rj, R, settings } = this;
     const view = settings.viewDistance;
     const startTime = base + note.time;
@@ -2592,7 +2602,9 @@ export default class PlayfieldRenderer {
     const inner = radiusAt(endTime);
     const outer = Math.min(radiusAt(startTime), R * 1.2);
 
-    if (outer - inner > 1) {
+    if (red) {
+      ctx.fillStyle = "#ff0000";
+    } else if (outer - inner > 1) {
       const gradient = ctx.createRadialGradient(cx, cy, inner, cx, cy, outer);
       for (let i = holdGradientStops.length - 1; i >= 0; i--) {
         const radius = radiusAt(startTime + holdGradientStops[i] * duration);

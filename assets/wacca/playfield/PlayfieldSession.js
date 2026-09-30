@@ -340,7 +340,7 @@ export default class PlayfieldSession {
   grabHold(note, base) {
     const { bot } = this;
     const id = `bot${bot.fingerCount++}`;
-    const shape = this.holdShapeAt(note, this.time - base);
+    const shape = this.holdShapeAt(note, this.time - base, true);
     const lane = this.botLane(shape.pos, shape.size);
     const radius = rowRadius(BOT_ROW);
     this.fingers.set(id, {
@@ -779,7 +779,7 @@ export default class PlayfieldSession {
     for (let i = this.activeHolds.length - 1; i >= 0; i--) {
       const hold = this.activeHolds[i];
       const local = now - hold.base;
-      const shape = this.holdShapeAt(hold.note, local);
+      const shape = this.holdShapeAt(hold.note, local, true);
       hold.held =
         hold.kind !== "miss" &&
         this.touching(Math.round(shape.pos), Math.round(shape.size));
@@ -936,7 +936,7 @@ export default class PlayfieldSession {
         bot.holds.splice(i, 1);
         continue;
       }
-      const shape = this.holdShapeAt(note, now - base);
+      const shape = this.holdShapeAt(note, now - base, true);
       this.fingerMove(
         id,
         this.botLane(shape.pos, shape.size),
@@ -1082,8 +1082,9 @@ export default class PlayfieldSession {
     return samples;
   }
 
-  holdShapeAt(note, localTime) {
-    const points = note.points;
+  // The drawn shape by default. With touching, the hidden points count too
+  holdShapeAt(note, localTime, touching = false) {
+    const points = (touching && note.judgePoints) || note.points;
     let i = 0;
     while (i < points.length - 2 && points[i + 1].time <= localTime) i++;
 
@@ -1099,6 +1100,24 @@ export default class PlayfieldSession {
       pos: a.pos + left * t,
       size: a.size + (right - left) * t
     };
+  }
+
+  // The hold as it's judged (hidden points included), for views that draw it next to the real
+  // one. Null when both are the same shape
+  hiddenHoldView(note) {
+    if (note.hiddenView !== undefined) return note.hiddenView;
+    note.hiddenView = null;
+    if (!note.judgePoints) return null;
+    const differs = [...note.points, ...note.judgePoints].some(({ time }) => {
+      const drawn = this.holdShapeAt(note, time);
+      const judged = this.holdShapeAt(note, time, true);
+      return (
+        Math.abs(mod60(drawn.pos - judged.pos + 30) - 30) > 0.01 ||
+        Math.abs(drawn.size - judged.size) > 0.01
+      );
+    });
+    if (differs) note.hiddenView = { ...note, points: note.judgePoints };
+    return note.hiddenView;
   }
 
   // What's on screen, for views to draw
