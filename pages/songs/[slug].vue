@@ -71,7 +71,9 @@
       </div>
     </v-container>
 
-    <v-container class="elevation-1 mt-4">
+    <!-- If a song is marked as hidden in its top level of waccaSongsPlus, check if the player has played the song
+     If not, do not let them see the chartview until they do -->
+    <v-container v-show="!song?.hidden || (profile?.songs[song.id]?.playCount ?? 0) > 0" class="elevation-1 mt-4">
       <h2 class="container-heading chartview-heading">
         Chart View
 
@@ -83,12 +85,15 @@
             divided
             class="chartview-toggle chartview-difficulties"
           >
+            <!-- If a song's INFERNOS is marked as hidden in its top level of waccaSongsPlus, (song.sheets[3] check if the player has played it
+            If not, do not let them see the chartview for the INF until they do. Does not apply to songs without INFs -->
             <v-btn
               v-for="(difficulty, i) in chartDifficulties"
               :key="i"
               :value="i"
               :color="difficulty.color"
               :base-color="difficulty.color"
+              v-show="i !== 3 || !hideInf || (profile?.songs?.[song.id]?.scores?.[i]?.play_count ?? 0) > 0"
               variant="flat"
               size="small"
               class="toggle-option chartview-difficulty"
@@ -726,6 +731,16 @@ const shownHistograms = computed(() =>
   )
 );
 
+// Checks if waccaSongsPlus has a hidden attribute set in sheets[3]. If so, sets hideInf flag to true
+// Used to hide chartviews from players who have not yet unlocked a hidden Inferno
+const hideInf = computed(() => {
+  console.log(profile?.songs?.[song.id]);
+  if (song.value.sheets[3] && song.value.sheets[3]?.hidden){
+    return true;
+  }
+  return false;
+});
+
 // Where the chart view and leaderboard start: the difficulty you've played the most
 // (the harder one on a tie), the highest if you haven't played it
 const startDifficulty = computed(() => {
@@ -739,7 +754,8 @@ const startDifficulty = computed(() => {
       mostPlays = plays;
     }
   });
-  return start;
+  // If the song is locked for the player, ensure that startDiff is never the Inf
+  return hideInf && start === 3 ? start - 1  : start;
 });
 
 const yourScoreDifficulty = ref(null);
