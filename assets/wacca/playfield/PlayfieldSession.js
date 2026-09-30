@@ -295,20 +295,22 @@ export default class PlayfieldSession {
 
     // Hold ends right at the seek point count too, the bot only grabs holds that are still going
     let passed = 0;
+    let combo = 0;
     let earned = 0;
     let gauge = 0;
-    const credit = (note) => {
+    const credit = (note, holdEnd = false) => {
       passed++;
+      if (!holdEnd) combo++;
       earned += this.noteValue(note);
       gauge += this.normaFor(note).marvelous;
     };
     for (const note of this.chart.notes) {
       if (start + note.time < this.time) credit(note);
       if (note.type === "hold" && start + note.endTime <= this.time)
-        credit(note);
+        credit(note, true);
     }
     if (this.isJudging()) {
-      this.combo = passed;
+      this.combo = combo;
       this.judged = passed;
       this.earned = earned;
       this.gauge = gauge;
@@ -810,13 +812,15 @@ export default class PlayfieldSession {
     }
   }
 
-  judge(kind, detail, note) {
+  judge(kind, detail, note, holdEnd = false) {
     // No judging: hits still clear notes, but nothing counts
     if (!this.isJudging()) return;
     const value = this.noteValue(note);
     const rate = SCORE_RATES[kind];
 
-    this.combo = kind === "miss" ? 0 : this.combo + 1;
+    // Hold ends score but don't add to the combo, a dropped hold still breaks it
+    if (kind === "miss") this.combo = 0;
+    else if (!holdEnd) this.combo++;
     this.judged++;
     // Misses drain the clear gauge, it doesn't go below empty
     this.gauge = Math.max(0, this.gauge + this.normaFor(note)[kind]);
@@ -874,7 +878,7 @@ export default class PlayfieldSession {
   }
 
   endHold(hold) {
-    this.judge(hold.kind, hold.detail, hold.note);
+    this.judge(hold.kind, hold.detail, hold.note, true);
     if (hold.kind === "miss") return;
     this.emit("holdEnd", { note: hold.note });
   }
