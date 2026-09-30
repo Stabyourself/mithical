@@ -15,3 +15,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             ~/deploymithical.sh
+
+      - name: Ping Kuma (success)
+        if: success()
+        run: curl -fsS -m 10 --retry 3 "${{ secrets.KUMA_PUSH_URL }}?status=up&msg=deployed-${{ github.sha }}"
+
+      - name: Ping Kuma (failure)
+        if: failure()
+        run: curl -fsS -m 10 --retry 3 "${{ secrets.KUMA_PUSH_URL }}?status=down&msg=deploy-failed-${{ github.sha }}"
