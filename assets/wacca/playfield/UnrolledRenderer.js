@@ -761,7 +761,7 @@ export default class UnrolledRenderer {
   drawSnapArrows(note, x, w, top, colors) {
     const { ctx, noteHeight: h, laneWidth } = this;
     const up = note.type === "snapIn";
-    const count = Math.max(1, Math.floor(note.size / 4));
+    const count = Math.max(1, Math.ceil(note.size / 4));
     const size = Math.min(laneWidth * 1.2, h * 1.3);
     const baseY = top - h * 0.4;
     ctx.fillStyle = colors.light;
@@ -789,11 +789,9 @@ export default class UnrolledRenderer {
     const size = Math.min(laneWidth * 0.9, h * 1.2);
     const y = top - h * 0.3 - size / 2;
     ctx.fillStyle = colors.light;
-    for (
-      let cx = x + laneWidth;
-      cx < x + w - laneWidth * 0.5;
-      cx += laneWidth * 2
-    ) {
+    const count = Math.max(1, Math.round(w / (laneWidth * 2)));
+    for (let i = 0; i < count; i++) {
+      const cx = x + (w * (i + 0.5)) / count;
       ctx.beginPath();
       if (left) {
         ctx.moveTo(cx + size / 3, y - size / 2);

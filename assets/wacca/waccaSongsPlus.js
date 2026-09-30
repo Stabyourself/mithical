@@ -15241,14 +15241,12 @@ const waccaSongs = [
       {
         difficulty: 11.0,
         gameVersion: 400,
-        charter: "Tiiger",
-        hideUntilAnyPlayed: true
+        charter: "Tiiger"
       },
       {
         difficulty: 12.0,
         gameVersion: 400,
-        charter: "UnoriginalUno",
-        hideUntilUnlocked: true
+        charter: "UnoriginalUno"
       }
     ]
   },
