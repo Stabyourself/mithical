@@ -1,6 +1,7 @@
 <template>
-  <div class="song-medal" :class="`medal-${medal}`">
-    <span>{{ medalNames[medal] }}</span>
+  <div class="song-medal" :class="[`medal-${medal}`, { 'has-short': short }]">
+    <span class="medal-full">{{ medalNames[medal] }}</span>
+    <span v-if="short" class="medal-short">{{ medalShortNames[medal] }}</span>
   </div>
 </template>
 
@@ -19,6 +20,18 @@
   font-family: "judgement_font", sans-serif;
   letter-spacing: -2px;
   font-size: 1.3rem;
+}
+
+// with the short prop, the abbreviation replaces the full name on mobile
+@media (min-width: 601px) {
+  .song-medal .medal-short {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .song-medal.has-short .medal-full {
+    display: none;
+  }
 }
 
 .medal-clear {
@@ -126,7 +139,8 @@
 
 <script setup>
 const props = defineProps({
-  medal: String
+  medal: String,
+  short: Boolean
 });
 
 const medalNames = {
@@ -135,5 +149,13 @@ const medalNames = {
   missless: "Missless!",
   clear: "Clear!",
   failed: "Failed"
+};
+
+const medalShortNames = {
+  allmarvelous: "AM",
+  fullcombo: "FC",
+  missless: "ML",
+  clear: "CL",
+  failed: "FA"
 };
 </script>
