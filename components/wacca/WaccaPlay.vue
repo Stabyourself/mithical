@@ -428,7 +428,7 @@ $cover-size: 100px;
   transform: translate(-50%, 13px);
 
   :deep(.v-btn__content) {
-    transform: translateY(-6px);
+    transform: translate(-2px, -6px);
   }
 
   // on mobile it sits in the card's bottom left corner, under the cover
@@ -438,6 +438,10 @@ $cover-size: 100px;
 
     :deep(.v-btn) {
       border-top-left-radius: 0;
+    }
+
+    :deep(.v-btn__content) {
+      transform: translate(-4px, -6px);
     }
   }
 }
