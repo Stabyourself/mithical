@@ -44,6 +44,10 @@
   width: 100%;
 }
 
+.playfield-stage :deep(canvas) {
+  touch-action: none;
+}
+
 /* Same size as the preview plus the toolbar */
 .playfield-placeholder {
   aspect-ratio: 1 / 1;
@@ -59,6 +63,7 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.85);
+  touch-action: none;
 }
 
 .playfield-lightbox .playfield-stage {
@@ -126,6 +131,16 @@ const props = defineProps({
     validator: (value) =>
       ["miss-up", "good-up", "great-up", "all-marvelous"].includes(value)
   },
+  // Unrolled view only: place notes by plain time instead of respecting time gimmicks
+  linear: {
+    type: Boolean,
+    default: false
+  },
+  // Draw holds as they're judged (hidden points included) in red over the drawn ones, where they differ
+  drawHiddenHolds: {
+    type: Boolean,
+    default: false
+  },
   view: {
     type: String,
     default: "circle",
@@ -133,6 +148,8 @@ const props = defineProps({
   }
 });
 const features = computed(() => ({
+  linear: props.linear,
+  drawHiddenHolds: props.drawHiddenHolds,
   ring: props.ring,
   autoplay: props.autoplay,
   judging: props.judging,

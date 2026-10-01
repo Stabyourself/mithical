@@ -295,20 +295,22 @@ export default class PlayfieldSession {
 
     // Hold ends right at the seek point count too, the bot only grabs holds that are still going
     let passed = 0;
+    let combo = 0;
     let earned = 0;
     let gauge = 0;
-    const credit = (note) => {
+    const credit = (note, holdEnd = false) => {
       passed++;
+      if (!holdEnd) combo++;
       earned += this.noteValue(note);
       gauge += this.normaFor(note).marvelous;
     };
     for (const note of this.chart.notes) {
       if (start + note.time < this.time) credit(note);
       if (note.type === "hold" && start + note.endTime <= this.time)
-        credit(note);
+        credit(note, true);
     }
     if (this.isJudging()) {
-      this.combo = passed;
+      this.combo = combo;
       this.judged = passed;
       this.earned = earned;
       this.gauge = gauge;
@@ -340,7 +342,7 @@ export default class PlayfieldSession {
   grabHold(note, base) {
     const { bot } = this;
     const id = `bot${bot.fingerCount++}`;
-    const shape = this.holdShapeAt(note, this.time - base);
+    const shape = this.holdShapeAt(note, this.time - base, true);
     const lane = this.botLane(shape.pos, shape.size);
     const radius = rowRadius(BOT_ROW);
     this.fingers.set(id, {
@@ -477,11 +479,15 @@ export default class PlayfieldSession {
         slides.length ? slides : this.closestNotes([type], lane, time, target)
       );
 
-      // Touch notes, hold starts and slides you move into from outside
-      for (const found of [
-        ...this.closestNotes(["touch", "hold"], lane, time, target),
-        ...this.closestNotes(["slideCW", "slideCCW"], lane, time, target)
-      ]) {
+      // Touch notes and hold starts count when you move onto or around inside them, slides
+      // only when you move into them from outside
+      this.hitNotes(this.closestNotes(["touch", "hold"], lane, time, target));
+      for (const found of this.closestNotes(
+        ["slideCW", "slideCCW"],
+        lane,
+        time,
+        target
+      )) {
         if (!this.covers(found.note.pos, found.note.size, from))
           this.hitNote(found);
       }
@@ -775,7 +781,7 @@ export default class PlayfieldSession {
     for (let i = this.activeHolds.length - 1; i >= 0; i--) {
       const hold = this.activeHolds[i];
       const local = now - hold.base;
-      const shape = this.holdShapeAt(hold.note, local);
+      const shape = this.holdShapeAt(hold.note, local, true);
       hold.held =
         hold.kind !== "miss" &&
         this.touching(Math.round(shape.pos), Math.round(shape.size));
@@ -806,13 +812,15 @@ export default class PlayfieldSession {
     }
   }
 
-  judge(kind, detail, note) {
+  judge(kind, detail, note, holdEnd = false) {
     // No judging: hits still clear notes, but nothing counts
     if (!this.isJudging()) return;
     const value = this.noteValue(note);
     const rate = SCORE_RATES[kind];
 
-    this.combo = kind === "miss" ? 0 : this.combo + 1;
+    // Hold ends score but don't add to the combo, a dropped hold still breaks it
+    if (kind === "miss") this.combo = 0;
+    else if (!holdEnd) this.combo++;
     this.judged++;
     // Misses drain the clear gauge, it doesn't go below empty
     this.gauge = Math.max(0, this.gauge + this.normaFor(note)[kind]);
@@ -870,7 +878,7 @@ export default class PlayfieldSession {
   }
 
   endHold(hold) {
-    this.judge(hold.kind, hold.detail, hold.note);
+    this.judge(hold.kind, hold.detail, hold.note, true);
     if (hold.kind === "miss") return;
     this.emit("holdEnd", { note: hold.note });
   }
@@ -932,7 +940,7 @@ export default class PlayfieldSession {
         bot.holds.splice(i, 1);
         continue;
       }
-      const shape = this.holdShapeAt(note, now - base);
+      const shape = this.holdShapeAt(note, now - base, true);
       this.fingerMove(
         id,
         this.botLane(shape.pos, shape.size),
@@ -1078,8 +1086,9 @@ export default class PlayfieldSession {
     return samples;
   }
 
-  holdShapeAt(note, localTime) {
-    const points = note.points;
+  // The drawn shape by default. With touching, the hidden points count too
+  holdShapeAt(note, localTime, touching = false) {
+    const points = (touching && note.judgePoints) || note.points;
     let i = 0;
     while (i < points.length - 2 && points[i + 1].time <= localTime) i++;
 
@@ -1095,6 +1104,24 @@ export default class PlayfieldSession {
       pos: a.pos + left * t,
       size: a.size + (right - left) * t
     };
+  }
+
+  // The hold as it's judged (hidden points included), for views that draw it next to the real
+  // one. Null when both are the same shape
+  hiddenHoldView(note) {
+    if (note.hiddenView !== undefined) return note.hiddenView;
+    note.hiddenView = null;
+    if (!note.judgePoints) return null;
+    const differs = [...note.points, ...note.judgePoints].some(({ time }) => {
+      const drawn = this.holdShapeAt(note, time);
+      const judged = this.holdShapeAt(note, time, true);
+      return (
+        Math.abs(mod60(drawn.pos - judged.pos + 30) - 30) > 0.01 ||
+        Math.abs(drawn.size - judged.size) > 0.01
+      );
+    });
+    if (differs) note.hiddenView = { ...note, points: note.judgePoints };
+    return note.hiddenView;
   }
 
   // What's on screen, for views to draw

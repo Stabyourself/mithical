@@ -107,7 +107,8 @@ export default class UnrolledRenderer {
   setFeatures(features) {
     this.features = {
       linear: features.linear ?? false,
-      ring: features.ring ?? true
+      ring: features.ring ?? true,
+      drawHiddenHolds: features.drawHiddenHolds ?? false
     };
     if (this.width) this.layout();
   }
@@ -262,6 +263,12 @@ export default class UnrolledRenderer {
     ctx.rect(0, 0, this.width, this.screenBottom);
     ctx.clip();
     for (const hold of this.visible.holds) this.drawHold(hold, now);
+    if (features.drawHiddenHolds) {
+      for (const hold of this.visible.holds) {
+        const note = session.hiddenHoldView(hold.note);
+        if (note) this.drawHold({ ...hold, note }, now, true);
+      }
+    }
     this.drawObjects();
     ctx.restore();
 
@@ -499,7 +506,8 @@ export default class UnrolledRenderer {
     }
   }
 
-  drawHold({ note, base, missed, active }, now) {
+  // red: the hold as it's judged, flat red (drawHiddenHolds)
+  drawHold({ note, base, missed, active }, now, red = false) {
     const { ctx, session, settings, features, laneWidth, width } = this;
     const view = settings.viewDistance;
     const linear = features.linear;
@@ -570,7 +578,9 @@ export default class UnrolledRenderer {
       : holdColorsAt(settings.colors.hold, active);
     const top = yAt(Math.min(endTime, to));
     const bottom = yAt(startTime);
-    if (bottom - top > 1) {
+    if (red) {
+      ctx.fillStyle = "#ff0000";
+    } else if (bottom - top > 1) {
       const gradient = ctx.createLinearGradient(0, bottom, 0, top);
       const span = endTime - startTime;
       for (let i = 0; i < holdGradientStops.length; i++) {
@@ -761,7 +771,7 @@ export default class UnrolledRenderer {
   drawSnapArrows(note, x, w, top, colors) {
     const { ctx, noteHeight: h, laneWidth } = this;
     const up = note.type === "snapIn";
-    const count = Math.max(1, Math.floor(note.size / 4));
+    const count = Math.max(1, Math.ceil(note.size / 4));
     const size = Math.min(laneWidth * 1.2, h * 1.3);
     const baseY = top - h * 0.4;
     ctx.fillStyle = colors.light;
@@ -789,11 +799,9 @@ export default class UnrolledRenderer {
     const size = Math.min(laneWidth * 0.9, h * 1.2);
     const y = top - h * 0.3 - size / 2;
     ctx.fillStyle = colors.light;
-    for (
-      let cx = x + laneWidth;
-      cx < x + w - laneWidth * 0.5;
-      cx += laneWidth * 2
-    ) {
+    const count = Math.max(1, Math.round(w / (laneWidth * 2)));
+    for (let i = 0; i < count; i++) {
+      const cx = x + (w * (i + 0.5)) / count;
       ctx.beginPath();
       if (left) {
         ctx.moveTo(cx + size / 3, y - size / 2);

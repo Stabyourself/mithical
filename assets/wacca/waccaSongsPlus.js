@@ -1,4 +1,8 @@
-// Add `hidden=true` to the top level of a song, or its inferno to hide chart view until a player unlocks it
+// Optional sheet properties that keep that difficulty's chart preview on the
+// song page hidden (it shows a placeholder instead):
+//   hideUntilAnyPlayed: true - until the profile has played the song on any difficulty
+//   hideUntilUnlocked: true  - until the profile owns the difficulty unlock (item kind 4)
+
 const waccaSongs = [
   {
     id: 3,

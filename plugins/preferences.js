@@ -39,6 +39,7 @@ export default defineNuxtPlugin({
         progressBar: false,
         bot: "none",
         type: "circle",
+        linear: false,
         timeRemaining: false,
         ...stored
       };

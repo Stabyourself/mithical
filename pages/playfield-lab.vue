@@ -319,14 +319,22 @@ const TOGGLES = [
     key: "progressBar",
     label: "Clear gauge",
     title: "The bar in the round view"
+  },
+  {
+    key: "drawHiddenHolds",
+    label: "Hidden holds",
+    title:
+      "Draw holds as they're judged (hidden points included) in red over the drawn ones, where they differ",
+    off: true
   }
 ];
 const toggles = reactive(
-  Object.fromEntries(TOGGLES.map(({ key }) => [key, true]))
+  Object.fromEntries(TOGGLES.map(({ key, off }) => [key, !off]))
 );
 const stripFeatures = computed(() => ({
   linear: linear.value,
-  ring: toggles.ring
+  ring: toggles.ring,
+  drawHiddenHolds: toggles.drawHiddenHolds
 }));
 
 const controller = usePlayfieldSession({

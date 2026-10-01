@@ -150,7 +150,9 @@ function parseMer(text) {
         size: object.size,
         rNote: R_NOTE_IDS.has(object.id),
         bonus: false,
-        points: shown.map(({ tick, pos, size }) => ({ tick, pos, size }))
+        points: shown.map(({ tick, pos, size }) => ({ tick, pos, size })),
+        // Every point including the hidden ones, for touch detection
+        allPoints: points.map(({ tick, pos, size }) => ({ tick, pos, size }))
       });
     } else if (NOTE_TYPES[object.id]) {
       chart.notes.push({
@@ -344,6 +346,14 @@ function buildChart(chart, mirror) {
         })
       );
       note.endTime = note.points.at(-1).time;
+      // Hidden points aren't drawn but still count for touching
+      note.judgePoints = source.allPoints.map((point) =>
+        flip({
+          time: chart.msAt(point.tick),
+          pos: point.pos,
+          size: point.size
+        })
+      );
     }
     return note;
   });
