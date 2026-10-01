@@ -156,6 +156,6 @@ const medalShortNames = {
   fullcombo: "FC",
   missless: "ML",
   clear: "CL",
-  failed: "FA"
+  failed: "F"
 };
 </script>
