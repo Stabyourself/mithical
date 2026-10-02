@@ -1,13 +1,6 @@
 <template>
   <WaccaProfileRequired>
     <v-container>
-      <v-alert type="info">
-        This page is only for testing purposes right now. It may or may not show
-        correct data, and won't save anything yet.<br />Also it looks bad.<br />
-        <br />If you wanna help me sort out any unknown stuff and lists here,
-        lemme know.
-      </v-alert>
-
       <div
         class="profile-plate"
         :style="{ backgroundImage: `url(${plateUrl})` }"
@@ -212,6 +205,10 @@
           >
         </template>
       </v-snackbar>
+
+      <v-snackbar v-model="showSaveUnsupported" :timeout="3000" color="error">
+        Saving doesn't work yet.
+      </v-snackbar>
     </v-container>
   </WaccaProfileRequired>
 </template>
@@ -296,7 +293,14 @@
   aspect-ratio: 1024 / 256;
   background-size: cover;
   background-position: center;
+  // Every plate image is 1024x256 with transparent sides, the art spans x=58..965 at
+  // the bottom. Scale up from the bottom center so that part fills the width. The
+  // margin makes room for the dome growing upward (art top is at y=11)
+  --plate-scale: 1.129;
+  margin-top: 2.1%;
   margin-bottom: 32px;
+  transform: scale(var(--plate-scale));
+  transform-origin: 50% 100%;
   clip-path: circle(73% at 50% 218%);
   container-type: inline-size;
   cursor: pointer;
@@ -2033,17 +2037,18 @@ const hasChanges = computed(() => {
 });
 
 const isSavingOptions = ref(false);
+const showSaveUnsupported = ref(false);
 
 function discardOptions() {
   Object.assign(profile.value.options, savedOptions.value);
 }
 
-// TODO: stubbed until the API exists, just pretends it saved
+// TODO: no API to save to yet
 async function saveOptions() {
   isSavingOptions.value = true;
   try {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    savedOptions.value = { ...profile.value.options };
+    showSaveUnsupported.value = true;
   } finally {
     isSavingOptions.value = false;
   }
