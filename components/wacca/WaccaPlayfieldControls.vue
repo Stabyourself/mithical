@@ -45,6 +45,7 @@
       origin="bottom center"
       :z-index="2500"
       :close-on-content-click="false"
+      :open-on-click="false"
     >
       <template v-slot:activator="{ props: menuProps }">
         <v-btn
@@ -53,8 +54,15 @@
           size="small"
           rounded="pill"
           class="playfield-speed"
+          :class="{ 'playfield-speed--dragging': speedDragging }"
           aria-label="Playback speed"
           title="Speed"
+          @click="speedClick"
+          @pointerdown="speedDragStart"
+          @pointermove="speedDragMove"
+          @pointerup="speedDragEnd"
+          @pointercancel="speedDragEnd"
+          @contextmenu="speedContextMenu"
         >
           {{ speed.toFixed(2) }}x
         </v-btn>
@@ -144,6 +152,13 @@
   text-transform: none;
   min-width: 0;
   padding: 0 6px;
+  font-variant-numeric: tabular-nums;
+  /* the sideways drag is ours, not the page's */
+  touch-action: none;
+}
+
+.playfield-speed--dragging {
+  cursor: ew-resize;
 }
 
 .speed-panel {
@@ -217,6 +232,70 @@ function setSpeed(value) {
     Math.max(SPEED_MIN, Math.round(value * 100) / 100)
   );
 }
+
+// Holding the speed button and moving sideways changes the speed, a tap opens the menu
+const SPEED_DRAG_PIXELS = 8; // per step
+const SPEED_DRAG_SLOP = 4;
+const SPEED_HOLD_MS = 300;
+
+const speedDragging = ref(false);
+let speedDrag = null;
+let speedHoldTimer = null;
+// The click after a drag is not a tap
+let speedDragged = false;
+
+function speedDragStart(event) {
+  if (event.button !== 0) return;
+  event.currentTarget.setPointerCapture(event.pointerId);
+  speedDrag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startSpeed: speed.value
+  };
+  speedDragged = false;
+  clearTimeout(speedHoldTimer);
+  speedHoldTimer = setTimeout(beginSpeedDrag, SPEED_HOLD_MS);
+}
+
+function beginSpeedDrag() {
+  clearTimeout(speedHoldTimer);
+  speedDragging.value = true;
+  speedDragged = true;
+}
+
+function speedDragMove(event) {
+  if (!speedDrag || event.pointerId !== speedDrag.pointerId) return;
+  const distance = event.clientX - speedDrag.startX;
+  if (!speedDragging.value) {
+    if (Math.abs(distance) < SPEED_DRAG_SLOP) return;
+    beginSpeedDrag();
+  }
+  setSpeed(
+    speedDrag.startSpeed +
+      Math.round(distance / SPEED_DRAG_PIXELS) * SPEED_STEP
+  );
+}
+
+function speedDragEnd(event) {
+  if (!speedDrag || event.pointerId !== speedDrag.pointerId) return;
+  clearTimeout(speedHoldTimer);
+  speedDrag = null;
+  speedDragging.value = false;
+  // the click comes right after, keyboard clicks later on have no drag before them
+  setTimeout(() => (speedDragged = false));
+}
+
+function speedClick() {
+  if (speedDragged) return;
+  speedMenuOpen.value = !speedMenuOpen.value;
+}
+
+// Holding a finger down would otherwise bring up the long press menu
+function speedContextMenu(event) {
+  if (speedDrag) event.preventDefault();
+}
+
+onBeforeUnmount(() => clearTimeout(speedHoldTimer));
 
 function formatTime(ms) {
   const seconds = Math.floor(ms / 1000);
