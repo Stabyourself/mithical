@@ -2,6 +2,7 @@
   <WaccaProfileRequired>
     <v-container>
       <div
+        v-if="hasVersionData"
         class="profile-plate"
         :style="{ backgroundImage: `url(${plateUrl})` }"
         @click="openPicker('plate')"
@@ -140,6 +141,7 @@
       </v-dialog>
 
       <v-btn-toggle
+        v-if="hasVersionData"
         v-model="activeCategory"
         class="settings-nav mb-6"
         shaped
@@ -154,7 +156,17 @@
         </v-btn>
       </v-btn-toggle>
 
-      <div class="settings-layout">
+      <v-alert
+        v-if="!hasVersionData"
+        type="info"
+        variant="tonal"
+        class="mb-6"
+      >
+        Looks like you have never played this version of Wacca. Go log in on a
+        cab running it to view your settings.
+      </v-alert>
+
+      <div v-else class="settings-layout">
         <div ref="previewColumn" class="settings-preview">
           <WaccaPlayfieldPreview
             :options="previewOptions"
@@ -186,7 +198,7 @@
       </div>
 
       <v-snackbar
-        :model-value="hasChanges"
+        :model-value="hasVersionData && hasChanges"
         :timeout="-1"
         location="bottom"
         multi-line
@@ -206,8 +218,14 @@
         </template>
       </v-snackbar>
 
-      <v-snackbar v-model="showSaveUnsupported" :timeout="3000" color="error">
-        Saving doesn't work yet.
+      <v-snackbar
+        :model-value="!!saveError"
+        :timeout="6000"
+        color="error"
+        multi-line
+        @update:model-value="saveError = ''"
+      >
+        <div class="save-error">{{ saveError }}</div>
       </v-snackbar>
     </v-container>
   </WaccaProfileRequired>
@@ -228,6 +246,10 @@
     column-gap: 32px;
     align-items: start;
   }
+}
+
+.save-error {
+  white-space: pre-line;
 }
 
 .settings-options {
@@ -621,6 +643,11 @@ const plateUrl = computed(() => {
   return `/wacca/img/plates/${plate?.path ?? "uT_US_1"}.webp`;
 });
 
+// Options are saved per version, a version that was never played has none
+const hasVersionData = computed(
+  () => !!profile.value.version_data[version.value]
+);
+
 const selectedVersionData = computed(() => {
   return (
     profile.value.version_data[version.value] ?? profile.value.version_data[300]
@@ -641,20 +668,27 @@ const stageupNumberUrl = computed(
   () => `/wacca/img/stageup/number_${selectedVersionData.value.rank}.webp`
 );
 
-// Color schemes ("My Color") are items, all selectable
-// Swatch: a mini touch ring showing where each color goes
-const colorSchemeOptions = waccaSymbolColors.map((scheme) => ({
-  text: {
-    ja: scheme.name,
-    en: scheme.nameEnglish
-  },
-  value: scheme.id,
-  consoleColors: scheme.colors
-}));
-
-// Note touch sounds ("入力SE") are items, only owned ones can be picked.
-// The current one stays listed even if it's not owned so it still shows
 const ownsItem = useOwnedItems();
+
+// Color schemes ("My Color") are items, only owned ones can be picked.
+// The current one stays listed even if it's not owned so it still shows
+// Swatch: a mini touch ring showing where each color goes
+const colorSchemeOptions = computed(() =>
+  waccaSymbolColors
+    .filter(
+      (scheme) => ownsItem(scheme.id) || scheme.id === profile.value.options[4]
+    )
+    .map((scheme) => ({
+      text: {
+        ja: scheme.name,
+        en: scheme.nameEnglish
+      },
+      value: scheme.id,
+      consoleColors: scheme.colors
+    }))
+);
+
+// Note touch sounds ("入力SE") work the same way
 const noteSoundOptions = computed(() =>
   waccaSoundEffects
     .filter(
@@ -1426,7 +1460,10 @@ const optionCategories = [
             },
             type: "options",
             default: 103001,
-            choices: colorSchemeOptions
+            // Getter so the list follows the owned items
+            get choices() {
+              return colorSchemeOptions.value;
+            }
           }
         ]
       },
@@ -2037,18 +2074,56 @@ const hasChanges = computed(() => {
 });
 
 const isSavingOptions = ref(false);
-const showSaveUnsupported = ref(false);
+const saveError = ref("");
 
 function discardOptions() {
   Object.assign(profile.value.options, savedOptions.value);
 }
 
-// TODO: no API to save to yet
+// Sends only the changed options. The server rejects the whole request if any option
+// is invalid, so on a violation those go back to their saved values and the rest stay
+// as unsaved changes
 async function saveOptions() {
+  if (isSavingOptions.value) return;
+
+  const changed = {};
+  for (const [id, value] of Object.entries(profile.value.options)) {
+    if (value !== savedOptions.value[id]) changed[id] = value;
+  }
+  if (Object.keys(changed).length === 0) return;
+
   isSavingOptions.value = true;
+  saveError.value = "";
+
   try {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    showSaveUnsupported.value = true;
+    await $fetch(
+      `${runtimeConfig.public.apiUrl}/wacca/user/${activeCard.value}/options/${version.value}`,
+      { method: "POST", body: { options: changed } }
+    );
+    Object.assign(savedOptions.value, changed);
+  } catch (error) {
+    const body = error.data;
+    const violations = Array.isArray(body?.violations) ? body.violations : [];
+
+    for (const violation of violations) {
+      const id = /^options\[(\d+)\]$/.exec(violation.subject)?.[1];
+      if (id === undefined) continue;
+      if (id in savedOptions.value) {
+        profile.value.options[id] = savedOptions.value[id];
+      } else {
+        delete profile.value.options[id];
+      }
+    }
+
+    if (violations.length > 0) {
+      saveError.value = violations.map((v) => v.description).join("\n");
+    } else if (error.statusCode === 429) {
+      saveError.value = "Too many saves, wait a moment and try again.";
+    } else if (error.statusCode === 400) {
+      saveError.value = "Some options were invalid.";
+    } else {
+      saveError.value = "Failed to save options.";
+    }
   } finally {
     isSavingOptions.value = false;
   }
