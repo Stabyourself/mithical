@@ -295,7 +295,6 @@ export function resolveSettings(options) {
     barlines: option(options, 105, 1) === 1,
     guidelineIntensity: clamp(option(options, 106, 5), 0, 5) / 5,
     thickness: clamp(option(options, 110, 3), 1, 5) - 1,
-    bonusEffect: option(options, 114, 1) === 1,
     scoreMinus: option(options, 116, 0) === 1,
     guidelineType: clamp(option(options, 118, 1), 0, 7),
     centerDisplay: option(options, 119, 1),
@@ -510,7 +509,8 @@ export default class PlayfieldRenderer {
         this.rEffectLane = note.pos + note.size / 2;
       }
 
-      if (note.bonus && settings.bonusEffect && note.type.startsWith("slide")) {
+      // Not tied to the bonus effect option, that only changes the gauge
+      if (note.bonus && note.type.startsWith("slide")) {
         const { bpm } = session;
         this.bonusSweeps.push({
           start: session.time,

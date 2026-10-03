@@ -203,6 +203,7 @@
   .v-btn {
     min-width: 28px;
     padding: 0 6px;
+    border-color: rgba(var(--v-theme-on-surface), 0.38);
   }
 }
 

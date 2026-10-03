@@ -836,15 +836,15 @@ const optionCategories = [
           {
             id: 108,
             label: {
-              en: "Judgment Timing",
+              en: "Audio Offset",
               ja: "判定調整"
             },
             title: {
-              en: "Judgment Timing Settings",
+              en: "Audio Offset Settings",
               ja: "判定調整設定"
             },
             description: {
-              en: "You can adjust the judgment timing.",
+              en: "Adjust the audio offset.",
               ja: "入力判定タイミングを調整できます。"
             },
             type: "slider",
@@ -933,6 +933,24 @@ const optionCategories = [
         },
         options: [
           {
+            id: 114,
+            label: {
+              en: "Bonus Effect",
+              ja: "ボーナス効果"
+            },
+            title: {
+              en: "Bonus Effect",
+              ja: "ボーナス効果"
+            },
+            description: {
+              en: "Choose whether bonus notes have their bonus effect.",
+              ja: "ボーナス効果の設定を行います。"
+            },
+            type: "toggle",
+            default: 1
+          },
+
+          {
             id: 101,
             label: {
               en: "Mirror",
@@ -943,11 +961,20 @@ const optionCategories = [
               ja: "ミラー設定"
             },
             description: {
-              en: "Choose whether to mirror the notes left to right.",
+              en: "Choose how to mirror the notes.",
               ja: "プレイ中のノーツ配置を入れ替えます。"
             },
-            type: "toggle",
-            default: 0
+            type: "options",
+            default: 0,
+            choices: [
+              { text: { en: "None", ja: "なし" }, value: 0 },
+              { text: { en: "L/R Mirror", ja: "左右ミラー" }, value: 1 },
+              { text: { en: "U/D Mirror", ja: "上下ミラー" }, value: 2 },
+              {
+                text: { en: "U/D + L/R Mirror", ja: "上下＋左右ミラー" },
+                value: 3
+              }
+            ]
           },
 
           {
@@ -1724,24 +1751,6 @@ const optionCategories = [
             description: {
               en: "Choose whether to show R note effects.",
               ja: "Ｒノーツエフェクトの表示を設定できます。"
-            },
-            type: "toggle",
-            default: 1
-          },
-
-          {
-            id: 114,
-            label: {
-              en: "Bonus Effect",
-              ja: "ボーナス効果"
-            },
-            title: {
-              en: "Bonus Effect",
-              ja: "ボーナス効果"
-            },
-            description: {
-              en: "Choose whether bonus notes have their bonus effect.",
-              ja: "ボーナス効果の設定を行います。"
             },
             type: "toggle",
             default: 1
