@@ -23,11 +23,7 @@
           <div class="rating-holder">
             <div v-for="(sheet, j) in folder.sheets" :key="sheet">
               <div class="rating-entry">
-                <div
-                  class="rating-song"
-                  role="button"
-                  @click="toggle(sheet)"
-                >
+                <div class="rating-song" role="button" @click="toggle(sheet)">
                   <div class="rating-cover">
                     <div class="rating-jacket">
                       <WaccaJacket :url="sheet.song.imageName" />
@@ -62,7 +58,9 @@
 
                     <v-icon>
                       {{
-                        isExpanded(sheet) ? "mdi-chevron-up" : "mdi-chevron-down"
+                        isExpanded(sheet)
+                          ? "mdi-chevron-up"
+                          : "mdi-chevron-down"
                       }}
                     </v-icon>
                   </div>
@@ -88,7 +86,7 @@
                         <th>
                           Profile
                           <v-tooltip activator="parent" location="top">
-                            How much rating your profile would gain
+                            How much rating your profile will gain
                           </v-tooltip>
                         </th>
                       </tr>
@@ -105,7 +103,9 @@
                       </tr>
                     </tbody>
                   </table>
-                  <div v-else class="rating-max">Highest possible rating already achieved. Yay!</div>
+                  <div v-else class="rating-max">
+                    Highest possible rating already achieved. Yay!
+                  </div>
 
                   <v-btn
                     class="rating-link"
@@ -224,7 +224,11 @@
   }
 
   tbody tr:nth-child(odd) {
-    background: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 5%, transparent);
+    background: color-mix(
+      in srgb,
+      rgb(var(--v-theme-on-surface)) 5%,
+      transparent
+    );
   }
 }
 

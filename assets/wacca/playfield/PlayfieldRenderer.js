@@ -1303,7 +1303,8 @@ export default class PlayfieldRenderer {
     if (this.features.drawHiddenHolds) {
       for (const hold of this.visible.holds) {
         const hidden = this.session.hiddenHoldView(hold.note);
-        if (hidden) this.drawHoldSurface(hidden, hold.base, now, false, 0, true);
+        if (hidden)
+          this.drawHoldSurface(hidden, hold.base, now, false, 0, true);
       }
     }
     this.drawObjects();
@@ -1581,9 +1582,7 @@ export default class PlayfieldRenderer {
             );
             ctx.fillStyle = style;
             ctx.fill(
-              this.ringCellPaths[Math.floor(cell / RING_ROWS)][
-                cell % RING_ROWS
-              ]
+              this.ringCellPaths[Math.floor(cell / RING_ROWS)][cell % RING_ROWS]
             );
           });
         }

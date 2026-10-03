@@ -169,7 +169,9 @@ export function usePlayfieldSession({
   // Difficulties of a song share a folder, and keep the position
   let loadedUrl = null;
   const sameSong = (a, b) =>
-    !!a && !!b && a.slice(0, a.lastIndexOf("/")) === b.slice(0, b.lastIndexOf("/"));
+    !!a &&
+    !!b &&
+    a.slice(0, a.lastIndexOf("/")) === b.slice(0, b.lastIndexOf("/"));
 
   async function loadChart(url) {
     const request = ++chartRequest;

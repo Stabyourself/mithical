@@ -157,12 +157,7 @@
         </v-btn>
       </v-btn-toggle>
 
-      <v-alert
-        v-if="!hasVersionData"
-        type="info"
-        variant="tonal"
-        class="mb-6"
-      >
+      <v-alert v-if="!hasVersionData" type="info" variant="tonal" class="mb-6">
         Looks like you have never played this version of Wacca. Go log in on a
         cab running it to view your settings.
       </v-alert>

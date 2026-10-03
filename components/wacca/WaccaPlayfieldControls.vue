@@ -271,8 +271,7 @@ function speedDragMove(event) {
     beginSpeedDrag();
   }
   setSpeed(
-    speedDrag.startSpeed +
-      Math.round(distance / SPEED_DRAG_PIXELS) * SPEED_STEP
+    speedDrag.startSpeed + Math.round(distance / SPEED_DRAG_PIXELS) * SPEED_STEP
   );
 }
 
