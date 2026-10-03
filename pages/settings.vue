@@ -2092,6 +2092,26 @@ async function saveOptions() {
     Object.assign(savedOptions.value, changed);
   } catch (error) {
     const body = error.data;
+
+    // Validation errors come back as an array with only the first bad option. Put it
+    // back to its saved value, the rest stay as unsaved changes to resave
+    if (Array.isArray(body)) {
+      const messages = [];
+      for (const failure of body) {
+        const id = /option ID (-?\d+)/.exec(failure.msg)?.[1];
+        if (id !== undefined) {
+          if (id in savedOptions.value) {
+            profile.value.options[id] = savedOptions.value[id];
+          } else {
+            delete profile.value.options[id];
+          }
+        }
+        messages.push(failure.msg);
+      }
+      saveError.value = messages.join("\n") || "Some options were invalid.";
+      return;
+    }
+
     const violations = Array.isArray(body?.violations) ? body.violations : [];
 
     for (const violation of violations) {
