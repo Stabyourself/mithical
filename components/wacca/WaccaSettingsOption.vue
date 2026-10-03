@@ -13,7 +13,7 @@
       </v-tooltip>
 
       <v-btn
-        v-if="value !== saved[option.id]"
+        v-if="options[option.id] !== saved[option.id]"
         class="option-reset"
         icon
         variant="text"
@@ -21,7 +21,7 @@
         color="primary"
         aria-label="Reset to saved value"
         title="Reset to saved value"
-        @click="value = saved[option.id]"
+        @click="reset"
       >
         <v-icon>mdi-restore</v-icon>
       </v-btn>
@@ -271,8 +271,9 @@ const props = defineProps({
   language: { type: String, required: true }
 });
 
+// Options the profile doesn't have yet show the in-game default
 const value = computed({
-  get: () => props.options[props.option.id],
+  get: () => props.options[props.option.id] ?? props.option.default,
   set: (newValue) => {
     props.options[props.option.id] = newValue;
     // Picked, so show the real thing. A touch never leaves what it tapped, and a
@@ -280,6 +281,13 @@ const value = computed({
     preview(null);
   }
 });
+
+function reset() {
+  const id = props.option.id;
+  if (id in props.saved) props.options[id] = props.saved[id];
+  else delete props.options[id];
+  preview(null);
+}
 
 // Slide previews follow the "Invert Slide Colors" option (136)
 const slideInvert = computed(() => props.options[136] === 1);

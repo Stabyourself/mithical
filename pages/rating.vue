@@ -1,87 +1,123 @@
 <template>
   <WaccaProfileRequired>
     <v-container>
-      <v-alert type="info" class="mb-2">
-        <p>
-          This page shows you your total rating for your top 35 and 15 songs in
-          the relevant Wacca versions.
-        </p>
-        <p>
-          Each song shows you the achieved rating, as well as a guide on how
-          much rating you will gain by improving your PB to the next rating
-          border.
-        </p>
-        <p>
-          The left number shows the improvement for the song, the right number
-          shows how much rating your whole profile will gain.
-        </p>
-      </v-alert>
-
-      <v-tabs fixed-tabs v-model="tab" bg-color="primary">
-        <v-tab v-for="(folder, i) in sheetFolders" :key="i">
-          {{ folder.name }}
-          <v-chip>{{ folder.count }}</v-chip>
-
-          {{ folder.rating.toFixed(3) }}
-        </v-tab>
-      </v-tabs>
+      <div class="rating-folders">
+        <button
+          v-for="(folder, i) in sheetFolders"
+          :key="i"
+          type="button"
+          class="rating-folder"
+          :class="{ active: tab == i }"
+          @click="tab = i"
+        >
+          <div class="rating-folder-name">{{ folder.name }}</div>
+          <div class="rating-folder-rating">
+            {{ folder.rating.toFixed(3) }}
+          </div>
+          <div class="rating-folder-count">Top {{ folder.count }} songs</div>
+        </button>
+      </div>
 
       <v-window v-model="tab">
         <div v-for="(folder, i) in sheetFolders" :key="i" v-show="tab == i">
           <div class="rating-holder">
             <div v-for="(sheet, j) in folder.sheets" :key="sheet">
-              <NuxtLink
-                style="text-decoration: none"
-                :to="`/songs/${getSlug(sheet.song)}`"
-                class="rating-song"
-              >
-                <div class="rating-jacket">
-                  <WaccaJacket :url="sheet.song.imageName" />
-                </div>
-
-                <div class="rating-info">
-                  <div class="rating-title">
-                    {{ getTitle(sheet.song) }}
-                  </div>
-
-                  <div
-                    v-if="sheet.nextScore"
-                    class="rating-suggestion"
-                    :class="`difficulty-${sheet.difficulty}`"
-                  >
-                    <div>
+              <div class="rating-entry">
+                <div
+                  class="rating-song"
+                  role="button"
+                  @click="toggle(sheet)"
+                >
+                  <div class="rating-cover">
+                    <div class="rating-jacket">
+                      <WaccaJacket :url="sheet.song.imageName" />
+                    </div>
+                    <div
+                      class="rating-level"
+                      :class="`difficulty-${sheet.difficulty}`"
+                    >
                       {{
-                        waccaDifficulties[sheet.difficulty].name
-                          .toUpperCase()
-                          .slice(0, 3)
-                      }}
-                      +{{ sheet.nextScoreDiff }}
-                    </div>
-                    <div>
-                      R +{{ sheet.ratingDiff.toFixed(3) }} / +{{
-                        Math.max(0, sheet.ratingGain).toFixed(3)
+                        formatDifficulty(
+                          sheet.song.sheets[sheet.difficulty].difficulty,
+                          difficultyInternal,
+                          true
+                        )
                       }}
                     </div>
                   </div>
 
-                  <div class="rating-difficulty" v-if="sheet.rating">
-                    <WaccaDifficultyPillSmall
-                      :i="sheet.difficulty + 1"
-                      :difficulty="
-                        sheet.song.sheets[sheet.difficulty].difficulty
-                      "
-                    />
-                  </div>
-                  <div class="rating-rating" v-if="sheet.rating">
-                    <WaccaRating
-                      :rating="sheet.rating"
-                      :divide="50"
-                      :simple="true"
-                      :decimals="3"
-                    />
+                  <div class="rating-info">
+                    <div class="rating-title">
+                      {{ getTitle(sheet.song) }}
+                    </div>
+
+                    <div class="rating-rating" v-if="sheet.rating">
+                      <WaccaRating
+                        :rating="sheet.rating"
+                        :divide="50"
+                        :simple="true"
+                        :decimals="3"
+                      />
+                    </div>
+
+                    <v-icon>
+                      {{
+                        isExpanded(sheet) ? "mdi-chevron-up" : "mdi-chevron-down"
+                      }}
+                    </v-icon>
                   </div>
                 </div>
-              </NuxtLink>
+
+                <div v-if="isExpanded(sheet)" class="rating-details">
+                  <table v-if="nextBorders(sheet, folder).length">
+                    <thead>
+                      <tr>
+                        <th>Score</th>
+                        <th>
+                          Needed
+                          <v-tooltip activator="parent" location="top">
+                            How much you need to PB by
+                          </v-tooltip>
+                        </th>
+                        <th>
+                          Song
+                          <v-tooltip activator="parent" location="top">
+                            How much rating this song will gain
+                          </v-tooltip>
+                        </th>
+                        <th>
+                          Profile
+                          <v-tooltip activator="parent" location="top">
+                            How much rating your profile would gain
+                          </v-tooltip>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="border in nextBorders(sheet, folder)"
+                        :key="border.score"
+                      >
+                        <td>{{ border.score.toLocaleString("en-US") }}</td>
+                        <td>+{{ border.needed.toLocaleString("en-US") }}</td>
+                        <td>+{{ border.songGain.toFixed(3) }}</td>
+                        <td>+{{ border.profileGain.toFixed(3) }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div v-else class="rating-max">Highest possible rating already achieved. Yay!</div>
+
+                  <v-btn
+                    class="rating-link"
+                    color="primary"
+                    rounded="pill"
+                    variant="flat"
+                    :to="`/songs/${getSlug(sheet.song)}`"
+                  >
+                    Go to song
+                  </v-btn>
+                </div>
+              </div>
               <div v-if="j == folder.count - 1" class="cutoff">
                 <v-icon>mdi-content-cut</v-icon>
                 Cutoff
@@ -96,6 +132,50 @@
 </template>
 
 <style scoped lang="scss">
+.rating-folders {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.rating-folder {
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #333;
+  background: rgb(var(--v-theme-surface));
+  color: rgb(var(--v-theme-on-surface));
+  text-align: center;
+  opacity: 0.6;
+  transition:
+    opacity 0.2s,
+    border-color 0.2s;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &.active {
+    opacity: 1;
+    border-color: rgb(var(--v-theme-primary));
+  }
+}
+
+.rating-folder-name {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.rating-folder-rating {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: rgb(var(--v-theme-primary));
+}
+
+.rating-folder-count {
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
 .rating-holder {
   display: flex;
   flex-direction: column;
@@ -103,13 +183,49 @@
   margin: 10px 0;
 }
 
-.rating-song {
-  color: var(--v-text-primary);
-  display: flex;
+.rating-entry {
   border-radius: 5px;
   border: 1px solid #333;
   background: rgb(var(--v-theme-surface));
   overflow: hidden;
+}
+
+.rating-song {
+  color: var(--v-text-primary);
+  display: flex;
+  cursor: pointer;
+}
+
+.rating-details {
+  padding: 10px;
+  border-top: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 4px 8px;
+    text-align: right;
+  }
+
+  th:not(:first-child) {
+    cursor: help;
+  }
+
+  th:first-child,
+  td:first-child {
+    text-align: left;
+  }
+
+  tbody tr:nth-child(odd) {
+    background: color-mix(in srgb, rgb(var(--v-theme-on-surface)) 5%, transparent);
+  }
 }
 
 .rating-info {
@@ -117,19 +233,66 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  min-width: 0;
   padding: 10px;
   gap: 10px;
+
+  > * {
+    flex-shrink: 0;
+  }
+}
+
+.rating-cover {
+  display: flex;
+  height: 60px;
+  flex-shrink: 0;
 }
 
 .rating-jacket {
-  height: 60px;
+  height: 100%;
   aspect-ratio: 1;
   flex-shrink: 1;
 }
 
+.rating-level {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-weight: bold;
+  font-size: 1rem;
+
+  // The difficulty's theme color (these count from 0), see plugins/vuetify.ts
+  @for $i from 0 through 3 {
+    &.difficulty-#{$i} {
+      background-color: rgb(var(--v-theme-difficulty-#{$i + 1}));
+      color: rgb(var(--v-theme-on-difficulty-#{$i + 1}));
+    }
+  }
+}
+
 .rating-title {
-  flex-grow: 1;
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+
+  // at most 2 lines, so the title never gets taller than the jacket
+  line-height: 20px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.rating-max {
+  text-align: center;
+}
+
+.rating-link {
+  align-self: center;
 }
 
 .rating-rating {
@@ -178,6 +341,7 @@
 </style>
 
 <script setup>
+import { formatDifficulty } from "~/assets/js/util";
 import getSongs from "~/assets/wacca/getSongs.js";
 import waccaDifficulties from "~/assets/wacca/waccaDifficulties";
 import getRatingBorders from "~/assets/wacca/waccaRateMulBorders";
@@ -185,6 +349,7 @@ import { getSongSlug } from "~/assets/wacca/songSlug.js";
 
 const profile = useState("profile");
 const version = useState("version");
+const difficultyInternal = useState("difficultyInternal");
 
 definePageMeta({
   middleware: ["auth"]
@@ -322,6 +487,50 @@ const sheetFolders = computed(() => {
 });
 
 const getTitle = useSongTitle();
+
+const expanded = ref({});
+
+function sheetKey(sheet) {
+  return `${sheet.song.id}-${sheet.difficulty}`;
+}
+
+function isExpanded(sheet) {
+  return !!expanded.value[sheetKey(sheet)];
+}
+
+function toggle(sheet) {
+  expanded.value[sheetKey(sheet)] = !isExpanded(sheet);
+}
+
+// Every rating border above the sheet's score, with the rating gained
+// on the song and on the whole profile (same units as the folder rating)
+function nextBorders(sheet, folder) {
+  const difficulty = sheet.song.sheets[sheet.difficulty].difficulty;
+  const current = sheet.rating / 10;
+
+  let lowestRating = 0;
+  if (folder.sheets.length >= folder.count) {
+    lowestRating = folder.sheets[folder.count - 1].rating / 10;
+  }
+
+  return ratingBorders.value
+    .filter((border) => border.min > sheet.score)
+    .reverse()
+    .map((border) => {
+      const rating = border.multiplier * difficulty;
+      const songGain = rating - current;
+
+      return {
+        score: border.min,
+        needed: border.min - sheet.score,
+        songGain,
+        profileGain:
+          current >= lowestRating
+            ? songGain
+            : Math.max(0, rating - lowestRating)
+      };
+    });
+}
 
 function getSlug(song) {
   return getSongSlug(song, getSongs(version.value));

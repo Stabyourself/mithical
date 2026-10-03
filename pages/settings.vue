@@ -1,46 +1,47 @@
 <template>
   <WaccaProfileRequired>
     <v-container>
-      <div
-        v-if="hasVersionData"
-        class="profile-plate"
-        :style="{ backgroundImage: `url(${plateUrl})` }"
-        @click="openPicker('plate')"
-      >
-        <div class="profile-plate-icon" @click.stop="openPicker('icon')">
-          <WaccaIcon :icon="iconId" />
-        </div>
-
-        <div class="profile-plate-title" @click.stop="openPicker('title')">
-          {{ titleText }}
-        </div>
-
-        <span class="stat-label profile-plate-lv-label">Lv.</span>
-        <span class="stat-value profile-plate-lv-value">{{ level }}</span>
-        <span class="stat-label profile-plate-bp-label">BP</span>
-        <span class="stat-value profile-plate-bp-value">{{
-          profile.points
-        }}</span>
-
-        <div class="profile-plate-name" @click.stop="openNameDialog">
-          {{ profile.user_name }}
-        </div>
-
+      <div v-if="hasVersionData" class="profile-plate-wrapper">
         <div
-          v-if="
-            selectedVersionData.rank > 0 && selectedVersionData.dan_rank > 0
-          "
-          class="profile-plate-stageup"
+          class="profile-plate"
+          :style="{ backgroundImage: `url(${plateUrl})` }"
+          @click="openPicker('plate')"
         >
-          <img :src="stageupMedalUrl" class="stageup-medal" />
-          <img :src="stageupNumberUrl" class="stageup-number" />
-        </div>
+          <div class="profile-plate-icon" @click.stop="openPicker('icon')">
+            <WaccaIcon :icon="iconId" />
+          </div>
 
-        <div class="profile-plate-rate" @click.stop="openRatingDialog">
-          <WaccaRating
-            class="rate-value"
-            :rating="selectedVersionData.rating"
-          />
+          <div class="profile-plate-title" @click.stop="openPicker('title')">
+            {{ titleText }}
+          </div>
+
+          <span class="stat-label profile-plate-lv-label">Lv.</span>
+          <span class="stat-value profile-plate-lv-value">{{ level }}</span>
+          <span class="stat-label profile-plate-bp-label">BP</span>
+          <span class="stat-value profile-plate-bp-value">{{
+            profile.points
+          }}</span>
+
+          <div class="profile-plate-name" @click.stop="openNameDialog">
+            {{ profile.user_name }}
+          </div>
+
+          <div
+            v-if="
+              selectedVersionData.rank > 0 && selectedVersionData.dan_rank > 0
+            "
+            class="profile-plate-stageup"
+          >
+            <img :src="stageupMedalUrl" class="stageup-medal" />
+            <img :src="stageupNumberUrl" class="stageup-number" />
+          </div>
+
+          <div class="profile-plate-rate" @click.stop="openRatingDialog">
+            <WaccaRating
+              class="rate-value"
+              :rating="selectedVersionData.rating"
+            />
+          </div>
         </div>
       </div>
 
@@ -309,6 +310,12 @@
   min-height: 40px;
 }
 
+// The plate is scaled past its box, only the dome above it may stick out
+.profile-plate-wrapper {
+  overflow-x: clip;
+  display: flow-root;
+}
+
 .profile-plate {
   position: relative;
   width: 100%;
@@ -475,12 +482,6 @@
     display: block;
     font-size: 2.3cqw;
   }
-}
-
-.rate-label {
-  display: block;
-  font-size: 2.6cqw;
-  opacity: 0.9;
 }
 </style>
 
@@ -672,7 +673,6 @@ const ownsItem = useOwnedItems();
 
 // Color schemes ("My Color") are items, only owned ones can be picked.
 // The current one stays listed even if it's not owned so it still shows
-// Swatch: a mini touch ring showing where each color goes
 const colorSchemeOptions = computed(() =>
   waccaSymbolColors
     .filter(
@@ -937,24 +937,6 @@ const optionCategories = [
           ja: "プレイ"
         },
         options: [
-          {
-            id: 114,
-            label: {
-              en: "Bonus Effect",
-              ja: "ボーナス効果"
-            },
-            title: {
-              en: "Bonus Effect",
-              ja: "ボーナス効果"
-            },
-            description: {
-              en: "Choose whether bonus notes have their bonus effect.",
-              ja: "ボーナス効果の設定を行います。"
-            },
-            type: "toggle",
-            default: 1
-          },
-
           {
             id: 101,
             label: {
@@ -1490,15 +1472,8 @@ const optionCategories = [
             type: "buttons",
             default: 3,
             choices: numberChoices(1, 5)
-          }
-        ]
-      },
-      {
-        name: {
-          en: "Note Colors",
-          ja: "ノーツの色"
-        },
-        options: [
+          },
+
           {
             id: 205,
             label: {
@@ -1757,6 +1732,24 @@ const optionCategories = [
             },
             type: "toggle",
             default: 1
+          },
+
+          {
+            id: 114,
+            label: {
+              en: "Bonus Effect",
+              ja: "ボーナス効果"
+            },
+            title: {
+              en: "Bonus Effect",
+              ja: "ボーナス効果"
+            },
+            description: {
+              en: "Choose whether bonus notes have their bonus effect.",
+              ja: "ボーナス効果の設定を行います。"
+            },
+            type: "toggle",
+            default: 1
           }
         ]
       }
@@ -1791,6 +1784,24 @@ const optionCategories = [
             get choices() {
               return noteSoundOptions.value;
             }
+          },
+
+          {
+            id: 115,
+            label: {
+              en: "Character Voices",
+              ja: "キャラクター音声"
+            },
+            title: {
+              en: "Character Voices",
+              ja: "キャラクター音声"
+            },
+            description: {
+              en: "You can turn character voices on or off.",
+              ja: "プレイ中（演奏中）のキャラクター音声をＯＮ／ＯＦＦできます"
+            },
+            type: "toggle",
+            default: 1
           }
         ]
       },
@@ -1800,6 +1811,28 @@ const optionCategories = [
           ja: "ボリューム"
         },
         options: [
+          {
+            id: 1001,
+            label: {
+              en: "Headphone Volume",
+              ja: "ヘッドホンボリューム"
+            },
+            title: {
+              en: "Headphone Volume",
+              ja: "ヘッドホンボリューム"
+            },
+            description: {
+              en: "Set with the volume buttons on the cabinet, saved to your profile.",
+              ja: "筐体のボリュームボタンで調整した音量です。"
+            },
+            type: "slider",
+            default: 0,
+            min: 0,
+            max: 20,
+            step: 1,
+            format: (value) => value
+          },
+
           {
             id: 5,
             label: {
@@ -2005,53 +2038,6 @@ const optionCategories = [
             format: (value) => `${value * 10}%`
           }
         ]
-      },
-      {
-        name: {
-          en: "Other",
-          ja: "その他"
-        },
-        options: [
-          {
-            id: 115,
-            label: {
-              en: "Character Voices",
-              ja: "キャラクター音声"
-            },
-            title: {
-              en: "Character Voices",
-              ja: "キャラクター音声"
-            },
-            description: {
-              en: "You can turn character voices on or off.",
-              ja: "プレイ中（演奏中）のキャラクター音声をＯＮ／ＯＦＦできます"
-            },
-            type: "toggle",
-            default: 1
-          },
-
-          {
-            id: 1001,
-            label: {
-              en: "Master Volume",
-              ja: "マスタボリューム"
-            },
-            title: {
-              en: "Master Volume",
-              ja: "マスタボリューム"
-            },
-            description: {
-              en: "Set with the volume buttons on the cabinet, saved to your profile.",
-              ja: "筐体のボリュームボタンで調整した音量です。"
-            },
-            type: "slider",
-            default: 0,
-            min: 0,
-            max: 20,
-            step: 1,
-            format: (value) => value
-          }
-        ]
       }
     ]
   }
@@ -2077,8 +2063,16 @@ const isSavingOptions = ref(false);
 const saveError = ref("");
 
 function discardOptions() {
-  Object.assign(profile.value.options, savedOptions.value);
+  const current = profile.value.options;
+  for (const id of Object.keys(current)) {
+    if (!(id in savedOptions.value)) delete current[id];
+  }
+  Object.assign(current, savedOptions.value);
 }
+
+// Edits live in the shared profile (the home page shows the icon, the picker reads it),
+// so leaving with unsaved ones would show them elsewhere and come back as "saved"
+onBeforeUnmount(discardOptions);
 
 // Sends only the changed options. The server rejects the whole request if any option
 // is invalid, so on a violation those go back to their saved values and the rest stay
