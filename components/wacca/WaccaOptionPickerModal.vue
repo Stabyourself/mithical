@@ -12,17 +12,12 @@
         </v-card-title>
 
         <v-card-text>
-          <div v-if="errorMessage" class="picker-error">{{ errorMessage }}</div>
-
           <div class="box-items">
             <div
               v-for="item in ownedItems"
               :key="item.id"
               class="box-item"
-              :class="{
-                selected: item.id === currentValue,
-                saving: savingId === item.id
-              }"
+              :class="{ selected: item.id === currentValue }"
               @click="selectItem(item)"
             >
               <WaccaGachaItem
@@ -88,29 +83,11 @@
   &.selected {
     outline-color: rgb(var(--v-theme-primary));
   }
-
-  &.saving {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-}
-
-.picker-error {
-  color: rgb(var(--v-theme-error));
-  margin-bottom: 12px;
-}
-
-.picker-empty {
-  opacity: 0.7;
-  margin-bottom: 12px;
 }
 </style>
 
 <script setup>
-const runtimeConfig = useRuntimeConfig();
 const profile = useState("profile");
-const activeCard = useState("activeCard");
-const version = useState("version");
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -121,9 +98,6 @@ const props = defineProps({
 
 const emit = defineEmits(["closeModal"]);
 
-const savingId = ref(null);
-const errorMessage = ref("");
-
 const currentValue = computed(() => profile.value.options[props.optionId]);
 
 const ownedItems = computed(() => {
@@ -133,13 +107,6 @@ const ownedItems = computed(() => {
 });
 
 async function selectItem(item) {
-  if (savingId.value || item.id === currentValue.value) {
-    return;
-  }
-
-  savingId.value = item.id;
-  errorMessage.value = "";
-
   profile.value.options[props.optionId] = item.id;
   close();
 }

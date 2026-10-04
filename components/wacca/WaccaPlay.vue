@@ -53,13 +53,13 @@
                 {{ play.info.score }}
               </div>
 
-              <WaccaMedal :medal="medal" class="play-medal" />
+              <WaccaMedal :medal="medal" short class="play-medal" />
             </div>
           </div>
         </div>
       </div>
 
-      <Collapse :when="expanded">
+      <Collapse :when="expanded" class="play-collapse">
         <!-- details only get rendered once the card is opened -->
         <div v-if="rendered" :class="{ collapsible: !props.forceExpand }">
           <div class="play-detail">
@@ -120,7 +120,8 @@
         </div>
       </Collapse>
 
-      <div class="play-expand" v-if="!props.forceExpand">
+      <!-- stops the card's ripple, which a tap on the button would otherwise set off -->
+      <div class="play-expand" v-if="!props.forceExpand" v-ripple.stop>
         <v-btn rounded @click.prevent="expand" color="primary">
           <div v-if="!expanded">
             <v-icon>mdi-chevron-down</v-icon>
@@ -168,6 +169,11 @@ $cover-size: 100px;
   &:hover {
     background-color: #444;
     box-shadow: 0 0 10px rgb(var(--v-theme-primary));
+  }
+
+  // room under the cover for the expand button, see .play-expand
+  @media (max-width: 600px) {
+    min-height: $cover-size + 23px;
   }
 }
 
@@ -307,6 +313,11 @@ $cover-size: 100px;
   }
 }
 
+// slower than vue-collapsed's automatic duration
+.play-collapse {
+  transition: height 500ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+
 .collapsible {
   padding-bottom: 30px;
 }
@@ -417,7 +428,21 @@ $cover-size: 100px;
   transform: translate(-50%, 13px);
 
   :deep(.v-btn__content) {
-    transform: translateY(-6px);
+    transform: translate(-2px, -6px);
+  }
+
+  // on mobile it sits in the card's bottom left corner, under the cover
+  @media (max-width: 600px) {
+    left: 0;
+    transform: translateY(13px);
+
+    :deep(.v-btn) {
+      border-top-left-radius: 0;
+    }
+
+    :deep(.v-btn__content) {
+      transform: translate(-4px, -6px);
+    }
   }
 }
 

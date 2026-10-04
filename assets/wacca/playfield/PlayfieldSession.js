@@ -137,7 +137,7 @@ function rowRadius(row) {
 export default class PlayfieldSession {
   constructor() {
     this.listeners = new Set();
-    this.mirror = false;
+    this.mirror = 0;
     this.judgementOffset = 0;
     this.setFeatures({});
 
@@ -221,7 +221,8 @@ export default class PlayfieldSession {
     // Bonus notes fill the clear gauge more
     this.bonusEffect = option(options, 114, 1) === 1;
 
-    const mirror = option(options, 101, 0) === 1;
+    // 0 = none, 1 = L/R, 2 = U/D, 3 = both
+    const mirror = option(options, 101, 0);
     if (mirror !== this.mirror) {
       this.mirror = mirror;
       this.setChart(buildChart(this.source, mirror));

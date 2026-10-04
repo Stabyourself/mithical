@@ -290,8 +290,17 @@ function mod60(value) {
   return ((value % 60) + 60) % 60;
 }
 
-function mirrorPosition(pos, size) {
-  return size === 60 ? pos : mod60(30 - pos - size);
+const MIRROR_LR = 1;
+const MIRROR_UD = 2;
+
+function mirrorPosition(pos, size, mirror) {
+  if (size === 60) return pos;
+  const lr = (mirror & MIRROR_LR) !== 0;
+  const ud = (mirror & MIRROR_UD) !== 0;
+  if (lr && ud) return mod60(pos + 30);
+  if (lr) return mod60(30 - pos - size);
+  if (ud) return mod60(-pos - size);
+  return pos;
 }
 
 const MIRRORED_TYPES = {
@@ -299,12 +308,15 @@ const MIRRORED_TYPES = {
   slideCCW: "slideCW"
 };
 
-// What the preview draws, times in ms. Mirror flips left/right and swaps slide directions
+// What the preview draws, times in ms. A single flip also swaps slide directions
 function buildChart(chart, mirror) {
   const flip = (item) => {
-    if (mirror) item.pos = mirrorPosition(item.pos, item.size);
+    item.pos = mirrorPosition(item.pos, item.size, mirror);
     return item;
   };
+  // Mirror image, so directions swap (lr and ud together cancel out)
+  const reversed =
+    ((mirror & MIRROR_LR) !== 0) !== ((mirror & MIRROR_UD) !== 0);
 
   // Which reverse something shows in. Only the notes between middle and end show during one,
   // holds have to end in there too. Measure lines count on the edges, SaturnData does that too
@@ -325,7 +337,9 @@ function buildChart(chart, mirror) {
 
   const notes = chart.notes.map((source) => {
     const note = flip({
-      type: mirror ? (MIRRORED_TYPES[source.type] ?? source.type) : source.type,
+      type: reversed
+        ? (MIRRORED_TYPES[source.type] ?? source.type)
+        : source.type,
       time: chart.msAt(source.tick),
       scaled: chart.scaledAt(chart.msAt(source.tick)),
       pos: source.pos,
@@ -408,7 +422,7 @@ function buildChart(chart, mirror) {
       size: mask.size,
       direction: mask.direction
     });
-    if (mirror && toggle.direction !== "center") {
+    if (reversed && toggle.direction !== "center") {
       toggle.direction = toggle.direction === "cw" ? "ccw" : "cw";
     }
 

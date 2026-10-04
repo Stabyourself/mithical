@@ -153,131 +153,131 @@
         :inert="!chartOptionsOpen"
       >
         <div class="chartview-collapse-inner">
-        <div class="chartview-options">
-          <div
-            v-if="chartFeatures.type == 'unrolled'"
-            class="chartview-options-row"
-          >
-            <span class="chartview-options-label">2D Time Scale</span>
-            <v-btn-toggle
-              v-model="chartFeatures.linear"
-              mandatory
-              density="compact"
-              divided
-              class="chartview-toggle"
+          <div class="chartview-options">
+            <div
+              v-if="chartFeatures.type == 'unrolled'"
+              class="chartview-options-row"
             >
-              <v-btn
-                v-for="scale in TIME_SCALES"
-                :key="scale.value"
-                :value="scale.value"
-                :title="scale.description"
-                color="primary"
-                base-color="primary"
-                variant="flat"
-                size="small"
-                class="toggle-option"
-                >{{ scale.title }}</v-btn
+              <span class="chartview-options-label">2D Time Scale</span>
+              <v-btn-toggle
+                v-model="chartFeatures.linear"
+                mandatory
+                density="compact"
+                divided
+                class="chartview-toggle"
               >
-            </v-btn-toggle>
-          </div>
+                <v-btn
+                  v-for="scale in TIME_SCALES"
+                  :key="scale.value"
+                  :value="scale.value"
+                  :title="scale.description"
+                  color="primary"
+                  base-color="primary"
+                  variant="flat"
+                  size="small"
+                  class="toggle-option"
+                  >{{ scale.title }}</v-btn
+                >
+              </v-btn-toggle>
+            </div>
 
-          <div class="chartview-options-row">
-            <span class="chartview-options-label">Display</span>
-            <v-btn-toggle
-              v-model="chartFeatures.userOptions"
-              mandatory
-              density="compact"
-              divided
-              class="chartview-toggle"
-            >
-              <v-btn
-                v-for="skill in DISPLAY_TYPES"
-                :key="skill.value"
-                :value="skill.value"
-                :title="skill.description"
-                color="primary"
-                base-color="primary"
-                variant="flat"
-                size="small"
-                class="toggle-option"
-                >{{ skill.title }}</v-btn
+            <div class="chartview-options-row">
+              <span class="chartview-options-label">Display</span>
+              <v-btn-toggle
+                v-model="chartFeatures.userOptions"
+                mandatory
+                density="compact"
+                divided
+                class="chartview-toggle"
               >
-            </v-btn-toggle>
-          </div>
+                <v-btn
+                  v-for="skill in DISPLAY_TYPES"
+                  :key="skill.value"
+                  :value="skill.value"
+                  :title="skill.description"
+                  color="primary"
+                  base-color="primary"
+                  variant="flat"
+                  size="small"
+                  class="toggle-option"
+                  >{{ skill.title }}</v-btn
+                >
+              </v-btn-toggle>
+            </div>
 
-          <div
-            v-for="group in CHART_TOGGLE_GROUPS"
-            :key="group.label"
-            class="chartview-options-row"
-          >
-            <span class="chartview-options-label">{{ group.label }}</span>
-            <v-btn-toggle
-              :model-value="enabledToggles(group)"
-              multiple
-              density="compact"
-              divided
-              class="chartview-toggle"
-              @update:model-value="(keys) => setEnabledToggles(group, keys)"
+            <div
+              v-for="group in CHART_TOGGLE_GROUPS"
+              :key="group.label"
+              class="chartview-options-row"
             >
-              <v-btn
-                v-for="toggle in group.toggles"
-                :key="toggle.key"
-                :value="toggle.key"
-                :title="toggle.title"
-                color="primary"
-                base-color="primary"
-                variant="flat"
-                size="small"
-                class="toggle-option"
-                >{{ toggle.label }}</v-btn
+              <span class="chartview-options-label">{{ group.label }}</span>
+              <v-btn-toggle
+                :model-value="enabledToggles(group)"
+                multiple
+                density="compact"
+                divided
+                class="chartview-toggle"
+                @update:model-value="(keys) => setEnabledToggles(group, keys)"
               >
-            </v-btn-toggle>
-          </div>
+                <v-btn
+                  v-for="toggle in group.toggles"
+                  :key="toggle.key"
+                  :value="toggle.key"
+                  :title="toggle.title"
+                  color="primary"
+                  base-color="primary"
+                  variant="flat"
+                  size="small"
+                  class="toggle-option"
+                  >{{ toggle.label }}</v-btn
+                >
+              </v-btn-toggle>
+            </div>
 
-          <div class="chartview-options-row">
-            <span class="chartview-options-label">Autoplay</span>
-            <v-btn-toggle
-              v-model="chartFeatures.bot"
-              mandatory
-              density="compact"
-              divided
-              class="chartview-toggle"
-            >
-              <v-btn
-                v-for="skill in BOT_SKILLS"
-                :key="skill.value"
-                :value="skill.value"
-                :title="skill.description"
-                color="primary"
-                base-color="primary"
-                variant="flat"
-                size="small"
-                class="toggle-option"
-                >{{ skill.title }}</v-btn
+            <div class="chartview-options-row">
+              <span class="chartview-options-label">Autoplay</span>
+              <v-btn-toggle
+                v-model="chartFeatures.bot"
+                mandatory
+                density="compact"
+                divided
+                class="chartview-toggle"
               >
-            </v-btn-toggle>
-          </div>
+                <v-btn
+                  v-for="skill in BOT_SKILLS"
+                  :key="skill.value"
+                  :value="skill.value"
+                  :title="skill.description"
+                  color="primary"
+                  base-color="primary"
+                  variant="flat"
+                  size="small"
+                  class="toggle-option"
+                  >{{ skill.title }}</v-btn
+                >
+              </v-btn-toggle>
+            </div>
 
-          <div class="chartview-scroll-options-row">
-            <span class="chartview-options-label">Note Speed</span>
-            <v-slider
-              v-model="noteSpeed"
-              :min="0"
-              :max="50"
-              :step="1"
-              :label="`${formatSpeed(noteSpeed)}`"
-              density="compact"
-              hide-details
-              color="primary"
-              thumb-label
-              class="lab-speed"
-            >
-              <template #thumb-label="{ modelValue }">{{
-                formatSpeed(modelValue)
-              }}</template>
-            </v-slider>
+            <div class="chartview-scroll-options-row">
+              <span class="chartview-options-label">Note Speed</span>
+              <v-slider
+                v-model="noteSpeed"
+                :min="0"
+                :max="50"
+                :step="1"
+                :label="`${formatSpeed(noteSpeed)}`"
+                density="compact"
+                hide-details
+                color="primary"
+                thumb-label
+                class="lab-speed"
+              >
+                <template #thumb-label="{ modelValue }">{{
+                  formatSpeed(modelValue)
+                }}</template>
+              </v-slider>
+            </div>
           </div>
-        </div>
         </div>
       </div>
 
