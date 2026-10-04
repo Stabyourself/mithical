@@ -13,7 +13,7 @@ More WebUI features coming your way...
 - *Reworked the *Rating* tab to show more detailed border information*
 - *Fixed a rendering issue on mobile in the *Recent Plays* tab*
 - *Improved input registration in the *Chart View* section*
-- *Adjusted *Chart View* so that songs released after 8-30-2026 must be played one time or unlocked in order to obtain their chart view*
+- *Adjusted *Chart View* so that songs released after *2026-08-30* must be played one time or unlocked in order to obtain their chart view*
 ---
 
 That's all for today. Please stay tuned for future updates!
