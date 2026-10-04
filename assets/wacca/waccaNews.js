@@ -17,8 +17,6 @@ More WebUI features coming your way...
 ---
 
 That's all for today. Please stay tuned for future updates!
-
-
 ![Doro](/wacca/img/news/doro.webp)
 `
   },
