@@ -2,22 +2,24 @@ const waccaNews = [
     {
     title: "**[Notice]** WebUI Updates, Settings page",
     date: "2026-10-04",
-    body: `Hello again! More WebUI features coming your way...
+    body: `Hello again!
+    
+More WebUI features coming your way...
 
 
 ##### *Changelog (2026-10-03)*
 ---
-- *Added *Settings* tab so users can change their in-game settings and cosmetics from the WebUI. (Changes will appear after saving on the following card in)*
-- *Reworked *Rating* tab to show more detailed border information*
+- *Added the *Settings* tab so users can change their in-game settings and cosmetics from the WebUI. (Changes will appear after saving on the following card in)*
+- *Reworked the *Rating* tab to show more detailed border information*
 - *Fixed a rendering issue on mobile in the *Recent Plays* tab
 - *Improved input registration in the *Chart View* section*
-- *Adjusted *Chart View* so that songs released after 9-30-2026 need to be played one time or unlocked in order to obtain their chart view*
+- *Adjusted *Chart View* so that songs released after 8-30-2026 must be played one time or unlocked in order to obtain their chart view*
 ---
 
 That's all for today. Please stay tuned for future updates!
 
 
-![Luin](/wacca/img/news/luin.webp)
+![Doro](/wacca/img/news/doro.webp)
 `
   },
   {
