@@ -1,7 +1,7 @@
 const waccaNews = [
   {
     title: "**[Notice]** WebUI Updates and Improvements, Settings Page",
-    date: "2026-10-05",
+    date: "2026-10-04",
     body: `Hello again!
 
 More WebUI features coming your way...
