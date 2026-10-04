@@ -1,6 +1,6 @@
 const waccaNews = [
     {
-    title: "**[Notice]** WebUI Updates, Settings page",
+    title: "**[Notice]** WebUI Updates and Improvements, Settings Page",
     date: "2026-10-04",
     body: `Hello again!
     
@@ -21,7 +21,7 @@ That's all for today. Please stay tuned for future updates!
 `
   },
   {
-    title: "**[Notice]** WebUI Updates and Improvements",
+    title: "**[Notice]** WebUI Updates and Improvements, Chart View",
     date: "2026-09-30",
     body: `Hey everyone! Just keeping you up to date on changes that have been going on in the background. Here's a quick rundown of the latest WebUI updates...
 
