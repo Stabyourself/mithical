@@ -1,13 +1,13 @@
 const waccaNews = [
     {
     title: "**[Notice]** WebUI Updates and Improvements, Settings Page",
-    date: "2026-10-04",
+    date: "2026-10-05",
     body: `Hello again!
     
 More WebUI features coming your way...
 
 
-##### *Changelog (2026-10-03)*
+##### *Changelog (2026-10-04)*
 ---
 - *Added *Settings* tab so users can change their in-game settings and cosmetics from the WebUI. (Changes will appear after saving on the following card in)*
 - *Reworked the *Rating* tab to show more detailed border information*
