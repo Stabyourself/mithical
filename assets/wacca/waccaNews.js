@@ -1,5 +1,26 @@
 const waccaNews = [
   {
+    title: "**[Notice]** WebUI Updates and Improvements, Settings Page",
+    date: "2026-10-05",
+    body: `Hello again!
+
+More WebUI features coming your way...
+
+
+##### *Changelog (2026-10-04)*
+---
+- *Added [Settings](/settings) tab so users can change their in-game settings and cosmetics from the WebUI.*
+- *Reworked the [Rating](/rating) tab to show more detailed border information*
+- *Fixed a rendering issue on mobile in the [Recent Plays](/recent) tab*
+- *Improved input registration in the song [Chart View](/songs) section*
+- *Adjusted the Chart View section so that songs released after *2026-08-30* must be played one time or unlocked in order to obtain their chart view*
+---
+
+That's all for today. Please stay tuned for future updates!
+![Doro](/wacca/img/news/doro.webp)
+`
+  },
+  {
     title: "**[Notice]** WebUI Updates and Improvements",
     date: "2026-09-30",
     body: `Hey everyone! Just keeping you up to date on changes that have been going on in the background. Here's a quick rundown of the latest WebUI updates...
@@ -29,7 +50,7 @@ That's all for today. Please stay tuned for future updates!
     body: `## Crazy weekend huh?
 
 Over 40 players flew out to Cincinnati, Ohio, this past weekend to compete in one of the most talent-stacked WACCA tournaments to date.
-***The Devil Incarnate 2***. 
+***The Devil Incarnate 2***.
 
 Players faced off against each other in a two-day bracket, with the first day having players go head-to-head in *WACCA Reverse*.
 The Top 8 players then moved on to an exclusive sightreading tournament for day two.
@@ -55,7 +76,7 @@ ___
 ## 「 The Devil Incarnate 2 」Sightread Tournament 2
 
 Players who were not the Tournament Organizer came back the following day to compete in a Double Elimination sightreading tournament, containing
-over 30 custom charts created by the TDI2 Fumen Team. 
+over 30 custom charts created by the TDI2 Fumen Team.
 
 You can watch the VOD for day two of the tournament [here](https://www.twitch.tv/arcadelegacy/videos). Thanks again to Arcade Legacy.
 
@@ -101,8 +122,8 @@ Finally, new original jacket art for:
 
 ![stardust](/wacca/img/news/stardust_1.webp)
 
-You might be seeing a pattern at this point, but this song will also come to WACCA Plus in a future update. Thank you to riklio and SaintSFGil for the amazing art. 
-Make sure to support both of them on their socials! 
+You might be seeing a pattern at this point, but this song will also come to WACCA Plus in a future update. Thank you to riklio and SaintSFGil for the amazing art.
+Make sure to support both of them on their socials!
 
 *[riklio on Twitter](https://x.com/rik_lio)*
 
