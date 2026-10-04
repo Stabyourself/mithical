@@ -11,7 +11,7 @@ More WebUI features coming your way...
 ---
 - *Added the *Settings* tab so users can change their in-game settings and cosmetics from the WebUI. (Changes will appear after saving on the following card in)*
 - *Reworked the *Rating* tab to show more detailed border information*
-- *Fixed a rendering issue on mobile in the *Recent Plays* tab
+- *Fixed a rendering issue on mobile in the *Recent Plays* tab*
 - *Improved input registration in the *Chart View* section*
 - *Adjusted *Chart View* so that songs released after 8-30-2026 must be played one time or unlocked in order to obtain their chart view*
 ---
