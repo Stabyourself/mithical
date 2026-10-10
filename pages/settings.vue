@@ -11,6 +11,7 @@
             <WaccaIcon :icon="iconId" />
           </div>
 
+          <span class="profile-plate-title-label">TITLE</span>
           <div class="profile-plate-title" @click.stop="openPicker('title')">
             {{ titleText }}
           </div>
@@ -36,6 +37,7 @@
             <img :src="stageupNumberUrl" class="stageup-number" />
           </div>
 
+          <span class="profile-plate-rate-label">Rate:</span>
           <div class="profile-plate-rate" @click.stop="openRatingDialog">
             <WaccaRating
               class="rate-value"
@@ -362,18 +364,29 @@
   }
 }
 
+.profile-plate-title-label {
+  position: absolute;
+  left: 26%;
+  top: 28.5%;
+  font-size: 1.5cqw;
+  font-weight: 500;
+  color: #909090;
+  font-family: "ring_font", sans-serif;
+}
+
 .profile-plate-title {
   position: absolute;
   left: 31%;
-  top: 27.2%;
-  max-width: 32%;
-  font-size: 1.9cqw;
+  top: 27.5%;
+  max-width: 31.5%;
+  font-size: 1.6cqw;
   font-weight: 600;
   color: #574e4e;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+  font-family: "plate_font", sans-serif;
 
   &:hover {
     text-decoration: underline;
@@ -382,37 +395,41 @@
 
 .stat-label {
   position: absolute;
-  font-size: 1.8cqw;
+  font-size: 1.4cqw;
   font-weight: 500;
-  opacity: 0.75;
-  color: #bbb;
+  color: #909090;
+  font-family: "ring_font", sans-serif;
 }
 
 .stat-value {
   position: absolute;
-  font-size: 2.5cqw;
+  font-size: 2cqw;
   font-weight: 700;
   color: #574e4e;
+  font-family: "ring_font", sans-serif;
+  text-align: right;
 }
 
 .profile-plate-lv-label {
-  left: 31%;
-  bottom: 43%;
+  left: 31.25%;
+  bottom: 45%;
 }
 
 .profile-plate-lv-value {
-  left: 35.5%;
-  bottom: 41.5%;
+  left: 34.5%;
+  bottom: 43.5%;
+  width: 5%;
 }
 
 .profile-plate-bp-label {
-  left: 41.7%;
-  bottom: 43%;
+  left: 42%;
+  bottom: 45%;
 }
 
 .profile-plate-bp-value {
   left: 45.5%;
-  bottom: 41.5%;
+  bottom: 43.5%;
+  width: 4%;
 }
 
 .profile-plate-name {
@@ -422,12 +439,13 @@
   max-width: 32%;
   font-size: 3cqw;
   font-weight: 600;
-  color: #1a1a2e;
+  color: #13142d;
   paint-order: stroke fill;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+  font-family: "plate_font", sans-serif;
 
   &:hover {
     text-decoration: underline;
@@ -460,14 +478,25 @@
   }
 }
 
+.profile-plate-rate-label {
+  position: absolute;
+  right: 16.75%;
+  bottom: 16.5%;
+  color: white;
+  font-family: "ring_font", sans-serif;
+  font-size: 1.5cqw;
+  letter-spacing: 0.5px;
+}
+
 .profile-plate-rate {
   position: absolute;
-  right: 15%;
+  right: 13.5%;
   bottom: 3.5%;
   text-align: center;
   color: white;
   text-shadow: 0 0.15cqw 0.4cqw rgba(0, 0, 0, 0.9);
   cursor: pointer;
+  width: 8%;
 
   &:hover {
     filter: brightness(1.15);
@@ -475,7 +504,7 @@
 
   .rate-value {
     display: block;
-    font-size: 2.3cqw;
+    font-size: 2.2cqw;
   }
 }
 </style>

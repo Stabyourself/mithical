@@ -17,24 +17,18 @@
 
 // Ring score digits and its "SCORE" label, only the glyphs those need
 @font-face {
-  font-family: "score_font";
-  font-style: normal;
-  font-weight: 100 900;
-  src: url("~/assets/font/score_font.woff2") format("woff2");
-}
-
-@font-face {
   font-family: "label_font";
   font-style: normal;
   font-weight: 100 900;
   src: url("~/assets/font/label_font.woff2") format("woff2");
 }
 
+// Used on user plates for player name.
 @font-face {
-  font-family: "RateFont";
+  font-family: "plate_font";
   font-style: normal;
-  font-weight: 400;
-  src: url("~/assets/font/RateFont.woff2") format("woff2");
+  font-weight: 100 900;
+  src: url("~/assets/font/plate_font.woff2") format("woff2");
 }
 
 // Page background pattern per theme, see app.vue
