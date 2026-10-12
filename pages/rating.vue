@@ -48,6 +48,14 @@
                     </div>
 
                     <div class="rating-rating" v-if="sheet.rating">
+                      <v-icon
+                        v-if="sheet.nextScore === undefined"
+                        class="rating-star"
+                        color="amber"
+                        size="x-small"
+                      >
+                        mdi-star
+                      </v-icon>
                       <WaccaRating
                         :rating="sheet.rating"
                         :divide="50"
@@ -300,8 +308,15 @@
 }
 
 .rating-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-weight: 700;
   font-size: 1.5em;
+}
+
+.rating-star {
+  color: #ffc107;
 }
 
 .cutoff {

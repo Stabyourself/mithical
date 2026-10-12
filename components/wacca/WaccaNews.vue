@@ -17,7 +17,11 @@
             :baseHeight="peekHeight"
             class="news-body-collapse"
           >
-            <div class="news-body" v-html="renderedBody"></div>
+            <div
+              class="news-body"
+              v-html="renderedBody"
+              @click="onBodyClick"
+            ></div>
           </Collapse>
         </div>
       </div>
@@ -347,6 +351,18 @@ const formattedDate = computed(() => {
     day: "numeric"
   });
 });
+
+// v-html links are plain <a> tags, so route internal ones through the router
+// to avoid a full page reload.
+function onBodyClick(e) {
+  const a = e.target.closest("a");
+  const href = a?.getAttribute("href");
+  if (!href?.startsWith("/") || a.classList.contains("news-lightbox-link")) {
+    return;
+  }
+  e.preventDefault();
+  navigateTo(href);
+}
 
 let lightbox;
 
