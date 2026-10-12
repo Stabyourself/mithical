@@ -7202,6 +7202,70 @@ const waccaTitles = [
     name: "Teamwork makes the dream work",
     acquisition: "???",
     acquisitionEnglish: "???"
+  },
+  {
+    id: 404134,
+    name: "AIZO",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    id: 404137,
+    name: "春擬き | Harumodoki",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    id: 404139,
+    name: "Hello",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },  
+  {
+    id: 404141,
+    name: "君の知らない物語 | Kimi no Shiranai Monogatari",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    id: 404142,
+    name: "Otonoke",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },  
+  {
+    id: 404144,
+    name: "Sorairo Days",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },  
+  {
+    id: 404145,
+    name: "Super Driver",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },  
+  {
+    id: 404147,
+    name: "UNDEAD",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   }
 ];
 
