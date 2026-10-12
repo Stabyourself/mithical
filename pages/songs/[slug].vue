@@ -1024,8 +1024,8 @@ const chartHiddenReason = computed(() => {
   if (!sheet) return null;
 
   if (sheet.hideUntilOnePlayed) {
-    const scores = profile.value?.songs[song.value.id]?.scores[chartView.value] ?? [];
-    if (!scores.some((score) => (score?.play_count ?? 0) > 0)) {
+    const score = profile.value?.songs[song.value.id]?.scores[chartView.value];
+    if ((score?.play_count ?? 0) <= 0) {
       return "This chart's preview unlocks once you've played this difficulty.";
     }
   }
