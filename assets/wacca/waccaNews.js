@@ -12,7 +12,7 @@ Coming at you in the first arc of this ~~season~~ update are:
 - *Sorairo Days* from *Tengan Toppa Gurren Lagann*
 - *Kimi no Shiranai Monogatari* from *Bakemonogatari*
 - *UNDEAD* from *Monogatari Series: Off and Monster Season*
-And it seems like we got some fillers episodes this season too huh:
+And it seems like we got some filler episodes this season too huh?:
 - *Otonoke* from *DAN DA DAN*
 - *Super Driver* from *The Melancholy of Haruhi Suzumiya*
 ![anime_1](/wacca/img/news/anime_1.webp)
@@ -22,16 +22,16 @@ And it seems like we got some fillers episodes this season too huh:
 Also:
 - *Fatima* **[INFERNO]** from *Steins;Gate 0*
 ![anime_4](/wacca/img/news/anime_4.webp)
-Besides these, we have some translations notes in the fans subs. Seems like:
+Besides these, we have some translation notes in the fans subs. Seems like:
 ---
-- *Super Abnormia* [Inferno] has been uprated to **14.8**. Enough people had difficulty with it compared to sys so now we have two 14.8s for now
-- *cloud IX* [Expert] has been changed to **13.8**. Why now? Well, those who know and all that I can't be specific.
-- *Chatter Chatter* [Expert] is now **12.7**. Be sure to try it if you haven't if your line for not playing things is under 12+
-- *Poppin Shower* [Inferno] is now **13.6**. It can go up again if Tiiger can't 990 it by 3DI
+- *Super Abnormia* [Inferno] has been uprated to **14.8**. Enough people had difficulty with it compared to sys so now we have two 14.8s.
+- *cloud IX* [Expert] has been changed to **13.8**. Why now? Well, those who know and all that, I can't be specific.
+- *Chatter Chatter* [Expert] is now **12.7**. Be sure to try it if you haven't, if your line for not playing things is under 12+
+- *Poppin Shower* [Inferno] is now **13.6**. It can go up again if Tiiger can't 990 it by 3DI.
 and other minor adjustments and changes
 ---
 ALSO
-ngobody. is currently doing a census on the english community please fill it out when you get the oppurtunity. https://forms.gle/orsm68aad8sFYRmH7
+ngobody. is currently doing a census on the English community please fill it out when you get the opportunity. https://forms.gle/orsm68aad8sFYRmH7
 For now that's all!
 ###### **Some content may have to be unlocked first*
 `
