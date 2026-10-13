@@ -15,7 +15,7 @@ Coming at you in the first arc of this ~~season~~ update are:
 - *Kimi no Shiranai Monogatari* from *Bakemonogatari*
 - *UNDEAD* from *Monogatari Series: Off and Monster Season*
 
-And it seems like we got some filler episodes this season too huh?:
+It seems like we got some filler episodes this season too:
 
 - *Otonoke* from *DAN DA DAN*
 - *Super Driver* from *The Melancholy of Haruhi Suzumiya*
@@ -23,15 +23,18 @@ And it seems like we got some filler episodes this season too huh?:
 ![anime_1](/wacca/img/news/anime_1.webp)
 ![anime_2](/wacca/img/news/anime_2.webp)
 ![anime_3](/wacca/img/news/anime_3.webp)
+
 ---
+
 Also:
 
 - *Fatima* **[INFERNO]** from *Steins;Gate 0*
 ![anime_4](/wacca/img/news/anime_4.webp)
 
-We also have some translation notes in the fan subs:
-
 ---
+
+There were also some translation notes in the fan subs:
+
 - *Super Abnormia* **[INFERNO]** has been uprated to **14.8**. Enough people had difficulty with it compared to sys/dei_cide so now we have two 14.8s.
 - *cloud IX* **[EXPERT]** has been changed to **13.8**. Why now? Well, those who know and all that, I can't be specific.
 - *Chatter Chatter* **[EXPERT]** is now **12.7**. Be sure to try it if you haven't, if your line for not playing things is under 12+.
