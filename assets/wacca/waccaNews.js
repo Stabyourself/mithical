@@ -1,8 +1,8 @@
 const waccaNews = [
     {
-    title: "Anime Update Wave 1",
+    title: "**[Content]** Anime Update",
     date: "2026-10-17",
-    body: `# **LEGALLY OBLIGATORY LARGE TEXT LINE**
+    body: `# **OBLIGATORY LARGE TEXT LINE**
     
 Hello, you guys remember April right? There was that charting contest and we voted and stuff, well we appreciate your patience cause it's finally here!
 
@@ -30,12 +30,15 @@ Also:
 ![anime_4](/wacca/img/news/anime_4.webp)
 
 We also have some translation notes in the fan subs:
+
 ---
-- *Super Abnormia* [Inferno] has been uprated to **14.8**. Enough people had difficulty with it compared to sys so now we have two 14.8s.
-- *cloud IX* [Expert] has been changed to **13.8**. Why now? Well, those who know and all that, I can't be specific.
-- *Chatter Chatter* [Expert] is now **12.7**. Be sure to try it if you haven't, if your line for not playing things is under 12+
-- *Poppin Shower* [Inferno] is now **13.6**. It can go up again if Tiiger can't 990 it by 3DI.
+- *Super Abnormia* **[INFERNO]** has been uprated to **14.8**. Enough people had difficulty with it compared to sys/dei_cide so now we have two 14.8s.
+- *cloud IX* **[EXPERT]** has been changed to **13.8**. Why now? Well, those who know and all that, I can't be specific.
+- *Chatter Chatter* **[EXPERT]** is now **12.7**. Be sure to try it if you haven't, if your line for not playing things is under 12+.
+- *Poppin Shower* **[INFERNO]** is now **13.6**. It can go up again if Tiiger can't 990 it by 3DI.
+
 and other minor adjustments and changes
+
 ---
 
 That's all for now!
@@ -246,7 +249,7 @@ Tune into the stream on September 12th, 2026 @ 4PM PST/7PM EST. You won't want t
 `
   },
   {
-    title: "Touhou Update Wave 2",
+    title: "**[Content]** Touhou Update Wave 2",
     date: "2026-08-31",
     body: `# The Incident Continues...
 \
