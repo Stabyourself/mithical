@@ -198,6 +198,10 @@ function getTooltip(category, item) {
 const filteredItems = computed(() => {
   return categories[activeCategory.value].items.filter((item) => {
     let owned = isOwned(item);
+    // secret items stay out of the list until the player has them
+    if (item.hideUntilObtained && !owned) {
+      return false;
+    }
     if (owned && toggleOwneds.value.includes(0)) {
       return true;
     }
