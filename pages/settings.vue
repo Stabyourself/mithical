@@ -11,8 +11,12 @@
             <WaccaIcon :icon="iconId" />
           </div>
 
-          <div class="profile-plate-title" @click.stop="openPicker('title')">
-            {{ titleText }}
+          <div
+            class="profile-plate-title plate-editable"
+            @click.stop="openPicker('title')"
+          >
+            <span class="plate-editable-text">{{ titleText }}</span>
+            <v-icon class="plate-editable-icon" size="0.8em">mdi-pencil</v-icon>
           </div>
 
           <span class="stat-label profile-plate-lv-label">Lv.</span>
@@ -22,8 +26,12 @@
             profile.points
           }}</span>
 
-          <div class="profile-plate-name" @click.stop="openNameDialog">
-            {{ profile.user_name }}
+          <div
+            class="profile-plate-name plate-editable"
+            @click.stop="openNameDialog"
+          >
+            <span class="plate-editable-text">{{ profile.user_name }}</span>
+            <v-icon class="plate-editable-icon" size="0.8em">mdi-pencil</v-icon>
           </div>
 
           <div
@@ -369,14 +377,37 @@
   max-width: 32%;
   font-size: 1.9cqw;
   font-weight: 600;
-  color: #574e4e;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  --text-color: #574e4e;
+}
+
+// Text that opens an editor: lightens and shows a pencil on hover
+.plate-editable {
+  color: var(--text-color);
   cursor: pointer;
 
+  .plate-editable-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Outside the text box so it doesn't take space from the name
+  .plate-editable-icon {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0.2em;
+    opacity: 0;
+  }
+
   &:hover {
-    text-decoration: underline;
+    color: color-mix(in srgb, var(--text-color) 65%, white);
+
+    .plate-editable-icon {
+      opacity: 1;
+    }
   }
 }
 
@@ -422,16 +453,8 @@
   max-width: 32%;
   font-size: 3cqw;
   font-weight: 600;
-  color: #1a1a2e;
+  --text-color: #1a1a2e;
   paint-order: stroke fill;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .name-save-error {
