@@ -94,7 +94,7 @@ const CENTER_LABELS = {
 
 // Fonts the game uses, see wacca.scss
 const JUDGEMENT_FONT = '"judgement_font", sans-serif';
-const SCORE_FONT = '"score_font", "ring_font", sans-serif';
+const SCORE_FONT = '"judgement_font", "ring_font", sans-serif';
 const LABEL_FONT = '"label_font", "ring_font", sans-serif';
 // Same gradients as the recent plays judgement labels
 const JUDGEMENT_STYLES = {
@@ -207,7 +207,7 @@ const RING_TEXT = {
   count: { angle: -132.4, pitch: 0.0587, color: "#f769bd" },
   countWord: { angle: -125, size: 0.042, pitch: 0.0341 },
   label: { angle: -103.7, size: 0.0311, color: "#b45121" },
-  score: { baseline: 0.9829, size: 0.0456, pitch: 0.0422, color: "#f8a12a" },
+  score: { baseline: 0.986, size: 0.0456, pitch: 0.0422, color: "#f8a12a" },
   difficulty: {
     angle: -77.4,
     size: 0.0427,
@@ -218,7 +218,7 @@ const RING_TEXT = {
   },
   title: {
     angle: -49.6,
-    end: -5,
+    end: 180, // loop around the ring like it would in-game
     size: 0.042,
     pitch: 0.041,
     color: TITLE_COLOR
