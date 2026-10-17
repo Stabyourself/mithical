@@ -1,7 +1,7 @@
 const waccaNews = [
     {
     title: "**[Content]** Anime Update",
-    date: "2026-10-17",
+    date: "2026-10-18",
     body: `# **OBLIGATORY LARGE TEXT LINE**
     
 Hello, you guys remember April right? There was that charting contest and we voted and stuff, well we appreciate your patience cause it's finally here!
