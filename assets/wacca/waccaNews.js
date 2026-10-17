@@ -48,6 +48,9 @@ along with other minor adjustments and changes
 That's all for now! Enjoy!
 
 ###### **Some content may have to be unlocked first*
+ 
+ 
+⠀  
 `
   },
   {
@@ -296,6 +299,8 @@ Last but not least, Lunatic mode has been unlocked
 Please look forward to it! Hopefully there won't be any strange incidents involving silent songs that m̴i̸g̶h̶t̴ ̷c̴a̴u̴s̴e̵ ̶a̸n̴y̵ ̷w̷e̸i̸r̴d̶ g̷̛̃̈́̃ľ̴̋̔͝i̸̊̓̅͠t̸c̷͂͑̄͝h̴͋͘͜è̶͗̉͘s̵̒̽̌͑.̶́̿͒̔.̷̑͂. C͔HECK THE R̶̤̣̽̀ECƠ̶̏̌̈Ȓ̴͝DS
 
 ###### **Some content may have to be unlocked first*
+
+⠀
 `
   }
 ];
