@@ -1,4 +1,59 @@
 const waccaNews = [
+    {
+    title: "**[Content]** Anime Update",
+    date: "2026-10-18",
+    body: `# **OBLIGATORY LARGE TEXT LINE**
+    
+Hello, you guys remember April right? There was that charting contest and we voted and stuff, well we appreciate your patience cause it's finally here!
+
+Coming at you in the first arc of this ~~season~~ update are:
+
+- *AIZO* from *Jujutsu Kaisen*
+- *Harumodoki* from *Yahari Ore no Seishun Love Come wa Machigatteiru*
+- *Hello* from *CITY THE ANIMATION*
+- *Sorairo Days* from *Tengan Toppa Gurren Lagann*
+- *Kimi no Shiranai Monogatari* from *Bakemonogatari*
+- *UNDEAD* from *Monogatari Series: Off and Monster Season*
+
+It seems like we got some filler episodes this season too:
+
+- *Otonoke* from *DAN DA DAN*
+- *Super Driver* from *The Melancholy of Haruhi Suzumiya*
+
+![anime_1](/wacca/img/news/anime_1.webp)
+![anime_2](/wacca/img/news/anime_2.webp)
+![anime_3](/wacca/img/news/anime_3.webp)
+
+---
+
+Also:
+
+- *Fatima* **[INFERNO]** from *Steins;Gate 0*
+![anime_4](/wacca/img/news/anime_4.webp)
+
+---
+
+There were also some translation notes in the fan subs:
+
+- *Super Abnormia* **[INFERNO]** has been uprated to **14.8**. Enough people had difficulty with it compared to *sys/dei_cide* so now we have two 14.8s.
+- *cloud IX* **[EXPERT]** has been changed to **13.8**. Why now? Well, those who know and all that, I can't be specific.
+- *Chatter Chatter* **[EXPERT]** is now **12.7**. Be sure to try it if you haven't, if your line for not playing things is under 12+.
+- *Poppin Shower* **[INFERNO]** is now **13.6**. It can go up again if Tiiger can't 990 it by 3DI.
+- All songs currently locked behind a gate (including base game songs!) can now be purchased with WP.
+Just in time to play properly rated *cloud IX!*
+
+along with other minor adjustments and changes
+
+---
+
+That's all for now! Enjoy!
+
+###### **Some content may have to be unlocked first*
+ 
+ 
+⠀  
+`
+  },
   {
     title: "**[Notice]** WebUI Updates and Improvements, Settings Page",
     date: "2026-10-04",
@@ -202,7 +257,7 @@ Tune into the stream on September 12th, 2026 @ 4PM PST/7PM EST. You won't want t
 `
   },
   {
-    title: "Touhou Update Wave 2",
+    title: "**[Content]** Touhou Update Wave 2",
     date: "2026-08-31",
     body: `# The Incident Continues...
 \
@@ -245,6 +300,8 @@ Last but not least, Lunatic mode has been unlocked
 Please look forward to it! Hopefully there won't be any strange incidents involving silent songs that m̴i̸g̶h̶t̴ ̷c̴a̴u̴s̴e̵ ̶a̸n̴y̵ ̷w̷e̸i̸r̴d̶ g̷̛̃̈́̃ľ̴̋̔͝i̸̊̓̅͠t̸c̷͂͑̄͝h̴͋͘͜è̶͗̉͘s̵̒̽̌͑.̶́̿͒̔.̷̑͂. C͔HECK THE R̶̤̣̽̀ECƠ̶̏̌̈Ȓ̴͝DS
 
 ###### **Some content may have to be unlocked first*
+
+⠀
 `
   }
 ];
