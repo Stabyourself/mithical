@@ -15181,7 +15181,7 @@ const waccaSongs = [
         charter: "g♥rmous × ng★body."
       },
       {
-        difficulty: 12.6,
+        difficulty: 12.7,
         gameVersion: 400,
         charter: "g♥rmous × ng★body."
       },
