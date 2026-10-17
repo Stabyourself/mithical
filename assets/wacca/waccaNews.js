@@ -40,7 +40,7 @@ There were also some translation notes in the fan subs:
 - *Chatter Chatter* **[EXPERT]** is now **12.7**. Be sure to try it if you haven't, if your line for not playing things is under 12+.
 - *Poppin Shower* **[INFERNO]** is now **13.6**. It can go up again if Tiiger can't 990 it by 3DI.
 - All songs up to now that were locked behind a gate (including base game songs!) can now be purchased with WP.
-Just in time to play properly rated Cloud IX!
+Just in time to play properly rated *cloud IX!*
 
 along with other minor adjustments and changes
 
