@@ -39,6 +39,7 @@ There were also some translation notes in the fan subs:
 - *cloud IX* **[EXPERT]** has been changed to **13.8**. Why now? Well, those who know and all that, I can't be specific.
 - *Chatter Chatter* **[EXPERT]** is now **12.7**. Be sure to try it if you haven't, if your line for not playing things is under 12+.
 - *Poppin Shower* **[INFERNO]** is now **13.6**. It can go up again if Tiiger can't 990 it by 3DI.
+- All songs in Base Game and Plus that were locked behind Gate progress can now be purchased with WP.
 
 along with other minor adjustments and changes
 
@@ -47,6 +48,9 @@ along with other minor adjustments and changes
 That's all for now! Enjoy!
 
 ###### **Some content may have to be unlocked first*
+ 
+ 
+⠀  
 `
   },
   {
@@ -295,6 +299,8 @@ Last but not least, Lunatic mode has been unlocked
 Please look forward to it! Hopefully there won't be any strange incidents involving silent songs that m̴i̸g̶h̶t̴ ̷c̴a̴u̴s̴e̵ ̶a̸n̴y̵ ̷w̷e̸i̸r̴d̶ g̷̛̃̈́̃ľ̴̋̔͝i̸̊̓̅͠t̸c̷͂͑̄͝h̴͋͘͜è̶͗̉͘s̵̒̽̌͑.̶́̿͒̔.̷̑͂. C͔HECK THE R̶̤̣̽̀ECƠ̶̏̌̈Ȓ̴͝DS
 
 ###### **Some content may have to be unlocked first*
+
+⠀
 `
   }
 ];
