@@ -1,5 +1,6 @@
 // Optional sheet properties that keep that difficulty's chart preview on the
 // song page hidden (it shows a placeholder instead):
+//   hideUntilOnePlayed: true - until the profile has played the song on specific difficulty
 //   hideUntilAnyPlayed: true - until the profile has played the song on any difficulty
 //   hideUntilUnlocked: true  - until the profile owns the difficulty unlock (item kind 4)
 
@@ -347,6 +348,12 @@ const waccaSongs = [
         difficulty: 9.5,
         gameVersion: 100,
         charter: "Marvelous"
+      },
+      {
+        difficulty: 12.4,
+        gameVersion: 400,
+        charter: "008 Sweep // rw2036",
+        hideUntilOnePlayed: true
       }
     ]
   },
@@ -6572,7 +6579,7 @@ const waccaSongs = [
         charter: "Marvelous"
       },
       {
-        difficulty: 13.5,
+        difficulty: 13.6,
         gameVersion: 400,
         charter: "ダンデライオン"
       }
@@ -11267,7 +11274,7 @@ const waccaSongs = [
         charter: "Marvelous"
       },
       {
-        difficulty: 13.6,
+        difficulty: 13.8,
         gameVersion: 300,
         charter: "Marvelous"
       }
@@ -14864,7 +14871,7 @@ const waccaSongs = [
         charter: "神様 HOLY THUNDEROUS WEAPON"
       },
       {
-        difficulty: 14.6,
+        difficulty: 14.8,
         gameVersion: 400,
         charter: "神様 HOLY THUNDEROUS WEAPON"
       }
@@ -15062,7 +15069,7 @@ const waccaSongs = [
   },
   {
     id: 4144,
-    title: "桜華月想-SDVX EDIT- | Ouka Getsusou -SDVX EDIT-",
+    title: "桜華月想 | Ouka Getsusou",
     titleEnglish: null,
     artist: "源屋 feat. 3L",
     dateAdded: 20260731,
@@ -15174,7 +15181,7 @@ const waccaSongs = [
         charter: "g♥rmous × ng★body."
       },
       {
-        difficulty: 12.6,
+        difficulty: 12.7,
         gameVersion: 400,
         charter: "g♥rmous × ng★body."
       },
@@ -15400,7 +15407,277 @@ const waccaSongs = [
         charter: "らおいや"
       }
     ]
-  }
+  },
+  {
+    id: 4151,
+    title: "AIZO",
+    titleEnglish: null,
+    artist: "King Gnu 『呪術廻戦』",
+    dateAdded: 20261017,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 190,
+    imageName: "S04/uT_J_S04_151.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-10-17",
+    sheets: [
+      {
+        difficulty: 3,
+        gameVersion: 400,
+        charter: "Dj",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 9.8,
+        gameVersion: 400,
+        charter: "Dj",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 13.4,
+        gameVersion: 400,
+        charter: "Dj",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4154,
+    title: "春擬き | Harumodoki",
+    titleEnglish: null,
+    artist: "やなぎなぎ",
+    dateAdded: 20261017,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 174,
+    imageName: "S04/uT_J_S04_154.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-10-17",
+    sheets: [
+      {
+        difficulty: 3,
+        gameVersion: 400,
+        charter: "ngobody.",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 8,
+        gameVersion: 400,
+        charter: "ngobody.",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 12.6,
+        gameVersion: 400,
+        charter: "ngobody.",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4156,
+    title: "Hello",
+    titleEnglish: null,
+    artist: "やなぎなぎ",
+    dateAdded: 20261017,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 185,
+    imageName: "S04/uT_J_S04_156.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-10-17",
+    sheets: [
+      {
+        difficulty: 2,
+        gameVersion: 400,
+        charter: "おはよう、xafnzeed",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 7.5,
+        gameVersion: 400,
+        charter: "你好，xafnzeed",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 13,
+        gameVersion: 400,
+        charter: "Greetings, xafnzeed",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4158,
+    title: "君の知らない物語 | Kimi no Shiranai Monogatari",
+    titleEnglish: null,
+    artist: "supercell",
+    dateAdded: 20261017,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 165,
+    imageName: "S04/uT_J_S04_158.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-10-17",
+    sheets: [
+      {
+        difficulty: 2,
+        gameVersion: 400,
+        charter: "araragormous",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 8,
+        gameVersion: 400,
+        charter: "araragormous",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 11.6,
+        gameVersion: 400,
+        charter: "araragormous",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4159,
+    title: "Otonoke",
+    titleEnglish: null,
+    artist: "Creepy Nuts",
+    dateAdded: 20261017,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 170,
+    imageName: "S04/uT_J_S04_159.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-10-17",
+    sheets: [
+      {
+        difficulty: 3,
+        gameVersion: 400,
+        charter: "Rafraud",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 8,
+        gameVersion: 400,
+        charter: "Rafrauda",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 12.8,
+        gameVersion: 400,
+        charter: "Rafraudadan",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4161,
+    title: "Sorairo Days",
+    titleEnglish: null,
+    artist: "空色デイズ",
+    dateAdded: 20261017,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 174,
+    imageName: "S04/uT_J_S04_161.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-10-17",
+    sheets: [
+      {
+        difficulty: 4,
+        gameVersion: 400,
+        charter: "twis",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 8.5,
+        gameVersion: 400,
+        charter: "twis",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 11,
+        gameVersion: 400,
+        charter: "twis",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4162,
+    title: "Super Driver",
+    titleEnglish: null,
+    artist: "涼宮ハルヒ (CV.平野 綾)",
+    dateAdded: 20261017,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 200,
+    imageName: "S04/uT_J_S04_162.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-10-17",
+    sheets: [
+      {
+        difficulty: 4,
+        gameVersion: 400,
+        charter: "plasmon [loop 19]",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 8,
+        gameVersion: 400,
+        charter: "plasmon [loop 41]",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 12.5,
+        gameVersion: 400,
+        charter: "plasmon [loop 15,532]",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4164,
+    title: "UNDEAD",
+    titleEnglish: null,
+    artist: "YOASOBI",
+    dateAdded: 20261017,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 200,
+    imageName: "S04/uT_J_S04_164.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-10-17",
+    sheets: [
+      {
+        difficulty: 3,
+        gameVersion: 400,
+        charter: "plasmougi",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 8,
+        gameVersion: 400,
+        charter: "plasmougi",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 11.9,
+        gameVersion: 400,
+        charter: "plasmougi",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 13.7,
+        gameVersion: 400,
+        charter: "plasmougi",
+        hideUntilOnePlayed: true
+      }
+    ]
+  },
 ];
 
 export default waccaSongs;

@@ -11,8 +11,13 @@
             <WaccaIcon :icon="iconId" />
           </div>
 
-          <div class="profile-plate-title" @click.stop="openPicker('title')">
-            {{ titleText }}
+          <span class="profile-plate-title-label">TITLE</span>
+          <div
+            class="profile-plate-title plate-editable"
+            @click.stop="openPicker('title')"
+          >
+            <span class="plate-editable-text">{{ titleText }}</span>
+            <v-icon class="plate-editable-icon" size="0.8em">mdi-pencil</v-icon>
           </div>
 
           <span class="stat-label profile-plate-lv-label">Lv.</span>
@@ -22,8 +27,12 @@
             profile.points
           }}</span>
 
-          <div class="profile-plate-name" @click.stop="openNameDialog">
-            {{ profile.user_name }}
+          <div
+            class="profile-plate-name plate-editable"
+            @click.stop="openNameDialog"
+          >
+            <span class="plate-editable-text">{{ profile.user_name }}</span>
+            <v-icon class="plate-editable-icon" size="0.8em">mdi-pencil</v-icon>
           </div>
 
           <div
@@ -36,6 +45,7 @@
             <img :src="stageupNumberUrl" class="stageup-number" />
           </div>
 
+          <span class="profile-plate-rate-label">Rate:</span>
           <div class="profile-plate-rate" @click.stop="openRatingDialog">
             <WaccaRating
               class="rate-value"
@@ -362,57 +372,95 @@
   }
 }
 
+.profile-plate-title-label {
+  position: absolute;
+  left: 26%;
+  top: 28.5%;
+  font-size: 1.5cqw;
+  font-weight: 500;
+  color: #909090;
+  font-family: "ring_font", sans-serif;
+}
+
 .profile-plate-title {
   position: absolute;
   left: 31%;
-  top: 27.2%;
-  max-width: 32%;
-  font-size: 1.9cqw;
+  top: 27.5%;
+  max-width: 31.5%;
+  font-size: 1.6cqw;
   font-weight: 600;
-  color: #574e4e;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  --text-color: #574e4e;
+}
+
+// Text that opens an editor: lightens and shows a pencil on hover
+.plate-editable {
+  color: var(--text-color);
   cursor: pointer;
+  font-family: "plate_font", sans-serif;
+
+  .plate-editable-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Outside the text box so it doesn't take space from the name
+  .plate-editable-icon {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0.2em;
+    opacity: 0;
+  }
 
   &:hover {
-    text-decoration: underline;
+    color: color-mix(in srgb, var(--text-color) 65%, white);
+
+    .plate-editable-icon {
+      opacity: 1;
+    }
   }
 }
 
 .stat-label {
   position: absolute;
-  font-size: 1.8cqw;
+  font-size: 1.4cqw;
   font-weight: 500;
-  opacity: 0.75;
-  color: #bbb;
+  color: #909090;
+  font-family: "ring_font", sans-serif;
 }
 
 .stat-value {
   position: absolute;
-  font-size: 2.5cqw;
+  font-size: 2cqw;
   font-weight: 700;
   color: #574e4e;
+  font-family: "ring_font", sans-serif;
+  text-align: right;
 }
 
 .profile-plate-lv-label {
-  left: 31%;
-  bottom: 43%;
+  left: 31.25%;
+  bottom: 45%;
 }
 
 .profile-plate-lv-value {
-  left: 35.5%;
-  bottom: 41.5%;
+  left: 34.5%;
+  bottom: 43.5%;
+  width: 5%;
 }
 
 .profile-plate-bp-label {
-  left: 41.7%;
-  bottom: 43%;
+  left: 42%;
+  bottom: 45%;
 }
 
 .profile-plate-bp-value {
   left: 45.5%;
-  bottom: 41.5%;
+  bottom: 43.5%;
+  width: 4%;
 }
 
 .profile-plate-name {
@@ -422,16 +470,8 @@
   max-width: 32%;
   font-size: 3cqw;
   font-weight: 600;
-  color: #1a1a2e;
+  --text-color: #13142d;
   paint-order: stroke fill;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .name-save-error {
@@ -460,14 +500,25 @@
   }
 }
 
+.profile-plate-rate-label {
+  position: absolute;
+  right: 16.75%;
+  bottom: 16.5%;
+  color: white;
+  font-family: "ring_font", sans-serif;
+  font-size: 1.5cqw;
+  letter-spacing: 0.5px;
+}
+
 .profile-plate-rate {
   position: absolute;
-  right: 15%;
+  right: 13.5%;
   bottom: 3.5%;
   text-align: center;
   color: white;
   text-shadow: 0 0.15cqw 0.4cqw rgba(0, 0, 0, 0.9);
   cursor: pointer;
+  width: 8%;
 
   &:hover {
     filter: brightness(1.15);
@@ -475,7 +526,7 @@
 
   .rate-value {
     display: block;
-    font-size: 2.3cqw;
+    font-size: 2.2cqw;
   }
 }
 </style>

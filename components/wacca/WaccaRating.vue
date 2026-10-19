@@ -33,7 +33,7 @@
   background-clip: text !important;
   color: transparent;
   text-shadow: none;
-  font-family: "RateFont", sans-serif;
+  font-family: "ring_font", sans-serif;
   font-weight: 800;
 }
 

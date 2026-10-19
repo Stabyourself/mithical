@@ -1017,11 +1017,18 @@ const chartDifficulties = computed(() =>
   }))
 );
 
-// Sheets flagged hideUntilAnyPlayed / hideUntilUnlocked keep their preview
+// Sheets flagged hideUntilOnePlayed / hideUntilAnyPlayed / hideUntilUnlocked keep their preview
 // hidden until the player has played the song on any difficulty / owns the difficulty unlock (item kind 4)
 const chartHiddenReason = computed(() => {
   const sheet = filteredSheets.value[chartView.value];
   if (!sheet) return null;
+
+  if (sheet.hideUntilOnePlayed) {
+    const score = profile.value?.songs[song.value.id]?.scores[chartView.value];
+    if ((score?.play_count ?? 0) <= 0) {
+      return "This chart's preview unlocks once you've played this difficulty.";
+    }
+  }
 
   if (sheet.hideUntilAnyPlayed) {
     const scores = profile.value?.songs[song.value.id]?.scores ?? [];
