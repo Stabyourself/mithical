@@ -15484,7 +15484,7 @@ const waccaSongs = [
     gameVersion: 400,
     bpm: 185,
     imageName: "S04/uT_J_S04_156.webp",
-    category: "アニメ／ＰＯＰ",
+    category: "バラエティ",
     releaseDate: "2026-10-17",
     sheets: [
       {
