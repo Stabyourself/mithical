@@ -7268,7 +7268,7 @@ const waccaTitles = [
       "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
   {
-    id: 404139,
+    id: 404140,
     name: "I believe what you said",
     acquisition:
       "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
