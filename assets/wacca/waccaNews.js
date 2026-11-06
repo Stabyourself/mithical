@@ -1,8 +1,7 @@
 const waccaNews = [
-    
-    {
+  {
     title: "**[Content]** Anime Update Part 2",
-    date: "2026-10-18",
+    date: "2026-11-06",
     body: `# **Second Season Confirmed!**
     
 If you thought something felt missing from the first ~~season~~ update, then you would be correct! 

@@ -13467,72 +13467,6 @@ const waccaSongs = [
     ]
   },
   {
-    id: 4011,
-    title: "LubedeR",
-    titleEnglish: null,
-    artist: "C-Show",
-    dateAdded: 20261106,
-    dateRemoved: 0,
-    gameVersion: 400,
-    bpm: 256,
-    imageName: "S04/uT_J_S04_011.webp",
-    category: "バラエティ",
-    releaseDate: "2026-11-06",
-    sheets: [
-      {
-        difficulty: 6,
-        gameVersion: 400,
-        charter: "RocketW",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 10.1,
-        gameVersion: 400,
-        charter: "RocketW",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 13.5,
-        gameVersion: 400,
-        charter: "Left:RocketW | Right:Snowball",
-        hideUntilAnyPlayed: true
-      }
-    ]
-  },
-  {
-    id: 4012,
-    title: "マサカリブレイド | Masakari Blade",
-    titleEnglish: null,
-    artist: "REDALiCE",
-    dateAdded: 20261106,
-    dateRemoved: 0,
-    gameVersion: 400,
-    bpm: 194,
-    imageName: "S04/uT_J_S04_012.webp",
-    category: "バラエティ",
-    releaseDate: "2026-11-06",
-    sheets: [
-      {
-        difficulty: 3,
-        gameVersion: 400,
-        charter: "ADELEiNESUMMY",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 9.7,
-        gameVersion: 400,
-        charter: "ADELEiNESUMMY",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 12.6,
-        gameVersion: 400,
-        charter: "ADELEiNESUMMY",
-        hideUntilAnyPlayed: true
-      }
-    ]
-  },
-  {
     id: 4030,
     title: "�",
     titleEnglish: "Null",
@@ -15508,78 +15442,6 @@ const waccaSongs = [
     ]
   },
   {
-    id: 4152,
-    title: "Don't say \"lazy\"",
-    titleEnglish: null,
-    artist: "桜高軽音部「けいおん！」",
-    dateAdded: 20261106,
-    dateRemoved: 0,
-    gameVersion: 400,
-    bpm: 181,
-    imageName: "S04/uT_J_S04_152.webp",
-    category: "アニメ／ＰＯＰ",
-    releaseDate: "2026-11-06",
-    sheets: [
-      {
-        difficulty: 4,
-        gameVersion: 400,
-        charter: "「紬」",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 7.8,
-        gameVersion: 400,
-        charter: "「唯」 feat. オオカミ",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 10.9,
-        gameVersion: 400,
-        charter: "「律」",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 13.4,
-        gameVersion: 400,
-        charter: "「澪」",
-        hideUntilAnyPlayed: true
-      }
-    ]
-  },
-  {
-    id: 4153,
-    title: "Fighting My Way",
-    titleEnglish: null,
-    artist: "歌：花海咲季 (CV. 長月あおい)　作詞作曲：HIROMI　編曲：Giga「学園アイドルマスター」",
-    dateAdded: 20261106,
-    dateRemoved: 0,
-    gameVersion: 400,
-    bpm: 132,
-    imageName: "S04/uT_J_S04_153.webp",
-    category: "アニメ／ＰＯＰ",
-    releaseDate: "2026-11-06",
-    sheets: [
-      {
-        difficulty: 5,
-        gameVersion: 400,
-        charter: "Charting My Way",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 9.7,
-        gameVersion: 400,
-        charter: "Charting My Way",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 12.4,
-        gameVersion: 400,
-        charter: "Charting My Way",
-        hideUntilAnyPlayed: true
-      }
-    ]
-  },
-  {
     id: 4154,
     title: "春擬き | Harumodoki",
     titleEnglish: null,
@@ -15613,39 +15475,6 @@ const waccaSongs = [
     ]
   },
   {
-    id: 4155,
-    title: "hectopascal",
-    titleEnglish: null,
-    artist: "小糸侑(CV：高田 憂希)＆七海燈子(CV：寿美菜子) 「やがて君になる」 より",
-    dateAdded: 20261106,
-    dateRemoved: 0,
-    gameVersion: 400,
-    bpm: 130,
-    imageName: "S04/uT_J_S04_155.webp",
-    category: "アニメ／ＰＯＰ",
-    releaseDate: "2026-11-06",
-    sheets: [
-      {
-        difficulty: 3,
-        gameVersion: 400,
-        charter: "Mirzam",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 8.8,
-        gameVersion: 400,
-        charter: "Mirzam",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 11.5,
-        gameVersion: 400,
-        charter: "Mirzam",
-        hideUntilAnyPlayed: true
-      }
-    ]
-  },
-  {
     id: 4156,
     title: "Hello",
     titleEnglish: null,
@@ -15674,39 +15503,6 @@ const waccaSongs = [
         difficulty: 13,
         gameVersion: 400,
         charter: "Greetings, xafnzeed",
-        hideUntilAnyPlayed: true
-      }
-    ]
-  },
-  {
-    id: 4157,
-    title: "I believe what you said",
-    titleEnglish: null,
-    artist: "亜咲花 『ひぐらしのなく頃に 業』",
-    dateAdded: 20261106,
-    dateRemoved: 0,
-    gameVersion: 400,
-    bpm: 138,
-    imageName: "S04/uT_J_S04_157.webp",
-    category: "アニメ／ＰＯＰ",
-    releaseDate: "2026-11-06",
-    sheets: [
-      {
-        difficulty: 4,
-        gameVersion: 400,
-        charter: "Amaru",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 8.7,
-        gameVersion: 400,
-        charter: "Rallapy.",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 12.5,
-        gameVersion: 400,
-        charter: "Rallapy.",
         hideUntilAnyPlayed: true
       }
     ]
@@ -15844,45 +15640,6 @@ const waccaSongs = [
     ]
   },
   {
-    id: 4163,
-    title: "TACTIC",
-    titleEnglish: null,
-    artist: "Daoko",
-    dateAdded: 20261106,
-    dateRemoved: 0,
-    gameVersion: 400,
-    bpm: 174,
-    imageName: "S04/uT_J_S04_163.webp",
-    category: "アニメ／ＰＯＰ",
-    releaseDate: "2026-11-06",
-    sheets: [
-      {
-        difficulty: 5,
-        gameVersion: 400,
-        charter: "ユキダマ",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 10.0,
-        gameVersion: 400,
-        charter: "ユキダマ",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 12.3,
-        gameVersion: 400,
-        charter: "転生したらユキダマだった件",
-        hideUntilAnyPlayed: true
-      },
-      {
-        difficulty: 13.9,
-        gameVersion: 400,
-        charter: "悪いユキダマじゃないよ",
-        hideUntilAnyPlayed: true
-      }
-    ]
-  },
-  {
     id: 4164,
     title: "UNDEAD",
     titleEnglish: null,
@@ -15918,6 +15675,152 @@ const waccaSongs = [
         gameVersion: 400,
         charter: "plasmougi",
         hideUntilOnePlayed: true
+      }
+    ]
+  },
+  {
+    id: 4152,
+    title: 'Don\'t say "lazy"',
+    titleEnglish: null,
+    artist: "桜高軽音部「けいおん！」",
+    dateAdded: 20261106,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 181,
+    imageName: "S04/uT_J_S04_152.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-11-06",
+    sheets: [
+      {
+        difficulty: 4,
+        gameVersion: 400,
+        charter: "「紬」",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 7.8,
+        gameVersion: 400,
+        charter: "「唯」 feat. オオカミ",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 10.9,
+        gameVersion: 400,
+        charter: "「律」",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 13.4,
+        gameVersion: 400,
+        charter: "「澪」",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4153,
+    title: "Fighting My Way",
+    titleEnglish: null,
+    artist:
+      "歌：花海咲季 (CV. 長月あおい)　作詞作曲：HIROMI　編曲：Giga「学園アイドルマスター」",
+    dateAdded: 20261106,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 132,
+    imageName: "S04/uT_J_S04_153.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-11-06",
+    sheets: [
+      {
+        difficulty: 5,
+        gameVersion: 400,
+        charter: "Charting My Way",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 9.7,
+        gameVersion: 400,
+        charter: "Charting My Way",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 12.4,
+        gameVersion: 400,
+        charter: "Charting My Way",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4155,
+    title: "hectopascal",
+    titleEnglish: null,
+    artist:
+      "小糸侑(CV：高田 憂希)＆七海燈子(CV：寿美菜子) 「やがて君になる」 より",
+    dateAdded: 20261106,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 130,
+    imageName: "S04/uT_J_S04_155.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-11-06",
+    sheets: [
+      {
+        difficulty: 3,
+        gameVersion: 400,
+        charter: "Mirzam",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 8.8,
+        gameVersion: 400,
+        charter: "Mirzam",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 11.5,
+        gameVersion: 400,
+        charter: "Mirzam",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4163,
+    title: "TACTIC",
+    titleEnglish: null,
+    artist: "Daoko",
+    dateAdded: 20261106,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 174,
+    imageName: "S04/uT_J_S04_163.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-11-06",
+    sheets: [
+      {
+        difficulty: 5,
+        gameVersion: 400,
+        charter: "ユキダマ",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 10.0,
+        gameVersion: 400,
+        charter: "ユキダマ",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 12.3,
+        gameVersion: 400,
+        charter: "転生したらユキダマだった件",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 13.9,
+        gameVersion: 400,
+        charter: "悪いユキダマじゃないよ",
+        hideUntilAnyPlayed: true
       }
     ]
   },
@@ -15961,8 +15864,42 @@ const waccaSongs = [
     ]
   },
   {
+    id: 4157,
+    title: "I believe what you said",
+    titleEnglish: null,
+    artist: "亜咲花 『ひぐらしのなく頃に 業』",
+    dateAdded: 20261106,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 138,
+    imageName: "S04/uT_J_S04_157.webp",
+    category: "アニメ／ＰＯＰ",
+    releaseDate: "2026-11-06",
+    sheets: [
+      {
+        difficulty: 4,
+        gameVersion: 400,
+        charter: "Amaru",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 8.7,
+        gameVersion: 400,
+        charter: "Rallapy.",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 12.5,
+        gameVersion: 400,
+        charter: "Rallapy.",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
     id: 4166,
-    title: "再会系女子はどうすりゃいいですか? | What Should I Do for Reunion Girls?",
+    title:
+      "再会系女子はどうすりゃいいですか? | What Should I Do for Reunion Girls?",
     titleEnglish: null,
     artist: "綾瀬理恵",
     dateAdded: 20261106,
@@ -15993,6 +15930,72 @@ const waccaSongs = [
       }
     ]
   },
+  {
+    id: 4011,
+    title: "LubedeR",
+    titleEnglish: null,
+    artist: "C-Show",
+    dateAdded: 20261106,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 256,
+    imageName: "S04/uT_J_S04_011.webp",
+    category: "バラエティ",
+    releaseDate: "2026-11-06",
+    sheets: [
+      {
+        difficulty: 6,
+        gameVersion: 400,
+        charter: "RocketW",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 10.1,
+        gameVersion: 400,
+        charter: "RocketW",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 13.5,
+        gameVersion: 400,
+        charter: "Left:RocketW | Right:Snowball",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  },
+  {
+    id: 4012,
+    title: "マサカリブレイド | Masakari Blade",
+    titleEnglish: null,
+    artist: "REDALiCE",
+    dateAdded: 20261106,
+    dateRemoved: 0,
+    gameVersion: 400,
+    bpm: 194,
+    imageName: "S04/uT_J_S04_012.webp",
+    category: "バラエティ",
+    releaseDate: "2026-11-06",
+    sheets: [
+      {
+        difficulty: 3,
+        gameVersion: 400,
+        charter: "ADELEiNESUMMY",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 9.7,
+        gameVersion: 400,
+        charter: "ADELEiNESUMMY",
+        hideUntilAnyPlayed: true
+      },
+      {
+        difficulty: 12.6,
+        gameVersion: 400,
+        charter: "ADELEiNESUMMY",
+        hideUntilAnyPlayed: true
+      }
+    ]
+  }
 ];
 
 export default waccaSongs;
