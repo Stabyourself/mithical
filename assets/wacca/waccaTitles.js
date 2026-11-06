@@ -7204,8 +7204,40 @@ const waccaTitles = [
     acquisitionEnglish: "???"
   },
   {
+    id: 404132,
+    name: "マサカリブレイド | Masakari Blade",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    id: 404133,
+    name: "LubedeR",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
     id: 404134,
     name: "AIZO",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    id: 404135,
+    name: "Don't Say \"lazy\"",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
+    id: 404136,
+    name: "Fighting My Way",
     acquisition:
       "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     acquisitionEnglish:
@@ -7220,13 +7252,29 @@ const waccaTitles = [
       "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
   },
   {
+    id: 404138,
+    name: "hectopascal",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  },
+  {
     id: 404139,
     name: "Hello",
     acquisition:
       "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     acquisitionEnglish:
       "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
-  },  
+  },
+  {
+    id: 404139,
+    name: "I believe what you said",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  }, 
   {
     id: 404141,
     name: "君の知らない物語 | Kimi no Shiranai Monogatari",
@@ -7250,7 +7298,7 @@ const waccaTitles = [
       "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     acquisitionEnglish:
       "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
-  },  
+  },
   {
     id: 404145,
     name: "Super Driver",
@@ -7258,10 +7306,34 @@ const waccaTitles = [
       "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     acquisitionEnglish:
       "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
-  },  
+  }, 
+  {
+    id: 404146,
+    name: "TACTIC",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  }, 
   {
     id: 404147,
     name: "UNDEAD",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  }, 
+  {
+    id: 404148,
+    name: "なんてカラフルな世界！ | What a colorful world!",
+    acquisition:
+      "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
+    acquisitionEnglish:
+      "Clear the above songs on\r\nNORMAL/HARD/EXPERT\r\nwith ALL Marvelous."
+  }, 
+  {
+    id: 404149,
+    name: "再会系女子はどうすりゃいいですか? | What Should I Do for Reunion Girls?",
     acquisition:
       "上記楽曲の\r\nNORMAL / HARD / EXPERTで\r\nALL Marvelousを達成",
     acquisitionEnglish:

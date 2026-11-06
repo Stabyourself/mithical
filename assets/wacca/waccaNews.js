@@ -1,5 +1,44 @@
 const waccaNews = [
+    
     {
+    title: "**[Content]** Anime Update Part 2",
+    date: "2026-10-18",
+    body: `# **Second Season Confirmed!**
+    
+If you thought something felt missing from the first ~~season~~ update, then you would be correct! 
+
+For season 2, here are the remaining contest winners, as well as some bonus content:
+
+- Our 1st place winner, *Don't say "lazy"* from *K-On!*
+- *Fighting My Way* from *THE iDOLM@STER*
+- *hectopascal* from *Bloom Into You*
+- *What Should I Do For Reunion Girls?* from *Nukitashi the Animation*
+- *I believe what you said* from *Higurashi no Naku Koro ni*
+- *What a colorful world!* from *Animelo Summer Live 2020-21*
+
+We have some anime-only content as well:
+
+- *TACTIC* from *Tensei Shitara Slime Datta Ken*
+
+For those that missed anything the first time, we have prepared some recap episodes as well:
+
+- *LubedeR*
+- *Masakari Blade*
+
+![anime_5](/wacca/img/news/anime_5.webp)
+![anime_6](/wacca/img/news/anime_6.webp)
+![anime_7](/wacca/img/news/anime_7.webp)
+
+
+And that's a wrap! We hope you've enjoyed your viewing experience thus far!
+
+###### **Some content may have to be unlocked first**
+ 
+ 
+⠀  
+`
+  },
+  {
     title: "**[Content]** Anime Update",
     date: "2026-10-18",
     body: `# **OBLIGATORY LARGE TEXT LINE**
@@ -48,7 +87,7 @@ along with other minor adjustments and changes
 
 That's all for now! Enjoy!
 
-###### **Some content may have to be unlocked first*
+###### **Some content may have to be unlocked first**
  
  
 ⠀  
