@@ -2,8 +2,7 @@ const waccaNews = [
   {
     title: "**[Content]** Surely",
     date: "2026-11-08",
-    body: `
-What?
+    body: `# **What?**
 
 Was something missing yesterday, why is there another announcement? Something got pushed back? Well if yesterday was "today" there, then today is 
 
