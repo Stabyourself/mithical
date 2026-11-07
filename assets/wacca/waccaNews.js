@@ -1,7 +1,28 @@
 const waccaNews = [
   {
+    title: "**[Content]** Surely",
+    date: "2026-11-08",
+    body: `
+What?
+
+Was something missing yesterday, why is there another announcement? Something got pushed back? Well if yesterday was "today" there, then today is 
+
+- *TOMORROW* from KonoSuba: God's Blessing on This Wonderful World!
+
+![anime_8](/wacca/img/news/anime_8.webp)
+
+
+Surely that's all now. Thank you again and please enjoy the update!
+
+###### **Some content may have to be unlocked first**
+ 
+ 
+⠀  
+`
+  },
+  {
     title: "**[Content]** Anime Update Part 2",
-    date: "2026-11-06",
+    date: "2026-11-07",
     body: `# **Second Season Confirmed!**
     
 If you thought something felt missing from the first ~~season~~ update, then you would be correct! 

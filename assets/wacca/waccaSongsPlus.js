@@ -1443,6 +1443,12 @@ const waccaSongs = [
         difficulty: 10.4,
         gameVersion: 100,
         charter: "Marvelous"
+      },
+      {
+        difficulty: 13.4,
+        gameVersion: 400,
+        charter: "D+1: THE DELAYER/ Tiiger",
+        hideUntilOnePlayed: true
       }
     ]
   },
