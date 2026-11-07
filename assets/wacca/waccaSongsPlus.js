@@ -15713,7 +15713,7 @@ const waccaSongs = [
         difficulty: 13.4,
         gameVersion: 400,
         charter: "「澪」",
-        hideUntilAnyPlayed: true
+        hideUntilOnePlayed: true
       }
     ]
   },
@@ -15820,7 +15820,7 @@ const waccaSongs = [
         difficulty: 13.9,
         gameVersion: 400,
         charter: "悪いユキダマじゃないよ",
-        hideUntilAnyPlayed: true
+        hideUntilOnePlayed: true
       }
     ]
   },
@@ -15859,7 +15859,7 @@ const waccaSongs = [
         difficulty: 13.6,
         gameVersion: 400,
         charter: "チルノ",
-        hideUntilAnyPlayed: true
+        hideUntilOnePlayed: true
       }
     ]
   },
