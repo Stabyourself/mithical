@@ -21,7 +21,7 @@ Surely that's all now. Thank you again and please enjoy the update!
 `
   },
   {
-    title: "**[Content]** Anime Update Part 2",
+    title: "**[Content]** Anime Update Wave 2",
     date: "2026-11-07",
     body: `# **Second Season Confirmed!**
     
