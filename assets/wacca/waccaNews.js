@@ -1,5 +1,118 @@
 const waccaNews = [
   {
+    title: "**[Content]** Surely",
+    date: "2026-11-08",
+    body: `# **What?**
+
+Was something missing yesterday, why is there another announcement? Something got pushed back? Well if yesterday was "today" there, then today is 
+
+- *TOMORROW* from KonoSuba: God's Blessing on This Wonderful World!
+
+![anime_8](/wacca/img/news/anime_8.webp)
+
+
+Surely that's all now. Thank you again and please enjoy the update!
+
+###### **Some content may have to be unlocked first**
+ 
+ 
+⠀  
+`
+  },
+  {
+    title: "**[Content]** Anime Update Wave 2",
+    date: "2026-11-07",
+    body: `# **Second Season Confirmed!**
+    
+If you thought something felt missing from the first ~~season~~ update, then you would be correct! 
+
+For season 2, here are the remaining contest winners, as well as some bonus content:
+
+- Our 1st place winner, *Don't say "lazy"* from *K-On!*
+- *Fighting My Way* from *THE iDOLM@STER*
+- *hectopascal* from *Bloom Into You*
+- *What Should I Do For Reunion Girls?* from *Nukitashi the Animation*
+- *I believe what you said* from *Higurashi no Naku Koro ni*
+- *What a colorful world!* from *Animelo Summer Live 2020-21*
+
+We have some anime-only content as well:
+
+- *TACTIC* from *Tensei Shitara Slime Datta Ken*
+
+For those that missed anything the first time, we have prepared some recap episodes as well:
+
+- *LubedeR*
+- *Masakari Blade*
+
+![anime_5](/wacca/img/news/anime_5.webp)
+![anime_6](/wacca/img/news/anime_6.webp)
+![anime_7](/wacca/img/news/anime_7.webp)
+
+
+And that's a wrap! We hope you've enjoyed your viewing experience thus far!
+
+###### **Some content may have to be unlocked first**
+ 
+ 
+⠀  
+`
+  },
+  {
+    title: "**[Content]** Anime Update",
+    date: "2026-10-18",
+    body: `# **OBLIGATORY LARGE TEXT LINE**
+    
+Hello, you guys remember April right? There was that charting contest and we voted and stuff, well we appreciate your patience cause it's finally here!
+
+Coming at you in the first arc of this ~~season~~ update are:
+
+- *AIZO* from *Jujutsu Kaisen*
+- *Harumodoki* from *Yahari Ore no Seishun Love Come wa Machigatteiru*
+- *Hello* from *CITY THE ANIMATION*
+- *Sorairo Days* from *Tengan Toppa Gurren Lagann*
+- *Kimi no Shiranai Monogatari* from *Bakemonogatari*
+- *UNDEAD* from *Monogatari Series: Off and Monster Season*
+
+It seems like we got some filler episodes this season too:
+
+- *Otonoke* from *DAN DA DAN*
+- *Super Driver* from *The Melancholy of Haruhi Suzumiya*
+
+![anime_1](/wacca/img/news/anime_1.webp)
+![anime_2](/wacca/img/news/anime_2.webp)
+![anime_3](/wacca/img/news/anime_3.webp)
+
+---
+
+Also:
+
+- *Fatima* **[INFERNO]** from *Steins;Gate 0*
+![anime_4](/wacca/img/news/anime_4.webp)
+
+---
+
+There were also some translation notes in the fan subs:
+
+- *Super Abnormia* **[INFERNO]** has been uprated to **14.8**. Enough people had difficulty with it compared to *sys/dei_cide* so now we have two 14.8s.
+- *cloud IX* **[EXPERT]** has been changed to **13.8**. Why now? Well, those who know and all that, I can't be specific.
+- *Chatter Chatter* **[EXPERT]** is now **12.7**. Be sure to try it if you haven't, if your line for not playing things is under 12+.
+- *Poppin Shower* **[INFERNO]** is now **13.6**. It can go up again if Tiiger can't 990 it by 3DI.
+- All songs currently locked behind a gate (including base game songs!) can now be purchased with WP.
+Just in time to play properly rated *cloud IX!*
+
+along with other minor adjustments and changes
+
+---
+
+That's all for now! Enjoy!
+
+###### **Some content may have to be unlocked first**
+ 
+ 
+⠀  
+`
+  },
+  {
     title: "**[Notice]** WebUI Updates and Improvements, Settings Page",
     date: "2026-10-04",
     body: `Hello again!
@@ -202,7 +315,7 @@ Tune into the stream on September 12th, 2026 @ 4PM PST/7PM EST. You won't want t
 `
   },
   {
-    title: "Touhou Update Wave 2",
+    title: "**[Content]** Touhou Update Wave 2",
     date: "2026-08-31",
     body: `# The Incident Continues...
 \
@@ -245,6 +358,8 @@ Last but not least, Lunatic mode has been unlocked
 Please look forward to it! Hopefully there won't be any strange incidents involving silent songs that m̴i̸g̶h̶t̴ ̷c̴a̴u̴s̴e̵ ̶a̸n̴y̵ ̷w̷e̸i̸r̴d̶ g̷̛̃̈́̃ľ̴̋̔͝i̸̊̓̅͠t̸c̷͂͑̄͝h̴͋͘͜è̶͗̉͘s̵̒̽̌͑.̶́̿͒̔.̷̑͂. C͔HECK THE R̶̤̣̽̀ECƠ̶̏̌̈Ȓ̴͝DS
 
 ###### **Some content may have to be unlocked first*
+
+⠀
 `
   }
 ];

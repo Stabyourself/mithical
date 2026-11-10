@@ -90,7 +90,7 @@
   background-color: #fddb2f;
   background-image:
     url("/wacca/img/RatePattern2.webp"), url("/wacca/img/gold1.webp");
-  @include animated;
+  @include rainbnow-animated;
 }
 
 .rating-rainbow {
