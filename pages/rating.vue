@@ -44,7 +44,9 @@
 
                   <div class="rating-info">
                     <div class="rating-title">
-                      {{ getTitle(sheet.song) }}
+                      <span class="rating-title-text">
+                        {{ getTitle(sheet.song) }}
+                      </span>
                     </div>
 
                     <div class="rating-rating" v-if="sheet.rating">
@@ -292,11 +294,22 @@
 
   // at most 2 lines, so the title never gets taller than the jacket
   line-height: 20px;
+  max-height: 40px;
+  overflow: hidden;
+}
+
+// the ellipsis after 2 lines
+.rating-title-text {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  line-clamp: 2;
   overflow: hidden;
+
+  // the standard property clamps a regular block, no -webkit-box needed
+  @supports (line-clamp: 2) {
+    display: block;
+    line-clamp: 2;
+  }
 }
 
 .rating-max {
